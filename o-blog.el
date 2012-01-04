@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 00:07:54
+;; Last changed: 2012-01-05 00:14:26
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -267,6 +267,53 @@ not provided 80 and 220 are used."
 		    (plist-put Y month
 			       (nconc (plist-get Y month) (list id))))))
 	finally (return dates)))
+
+(defun ob-eval-lisp()
+  "Eval embeded lisp code defined by <lisp> tags in html fragment
+when publishing a page."
+  (save-excursion
+    (save-restriction
+      (save-match-data
+	;; needed for thing-at-point
+	(html-mode)
+	(beginning-of-buffer)
+	(let ((open-tag "<lisp>")
+	      (close-tag "</lisp>")
+	      beg end sexp)
+	  (while (search-forward open-tag nil t)
+	    (setq beg (- (point) (length open-tag)))
+	    (when (search-forward close-tag nil t)
+	      (setq end (point))
+	      (backward-char (length close-tag))
+	      (backward-sexp)
+	      (setq sexp (substring-no-properties (thing-at-point 'sexp)))
+	      (delete-region beg end)
+	      (insert
+	       (save-match-data
+		 (condition-case err
+		     (let ((object (eval (read sexp))))
+		       (cond
+			;; result is a string
+			((stringp object) object)
+			;; a list
+			((and (listp object)
+			      (not (eq object nil)))
+			 (let ((string (pp-to-string object)))
+			   (substring string 0 (1- (length string)))))
+			;; a number
+			((numberp object)
+			 (number-to-string object))
+			;; nil
+			((eq object nil) "")
+			;; otherwise
+			(t (pp-to-string object))))
+		   ;; error handler
+		   (error
+		    (format "Lisp error in %s: %s" (buffer-file-name) err)))))
+	      (goto-char beg))))))))
+
+
+
 
 
 (defun ob:sanitize-string (s)
