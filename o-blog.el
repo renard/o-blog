@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-04 21:09:08
+;; Last changed: 2012-01-05 00:07:54
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -77,12 +77,14 @@ defined, or interactivelly called with `prefix-arg'.
 				    (or (ob:blog-posts-filter BLOG)
 					"+TODO=\"DONE\"")
 				    'file-with-archives)))
-	   (TAGS (ob-compute-tags POSTS)))
+	   (TAGS (ob-compute-tags POSTS))
+	   (DATES (ob-compute-dates POSTS)))
+
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
 					   (time-subtract (current-time) start-time))))
-      TAGS)))
+      DATES)))
 
 ;; Internal functions
 
@@ -235,6 +237,36 @@ not provided 80 and 220 are used."
 			      (/
 			       (* (- val min_f) (- max_r min_r))
 			       (max 1.0 (float (- max_f min_f))))))))))
+
+
+(defun ob-compute-dates (posts)
+  "Return a sorted list of articles per year and month."
+  ;; TODO: Use something like:
+  ;; (let (Y)
+  ;;   (setf Y (acons 2010 3 Y))
+  ;;   (setf Y (acons 2011 9 Y))
+  ;;   (setcdr (assoc 2010 Y) 2)
+  ;;   Y)
+  ;;
+  ;;
+  ;; (let (Y)
+  ;;   (setf Y (acons 2010 '(3) Y))
+  ;;   (setf Y (acons 2011 '(9) Y))
+  ;;   (setcdr (assoc 2010 Y) (append (cdr (assoc 2010 Y)) (list 2)))
+  ;;   (setcdr (assoc 2010 Y) (append (cdr (assoc 2010 Y)) (list 5)))
+  ;;   Y)
+  (loop for post in posts
+	with dates = nil
+	do (let* ((year (ob:post-year post))
+		  (month (ob:post-month post))
+		  (id (ob:post-id post))
+		  (Y (plist-get dates year)))
+	     (setq dates
+		   (plist-put
+		    dates year
+		    (plist-put Y month
+			       (nconc (plist-get Y month) (list id))))))
+	finally (return dates)))
 
 
 (defun ob:sanitize-string (s)
