@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-04 20:31:20
+;; Last changed: 2012-01-04 21:09:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -42,6 +42,11 @@
   content
   content-html)
 
+
+(defstruct (ob:tags (:type list) :named)
+  name count size)
+
+
 ;;;###autoload
 (defun org-publish-blog (&optional file async)
   "Publish FILE as a blog synchronously execpt ib ASYNC is
@@ -71,12 +76,13 @@ defined, or interactivelly called with `prefix-arg'.
 		   (org-map-entries 'point-marker
 				    (or (ob:blog-posts-filter BLOG)
 					"+TODO=\"DONE\"")
-				    'file-with-archives))))
+				    'file-with-archives)))
+	   (TAGS (ob-compute-tags POSTS)))
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
 					   (time-subtract (current-time) start-time))))
-      POSTS)))
+      TAGS)))
 
 ;; Internal functions
 
@@ -185,8 +191,50 @@ headers and body."
     (substring-no-properties (org-export-as-html nil nil nil 'string t))))
 
 
+(defun ob-compute-tags (posts &optional min_r max_r)
+  "Return a list of all tags sorted by usage.
 
+Each item is: \(TAG COUNT PERCENT \)
 
+CONTENT-LIST is a list of all articles such as generated in
+`org-publish-blog'.
+
+MIN_R and MAX_R are the minimum and maximum percentage value. If
+not provided 80 and 220 are used."
+  (let* ((tags (sort (loop for post in posts
+			   append (ob:post-tags post))
+		     #'string<))
+	 (min_r (or min_r 80))
+	 (max_r (or max_r 220))
+	 (min_f (length tags))
+	 (max_f 0))
+
+    (loop for item in
+	    ;; Here extract uniq tags and count occurrences
+	    ;; (such as uniq -c does)
+	    ;; Each item of returned list is
+	    ;; (VALUE COUNT)
+	  (loop for (i . j) on tags
+		with k = 1
+		when (string= i (car j)) do (incf k)
+		else collect (progn
+			       (when (> k max_f) (setf max_f k))
+			       (when (< k min_f) (setf min_f k))
+			       (cons i (list k)))
+		and do (setf k 1))
+
+	  collect (let ((val (cadr item)))
+		    (make-ob:tags
+		     :name (car item)
+		     :count val
+		     ;; This is the tricky part
+		     ;; Formula is:
+		     ;; % = min_r + (val - min_f) * (max_r - min_r) / (max_f - min_f)
+		     ;; the `max' is on purpose in case of max_f = min_f
+		     :size (+ min_r
+			      (/
+			       (* (- val min_f) (- max_r min_r))
+			       (max 1.0 (float (- max_f min_f))))))))))
 
 
 (defun ob:sanitize-string (s)
