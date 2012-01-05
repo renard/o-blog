@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 02:20:39
+;; Last changed: 2012-01-05 02:50:38
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -425,6 +425,25 @@ Returns only fist match execpt is ALL is defined."
      (erase-buffer)
      (insert-file-contents (format "%s/%s" (ob:blog-template-dir BLOG) template))
      (buffer-string))))
+
+(defun ob:format-date (date &optional format locale)
+  "Format DATE using FORMAT and LOCALE.
+
+DATE can heither be string suitable for `parse-time-string' or a
+list of interger using `current-time' format.
+
+FORMAT is a `format-time-string' compatible definition. If not
+set ISO8601 \"%Y-%m-%dT%TZ\" format would be used."
+  (let* ((date (cond
+		((stringp date)
+		 (apply 'encode-time
+			(parse-time-string date)))
+		((listp date)
+		 date)))
+	 (format (or format "%Y-%m-%dT%TZ"))
+	 (system-time-locale locale))
+    (format-time-string format date)))
+
 
 
 (provide 'o-blog)
