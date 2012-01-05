@@ -382,8 +382,14 @@ Returns only fist match execpt is ALL is defined."
 		values
 	      (car values))))))))
 
-
-
+(defun ob:insert-template (template)
+  "Insert TEMPLATE in current buffer."
+  (insert
+   (with-temp-buffer
+     "*Org-Publish-Template*"
+     (erase-buffer)
+     (insert-file-contents (format "%s/%s" (ob:blog-template-dir BLOG) template))
+     (buffer-string))))
 
 
 (provide 'o-blog)
