@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 02:50:38
+;; Last changed: 2012-01-05 15:30:55
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -294,15 +294,73 @@ when publishing a page."
   (write-file file))
 
 (defun ob-write-index()
-  "Publish default index"
+  "Publish all indexes (default, categories, year, month)"
+
+  (ob-write-index-to-file "index.html"
+			  (format "%s/index.html"
+				  (ob:blog-publish-dir BLOG)))
+
+  (ob-write-index-to-file "_index_all.html"
+			  (format "%s/all.html"
+				  (ob:blog-publish-dir BLOG)))
+
+
+  (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	do
+	(loop for YEAR in (ob:get-posts
+			   (lambda (x) (equal CATEGORY (ob:post-category x)))
+			   nil nil 'year)
+	      do
+	      ;; Month indexes
+	      (loop for MONTH in (ob:get-posts
+				  (lambda (x) (and
+					       (equal CATEGORY (ob:post-category x))
+					       (= YEAR (ob:post-year x))))
+				  nil nil 'month)
+		    ;; generate mon
+		    do (let ((POSTS (ob:get-posts
+				     (lambda (x) (and
+						  (equal CATEGORY (ob:post-category x))
+						  (= YEAR (ob:post-year x))
+						  (= MONTH (ob:post-month x)))))))
+			 (ob-write-index-to-file
+			  "_index_month.html"
+			  (format "%s/%s/%.4d/%.2d/index.html"
+				  (ob:blog-publish-dir BLOG)
+				  CATEGORY YEAR MONTH))))
+	      and do
+	      ;; Also write year indexes
+	      (let ((POSTS (ob:get-posts
+			    (lambda (x) (and
+					 (equal CATEGORY (ob:post-category x))
+					 (= YEAR (ob:post-year x)))))))
+		(ob-write-index-to-file
+		 "_index_year.html"
+		 (format "%s/%s/%.4d/index.html"
+			 (ob:blog-publish-dir BLOG)
+			 CATEGORY YEAR))))
+
+	and do
+	(unless (equal "." CATEGORY)
+	  ;; Also write category indexes
+	  (let ((POSTS (ob:get-posts
+			(lambda (x) (equal CATEGORY (ob:post-category x))))))
+	    (ob-write-index-to-file
+	     "_index_category.html"
+	     (format "%s/%s/index.html"
+		     (ob:blog-publish-dir BLOG)
+		     CATEGORY))))))
+
+
+(defun ob-write-index-to-file (template outfile)
+  ""
   (with-temp-buffer
     "*ORG blog publish index*"
     (erase-buffer)
     (insert-file-contents
-     (format "%s/index.html" (ob:blog-template-dir BLOG)))
+     (format "%s/%s" (ob:blog-template-dir BLOG) template))
     (ob-eval-lisp)
-    (ob-write-file
-     (format "%s/index.html" (ob:blog-publish-dir BLOG)))))
+    (ob-write-file outfile)))
 
 
 (defun ob:sanitize-string (s)
