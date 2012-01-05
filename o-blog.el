@@ -77,15 +77,13 @@ defined, or interactivelly called with `prefix-arg'.
 		   (org-map-entries 'point-marker
 				    (ob:blog-posts-filter BLOG)
 				    'file-with-archives)))
-	   (TAGS (ob-compute-tags POSTS))
-	   (DATES (ob-compute-dates POSTS)))
+	   (TAGS (ob-compute-tags POSTS)))
 
       (ob-write-index)
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
 					   (time-subtract (current-time) start-time))))
-
       )))
 
 ;; Internal functions
