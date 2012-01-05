@@ -438,6 +438,7 @@ Returns only fist match execpt is ALL is defined."
      "*Org-Publish-Template*"
      (erase-buffer)
      (insert-file-contents (format "%s/%s" (ob:blog-template-dir BLOG) template))
+     (ob-eval-lisp)
      (buffer-string))))
 
 (defun ob:format-date (date &optional format locale)
