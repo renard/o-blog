@@ -146,7 +146,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (month (string-to-number (format-time-string "%m" timestamp)))
 	   (day (string-to-number (format-time-string "%d" timestamp)))
 	   
-	   (category (or (org-entry-get (point) "category") "."))
+	   (category (or (org-entry-get (point) "category") "blog"))
 
 
 	   (filename (ob:sanitize-string title))
