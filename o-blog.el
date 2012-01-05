@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 15:30:55
+;; Last changed: 2012-01-05 16:25:11
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -311,45 +311,31 @@ when publishing a page."
 			   (lambda (x) (equal CATEGORY (ob:post-category x)))
 			   nil nil 'year)
 	      do
-	      ;; Month indexes
 	      (loop for MONTH in (ob:get-posts
 				  (lambda (x) (and
 					       (equal CATEGORY (ob:post-category x))
 					       (= YEAR (ob:post-year x))))
 				  nil nil 'month)
-		    ;; generate mon
-		    do (let ((POSTS (ob:get-posts
-				     (lambda (x) (and
-						  (equal CATEGORY (ob:post-category x))
-						  (= YEAR (ob:post-year x))
-						  (= MONTH (ob:post-month x)))))))
-			 (ob-write-index-to-file
-			  "_index_month.html"
-			  (format "%s/%s/%.4d/%.2d/index.html"
-				  (ob:blog-publish-dir BLOG)
-				  CATEGORY YEAR MONTH))))
-	      and do
-	      ;; Also write year indexes
-	      (let ((POSTS (ob:get-posts
-			    (lambda (x) (and
-					 (equal CATEGORY (ob:post-category x))
-					 (= YEAR (ob:post-year x)))))))
-		(ob-write-index-to-file
-		 "_index_year.html"
-		 (format "%s/%s/%.4d/index.html"
-			 (ob:blog-publish-dir BLOG)
-			 CATEGORY YEAR))))
+		    do (ob-process-index "_index_month.html" CATEGORY YEAR MONTH))
+	      and do (ob-process-index "_index_year.html" CATEGORY YEAR))
+	and do (unless (equal "." CATEGORY)
+		 (ob-process-index "_index_category.html" CATEGORY))))
 
-	and do
-	(unless (equal "." CATEGORY)
-	  ;; Also write category indexes
-	  (let ((POSTS (ob:get-posts
-			(lambda (x) (equal CATEGORY (ob:post-category x))))))
-	    (ob-write-index-to-file
-	     "_index_category.html"
-	     (format "%s/%s/index.html"
+(defun ob-process-index (template &optional cat year month)
+  ""
+  (let* ((fp (format "%s/%s/index.html"
 		     (ob:blog-publish-dir BLOG)
-		     CATEGORY))))))
+		     (cond
+		      ((and cat year month) (format "%s/%.4d/%.2d" cat year month))
+		      ((and cat year) (format "%s/%.4d" cat year))
+		      (t cat))))
+
+	 (POSTS (ob:get-posts
+		 (lambda (x) (and
+			      (if cat (equal cat (ob:post-category x)) t)
+			      (if year (= year (ob:post-year x)) t)
+			      (if month (= month (ob:post-month x)) t))))))
+	 (ob-write-index-to-file template fp)))
 
 
 (defun ob-write-index-to-file (template outfile)
