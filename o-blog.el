@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 16:31:45
+;; Last changed: 2012-01-05 17:19:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -40,11 +40,17 @@
   filepath
   filename
   htmlfile
+  path-to-root
   content
   content-html)
 
 
 (defstruct (ob:tags (:type list) :named)
+  "Tag structure with following slots:
+
+ - name: string defying the tag name.
+ - count: how many time the tag is used.
+ - size: the font size in percent."
   name count size)
 
 
@@ -163,6 +169,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 		    :day day
 		    :filename filename
 		    :filepath filepath
+		    :path-to-root (file-relative-name "." filepath)
 		    :htmlfile htmlfile
 		    :template (or (org-entry-get (point) "TEMPLATE") "_post.html")
 		    :content content
@@ -302,16 +309,19 @@ when publishing a page."
 				  (ob:blog-publish-dir BLOG)))
 
   (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	with PATH-TO-ROOT = ".."
 	do
 	(loop for YEAR in (ob:get-posts
 			   (lambda (x) (equal CATEGORY (ob:post-category x)))
 			   nil nil 'year)
+	      with PATH-TO-ROOT = "../.."
 	      do
 	      (loop for MONTH in (ob:get-posts
 				  (lambda (x) (and
 					       (equal CATEGORY (ob:post-category x))
 					       (= YEAR (ob:post-year x))))
 				  nil nil 'month)
+		    with PATH-TO-ROOT = "../../.."
 		    do (ob-process-index "_index_month.html" CATEGORY YEAR MONTH))
 	      and do (ob-process-index "_index_year.html" CATEGORY YEAR))
 	and do (unless (equal "." CATEGORY)
