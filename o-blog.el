@@ -362,7 +362,7 @@ when publishing a page."
 ;; template accessible functions
 
 
-(defun ob:get-posts (&optional predicate count sortfunc)
+(defun ob:get-posts (&optional predicate count sortfunc collect)
   "Return posts (from `POSTS' as defined in `org-publish-blog')
 matching PREDICATE. Limit to COUNT results if defined and sorted
 using SORTFUNC.
@@ -372,6 +372,9 @@ argument. If PREDICATE is nil, no filter would be done on posts.
 
 SORTFUNC is used a `sort' PREDICATE.
 
+If COLLECT is defined, only returns the COLLECT field of a
+`ob:post' structure.
+
 Examples:
 
  - Getting last 10 posts:
@@ -380,8 +383,13 @@ Examples:
  - Getting post from January 2012:
    \(ob:get-posts
       \(lambda \(x\)
-         \(and \(= 2012 \(plist-get x :year\)\)
-              \(= 1 \(plist-get x :month\)\)\)\)\)"
+         \(and \(= 2012 \(ob:post-year x\)\)
+              \(= 1 \(ob:post-month x\)\)\)\)\)
+
+ - getting all categories
+    \(ob:get-posts nil nil nil 'category\)
+
+"
   (let* ((posts (if predicate
 		    (loop for post in POSTS
 			  when (funcall predicate post)
@@ -392,6 +400,13 @@ Examples:
       (setq posts (butlast posts (- len count))))
     (when sortfunc
       (setq posts (sort posts sortfunc)))
+    (when collect
+      (setq posts
+	    (loop for post in posts
+		  with ret = nil
+		  collect (funcall (intern (format "ob:post-%s" collect)) post)
+		  into ret
+		  finally return (delete-dups ret))))
     posts))
 
 (defun ob:get-header (header &optional all)
