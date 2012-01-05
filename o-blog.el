@@ -473,5 +473,12 @@ set ISO8601 \"%Y-%m-%dT%TZ\" format would be used."
     (format-time-string format date)))
 
 
+(defun ob:path-to-root ()
+  "Return path to site root from `PATH-TO-ROOT' or `POST'
+path-to-root slot."
+  (cond
+   ((boundp 'PATH-TO-ROOT) PATH-TO-ROOT)
+   ((boundp 'POST) (ob:post-path-to-root POST))
+   (t ".")))
 
 (provide 'o-blog)
