@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 01:05:44
+;; Last changed: 2012-01-05 02:11:37
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -342,19 +342,21 @@ when publishing a page."
 - replacing non alphanumerical chars to \"-\"
 - downcasing all letters
 - trimming leading and tailing \"-\""
-  (with-temp-buffer
-    (insert s)
-    (call-process-region
-     (point-min) (point-max)
-     "iconv" t t nil "--to-code=ASCII//TRANSLIT")
-    (replace-regexp "[^a-zA-Z0-9]+"
-		    "-" nil (point-min) (point-max))
-    (downcase-region (point-min) (point-max))
-    (replace-regexp "^-+\\|-+$"
-		    "" nil (point-min) (point-max))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-
+  (loop for c across s
+	with gc
+	with ret
+	do (setf gc (get-char-code-property c 'general-category))
+	if (member gc '(Lu Ll))
+	collect (downcase (char-to-string
+			   (car (get-char-code-property c 'decomposition))))
+	into ret
+	else if (member gc '(Zs))
+	collect "-" into ret
+	finally return (replace-regexp-in-string
+			"--+" "-"
+			(replace-regexp-in-string
+			 "^-+\\|-+$" ""
+			 (mapconcat 'identity ret "")))))
 
 
 ;; template accessible functions
