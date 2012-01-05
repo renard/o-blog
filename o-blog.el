@@ -313,7 +313,23 @@ when publishing a page."
 	      (goto-char beg))))))))
 
 
+;; Publish functions
 
+(defun ob-write-file (file)
+  "Write current buffer to FILE and create full path if necessary."
+  (mkdir (file-name-directory file) t)
+  (write-file file))
+
+(defun ob-write-index()
+  "Publish default index"
+  (with-temp-buffer
+    "*ORG blog publish index*"
+    (erase-buffer)
+    (insert-file-contents
+     (format "%s/index.html" (ob:blog-template-dir BLOG)))
+    (ob-eval-lisp)
+    (ob-write-file
+     (format "%s/index.html" (ob:blog-publish-dir BLOG)))))
 
 
 (defun ob:sanitize-string (s)
