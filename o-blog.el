@@ -360,7 +360,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 
 (defun ob-write-posts ()
-  ""
+  "Publish all posts"
   (loop for POST in POSTS
 	do (ob-write-index-to-file
 	    (ob:post-template POST)
