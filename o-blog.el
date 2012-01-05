@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 16:25:11
+;; Last changed: 2012-01-05 16:29:26
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -304,7 +304,6 @@ when publishing a page."
 			  (format "%s/all.html"
 				  (ob:blog-publish-dir BLOG)))
 
-
   (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
 	do
 	(loop for YEAR in (ob:get-posts
@@ -321,18 +320,22 @@ when publishing a page."
 	and do (unless (equal "." CATEGORY)
 		 (ob-process-index "_index_category.html" CATEGORY))))
 
-(defun ob-process-index (template &optional cat year month)
-  ""
+(defun ob-process-index (template &optional category year month)
+  "Low-level function for `ob-write-index'.
+
+Template is read from TEMPLATE file.
+
+If provided CATEGORY YEAR and MONTH are used to select articles."
   (let* ((fp (format "%s/%s/index.html"
 		     (ob:blog-publish-dir BLOG)
 		     (cond
-		      ((and cat year month) (format "%s/%.4d/%.2d" cat year month))
-		      ((and cat year) (format "%s/%.4d" cat year))
-		      (t cat))))
+		      ((and category year month) (format "%s/%.4d/%.2d" category year month))
+		      ((and cat year) (format "%s/%.4d" category year))
+		      (t category))))
 
 	 (POSTS (ob:get-posts
 		 (lambda (x) (and
-			      (if cat (equal cat (ob:post-category x)) t)
+			      (if category (equal category (ob:post-category x)) t)
 			      (if year (= year (ob:post-year x)) t)
 			      (if month (= month (ob:post-month x)) t))))))
 	 (ob-write-index-to-file template fp)))
