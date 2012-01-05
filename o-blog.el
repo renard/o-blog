@@ -80,6 +80,7 @@ defined, or interactivelly called with `prefix-arg'.
 	   (TAGS (ob-compute-tags POSTS)))
 
       (ob-write-index)
+      (ob-write-posts)
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
@@ -346,6 +347,16 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
      (format "%s/%s" (ob:blog-template-dir BLOG) template))
     (ob-eval-lisp)
     (ob-write-file outfile)))
+
+
+(defun ob-write-posts ()
+  ""
+  (loop for POST in POSTS
+	do (ob-write-index-to-file
+	    (ob:post-template POST)
+	    (format "%s/%s"
+		    (ob:blog-publish-dir BLOG)
+		    (ob:post-htmlfile POST)))))
 
 
 (defun ob:sanitize-string (s)
