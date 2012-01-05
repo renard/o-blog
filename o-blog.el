@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 17:19:36
+;; Last changed: 2012-01-05 17:54:05
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -87,6 +87,7 @@ defined, or interactivelly called with `prefix-arg'.
 
       (ob-write-index)
       (ob-write-posts)
+      (ob-write-tags)
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
@@ -367,6 +368,22 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 	    (format "%s/%s"
 		    (ob:blog-publish-dir BLOG)
 		    (ob:post-htmlfile POST)))))
+
+
+
+(defun ob-write-tags ()
+  "Publish all tags into directory named \"tags\"."
+  (let ((PATH-TO-ROOT ".."))
+    (ob-write-index-to-file "_tags.html"
+			    (format "%s/tags/index.html"
+				    (ob:blog-publish-dir BLOG)))
+
+    (loop for TAG in TAGS
+	  do
+	  (ob-write-index-to-file "_tags-details.html"
+				  (format "%s/tags/%s.html"
+					  (ob:blog-publish-dir BLOG)
+					  (ob:tags-name TAG))))))
 
 
 (defun ob:sanitize-string (s)
