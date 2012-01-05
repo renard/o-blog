@@ -326,7 +326,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 		     (ob:blog-publish-dir BLOG)
 		     (cond
 		      ((and category year month) (format "%s/%.4d/%.2d" category year month))
-		      ((and cat year) (format "%s/%.4d" category year))
+		      ((and category year) (format "%s/%.4d" category year))
 		      (t category))))
 
 	 (POSTS (ob:get-posts
