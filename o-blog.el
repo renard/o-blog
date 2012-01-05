@@ -23,6 +23,7 @@
   publish-dir
   template-dir
   posts-filter
+  cache-dir
   )
 
 
