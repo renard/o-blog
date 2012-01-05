@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 00:14:26
+;; Last changed: 2012-01-05 01:00:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -84,16 +84,18 @@ defined, or interactivelly called with `prefix-arg'.
 		       file
 		       (format-time-string "%s.%3N"
 					   (time-subtract (current-time) start-time))))
+      (ob-write-index)
       DATES)))
 
 ;; Internal functions
 
-(defun ob-parse-blog-headers ()
+(defun ob-parse-blog-headers (&optional file)
   "Parse blog related variable from current-buffer."
-  (let ((blog (make-ob:blog :file file :buffer (current-buffer))))
+  (let* ((file (or file (buffer-file-name)))
+	 (blog (make-ob:blog :file file :buffer (current-buffer))))
     (setf (ob:blog-publish-dir blog) (ob:get-header "PUBLISH_DIR"))
     (setf (ob:blog-template-dir blog) (ob:get-header "TEMPLATE_DIR"))
-    (setf (ob:blog-template-dir blog) (ob:get-header "POSTS_FILTER"))
+    (setf (ob:blog-posts-filter blog) (ob:get-header "POSTS_FILTER"))
     blog))
 
 
