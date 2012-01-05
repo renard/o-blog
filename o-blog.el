@@ -170,6 +170,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 			  :template (or (org-entry-get (point) "TEMPLATE") "_post.html")
 			  :content content
 			  :content-html (ob-export-string-to-html content)
+			  :category category
 			  )))
       post)))
 
