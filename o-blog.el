@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 01:00:36
+;; Last changed: 2012-01-05 01:05:44
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -75,8 +75,7 @@ defined, or interactivelly called with `prefix-arg'.
 	   (BLOG (ob-parse-blog-headers))
 	   (POSTS (ob-parse-entries
 		   (org-map-entries 'point-marker
-				    (or (ob:blog-posts-filter BLOG)
-					"+TODO=\"DONE\"")
+				    (ob:blog-posts-filter BLOG)
 				    'file-with-archives)))
 	   (TAGS (ob-compute-tags POSTS))
 	   (DATES (ob-compute-dates POSTS)))
@@ -94,9 +93,10 @@ defined, or interactivelly called with `prefix-arg'.
   "Parse blog related variable from current-buffer."
   (let* ((file (or file (buffer-file-name)))
 	 (blog (make-ob:blog :file file :buffer (current-buffer))))
-    (setf (ob:blog-publish-dir blog) (ob:get-header "PUBLISH_DIR"))
+    (setf (ob:blog-publish-dir blog) (or (ob:get-header "PUBLISH_DIR") "out"))
     (setf (ob:blog-template-dir blog) (ob:get-header "TEMPLATE_DIR"))
-    (setf (ob:blog-posts-filter blog) (ob:get-header "POSTS_FILTER"))
+    (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
+    (setf (ob:blog-cache-dir blog) (or (ob:get-header "CACHE_DIR") "cache"))
     blog))
 
 
