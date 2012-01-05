@@ -361,6 +361,40 @@ when publishing a page."
 
 
 ;; template accessible functions
+
+
+(defun ob:get-posts (&optional predicate count sortfunc)
+  "Return posts (from `POSTS' as defined in `org-publish-blog')
+matching PREDICATE. Limit to COUNT results if defined and sorted
+using SORTFUNC.
+
+PREDICATE is a function run for each post with the post itself as
+argument. If PREDICATE is nil, no filter would be done on posts.
+
+SORTFUNC is used a `sort' PREDICATE.
+
+Examples:
+
+ - Getting last 10 posts:
+   \(ob:get-posts nil 10\)
+
+ - Getting post from January 2012:
+   \(ob:get-posts
+      \(lambda \(x\)
+         \(and \(= 2012 \(plist-get x :year\)\)
+              \(= 1 \(plist-get x :month\)\)\)\)\)"
+  (let* ((posts (if predicate
+		    (loop for post in POSTS
+			  when (funcall predicate post)
+			  collect post)
+		  POSTS))
+	 (len (length posts)))
+    (when (and count (> count 0) (< count len))
+      (setq posts (butlast posts (- len count))))
+    (when sortfunc
+      (setq posts (sort posts sortfunc)))
+    posts))
+
 (defun ob:get-header (header &optional all)
   "Get HEADER from blog buffer as defined in BLOG global context
 variable.
