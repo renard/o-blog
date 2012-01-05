@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 16:29:26
+;; Last changed: 2012-01-05 16:31:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -152,26 +152,22 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
-	   (content (ob-get-entry-text))
+	   (content (ob-get-entry-text)))
 	   
-
-	   (post
-	    (make-ob:post :title title
-			  :tags tags
-			  :timestamp timestamp
-			  :year year
-			  :month month
-			  :day day
-			  :filename filename
-			  :filepath filepath
-			  :htmlfile htmlfile
-			  :template (or (org-entry-get (point) "TEMPLATE") "_post.html")
-			  :content content
-			  :content-html (ob-export-string-to-html content)
-			  :category category
-			  )))
-      post)))
-
+      (make-ob:post :title title
+		    :tags tags
+		    :timestamp timestamp
+		    :year year
+		    :month month
+		    :day day
+		    :filename filename
+		    :filepath filepath
+		    :htmlfile htmlfile
+		    :template (or (org-entry-get (point) "TEMPLATE") "_post.html")
+		    :content content
+		    :content-html (ob-export-string-to-html content)
+		    :category category
+		    ))))
 
 
 (defun ob-get-entry-text ()
