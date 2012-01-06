@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 16:54:34
+;; Last changed: 2012-01-06 17:11:53
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -163,13 +163,19 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   
 	   (category (or (org-entry-get (point) "category") "blog"))
 
+	   (page (org-entry-get (point) "PAGE"))
 
 	   (filename (ob:sanitize-string title))
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
 	   (content (ob-get-entry-text)))
-	   
+
+      (when page
+	(setq htmlfile page
+	      filename (file-name-sans-extension (file-name-nondirectory htmlfile))
+	      filepath (file-name-directory htmlfile)))
+
       (make-ob:post :title title
 		    :tags tags
 		    :timestamp timestamp
@@ -180,7 +186,8 @@ MARKERS is a list of entries given by `org-map-entries'."
 		    :filepath filepath
 		    :path-to-root (file-relative-name "." filepath)
 		    :htmlfile htmlfile
-		    :template (or (org-entry-get (point) "TEMPLATE") "_post.html")
+		    :template (or (org-entry-get (point) "TEMPLATE")
+				  (if page "blog_static.html" "blog_post.html"))
 		    :content content
 		    :content-html (ob-export-string-to-html content)
 		    :category category
@@ -370,7 +377,12 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 (defun ob-write-static ()
   "Publish static pages"
-  (message (format "%S" STATIC)))
+  (loop for POST in STATIC
+	do (ob-write-index-to-file
+	    (ob:post-template POST)
+	    (format "%s/%s"
+		    (ob:blog-publish-dir BLOG)
+		    (ob:post-htmlfile POST)))))
 
 (defun ob-write-posts ()
   "Publish all posts"
