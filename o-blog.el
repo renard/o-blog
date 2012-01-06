@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-05 17:54:05
+;; Last changed: 2012-01-06 16:54:34
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -23,6 +23,7 @@
   publish-dir
   template-dir
   posts-filter
+  static-filter
   cache-dir
   )
 
@@ -80,11 +81,17 @@ defined, or interactivelly called with `prefix-arg'.
 	   (default-directory (file-name-directory file))
 	   (BLOG (ob-parse-blog-headers))
 	   (POSTS (ob-parse-entries
-		   (org-map-entries 'point-marker
-				    (ob:blog-posts-filter BLOG)
-				    'file-with-archives)))
+	   	   (org-map-entries 'point-marker
+	   			    (ob:blog-posts-filter BLOG)
+	   			    'file-with-archives)))
+	   (STATIC (ob-parse-entries
+		    (org-map-entries 'point-marker
+				     (ob:blog-static-filter BLOG)
+				     'file-with-archives)))
+
 	   (TAGS (ob-compute-tags POSTS)))
 
+      (ob-write-static)
       (ob-write-index)
       (ob-write-posts)
       (ob-write-tags)
@@ -103,6 +110,7 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-publish-dir blog) (or (ob:get-header "PUBLISH_DIR") "out"))
     (setf (ob:blog-template-dir blog) (ob:get-header "TEMPLATE_DIR"))
     (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
+    (setf (ob:blog-static-filter blog) (or (ob:get-header "STATIC_FILTER") "+PAGE={.+\.html}"))
     (setf (ob:blog-cache-dir blog) (or (ob:get-header "CACHE_DIR") "cache"))
     blog))
 
@@ -359,6 +367,10 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
     (ob-eval-lisp)
     (ob-write-file outfile)))
 
+
+(defun ob-write-static ()
+  "Publish static pages"
+  (message (format "%S" STATIC)))
 
 (defun ob-write-posts ()
   "Publish all posts"
