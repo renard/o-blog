@@ -319,14 +319,9 @@ when publishing a page."
 
 (defun ob-write-index()
   "Publish all indexes (default, categories, year, month)"
-
-  (ob-write-index-to-file "index.html"
-			  (format "%s/index.html"
-				  (ob:blog-publish-dir BLOG)))
-
-  (ob-write-index-to-file "_index_all.html"
-			  (format "%s/all.html"
-				  (ob:blog-publish-dir BLOG)))
+  (ob-write-index-to-file "blog_archives.html"
+  			  (format "%s/archives.html"
+  				  (ob:blog-publish-dir BLOG)))
 
   (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
 	with PATH-TO-ROOT = ".."
@@ -342,10 +337,10 @@ when publishing a page."
 					       (= YEAR (ob:post-year x))))
 				  nil nil 'month)
 		    with PATH-TO-ROOT = "../../.."
-		    do (ob-process-index "_index_month.html" CATEGORY YEAR MONTH))
-	      and do (ob-process-index "_index_year.html" CATEGORY YEAR))
+		    do (ob-process-index "blog_index_month.html" CATEGORY YEAR MONTH))
+	      and do (ob-process-index "blog_index_year.html" CATEGORY YEAR))
 	and do (unless (equal "." CATEGORY)
-		 (ob-process-index "_index_category.html" CATEGORY))))
+		 (ob-process-index "blog_index_category.html" CATEGORY))))
 
 (defun ob-process-index (template &optional category year month)
   "Low-level function for `ob-write-index'.
