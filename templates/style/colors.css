@@ -1,0 +1,42 @@
+html {
+   background: #bababa;
+}
+
+body {
+   background-color: #dadada;
+   color: black;
+}
+
+#top nav {
+
+}
+
+a {
+   color: #933;
+}
+
+footer#bottom {
+   background: #bababa;
+   border-color: #9a9a9a;
+}
+
+#bottom section, #bottom nav, #top nav {
+   border-color: #9a9a9a;
+}
+
+#content article footer, #content article header {
+   background-color: #cacaca;
+}
+
+div.date {
+   border-color: #bababa;
+}
+
+span.date-y {
+   background-color: #dadada;
+}
+
+
+#bottom #copyright p.powered {
+   color: #9a9a9a;
+}

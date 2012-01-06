@@ -1,0 +1,39 @@
+      </div>
+      <footer id="bottom">
+	<div>
+	  <section>
+	    <h1>About</h1>
+	    <address>
+	      <lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
+	    </address>
+	  </section>
+	  <nav id="links">
+	    <h1>Links</h1>
+	    <lisp>(ob:insert-template "nav_links.html")</lisp>
+	  </nav>
+	  <nav id="archives">
+	    <h1>Archives</h1>
+	    <ul>
+	      <lisp>
+		(loop for p in (ob:get-posts nil 10)
+		do (insert (format "<li><a href=\"%s/%s\">%s</a></li> "
+		(ob:path-to-root)
+		(ob:post-htmlfile p)
+		(ob:post-title p)
+		)))
+	      </lisp>
+	    </ul>
+	  </nav>
+	  <nav class="tag-cloud">
+	    <h1>Tags</h1>
+	    <lisp>(ob:insert-template "nav_tag-cloud.html")</lisp>
+	  </nav>
+	</div>
+	<div id="copyright">
+	  <lisp>(ob:post-content-html (ob:get-snippet "Copyright"))</lisp>
+	  <p class="powered">Powered by Org-eblog.</p>
+	</div>
+      </footer>
+    </div>
+  </body>
+</html>

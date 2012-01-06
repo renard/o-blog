@@ -1,0 +1,286 @@
+html {
+   font-family: Nobile, "Helvetica Neue", Helvetica, Arial, sans-serif;
+   height: 100%;
+}
+
+body {
+   margin: 0;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+#main-delimiter {
+   min-width: 950px;
+}
+
+
+/*
+ * Header
+ */
+
+header#top {
+   display: block;
+   margin: 0;
+   font-size: 1em;
+}
+
+#top hgroup {
+   display: block;
+   margin: 0 25em;
+}
+
+#top hgroup h1 {
+   font-size: 4em;
+   float: left;
+   margin-top: 0.2em;
+   margin-bottom: 0.2em;
+}
+
+#top hgroup h2 {
+   font-size: 3em;
+   padding-left: 3em;
+   float: left;
+   margin-top: 0.2em;
+   margin-bottom: 0.2em;
+
+}
+
+#top nav {
+   clear: both;
+   float: none;
+   margin: 0 25%;
+   margin-bottom: 2em;
+   border-bottom: 0.3em solid
+}
+
+#top nav ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+}
+
+#top nav ul li {
+   display: inline;
+   padding-right: 4em;
+}
+
+
+
+
+/*
+ * Footer
+ */
+
+
+footer#bottom {
+   display: block;
+   clear: both;
+   margin: 0;
+   border-top: 1px solid;
+}
+
+footer#bottom div {
+   width: 75%;
+   margin: 0 auto;
+   font-size: 0.7em;
+}
+
+#bottom section, #bottom nav {
+   width: 22em;
+   float: left;
+   margin: 2em;;
+   padding: 0.25em;
+   border-top: 0.25em solid;
+   min-height: 10em;
+}
+
+#bottom #copyright p {
+   clear: both;
+   text-align: center;
+   font-size: 0.8em;
+}
+
+#bottom #copyright p.powered {
+   padding-bottom: 2em;
+}
+
+#bottom h1 {
+   margin: 0 auto;
+   
+}
+
+#bottom nav ul, nav.tag-cloud ul {
+   list-style-type: none;
+   margin: 0;
+   padding-left: 0.5em;
+   padding-right: 0.5em;
+}
+
+nav.tag-cloud ul li {
+   display: inline;
+   padding-right: 0.5em;
+}
+
+
+
+/*
+ * Content
+ */
+
+
+
+div#content {
+   width: 50em;
+   margin: 0 auto;
+   font-size: 1em;
+}
+
+#content article footer {
+   
+}
+
+.article-header, .article-footer {
+   padding: 0.5em;
+}
+
+.article-header h1 {
+   display: inline-block;
+   vertical-align: top;
+   padding-left: 3em;
+}
+
+.article-header nav {
+   display: block;
+   clear: both;
+}
+
+
+.article-header nav ul {
+   margin: 0;
+   padding: 0;
+}
+
+.article-header nav ul li {
+   display: inline;
+   list-style-type: none;
+}
+
+.article-header nav ul li.prev:before {
+   content: "\AB";
+   margin-right: 0.3em;
+}
+
+.article-header nav ul li.next {
+   /* Only .next should have a float property. .prev shoud NOT have one. */
+   float: right;
+}
+
+.article-header nav ul li.next:after {
+   content: "\BB";
+   margin-left: 0.3em;
+}
+
+
+
+div.date {
+   border: 1px solid; 
+   position: relative;
+   display: inline-block;
+   width: 2em;
+}
+
+div.date span {
+   display: block; 
+   text-align: center; 
+}
+
+span.date-d {
+   font-size: 1.5em;
+}
+
+span.date-m {
+   text-transform: uppercase; 
+   font-size: 0.8em;
+}
+
+span.date-y {
+   font-size: 0.6em; 
+   padding: 0.3em 0; 
+   margin-top: 0.3em;
+}
+
+
+.article-content {
+   text-align: justify;
+}
+
+.two-cols {
+   column-count: 2;
+   -moz-column-count:2; /* Firefox */
+   -webkit-column-count:2; /* Safari and Chrome */
+}
+
+/* Just for fun */
+.article-content  p:first-child:first-letter {
+   font-size: 1.03em;
+   vertical-align: text-top;
+   float: left;
+   font-weight: 900;
+}
+
+#content {
+   padding-bottom: 5em;
+}
+
+
+nav.archives {
+   margin: 1em;
+}
+
+ul.all {
+   list-style-type: none;
+   margin: 0;
+   padding-left: 1em;
+}
+
+ul.category {
+   list-style-type: none;
+   margin: 0;
+   padding-left: 1em;
+}
+
+ul.year {
+   list-style-type: none;
+   margin: 0;
+   padding-left: 1em;
+}
+
+ul.month {
+   list-style-type: none;
+   margin: 0;
+   padding-left: 1em;
+}
+
+nav.tags {
+   font-size: 250%;
+}
+
+nav.tags ul {
+   list-style-type: none;
+}
+nav.tags ul li {
+   display: inline;
+}
+
+
+nav.tag-detail ul {
+   list-style-type: none;
+}
+
+

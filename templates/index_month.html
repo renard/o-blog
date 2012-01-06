@@ -1,0 +1,9 @@
+<ul class="month <lisp>YEAR</lisp> <lisp>MONTH</lisp>">
+  <lisp>
+    (loop for post in POSTS
+    do (insert (format "<li><a href=\"%s/%s\">%s</a></li>"
+    (ob:path-to-root)
+    (or (ob:post-htmlfile post) "htmlfile")
+    (or (ob:post-title post) "title"))))
+  </lisp>
+</ul>

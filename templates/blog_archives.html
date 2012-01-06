@@ -1,0 +1,15 @@
+<lisp>(ob:insert-template "page_header.html")</lisp>
+<article>
+  <header class="article-header">
+    <h1>Archives</h1>
+    <nav class="articles-nav">
+      <ul><li class="prev"><a href="index.html">Up</a></li></ul>
+    </nav>
+  </header>    
+  <div class="article-content">
+    <nav class="archives">
+      <lisp>(ob:insert-template "index_archives.html")</lisp>
+    </nav>
+  </div>
+</article>
+<lisp>(ob:insert-template "page_footer.html")</lisp>
