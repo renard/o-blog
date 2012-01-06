@@ -402,13 +402,13 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 (defun ob-write-tags ()
   "Publish all tags into directory named \"tags\"."
   (let ((PATH-TO-ROOT ".."))
-    (ob-write-index-to-file "_tags.html"
+    (ob-write-index-to-file "blog_tags.html"
 			    (format "%s/tags/index.html"
 				    (ob:blog-publish-dir BLOG)))
 
     (loop for TAG in TAGS
 	  do
-	  (ob-write-index-to-file "_tags-details.html"
+	  (ob-write-index-to-file "blog_tags-details.html"
 				  (format "%s/tags/%s.html"
 					  (ob:blog-publish-dir BLOG)
 					  (ob:tags-name TAG))))))
