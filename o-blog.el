@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 20:02:49
+;; Last changed: 2012-01-06 20:50:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -103,6 +103,8 @@ defined, or interactivelly called with `prefix-arg'.
       (ob-write-posts)
       (ob-write-tags)
       (ob-write-index)
+      (copy-directory (format "%s/%s" (ob:blog-template-dir BLOG) "style")
+		      (ob:blog-publish-dir BLOG))
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
