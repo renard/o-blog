@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 21:07:56
+;; Last changed: 2012-01-06 23:30:13
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -16,6 +16,16 @@
 
 ;;; Code:
 
+
+(eval-when-compile
+  (require 'cl nil t)
+  (require 'find-func nil t))
+(require 'time-stamp nil t)
+
+
+(defcustom ob-async-opts nil
+  "Extra options to be used when compiling with
+`org-publish-blog-async'.")
 
 (defstruct (ob:blog (:type list) :named)
   (file nil :read-only)
@@ -73,8 +83,8 @@ defined, or interactivelly called with `prefix-arg'.
       (org-publish-blog-async file)
       (org-publish-blog-sync file)))
 
-
-(defun org-publish-blog-1 (file)
+;;;###autoload
+(defun org-publish-blog-sync (file)
   "Publish FILE synchronously."
   (with-current-buffer (or
 			(get-file-buffer file)
@@ -111,8 +121,44 @@ defined, or interactivelly called with `prefix-arg'.
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
-					   (time-subtract (current-time) start-time))))
-      )))
+					   (time-subtract (current-time) start-time)))))))
+
+(defun org-blog-publish-run-processes-sentinel (proc change)
+  "Sentinel in charge of cleaning `org-publish-blog-async' on success."
+  (when (eq (process-status proc) 'exit)
+    (let ((status  (process-exit-status proc))
+	  (cmd (process-get proc :cmd))
+	  (cmd-buf (process-get proc :cmd-buf)))
+      (if (not (eq 0 status))
+	  (progn
+	    (when (process-buffer proc)
+	      (set-window-buffer (selected-window) cmd-buf))
+	    (error "Org blog ERROR: %s" cmd))
+	(message  "Org blog OK: %s" cmd))
+      (when cmd-buf (kill-buffer cmd-buf)))))
+
+
+(defun org-publish-blog-async (file)
+  "Publish FILE synchronously."
+  (let* ((cmd-line (append command-line-args
+			   `("--batch"
+			     "-l" ,(concat (file-name-as-directory
+					    user-emacs-directory)
+					   "init.el")
+			     ,@ob-async-opts
+			     "--eval"
+			     ,(format "(org-publish-blog \"%s\")" file))))
+	 (cmd-buf (get-buffer-create (format "ORG blog build %s" file)))
+	 (proc (apply 'start-process (car cmd-line)
+		      cmd-buf (car cmd-line) (cdr cmd-line))))
+    (message "Run: %S" cmd-line)
+    (process-put proc :cmd (format "Build %s" file))
+    (process-put proc :cmd-buf cmd-buf)
+    (set-process-sentinel proc 'org-blog-publish-run-processes-sentinel)))
+
+
+
+
 
 ;; Internal functions
 
