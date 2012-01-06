@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 17:11:53
+;; Last changed: 2012-01-06 20:02:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -24,6 +24,7 @@
   template-dir
   posts-filter
   static-filter
+  snippet-filter
   title
   description
   cache-dir
@@ -86,17 +87,22 @@ defined, or interactivelly called with `prefix-arg'.
 	   	   (org-map-entries 'point-marker
 	   			    (ob:blog-posts-filter BLOG)
 	   			    'file-with-archives)))
+	   (ALL-POSTS POSTS)
 	   (STATIC (ob-parse-entries
 		    (org-map-entries 'point-marker
 				     (ob:blog-static-filter BLOG)
 				     'file-with-archives)))
+	   (SNIPPETS (ob-parse-entries
+		      (org-map-entries 'point-marker
+				       (ob:blog-snippet-filter BLOG)
+				       'file-with-archives)))
 
 	   (TAGS (ob-compute-tags POSTS)))
 
       (ob-write-static)
-      (ob-write-index)
       (ob-write-posts)
       (ob-write-tags)
+      (ob-write-index)
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
@@ -113,6 +119,7 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-template-dir blog) (ob:get-header "TEMPLATE_DIR"))
     (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
     (setf (ob:blog-static-filter blog) (or (ob:get-header "STATIC_FILTER") "+PAGE={.+\.html}"))
+    (setf (ob:blog-snippet-filter blog) (or (ob:get-header "SNIPPET_FILTER") "+SNIPPET={.+}"))
     (setf (ob:blog-cache-dir blog) (or (ob:get-header "CACHE_DIR") "cache"))
     (setf (ob:blog-title blog) (or (ob:get-header "TITLE") "title"))
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
@@ -482,6 +489,19 @@ Examples:
 		  into ret
 		  finally return (delete-dups ret))))
     posts))
+
+
+(defun ob:get-post-by-id (id)
+  "Return post which id is ID"
+  (when (>= id 0)
+    (nth id POSTS)))
+
+(defun ob:get-snippet (name)
+  "Get first snippet matching NAME."
+  (let ((POSTS SNIPPETS))
+    (car
+     (ob:get-posts (lambda(x) (equal name (ob:post-title x)))))))
+
 
 (defun ob:get-header (header &optional all)
   "Get HEADER from blog buffer as defined in BLOG global context
