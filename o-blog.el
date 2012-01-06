@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 20:54:52
+;; Last changed: 2012-01-06 21:07:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -335,6 +335,11 @@ when publishing a page."
   (ob-write-index-to-file "blog_archives.html"
   			  (format "%s/archives.html"
   				  (ob:blog-publish-dir BLOG)))
+
+  (ob-write-index-to-file "blog_rss.html"
+  			  (format "%s/index.xml"
+  				  (ob:blog-publish-dir BLOG)))
+
 
   (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
 	with PATH-TO-ROOT = ".."
