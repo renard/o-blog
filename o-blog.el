@@ -24,6 +24,8 @@
   template-dir
   posts-filter
   static-filter
+  title
+  description
   cache-dir
   )
 
@@ -112,6 +114,8 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
     (setf (ob:blog-static-filter blog) (or (ob:get-header "STATIC_FILTER") "+PAGE={.+\.html}"))
     (setf (ob:blog-cache-dir blog) (or (ob:get-header "CACHE_DIR") "cache"))
+    (setf (ob:blog-title blog) (or (ob:get-header "TITLE") "title"))
+    (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
     blog))
 
 
