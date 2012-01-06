@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 23:30:13
+;; Last changed: 2012-01-07 00:38:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -167,7 +167,12 @@ defined, or interactivelly called with `prefix-arg'.
   (let* ((file (or file (buffer-file-name)))
 	 (blog (make-ob:blog :file file :buffer (current-buffer))))
     (setf (ob:blog-publish-dir blog) (or (ob:get-header "PUBLISH_DIR") "out"))
-    (setf (ob:blog-template-dir blog) (ob:get-header "TEMPLATE_DIR"))
+    (setf (ob:blog-template-dir blog) (or (ob:get-header "TEMPLATE_DIR")
+					  (concat
+					   (file-name-directory
+					    (file-name-directory
+					     (find-library-name "o-blog")))
+					   "templates")))
     (setf (ob:blog-style-dir blog) (or (ob:get-header "STYLE_DIR") "style"))
     (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
     (setf (ob:blog-static-filter blog) (or (ob:get-header "STATIC_FILTER") "+PAGE={.+\.html}"))
