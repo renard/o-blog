@@ -228,9 +228,8 @@ span.date-y {
 
 /* Just for fun */
 .article-content  p:first-child:first-letter {
-   font-size: 1.03em;
+   font-size: 1em;
    vertical-align: text-top;
-   float: left;
    font-weight: 900;
 }
 
