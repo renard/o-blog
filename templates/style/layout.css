@@ -283,3 +283,8 @@ nav.tag-detail ul {
 }
 
 
+pre.src, pre.example {
+   border: 1px solid;
+   margin: 15px;
+   padding: 5px;
+}

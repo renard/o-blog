@@ -40,3 +40,14 @@ span.date-y {
 #bottom #copyright p.powered {
    color: #9a9a9a;
 }
+
+#bottom #copyright p.powered a {
+   color: #8a8a8a;
+}
+
+
+pre.src, pre.example {
+   border-color: #9a9a9a;
+   background:  #2e3436;
+   color: #eeeeec;
+}
