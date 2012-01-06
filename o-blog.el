@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-06 20:50:25
+;; Last changed: 2012-01-06 20:54:52
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -22,6 +22,7 @@
   (buffer nil :read-only)
   publish-dir
   template-dir
+  style-dir
   posts-filter
   static-filter
   snippet-filter
@@ -103,7 +104,9 @@ defined, or interactivelly called with `prefix-arg'.
       (ob-write-posts)
       (ob-write-tags)
       (ob-write-index)
-      (copy-directory (format "%s/%s" (ob:blog-template-dir BLOG) "style")
+      (copy-directory (format "%s/%s"
+			      (ob:blog-template-dir BLOG)
+			      (ob:blog-style-dir BLOG))
 		      (ob:blog-publish-dir BLOG))
       (message (format "Blog %s published in %ss"
 		       file
@@ -119,6 +122,7 @@ defined, or interactivelly called with `prefix-arg'.
 	 (blog (make-ob:blog :file file :buffer (current-buffer))))
     (setf (ob:blog-publish-dir blog) (or (ob:get-header "PUBLISH_DIR") "out"))
     (setf (ob:blog-template-dir blog) (ob:get-header "TEMPLATE_DIR"))
+    (setf (ob:blog-style-dir blog) (or (ob:get-header "STYLE_DIR") "style"))
     (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
     (setf (ob:blog-static-filter blog) (or (ob:get-header "STATIC_FILTER") "+PAGE={.+\.html}"))
     (setf (ob:blog-snippet-filter blog) (or (ob:get-header "SNIPPET_FILTER") "+SNIPPET={.+}"))
