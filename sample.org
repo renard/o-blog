@@ -140,3 +140,165 @@ tag value.
 
 If an article has more than one tag, separate them by a comma (","). 
 
+** DONE Example of some org syntax
+   CLOSED: [2012-01-07 Sat 11:23]
+   :PROPERTIES:
+   :tags:     usage
+   :END:
+
+*** Praragaphs
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+html: <div class="two-cols">
+
+Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec
+facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis
+odio. Nunc porta vulputate tellus. Nunc rutrum turpis sed pede. Sed
+bibendum. Aliquam posuere. Nunc aliquet, augue nec adipiscing interdum,
+lacus tellus malesuada massa, quis varius mi purus non odio. Pellentesque
+condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non
+luctus diam neque sit amet urna. Curabitur vulputate vestibulum lorem. Fusce
+sagittis, libero non molestie mollis, magna orci ultrices dolor, at
+vulputate neque nulla lacinia eros. Sed id ligula quis est convallis
+tempor. Curabitur lacinia pulvinar nibh. Nam a sapien.
+
+Pellentesque dapibus suscipit ligula. Donec posuere augue in quam. Etiam vel
+tortor sodales tellus ultricies commodo. Suspendisse potenti. Aenean in sem
+ac leo mollis blandit. Donec neque quam, dignissim in, mollis nec, sagittis
+eu, wisi. Phasellus lacus. Etiam laoreet quam sed arcu. Phasellus at dui in
+ligula mollis ultricies. Integer placerat tristique nisl. Praesent
+augue. Fusce commodo. Vestibulum convallis, lorem a tempus semper, dui dui
+euismod elit, vitae placerat urna tortor vitae lacus. Nullam libero mauris,
+consequat quis, varius et, dictum id, arcu. Mauris mollis tincidunt
+felis. Aliquam feugiat tellus ut neque. Nulla facilisis, risus a rhoncus
+fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.
+
+#+html: </div>
+
+
+#+begin_verse
+Great clouds overhead
+Tiny black birds rise and fall
+Snow covers Emacs
+
+-- AlexSchroeder
+#+end_verse
+
+#lbegin_quote
+Everything should be made as simple as possible,
+but not any simpler -- Albert Einstein
+#+end_quote
+
+#+BEGIN_CENTER
+Everything should be made as simple as possible, \\
+but not any simpler
+#+END_CENTER
+
+*** Lists
+
+As taken from org manual:
+
+My favorite scenes are (in this order)
+        1. The attack of the Rohirrim
+        2. Eowyn's fight with the witch king
+           + this was already my favorite scene in the book
+           + I really like Miranda Otto.
+        3. Peter Jackson being shot by Legolas
+           - on DVD only
+           He makes a really funny face when it happens.
+But in the end, no individual scenes matter but the film as a whole.
+Important actors in this film are:
+        - Elijah Wood :: He plays Frodo
+        - Sean Austin :: He plays Sam, Frodo's friend.  I still remember
+          him very well from his role as Mikey Walsh in The Goonies.
+
+*** Footnotes
+
+The Org homepage[fn:1] now looks a lot better than it used to.
+
+[fn:1] The link is: http://orgmode.org
+
+*** Emphasis and monospace
+
+You can make words *bold*, /italic/, _underlined_, =code= and ~verbatim~,
+and, if you must, ‘+strike-through+’. Text in the code and verbatim string
+is not processed for Org mode specific syntax; it is exported verbatim.
+
+*** Horizontal rules
+
+A line consisting of only dashes, and at least 5 of them, will be exported
+as a horizontal line (‘<hr/>’ in HTML and \hrule in LaTeX).
+
+------
+
+As shown previously.
+
+*** Comment lines
+
+Lines starting with ‘#’ in column zero are treated as comments and will
+never be exported. If you want an indented line to be treated as a comment,
+start it with ‘#+ ’. Also entire subtrees starting with the word ‘COMMENT’
+will never be exported. Finally, regions surrounded by ‘#+BEGIN\_COMMENT’
+... ‘#+END\_COMMENT’ will not be exported.
+
+#+begin_comment
+C-c ;
+Toggle the COMMENT keyword at the beginning of an entry.
+#+end_comment
+
+*** Images and Tables
+
+#+CAPTION: This is the caption for the next table (or link)
+#+LABEL:   tbl:basic-data
+
+| Header 1 | Header 2 |
+|----------+----------|
+|      1.1 |      1.2 |
+|      2.1 |      2.2 |
+|----------+----------|
+|      A.1 |      B.1 |
+
+
+#+CAPTION: This is the caption for the next figure link (or table)
+#+LABEL:   fig:SED-HR4049
+[[./img/a.jpg]]
+
+*** Literal examples
+
+#+BEGIN_EXAMPLE
+Some example from a text file.
+#+END_EXAMPLE
+
+
+Here is an example
+        : Some example from a text file.
+
+#+BEGIN_SRC emacs-lisp
+  (defun org-xor (a b)
+    "Exclusive or."
+    (if a (not b) b))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp -n -r
+  (save-excursion                  (ref:sc)
+     (goto-char (point-min)))       (ref:jump)
+#+END_SRC
+
+In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]]
+jumps to point-min.
+
+*** Special symbols
+
+Angles are written as Greek letters \alpha, \beta and \gamma.
+
+*** Subscripts and superscripts
+
+The mass of the sun is M_sun = 1.989 x 10^30 kg.  The radius of
+the sun is R_{sun} = 6.96 x 10^8 m.
+
