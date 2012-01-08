@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-08 02:32:21
+;; Last changed: 2012-01-08 02:33:27
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -172,6 +172,7 @@ defined, or interactivelly called with `prefix-arg'.
 			      (match-string 2 s))))
 		     (when (and f
 				(file-exists-p f))
+		       ;; use add-to-list to prevent from coping a file twice.
 		       (add-to-list 'ret f)))))
 	ret))))
 
