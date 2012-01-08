@@ -46,8 +46,48 @@ span.date-y {
 }
 
 
-pre.src, pre.example {
+
+.article-content p.verse {
+   border-color: #bababa;
+}
+
+.article-content #footnotes {
+   border-color: #bababa;
+}
+
+.article-content table.org-table {
+   border-color: #bababa;
+}
+
+.article-content table.org-table thead {
+    background: #cacaca;
+}
+
+.article-content table.org-table thead th {
+   border-color: #bababa;
+}
+
+
+.article-content table.org-table tbody td {
+   border-color: #bababa;
+}
+
+
+.article-content pre.src {
    border-color: #9a9a9a;
    background:  #2e3436;
    color: #eeeeec;
 }
+
+
+.article-content pre.example {
+   border-color: #9a9a9a;
+   background:  #2e3436;
+   color: #eeeeec;
+}
+
+
+.article-content pre.src .code-highlighted {
+    background: darkolivegreen;
+}
+

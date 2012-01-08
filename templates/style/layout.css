@@ -1,22 +1,22 @@
 html {
-   font-family: Nobile, "Helvetica Neue", Helvetica, Arial, sans-serif;
-   height: 100%;
+    font-family: Nobile, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    height: 100%;
 }
 
 body {
-   margin: 0;
+    margin: 0;
 }
 
 a {
-   text-decoration: none;
+    text-decoration: none;
 }
 
 a:hover {
-   text-decoration: underline;
+    text-decoration: underline;
 }
 
 #main-delimiter {
-   min-width: 950px;
+    min-width: 950px;
 }
 
 
@@ -25,49 +25,49 @@ a:hover {
  */
 
 header#top {
-   display: block;
-   margin: 0;
-   font-size: 1em;
+    display: block;
+    margin: 0;
+    font-size: 1em;
 }
 
 #top hgroup {
-   display: block;
-   margin: 0 25em;
+    display: block;
+    margin: 0 25em;
 }
 
 #top hgroup h1 {
-   font-size: 4em;
-   float: left;
-   margin-top: 0.2em;
-   margin-bottom: 0.2em;
+    font-size: 4em;
+    float: left;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
 }
 
 #top hgroup h2 {
-   font-size: 3em;
-   padding-left: 3em;
-   float: left;
-   margin-top: 0.2em;
-   margin-bottom: 0.2em;
-
+    font-size: 3em;
+    padding-left: 3em;
+    float: left;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    
 }
 
 #top nav {
-   clear: both;
-   float: none;
-   margin: 0 25%;
-   margin-bottom: 2em;
-   border-bottom: 0.3em solid
+    clear: both;
+    float: none;
+    margin: 0 25%;
+    margin-bottom: 2em;
+    border-bottom: 0.3em solid
 }
 
 #top nav ul {
-   list-style-type: none;
-   margin: 0;
-   padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 #top nav ul li {
-   display: inline;
-   padding-right: 4em;
+    display: inline;
+    padding-right: 4em;
 }
 
 
@@ -76,55 +76,53 @@ header#top {
 /*
  * Footer
  */
-
-
 footer#bottom {
-   display: block;
-   clear: both;
-   margin: 0;
-   border-top: 1px solid;
+    display: block;
+    clear: both;
+    margin: 0;
+    border-top: 1px solid;
 }
 
 footer#bottom div {
-   width: 75%;
-   margin: 0 auto;
-   font-size: 0.7em;
+    width: 75%;
+    margin: 0 auto;
+    font-size: 0.7em;
 }
 
 #bottom section, #bottom nav {
-   width: 22em;
-   float: left;
-   margin: 2em;;
-   padding: 0.25em;
-   border-top: 0.25em solid;
-   min-height: 10em;
+    width: 22em;
+    float: left;
+    margin: 2em;;
+    padding: 0.25em;
+    border-top: 0.25em solid;
+    min-height: 10em;
 }
 
 #bottom #copyright p {
-   clear: both;
-   text-align: center;
-   font-size: 0.8em;
+    clear: both;
+    text-align: center;
+    font-size: 0.8em;
 }
 
 #bottom #copyright p.powered {
-   padding-bottom: 2em;
+    padding-bottom: 2em;
 }
 
 #bottom h1 {
-   margin: 0 auto;
+    margin: 0 auto;
    
 }
 
 #bottom nav ul, nav.tag-cloud ul {
-   list-style-type: none;
-   margin: 0;
-   padding-left: 0.5em;
-   padding-right: 0.5em;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 nav.tag-cloud ul li {
-   display: inline;
-   padding-right: 0.5em;
+    display: inline;
+    padding-right: 0.5em;
 }
 
 
@@ -133,12 +131,10 @@ nav.tag-cloud ul li {
  * Content
  */
 
-
-
 div#content {
-   width: 50em;
-   margin: 0 auto;
-   font-size: 1em;
+    width: 50em;
+    margin: 0 auto;
+    font-size: 1em;
 }
 
 #content article footer {
@@ -146,84 +142,82 @@ div#content {
 }
 
 .article-header, .article-footer {
-   padding: 0.5em;
+    padding: 0.5em;
 }
 
 .article-header h1 {
-   display: inline-block;
-   vertical-align: top;
-   padding-left: 3em;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 3em;
 }
 
 .article-header nav {
-   display: block;
-   clear: both;
+    display: block;
+    clear: both;
 }
 
-
 .article-header nav ul {
-   margin: 0;
-   padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .article-header nav ul li {
-   display: inline;
-   list-style-type: none;
+    display: inline;
+    list-style-type: none;
 }
 
 .article-header nav ul li.prev:before {
-   content: "\AB";
-   margin-right: 0.3em;
+    content: "\AB";
+    margin-right: 0.3em;
 }
 
 .article-header nav ul li.next {
-   /* Only .next should have a float property. .prev shoud NOT have one. */
-   float: right;
+    /* Only .next should have a float property. .prev shoud NOT have one. */
+    float: right;
 }
 
 .article-header nav ul li.next:after {
-   content: "\BB";
-   margin-left: 0.3em;
+    content: "\BB";
+    margin-left: 0.3em;
 }
-
 
 
 div.date {
-   border: 1px solid; 
-   position: relative;
-   display: inline-block;
-   width: 2em;
+    border: 1px solid; 
+    position: relative;
+    display: inline-block;
+    width: 2em;
 }
 
 div.date span {
-   display: block; 
-   text-align: center; 
+    display: block; 
+    text-align: center; 
 }
 
 span.date-d {
-   font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 span.date-m {
-   text-transform: uppercase; 
-   font-size: 0.8em;
+    text-transform: uppercase; 
+    font-size: 0.8em;
 }
 
 span.date-y {
-   font-size: 0.6em; 
-   padding: 0.3em 0; 
-   margin-top: 0.3em;
+    font-size: 0.6em; 
+    padding: 0.3em 0; 
+    margin-top: 0.3em;
 }
 
 
 .article-content {
-   text-align: justify;
+    text-align: justify;
 }
 
 .two-cols {
-   column-count: 2;
-   -moz-column-count:2; /* Firefox */
-   -webkit-column-count:2; /* Safari and Chrome */
+    column-count: 2;
+    -moz-column-count:2; /* Firefox */
+    -webkit-column-count:2; /* Safari and Chrome */
 }
 
 /* Just for fun */
@@ -234,57 +228,179 @@ span.date-y {
 }
 
 #content {
-   padding-bottom: 5em;
+    padding-bottom: 5em;
 }
 
 
 nav.archives {
-   margin: 1em;
+    margin: 1em;
 }
 
 ul.all {
-   list-style-type: none;
-   margin: 0;
-   padding-left: 1em;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 1em;
 }
 
 ul.category {
-   list-style-type: none;
-   margin: 0;
-   padding-left: 1em;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 1em;
 }
 
 ul.year {
-   list-style-type: none;
-   margin: 0;
-   padding-left: 1em;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 1em;
 }
 
 ul.month {
-   list-style-type: none;
-   margin: 0;
-   padding-left: 1em;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 1em;
 }
 
 nav.tags {
-   font-size: 250%;
+    font-size: 250%;
 }
 
 nav.tags ul {
-   list-style-type: none;
+    list-style-type: none;
 }
 nav.tags ul li {
-   display: inline;
+    display: inline;
 }
 
 
 nav.tag-detail ul {
-   list-style-type: none;
+    list-style-type: none;
 }
 
 
-pre.src, pre.example {
+/* Org related formating */
+
+/* Default org paragraph */
+.article-content p { }
+
+/* Verse block */
+.article-content p.verse {
+    border-left: 1px dashed;
+    margin-left: 2em;
+    padding-left: 1em;
+}
+
+/* Org lists */
+
+/* Ordinal lists */
+.article-content ol { }
+.article-content ol li { }
+
+/* Unumbered lists */
+.article-content ul { }
+.article-content ul li {
+    list-style-type: square;
+}
+
+
+/* Definition lists */
+.article-content dl {
+    margin-left: 1em;
+}
+.article-content dl dt {
+    font-style: oblique;
+}
+.article-content dl dd {
+}
+
+
+/* Foot notes */
+.article-content sup a.footref {
+    
+}
+#footnotes {
+    font-size: 75%;
+    border-top: 1px dashed;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#footnotes h2.footnotes{
+    font-size: 90%;
+}
+#footnotes div.text-footnotes{}
+#footnotes div.text-footnotes p.footnote {}
+#footnotes div.text-footnotes p.footnote a.footnum {}
+
+/* Text effect */
+.article-content b {}
+.article-content i {}
+.article-content code {}
+.article-content sub {}
+.article-content sup {}
+
+/* Tables */
+.article-content table.org-table {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid;
+    border-collapse: collapse;
+
+}
+.article-content table.org-table caption {
+    font-style: italic;
+}
+.article-content table.org-table colgroup col {}
+.article-content table.org-table thead {}
+.article-content table.org-table thead tr {}
+.article-content table.org-table thead th {
+    text-align: center;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+.article-content table.org-table tbody {}
+.article-content table.org-table tbody tr {}
+.article-content table.org-table tbody td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+.article-content table.org-table tbody td.left {
+    text-align: left;
+}
+.article-content table.org-table tbody td {
+    text-align: right;
+}
+
+/* Images */
+.article-content img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Blocks */
+
+/* Source block */
+.article-content pre.src {
    border: 1px solid;
    margin: 15px;
    padding: 5px;
+}
+/* Code with a referecence */
+.article-content pre.src span.coderef-off { }
+.article-content pre.src span.linenr {
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* Example block */
+.article-content pre.example {
+   border: 1px solid;
+   margin: 15px;
+   padding: 5px;
+}
+
+/* Horizontal rule */
+.article-content hr {
+    width: 50%;
 }
