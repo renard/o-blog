@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-07 00:38:09
+;; Last changed: 2012-01-08 02:26:14
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -156,9 +156,31 @@ defined, or interactivelly called with `prefix-arg'.
     (process-put proc :cmd-buf cmd-buf)
     (set-process-sentinel proc 'org-blog-publish-run-processes-sentinel)))
 
-
-
-
+(defun ob-get-linked-files (s)
+  "Return a lis of linked files from S."
+  (save-match-data
+    (with-temp-buffer
+      (insert s)
+      (beginning-of-buffer)
+      (let (ret)
+	(while (re-search-forward org-any-link-re nil t)
+	  (let* ((s1 (match-string-no-properties 2))
+		 (s2 (match-string-no-properties 4))
+		 (f1 (when s1
+		       (save-match-data
+			 (string-match "^\\(file:\\)?\\(.+\\)" s1)
+			 (match-string 2 s1))))
+		 (f2 (when s2
+		       (save-match-data
+			 (string-match "^\\(file:\\)?\\(.+\\)" s2)
+			 (match-string 2 s2)))))
+	    (when (and f1
+		       (file-exists-p f1))
+	      (add-to-list 'ret f1))
+	    (when (and f2
+		       (file-exists-p f2))
+	      (add-to-list 'ret f2))))
+	ret))))
 
 ;; Internal functions
 
@@ -237,12 +259,21 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
-	   (content (ob-get-entry-text)))
+	   (content (ob-get-entry-text))
+	   (linked-files (ob-get-linked-files content)))
 
       (when page
 	(setq htmlfile page
 	      filename (file-name-sans-extension (file-name-nondirectory htmlfile))
 	      filepath (file-name-directory htmlfile)))
+
+      (loop for f in linked-files
+	    do (let ((target (format "%s/%s/%s"
+				     (ob:blog-publish-dir BLOG)
+				     filepath f)))
+		 (mkdir (file-name-directory target) t)
+		 (copy-file f target t t t t)))
+
 
       (make-ob:post :title title
 		    :tags tags
