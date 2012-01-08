@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-08 02:26:14
+;; Last changed: 2012-01-08 02:32:21
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -164,22 +164,15 @@ defined, or interactivelly called with `prefix-arg'.
       (beginning-of-buffer)
       (let (ret)
 	(while (re-search-forward org-any-link-re nil t)
-	  (let* ((s1 (match-string-no-properties 2))
-		 (s2 (match-string-no-properties 4))
-		 (f1 (when s1
-		       (save-match-data
-			 (string-match "^\\(file:\\)?\\(.+\\)" s1)
-			 (match-string 2 s1))))
-		 (f2 (when s2
-		       (save-match-data
-			 (string-match "^\\(file:\\)?\\(.+\\)" s2)
-			 (match-string 2 s2)))))
-	    (when (and f1
-		       (file-exists-p f1))
-	      (add-to-list 'ret f1))
-	    (when (and f2
-		       (file-exists-p f2))
-	      (add-to-list 'ret f2))))
+	  (loop for s in (list (match-string-no-properties 2)
+			       (match-string-no-properties 4))
+		when s
+		do (let ((f (save-match-data
+			      (string-match "^\\(file:\\)?\\(.+\\)" s)
+			      (match-string 2 s))))
+		     (when (and f
+				(file-exists-p f))
+		       (add-to-list 'ret f)))))
 	ret))))
 
 ;; Internal functions
