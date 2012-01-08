@@ -267,7 +267,7 @@ Toggle the COMMENT keyword at the beginning of an entry.
 
 #+CAPTION: This is the caption for the next figure link (or table)
 #+LABEL:   fig:SED-HR4049
-[[./img/a.jpg]]
+[[file:200px-Org-mode-unicorn.svg.png][file:org-mode-unicorn.png]]
 
 *** Literal examples
 
