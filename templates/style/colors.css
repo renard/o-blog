@@ -3,7 +3,7 @@ html {
 }
 
 body {
-   background-color: #dadada;
+   background-color: #eaeaea;
    color: black;
 }
 
@@ -15,6 +15,27 @@ a {
    color: #933;
 }
 
+
+
+.article-content h3 {
+    background: #d4d4d4;
+    border-color: #c4c4c4;
+}
+
+.article-content h4 {
+    background: #dadada;
+    border-color: #cacaca;
+}
+.article-content h5 {
+    background: #e4e4e4;
+    border-color: #d4d4d4;
+}
+.article-content h6 {
+    border-color: #d0d0d0;
+}
+
+
+
 footer#bottom {
    background: #bababa;
    border-color: #9a9a9a;
@@ -24,8 +45,12 @@ footer#bottom {
    border-color: #9a9a9a;
 }
 
-#content article footer, #content article header {
-   background-color: #cacaca;
+#content article footer {
+   background-color: #e4e4e4;
+}
+
+#content article header {
+   background-color: #d0d0d0;
 }
 
 div.date {
@@ -33,7 +58,7 @@ div.date {
 }
 
 span.date-y {
-   background-color: #dadada;
+   background-color: #cacaca;
 }
 
 
@@ -45,6 +70,10 @@ span.date-y {
    color: #8a8a8a;
 }
 
+
+.article-content blockquote {
+   border-color: #bababa;
+}
 
 
 .article-content p.verse {

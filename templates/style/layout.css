@@ -145,10 +145,15 @@ div#content {
     padding: 0.5em;
 }
 
+.article-footer h1 {
+    font-size: 1.0em;
+}
+
 .article-header h1 {
     display: inline-block;
     vertical-align: top;
-    padding-left: 3em;
+    padding-left: 1em;
+    font-size: 1.6em;
 }
 
 .article-header nav {
@@ -279,8 +284,52 @@ nav.tag-detail ul {
 
 /* Org related formating */
 
+
+/* Unused */
+.article-content h1 { }
+/* Unused */
+.article-content h2 { }
+
+.article-content h3 { 
+    font-size: 1.4em;
+    border-bottom: 1px solid;
+ }
+.article-content div.outline-3 { }
+.article-content h4 {
+    font-size: 1.2em;
+    border-bottom: 1px solid;
+}
+.article-content div.outline-4 {
+    margin-left: 1em;
+}
+.article-content h5 {
+    font-size: 1.1em;
+    border-bottom: 1px solid;
+ }
+.article-content div.outline-5 {
+    margin-left: 2em;
+}
+
+.article-content h6 {
+    font-size: 1em;
+    border-bottom: 1px solid;
+ }
+.article-content div.outline-6 {
+    margin-left: 2em;
+}
+
+
+
 /* Default org paragraph */
 .article-content p { }
+
+/* Quote block */
+.article-content blockquote{
+    border-left: 1px dashed;
+    margin-left: 2em;
+    padding-left: 1em;
+}
+
 
 /* Verse block */
 .article-content p.verse {
