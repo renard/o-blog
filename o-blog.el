@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-08 21:12:01
+;; Last changed: 2012-01-09 01:20:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -297,10 +297,19 @@ headers and body."
     (save-restriction
       (save-match-data
 	(org-narrow-to-subtree)
-	(goto-char (point-min))
-	(let ((p (search-forward-regexp "^\\s-*$" nil t)))
-	  (when p (goto-char p)))
-	(buffer-substring-no-properties (point) (point-max))))))
+	(let ((text (buffer-string)))
+	  (with-temp-buffer
+	    (insert text)
+	    (goto-char (point-min))
+	    (org-mode)
+	    (while (<= 2 (save-match-data (funcall outline-level)))
+	      (org-promote-subtree))
+	    (goto-char (point-min))
+	    (when (search-forward-regexp "^\\s-*$" nil t)
+	      (goto-char (match-end 0)))
+	    (save-excursion
+	      (insert "#+OPTIONS: H:5 num:nil  toc:8 d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
+	    (buffer-substring-no-properties (point) (point-max))))))))
 
 
 (defun ob-export-string-to-html (string)
