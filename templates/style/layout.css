@@ -223,7 +223,13 @@ span.date-y {
     column-count: 2;
     -moz-column-count:2; /* Firefox */
     -webkit-column-count:2; /* Safari and Chrome */
+    margin-top: 1em;
 }
+
+.two-cols p:first-child {
+    margin-top: 0;
+}
+
 
 /* Just for fun */
 .article-content  p:first-child:first-letter {
