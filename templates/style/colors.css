@@ -55,10 +55,11 @@ footer#bottom {
 
 div.date {
    border-color: #bababa;
+   background-color: #dadada;
 }
 
 span.date-y {
-   background-color: #cacaca;
+   background-color: #c0c0c0;
 }
 
 
