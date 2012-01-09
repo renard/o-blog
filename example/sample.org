@@ -39,7 +39,7 @@ And add following to your =~/.emacs.d/init.el= file:
 
 *** Publish
 
-Open the =~/.emacs.d/o-blog/sample.org= file and type =M-x
+Open the =~/.emacs.d/o-blog/example/sample.org= file and type =M-x
 org-publish-blog=. The result site would be published by default in
 =~/.emacs.d/o-blog/out=.
 

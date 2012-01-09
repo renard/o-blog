@@ -1,0 +1,38 @@
+= o-blog quick start
+
+This is a sample website to show how to use
+https://github.com/renard/o-blog[o-blog].
+
+
+== Quick start guide
+First you need:
+
+- http:www.gnu.org/s/emacs[emacs] (I assume you already have it)
+- http://orgmode.org/[org-mode] (same as above)
+
+If you don't have them, you should install them fist.
+
+=== Setup
+
+Start by cloning the +git+ repository from http:github.com[Github].
+
+----
+cd ~/.emacs.d
+git clone https://github.com/renard/o-blog.git
+----
+
+And add following to your '~/.emacs.d/init.el' file:
+
+----
+(add-to-list 'load-path "~/.emacs.d/o-blog")
+(require 'o-blog)
+----
+
+=== Publish
+
+Open the '~/.emacs.d/o-blog/example/sample.org' file and type 'M-x
+org-publish-blog'. The result site would be published by default in
+'~/.emacs.d/o-blog/out'.
+
+See the 'example/out/blog/index.html' and 'example/out/todo.html' for more details.
+
