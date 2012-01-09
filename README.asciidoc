@@ -1,7 +1,6 @@
 = o-blog quick start
 
-This is a sample website to show how to use
-https://github.com/renard/o-blog[o-blog].
+How to use https://github.com/renard/o-blog[o-blog].
 
 
 == Quick start guide
@@ -30,9 +29,9 @@ And add following to your '~/.emacs.d/init.el' file:
 
 === Publish
 
-Open the '~/.emacs.d/o-blog/example/sample.org' file and type 'M-x
+Open the '\~/.emacs.d/o-blog/example/sample.org' file and type 'M-x
 org-publish-blog'. The result site would be published by default in
-'~/.emacs.d/o-blog/out'.
+'\~/.emacs.d/o-blog/out'.
 
 See the 'example/out/blog/index.html' and 'example/out/todo.html' for more details.
 
