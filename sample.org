@@ -146,6 +146,25 @@ If an article has more than one tag, separate them by a comma (",").
    :tags:     usage
    :END:
 
+*** Titles
+
+This is a level 1
+
+**** Level 2
+
+This is a level 2
+
+
+***** Level 3
+
+This is a level 3
+
+****** Level 4
+
+This is a level 4
+
+Up to 4 levels of indentation could be used.
+
 *** Praragaphs
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
@@ -190,7 +209,7 @@ Snow covers Emacs
 -- AlexSchroeder
 #+end_verse
 
-#lbegin_quote
+#+begin_quote
 Everything should be made as simple as possible,
 but not any simpler -- Albert Einstein
 #+end_quote
