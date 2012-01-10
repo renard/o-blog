@@ -32,7 +32,8 @@ header#top {
 
 #top hgroup {
     display: block;
-    margin: 0 25em;
+    width: 50em;
+    margin: 0 auto;
 }
 
 #top hgroup h1 {
@@ -54,7 +55,8 @@ header#top {
 #top nav {
     clear: both;
     float: none;
-    margin: 0 25%;
+    width: 50em;
+    margin: 0 auto;
     margin-bottom: 2em;
     border-bottom: 0.3em solid
 }
@@ -90,9 +92,9 @@ footer#bottom div {
 }
 
 #bottom section, #bottom nav {
-    width: 22em;
+    width: 14%;
     float: left;
-    margin: 2em;;
+    margin: 2em 5%;
     padding: 0.25em;
     border-top: 0.25em solid;
     min-height: 10em;
