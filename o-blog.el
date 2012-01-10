@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-09 01:20:25
+;; Last changed: 2012-01-11 00:28:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -23,11 +23,33 @@
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
 
+
 
-(defcustom ob-async-opts nil
+(defconst o-blog-version "0.0" "o-blog version number")
+
+(defgroup o-blog nil "o-blog customization group"
+  :group 'org-export)
+
+(defcustom o-blog-async-opts nil
   "Extra options to be used when compiling with
-`org-publish-blog-async'.")
+`org-publish-blog-async'."
+  :group 'o-blog
+  :type 'list)
 
+(defcustom o-blog-before-publish-hook nil
+  "Hook to be run before publishing a blog.
+Each hook is a function that could be called with no parameter."
+  :group 'o-blog
+  :type 'hook)
+
+(defcustom o-blog-after-publish-hook nil
+  "Hook to be run after publishing a blog.
+Each hook is a function that could be called with no parameter."
+  :group 'o-blog
+  :type 'hook)
+
+
+
 (defstruct (ob:blog (:type list) :named)
   (file nil :read-only)
   (buffer nil :read-only)
@@ -69,6 +91,13 @@
  - size: the font size in percent."
   name count size)
 
+
+;;;###autoload
+(defun o-blog-version ()
+  "Message the current o-blog version"
+  (interactive)
+  (message "o-blog version %s" o-blog-version))
+
 
 ;;;###autoload
 (defun org-publish-blog (&optional file async)
@@ -90,7 +119,7 @@ defined, or interactivelly called with `prefix-arg'.
   (with-current-buffer (or
 			(get-file-buffer file)
 			(find-file file))
-
+    (run-hooks o-blog-before-publish-hook)
     (let* ((start-time (current-time)) ;; for statistic purposes only
 	   ;; make sure we are on the correct directory.
 	   (default-directory (file-name-directory file))
@@ -119,6 +148,7 @@ defined, or interactivelly called with `prefix-arg'.
 			      (ob:blog-template-dir BLOG)
 			      (ob:blog-style-dir BLOG))
 		      (ob:blog-publish-dir BLOG))
+      (run-hooks o-blog-after-publish-hook)
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
