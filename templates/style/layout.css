@@ -248,27 +248,26 @@ span.date-y {
 nav.archives {
     margin: 1em;
 }
+nav.archives ul>li {
+    list-style-type: none;
+}
 
 ul.all {
-    list-style-type: none;
     margin: 0;
     padding-left: 1em;
 }
 
 ul.category {
-    list-style-type: none;
     margin: 0;
     padding-left: 1em;
 }
 
 ul.year {
-    list-style-type: none;
     margin: 0;
     padding-left: 1em;
 }
 
 ul.month {
-    list-style-type: none;
     margin: 0;
     padding-left: 1em;
 }
