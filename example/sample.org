@@ -16,14 +16,14 @@ This is a sample website to show how to use [[https://github.com/renard/o-blog][
 ** Quick start guide
 First you need:
 
-- [[http:www.gnu.org/s/emacs][emacs]] (I assume you already have it)
+- [[http://www.gnu.org/s/emacs][emacs]] (I assume you already have it)
 - [[http://orgmode.org/][org-mode]] (same as above)
 
 If you don't have them, you should install them fist.
 
 *** Setup
 
-Start by cloning the /git/ repository from [[http:github.com][Github]].
+Start by cloning the /git/ repository from [[http://github.com][Github]].
 
 #+begin_src bash
 cd ~/.emacs.d
