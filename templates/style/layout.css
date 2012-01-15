@@ -372,6 +372,75 @@ nav.tag-detail ul {
     list-style-type: none;
 }
 
+#top ul.site-nav li:before {
+    margin-right: 0.3em;
+}
+
+#top ul.site-nav li.home:before {
+    content: url(home_016_00.png);
+}
+
+#top ul.site-nav li.home:hover:before {
+    content: url(home_016_01.png);
+}
+
+#top ul.site-nav li.home:active:before {
+    content: url(home_016_02.png);
+}
+
+
+#top ul.site-nav li.blog:before {
+    content: url(speech_016_00.png);
+}
+
+#top ul.site-nav li.blog:hover:before {
+    content: url(speech_016_01.png);
+}
+
+#top ul.site-nav li.blog:active:before {
+    content: url(speech_016_02.png);
+}
+
+
+#top ul.site-nav li.tags:before {
+    content: url(tag_016_00.png);
+}
+
+#top ul.site-nav li.tags:hover:before {
+    content: url(tag_016_01.png);
+}
+
+#top ul.site-nav li.tags:active:before {
+    content: url(tag_016_02.png);
+}
+
+
+
+#top ul.site-nav li.archives:before {
+    content: url(note_016_00.png);
+}
+
+#top ul.site-nav li.archives:hover:before {
+    content: url(note_016_01.png);
+}
+
+#top ul.site-nav li.archives:active:before {
+    content: url(note_016_02.png);
+}
+
+
+#top ul.site-nav li.rss:before {
+    content: url(rss_016_00.png);
+}
+
+#top ul.site-nav li.rss:hover:before {
+    content: url(rss_016_01.png);
+}
+
+#top ul.site-nav li.rss:active:before {
+    content: url(rss_016_02.png);
+}
+
 
 /* Org related formating */
 

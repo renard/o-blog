@@ -1,6 +1,6 @@
-<ul>
-  <li><a href="<lisp>(ob:path-to-root)</lisp>/index.html">Home</a></li>
-  <li><a href="<lisp>
+<ul class="site-nav">
+  <li class="home"><a href="<lisp>(ob:path-to-root)</lisp>/index.html">Home</a></li>
+  <li class="blog"><a href="<lisp>
 	       (let ((POSTS ALL-POSTS))
 	       (format "%s/%s"
 			      (ob:path-to-root)
@@ -8,6 +8,7 @@
 			      (car (ob:get-posts (lambda (x) 
 			      (equal "blog" (ob:post-category x))))))))
 					   </lisp>">Blog</a></li>
-  <li><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html">Tags</a></li>
-  <li><a href="<lisp>(ob:path-to-root)</lisp>/archives.html">Archives</a></li>
+  <li class="tags"><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html">Tags</a></li>
+  <li class="archives"><a href="<lisp>(ob:path-to-root)</lisp>/archives.html">Archives</a></li>
+  <li class="rss"><a href="<lisp>(ob:path-to-root)</lisp>/index.xml">RSS</a></li>
 </ul>
