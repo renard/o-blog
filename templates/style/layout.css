@@ -122,6 +122,20 @@ footer#bottom div {
     padding-right: 0.5em;
 }
 
+#bottom nav.tag-cloud ul {
+    background: url(tag_064_00.png) no-repeat;
+}
+
+
+#bottom nav#links ul {
+    background: url(link_064_00.png) no-repeat;
+}
+
+
+#bottom nav#archives ul {
+    background: url(note_064_00.png) no-repeat;
+}
+
 nav.tag-cloud ul li {
     display: inline;
     padding-right: 0.5em;
@@ -151,6 +165,10 @@ div#content {
     font-size: 1.0em;
 }
 
+.article-footer nav.tag-cloud {
+    background: url(tag_064_00.png) no-repeat;
+}
+
 .article-header h1 {
     display: inline-block;
     vertical-align: top;
@@ -173,10 +191,17 @@ div#content {
     list-style-type: none;
 }
 
+
 .article-header nav ul li.prev:before {
-    content: "\AB";
+    content: url(backward_016_01.png);
     margin-right: 0.3em;
 }
+
+.article-header nav ul li.prev:hover:before {
+    content: url(backward_016_02.png);
+    margin-right: 0.3em;
+}
+
 
 .article-header nav ul li.next {
     /* Only .next should have a float property. .prev shoud NOT have one. */
@@ -184,9 +209,15 @@ div#content {
 }
 
 .article-header nav ul li.next:after {
-    content: "\BB";
+    content: url(forward_016_01.png);
     margin-left: 0.3em;
 }
+
+.article-header nav ul li.next:hover:after {
+    content: url(forward_016_02.png);
+    margin-left: 0.3em;
+}
+
 
 
 div.date {
@@ -257,23 +288,76 @@ ul.all {
     padding-left: 1em;
 }
 
+
+.article-content ul.category li {
+    list-style-image: url(diary_012_00.png);
+}
+
+.article-content ul.category li:hover {
+    list-style-image: url(diary_012_01.png);
+}
+
+.article-content ul.category li:active {
+    list-style-image: url(diary_012_02.png);
+}
+
+
 ul.category {
     margin: 0;
     padding-left: 1em;
 }
+
+.article-content ul.category li {
+    list-style-image: url(calendar_012_00.png);
+}
+
+.article-content ul.category li:hover {
+    list-style-image: url(calendar_012_01.png);
+}
+
+.article-content ul.category li:active {
+    list-style-image: url(calendar_012_02.png);
+}
+
 
 ul.year {
     margin: 0;
     padding-left: 1em;
 }
 
+.article-content ul.year li {
+    list-style-image: url(calendar_012_00.png);
+}
+
+.article-content ul.year li:hover {
+    list-style-image: url(calendar_012_01.png);
+}
+
+.article-content ul.year li:active {
+    list-style-image: url(calendar_012_02.png);
+}
+
+
 ul.month {
     margin: 0;
     padding-left: 1em;
 }
 
+.article-content ul.month li {
+    list-style-image: url(note_012_00.png);
+}
+
+.article-content ul.month li:hover {
+    list-style-image: url(note_012_01.png);
+}
+
+.article-content ul.month li:active {
+    list-style-image: url(note_012_02.png);
+}
+
 nav.tags {
     font-size: 250%;
+    background: url(tag_128_00.png) no-repeat;
 }
 
 nav.tags ul {
@@ -354,7 +438,10 @@ nav.tag-detail ul {
 /* Unumbered lists */
 .article-content ul { }
 .article-content ul li {
-    list-style-type: square;
+    list-style-image: url(bullet-list_012_00.png);
+}
+.article-content ul li:hover {
+    list-style-image: url(bullet-list_012_01.png);
 }
 
 
@@ -460,3 +547,56 @@ nav.tag-detail ul {
 .article-content hr {
     width: 50%;
 }
+
+/* Org-blog extra */
+
+.article-content div.admonition {
+    width: 90%;
+    margin: 2em auto;
+}
+
+.article-content div.admonition p {
+    margin-left: 70px;
+}
+
+.article-content div.admonition p.admonition-header {
+    font-weight: bolder;
+    display: inline;
+}
+
+
+.article-content div.admonition.warning {
+    background:  url(warning_064_00.png) no-repeat;
+}
+
+.article-content div.admonition.warning:hover {
+    background:  url(warning_064_01.png) no-repeat;
+}
+
+
+.article-content div.admonition.danger {
+    background:  url(danger_064_00.png) no-repeat;
+}
+
+.article-content div.admonition.danger:hover {
+    background:  url(danger_064_01.png) no-repeat;
+}
+
+
+.article-content div.admonition.information {
+    background:  url(information_064_00.png) no-repeat;
+}
+
+.article-content div.admonition.information:hover {
+    background:  url(information_064_01.png) no-repeat;
+}
+
+
+.article-content div.admonition.tip {
+    background:  url(bulb_064_00.png) no-repeat;
+}
+
+.article-content div.admonition.tip:hover {
+    background:  url(bulb_064_01.png) no-repeat;
+}
+
