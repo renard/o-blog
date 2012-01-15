@@ -53,13 +53,13 @@ See the [[file:blog/index.html][blog]] and [[file:todo.html][todo]] for more det
 
 [[https://github.com/renard/o-blog][o-blog]] todo:
 
-- [-] blog
+- [X] blog
   - [X] tags
   - [X] rss feeds
   - [X] static pages (not only blogs)
   - [X] html snippet usage
   - [X] templating (with lisp interpretation)
-  - [ ] file copy support
+  - [X] file copy support
 
 - [-] documentation
   - [X] [[file:blog/index.html][sample blog]]
@@ -86,7 +86,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 ** DONE Creating a blog
   CLOSED: [2012-01-07 Sat 00:13]
   :PROPERTIES:
-  :tags:     usage
+  :tags:     usage, o-blog
   :END:
 
 A blog consists of org entries. Each entry has a title, some properties and
@@ -128,7 +128,7 @@ entry.
 ** DONE How to use tags
   CLOSED: [2012-01-07 Sat 00:28]
   :PROPERTIES:
-  :tags:     usage
+  :tags:     usage, o-blog
   :END:
 
 Tags are useful to classify articles. They are stored in the =tags= property
@@ -143,9 +143,9 @@ If an article has more than one tag, separate them by a comma (",").
 ** DONE Example of some org syntax
    CLOSED: [2012-01-07 Sat 11:23]
    :PROPERTIES:
-   :tags:     usage
+   :tags:     usage, org
    :END:
-
+   
 *** Titles
 
 This is a level 1
