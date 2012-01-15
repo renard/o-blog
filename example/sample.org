@@ -332,3 +332,98 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 - [[Creating a blog]]
 - insite (file): [[file:o-blog.el]]
 - in page (anchor): [[Literal examples]]
+** DONE Some HTML5 samples
+   CLOSED: [2012-01-10 Tue 20:58]
+   :PROPERTIES:
+   :tags:     html5
+   :END:
+
+*** tag: <details>
+
+Works only with chrome.
+
+#+HTML: <details>
+#+HTML: <summary>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</summary>
+- Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+- Proin quam nisl, tincidunt et, mattis eget, convallis nec, purus.
+- Sed diam.
+- Nam vestibulum accumsan nisl.
+#+HTML: </details>
+
+#+begin_src org
+  ,#+HTML: <details>
+  ,#+HTML: <summary>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</summary>
+  ,- Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ,- Proin quam nisl, tincidunt et, mattis eget, convallis nec, purus.
+  ,- Sed diam.
+  ,- Nam vestibulum accumsan nisl.
+  ,#+HTML: </details>
+#+end_src
+
+
+** DONE Admonitions
+   CLOSED: [2012-01-15 Sun 20:40]
+   :PROPERTIES:
+   :tags:     usage
+   :END:
+
+
+Admonitions are declared in =admonition= blocks. There are 4 types of them:
+
+ - tip
+ - information
+ - warning
+ - danger
+
+#+begin_src org
+  ,#+begin_admonition <TYPE>
+  ,Text of the admonition
+  ,#+end_admonition
+#+end_src
+
+
+#+begin_admonition tip
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_admonition
+
+#+begin_admonition information
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_admonition
+
+
+
+#+begin_admonition warning
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_admonition
+
+#+begin_admonition danger
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_admonition
