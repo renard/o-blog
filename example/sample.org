@@ -23,6 +23,13 @@ If you don't have them, you should install them fist.
 
 *** Setup
 
+**** Using =el-get=
+
+If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
+is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
+
+**** Manual setup
+
 Start by cloning the /git/ repository from [[http://github.com][Github]].
 
 #+begin_src bash
