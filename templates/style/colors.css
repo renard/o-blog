@@ -121,3 +121,20 @@ span.date-y {
     background: darkolivegreen;
 }
 
+.article-content div.admonition.information p.admonition-header {
+    background: #babaff;
+}
+
+.article-content div.admonition.tip p.admonition-header {
+    background: #baffba;
+}
+
+
+.article-content div.admonition.warning p.admonition-header {
+    background: #ffffba;
+}
+
+
+.article-content div.admonition.danger p.admonition-header {
+    background: #ffbaba;
+}
