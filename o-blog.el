@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-11 00:28:49
+;; Last changed: 2012-01-11 01:02:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -187,6 +187,8 @@ defined, or interactivelly called with `prefix-arg'.
     (process-put proc :cmd-buf cmd-buf)
     (set-process-sentinel proc 'org-blog-publish-run-processes-sentinel)))
 
+;; Internal functions
+
 (defun ob-get-linked-files (s)
   "Return a lis of linked files from S."
   (save-match-data
@@ -206,8 +208,6 @@ defined, or interactivelly called with `prefix-arg'.
 		       ;; use add-to-list to prevent from coping a file twice.
 		       (add-to-list 'ret f)))))
 	ret))))
-
-;; Internal functions
 
 (defun ob-parse-blog-headers (&optional file)
   "Parse blog related variable from current-buffer."
@@ -318,6 +318,64 @@ MARKERS is a list of entries given by `org-map-entries'."
 		    ))))
 
 
+(defun o-blog-publish-admonition ()
+  "Publish an admonition in HTML mode.
+
+Admonitions are specially marked topics that can appear
+anywhere an ordinary body element can. They contain arbitrary
+body elements. Typically, an admonition is rendered as an offset
+block in a document, sometimes outlined or shaded, with a title
+matching the admonition type. For example:
+
+#+BEGIN_ADMONITION type
+Some text inside the admonition
+#+END_ADMONITION
+
+This directive might be rendered something like this:
+
++---------------------------------+
+| Type                            |
+|                                 |
+| Some text inside the admonition |
++---------------------------------+
+
+In an HTML context, previous directive would be expanded as:
+
+#+BEGIN_HTML
+<div class=\"admonition type\"><p class=\"header\">Type</p>
+#+END_HTML
+Some text inside the admonition
+#+BEGIN_HTML
+<div>
+#+END_HTML
+"
+  (save-match-data
+    (save-excursion
+      (goto-char (point-min))
+      (let ((case-fold-search t))
+	(while (re-search-forward "^#\\+BEGIN_ADMONITION:?[ \t]+\\(.*\\)" nil t)
+	  (let* ((params (read (concat "(" (match-string 1) ")")))
+		 (admo (org-symname-or-string (pop params))))
+	    (beginning-of-line)
+	    (insert
+	     "#+BEGIN_HTML\n"
+	     (format "<div class=\"admonition %s\"><p class=\"admonition-header\">%s</p>"
+		     (downcase admo) admo)
+	     "\n#+END_HTML\n")
+	    (delete-region (point) (point-at-eol))
+	    (unless
+		(re-search-forward "^#\\+END_ADMONITION" nil t)
+	      (error "#+END_ADMONITION not found in %s@%s." (buffer-file-name)
+		     (point)))
+	    (beginning-of-line)
+	    (insert
+	     "\n#+BEGIN_HTML\n"
+	     "</div>"
+	     "\n#+END_HTML\n")
+	    (delete-region (point) (point-at-eol))))))))
+
+
+
 (defun ob-get-entry-text ()
   "Return entry text from point with not properties.
 
@@ -334,6 +392,8 @@ headers and body."
 	    (org-mode)
 	    (while (<= 2 (save-match-data (funcall outline-level)))
 	      (org-promote-subtree))
+	    (o-blog-publish-admonition)
+
 	    (goto-char (point-min))
 	    (when (search-forward-regexp "^\\s-*$" nil t)
 	      (goto-char (match-end 0)))
