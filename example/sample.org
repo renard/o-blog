@@ -367,13 +367,11 @@ Works only with chrome.
   ,#+HTML: </details>
 #+end_src
 
-
 ** DONE Admonitions
    CLOSED: [2012-01-15 Sun 20:40]
    :PROPERTIES:
    :tags:     usage
    :END:
-
 
 Admonitions are declared in =admonition= blocks. There are 4 types of them:
 
@@ -434,3 +432,158 @@ dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
 #+end_admonition
+
+** DONE Templates
+   CLOSED: [2012-01-17 Tue 13:53]
+   :PROPERTIES:
+   :tags:     usage,templates
+   :END:
+
+Templates which are a big part of the [[https://github.com/renard/o-blog][o-blog]] export process, are HTML-based
+files. Lisp code could be interpreted as long as =<lisp>= tags surrounds it.
+
+#+begin_src html
+<h1><lisp>(ob:blog-title BLOG)</lisp></h1>
+#+end_src
+
+The previous snippet would be exported to something similar to:
+
+#+begin_src html
+<h1>o-blog</h1>
+#+end_src
+
+#+begin_admonition Information
+[[https://github.com/renard/o-blog][o-blog]] only needs =blog_= prefixed templates as long as they do not need any
+other templates (using =ob:insert-template= function).
+
+All other templates are defined for convenience.
+#+end_admonition
+
+
+*** Required templates
+
+=blog_= prefixed templates.
+
+ - =blog_static.html=: exports any static page (function =ob-write-static=).
+ - =blog_post.html=: exports a blog post (function =ob-write-posts=).
+ - =blog_tags.html=: exports a tag cloud page (function =ob-write-tags=).
+ - =blog_tags-detail.html=: exports page matching a specific tag (function
+   =ob-write-tags=).
+ - =blog_archive.html=: exports the whole archives (all categories, all
+   years, all months) page (function =ob-write-index=).
+ - =blog_rss.html=: exports the rss feed (function =ob-write-index=).
+ - =blog_index_month.html= export index page for a given month (function
+   =ob-write-index=).
+ - =blog_index_year.html= export index page for a given year (function
+   =ob-write-index=).
+ - =blog_index_catery.html= export index page for a given category (function
+   =ob-write-index=).
+
+*** index templates
+
+=index_= prefixed templates. They are used my all =blog_index_*.html=
+templates to generate a list of articles matching given category, year and
+month and the whole archives.
+
+ - =index_archives.html=
+ - =index_category.html=
+ - =index_month.html=
+ - =index_year.html=
+
+*** Navigation templates
+
+=nav_= prefixed templates used to generate navigation snippets:
+
+ - =nav_links.html=: used to generate navigation menu used in both page
+   header and footer.
+ - =nav_tag-cloud.html=: used to generate tag cloud on page bottom.
+
+*** Page templates
+
+=page_= prefixed templates used for both html header and footer.
+
+** DONE Structures used in template
+   CLOSED: [2012-01-17 Tue 15:31]
+   :PROPERTIES:
+   :tags:     usage,templates
+   :END:
+
+Some variables are available when publishing lisp parts of templates. These
+variables are defined using [[http://www.gnu.org/software/emacs/manual/html_node/cl/Structures.html][defstruct]], then any slot (or property) is
+available using a =(type-slot variable)= form.
+
+*** =ob:blog=
+
+Structure used to define a blog:
+
+ - =file=: the blog source file (read-only).
+ - =buffer=: buffer visiting the blog file (read-only).
+ - =publish-dir=: where to publish the blog defined by the =#+PUBLISH_DIR:=
+   header directive or =out= in the same directory as the blog source file.
+ - =template-dir=: location of the template directory defined by the
+   =#+TEMPLATE_DIR:= header directive or the =templates= directory of the
+   =o-blog= library.
+ - =style-dir=: path of the /css/ files defined by the =#STYLE_DIR:= header
+   directive or =style=. This directory is relative to =template-dir=.
+ - =posts-filter=: default filter for post defined by the =#POSTS_FILTER:=
+   header directive or =+TODO={DONE}=.
+ - =static-filter=: default filter for static pages defined by the
+   =#STATIC_FILTER:= header directive or =+PAGES={.*}=.
+ - =snippet-filter=  default filter for snippets defined by the
+   =#SNIPPET_FILTER:= header directive or =+SNIPPET={.*}=.
+ - =title=: Blog title defined by the =#+TITLE:= header directive.
+ - =description=: blog description defined by the =#+DESCRIPTION:= header
+   directive.
+
+Example:
+
+#+begin_src emacs-lisp
+;; get the title of the current blog defined in variable BLOG.
+(ob:blog-title BLOG)
+#+end_src
+
+*** =ob:post=
+
+ - =id=: the post numerical id. Posts are sort by reversed chronological
+   order. The most recent post get the id 0.
+ - =title=: the post title read from the entry title. 
+ - =timestamp=: the post timestamp given by the =CLOSED= property or the
+   current time.
+ - =year=: numerical year computed from =timestamp=.
+ - =month=: numerical month computed from =timestamp=.
+ - =day=: numerical day computed from =timestamp=.
+ - =category=: category read from =CATEGORY= property org =blog=.
+ - =tags=: list of tags read from =tags= property (comma separated).
+ - =template=: template to use for current post read from =TEMPLATE=
+   property or =blog_post.html=.
+ - =filepath=: relative path from the blog root directory to the post
+   directory (directory only).
+ - =filename=: sanitized filename generated from =title=.
+ - =htmlfile=: full relative path to the post html file (file and
+   directory).
+ - =path-to-root=: relative path from the post html file to the blog root.
+ - =content=: raw content of the post (org-mode format).
+ - =content-html=: HTML export of the post.
+
+Example:
+
+#+begin_src emacs-lisp
+;; get the HTML content of the post defined in variable POST.
+(ob:post-content-html POST)
+#+end_src
+
+*** =ob:tags=
+
+Structure used to define a tag:
+
+ - =name=: string defying the tag name.
+ - =count=: how many time the tag is used.
+ - =size=: the font size in percent.
+
+Example:
+
+#+begin_src emacs-lisp
+;; get the name of the tag defined in variable TAG.
+(ob:tags-name TAG)
+#+end_src
+
