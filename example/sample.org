@@ -28,6 +28,9 @@ If you don't have them, you should install them fist.
 If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
 is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
 
+If you are using =el-get= 4 or greater, you only need to type: =M-x
+el-get-install o-blog=.
+
 **** Manual setup
 
 Start by cloning the /git/ repository from [[http://github.com][Github]].
