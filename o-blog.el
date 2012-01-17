@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-17 16:44:42
+;; Last changed: 2012-01-17 17:37:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -762,7 +762,7 @@ Examples:
   "Get HEADER from blog buffer as defined in BLOG global context
 variable.
 
-Returns only fist match execpt is ALL is defined."
+Returns only fist match except if ALL is defined."
   (with-current-buffer
       ;; Be sure we are in blog buffer
       (if (boundp 'BLOG)
