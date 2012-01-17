@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-17 16:04:42
+;; Last changed: 2012-01-17 16:44:42
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -96,6 +96,45 @@ Each hook is a function that could be called with no parameter."
 
 
 (defstruct (ob:post (:type list) :named)
+  "Post structure
+
+ - id: the post numerical id. Posts are sort by reversed
+   chronological order. The most recent post get the id 0.
+
+ - title: the post title read from the entry title.
+
+ - timestamp: the post timestamp given by the \"CLOSED\" property
+   or the current time.
+
+ - year: numerical year computed from \"timestamp\".
+
+ - month: numerical month computed from \"timestamp\".
+
+ - day: numerical day computed from \"timestamp\".
+
+ - category: category read from \"CATEGORY\" property org
+   \"blog\".
+
+ - tags: list of tags read from \"tags\" property (comma
+   separated).
+
+ - template: template to use for current post read from
+   \"TEMPLATE\" property or \"blog_post.html\".
+
+ - filepath: relative path from the blog root directory to the
+   post directory (directory only).
+
+ - filename: sanitized filename generated from \"title\".
+
+ - htmlfile: full relative path to the post html file (file and
+   directory).
+
+ - path-to-root: relative path from the post html file to the
+   blog root.
+
+ - content: raw content of the post (org-mode format).
+
+ - content-html: HTML export of the post."
   id
   title
   timestamp
