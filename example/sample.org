@@ -512,7 +512,9 @@ Some variables are available when publishing lisp parts of templates. These
 variables are defined using [[http://www.gnu.org/software/emacs/manual/html_node/cl/Structures.html][defstruct]], then any slot (or property) is
 available using a =(type-slot variable)= form.
 
-*** =ob:blog=
+*** Structures
+
+**** =ob:blog=
 
 Structure used to define a blog:
 
@@ -542,7 +544,7 @@ Example:
 (ob:blog-title BLOG)
 #+end_src
 
-*** =ob:post=
+**** =ob:post=
 
  - =id=: the post numerical id. Posts are sort by reversed chronological
    order. The most recent post get the id 0.
@@ -572,7 +574,7 @@ Example:
 (ob:post-content-html POST)
 #+end_src
 
-*** =ob:tags=
+**** =ob:tags=
 
 Structure used to define a tag:
 
@@ -587,3 +589,189 @@ Example:
 (ob:tags-name TAG)
 #+end_src
 
+*** Variables
+
+Following variables are always available when publishing a blog:
+
+ - =BLOG= (=ob:blog=): information about the blog being published.
+ - =POSTS= (list of =ob:post=): list of all posts of the blog or restricted
+   list of posts (depending what is exported).
+ - =ALL-POSTS=: A copy of =POSTS= except this *always* contents all the
+   posts from the blog.
+ - =STATIC= (list of =ob:post=): list of static pages.
+ - =SNIPPETS= (list of =ob:post=): list of snippets pages.
+ - =TAGS= (list of =ob:tags=): list of all tags.
+
+Some variables may be defined in some functions:
+
+ - =POST= (=ob:post=): post (or static page) being currently published.
+ - =TAG= (=ob:tags=): tag being currently published.
+ - =CATEGORY= (=string=): the category being published.
+ - =YEAR=, =MONTH (=integer=): the year and month being published.
+ - =PATH-TO-ROOT= (=string=): (intern use only, use =ob:path-to-root=
+   instead) path to blog root used by =ob:path-to-root=.
+
+** DONE Functions used in template
+   CLOSED: [2012-01-17 Tue 17:09]
+   :PROPERTIES:
+   :tags:     usage,templates
+   :END:
+
+Basically any lisp function could be used withing a blog template as long as
+they are known when exporting. Meanwhile some of them are specifically made
+to be used withing templates. These functions are prefixed by =ob:=.
+
+Descriptions are taken from function docstrings.
+
+*** =(ob:get-posts &optional PREDICATE COUNT SORTFUNC COLLECT)=
+
+Return posts (from =POSTS= as defined in =org-publish-blog=) matching
+=PREDICATE=. Limit to =COUNT= results if defined and sorted using
+=SORTFUNC=.
+
+=PREDICATE= is a function run for each post with the post itself as
+argument. If =PREDICATE= is nil, no filter would be done on posts.
+
+=SORTFUNC= is used a =sort= =PREDICATE=.
+
+If =COLLECT= is defined, only returns the =COLLECT= field of a
+=ob:post= structure.
+
+Examples:
+
+Getting last 10 posts:
+
+#+begin_src emacs-lisp
+   (ob:get-posts nil 10)
+#+end_src
+
+
+Getting post from January 2012:
+
+#+begin_src emacs-lisp
+   (ob:get-posts
+      (lambda (x)
+         (and (= 2012 (ob:post-year x))
+              (= 1 (ob:post-month x)))))
+#+end_src
+
+Getting all categories:
+
+#+begin_src emacs-lisp
+    (ob:get-posts nil nil nil 'category)
+#+end_src
+
+
+**** Template usages
+
+For archive navigation:
+
+#+begin_src html
+  <nav id="archives">
+    <h1>Archives</h1>
+    <ul>
+      <lisp>
+        (loop for p in (ob:get-posts nil 10)
+              do (insert (format "<li><a href=\"%s/%s\">%s</a></li> "
+                                 (ob:path-to-root)
+                                 (ob:post-htmlfile p)
+                                 (ob:post-title p))))
+      </lisp>
+    </ul>
+  </nav>
+#+end_src
+
+*** =(ob:get-post-by-id ID)=
+
+Return post which id is =ID=.
+
+**** Template usages
+
+Posts navigation:
+
+#+begin_src html
+  <nav class="articles-nav">
+    <ul>
+      <lisp>
+        (progn
+          ;; Get previous post
+          (let ((ppost (ob:get-post-by-id (1+ (ob:post-id POST)))))
+            (if ppost
+                (insert (format "<li class=\"prev\"><a href=\"%s/%s\">%s</a></li>"
+                                (ob:path-to-root)
+                                (ob:post-htmlfile ppost)
+                                (ob:post-title ppost)))
+              (insert "<li>&nbsp;</li>")))
+          ;; Get next post
+          (let ((npost (ob:get-post-by-id (1- (ob:post-id POST)))))
+            (if npost
+                (insert (format "<li class=\"next\"><a href=\"%s/%s\">%s</a></li>"
+                                (ob:path-to-root)
+                                (ob:post-htmlfile npost)
+                                (ob:post-title npost)))
+              (insert "<li>&nbsp;</li>"))))
+      </lisp>
+    </ul>
+  </nav>
+#+end_src
+
+*** =(ob:get-snippet NAME)=
+
+Get first snippet matching =NAME=.
+
+**** Template usages
+
+Insert the /About/ section in page footer:
+
+#+begin_src html
+  <h1>About</h1>
+  <address>
+    <lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
+  </address>
+#+end_src
+
+*** =(ob:get-header HEADER &optional ALL)=
+
+Get =HEADER= from blog buffer as defined in =BLOG= global context variable.
+
+Returns only fist match except if =ALL= is defined.
+
+**** Template usages
+
+Get the last updated header for rss export:
+
+#+begin_src html
+  <updated><lisp>(ob:format-date (ob:get-header "DATE"))</lisp></updated>
+#+end_src
+
+*** =(ob:insert-template TEMPLATE)=
+
+Insert =TEMPLATE= in current buffer.
+
+**** Template usages
+
+Insert html header:
+
+#+begin_src html
+  <lisp>(ob:insert-template "page_header.html")</lisp>
+#+end_src
+
+*** =(ob:format-date DATE &optional FORMAT LOCALE)=
+
+Format =DATE= using =FORMAT= and =LOCALE=.
+
+=DATE= can heither be string suitable for =parse-time-string= or a list of
+interger using =current-time= format.
+
+=FORMAT= is a =format-time-string= compatible definition. If not
+set ISO8601 =%Y-%m-%dT%TZ= format would be used.
+
+**** Template usages
+
+Add a human readable timestamp for a post:
+
+#+begin_src html
+  Posted on <time datetime="<lisp> (ob:format-date (ob:post-timestamp POST)) </lisp>">
+    <lisp> (ob:format-date (ob:post-timestamp POST) "%A %B, %d %Y at %H:%M:%S") </lisp>
+  </time>.
+#+end_src
