@@ -546,7 +546,9 @@ nav.tag-detail ul {
 /* Text effect */
 .article-content b {}
 .article-content i {}
-.article-content code {}
+.article-content code {
+    font-size: 1.15em;
+}
 .article-content sub {}
 .article-content sup {}
 
@@ -668,4 +670,3 @@ nav.tag-detail ul {
 .article-content div.admonition.tip:hover {
     background:  url(bulb_064_01.png) no-repeat;
 }
-
