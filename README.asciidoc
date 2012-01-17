@@ -46,3 +46,4 @@ org-publish-blog+. The result site would be published by default in
 See the +example/out/blog/index.html+ and +example/out/todo.html+' for more
 details.
 
+http://o-blog.chezwam.org[Demo site].
