@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-11 01:02:17
+;; Last changed: 2012-01-17 16:03:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -51,6 +51,38 @@ Each hook is a function that could be called with no parameter."
 
 
 (defstruct (ob:blog (:type list) :named)
+  "Blog structure
+
+ - file: the blog source file (read-only).
+
+ - buffer: buffer visiting the blog file (read-only).
+
+ - publish-dir: where to publish the blog defined by the
+   \"#+PUBLISH_DIR:\" header directive or out in the same
+   directory as the blog source file.
+
+ - template-dir: location of the template directory defined by
+   the \"#+TEMPLATE_DIR:\" header directive or the templates
+   directory of the o-blog library.
+
+ - style-dir: path of the \"css\" files defined by the
+   \"#STYLE_DIR:\" header directive or style. This directory is
+   relative to \"template-dir\".
+
+ - posts-filter: default filter for post defined by the
+   \"#POSTS_FILTER:\" header directive or \"+TODO=\\\"DONE\\\".
+
+ - static-filter: default filter for static pages defined by the
+   \"#STATIC_FILTER:\" header directive or \"+PAGES={.*}\.
+
+ - snippet-filter default filter for snippets defined by the
+   \"#SNIPPET_FILTER:\" header directive or \"+SNIPPET={.*}\".
+
+ - title: Blog title defined by the \"#+TITLE:\" header
+   directive.
+
+ - description: blog description defined by the
+   \"#+DESCRIPTION:\" header directive."
   (file nil :read-only)
   (buffer nil :read-only)
   publish-dir
