@@ -4,19 +4,36 @@
     <meta charset="utf-8"/>
     <title><lisp>(if (boundp 'POST) (ob:post-title POST) (ob:blog-title BLOG))</lisp></title>
     <!-- <link rel="stylesheet" type="text/css" href="style/reset.css"> -->
-    <link rel="stylesheet" type="text/css" href="<lisp>(ob:path-to-root)</lisp>/style/layout.css">
-    <link rel="stylesheet" type="text/css" href="<lisp>(ob:path-to-root)</lisp>/style/colors.css">
+    <link rel="stylesheet" type="text/less" href="<lisp>(ob:path-to-root)</lisp>/style/css/o-blog.less">
+    <script src="<lisp>(ob:path-to-root)</lisp>/style/js/less-1.2.1.min.js" type="text/javascript"></script>
     <lisp>org-export-xhtml-scripts</lisp>
   </head>
   <body>
-    <div id="main-delimiter">
-      <header id="top">
-	<hgroup>
-	  <h1><lisp>(ob:blog-title BLOG)</lisp></h1>
-	  <h2><lisp>(ob:blog-description BLOG)</lisp></h2>
-	</hgroup>
-	<nav>
-	  <lisp>(ob:insert-template "nav_links.html")</lisp>
-	</nav>
-      </header>
-      <div id="content">
+    <div class="topbar-wrapper" style="z-index: 5;">
+      <div class="topbar">
+	<div class="topbar-inner">
+	  <div class="container">
+	    <ul class="nav">
+	      <lisp>(ob:insert-template "nav_links.html")</lisp>
+	    </ul>
+	  </div>
+	</div>
+
+	<div class="topbar-inner" style="opacity: 0.95;">
+	  <header>
+	    <hgroup>
+	    <div class="container">
+	      <div class="offset4">
+		<h1><lisp>(ob:blog-title BLOG)</lisp></h1>
+		<h2 class="pull-right"><lisp>(ob:blog-description BLOG)</lisp></h2>
+	      </div>
+	    </div>
+	    </hgroup>
+	  </header>
+	</div>
+
+      </div>
+    </div>
+
+
+    <div class="container" style="margin-top: 150px; margin-bottom: 20px;">

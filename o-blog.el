@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-17 17:37:08
+;; Last changed: 2012-01-17 21:18:43
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -421,14 +421,14 @@ Some text inside the admonition
     (save-excursion
       (goto-char (point-min))
       (let ((case-fold-search t))
-	(while (re-search-forward "^#\\+BEGIN_ADMONITION:?[ \t]+\\(.*\\)" nil t)
-	  (let* ((params (read (concat "(" (match-string 1) ")")))
-		 (admo (org-symname-or-string (pop params))))
+	(while (re-search-forward "^#\\+BEGIN_ADMONITION:?[ \t]+\\(info\\|success\\|warning\\|error\\)[ \t]*\\(.*\\)" nil t)
+	  (let* ((admo-type (match-string 1))
+		 (admo-title (match-string 2)))
 	    (beginning-of-line)
 	    (insert
 	     "#+BEGIN_HTML\n"
-	     (format "<div class=\"admonition %s\"><p class=\"admonition-header\">%s</p>"
-		     (downcase admo) admo)
+	     (format "<div class=\"alert-message block-message warning %s\"><p class=\"admonition-header\"><strong>%s</strong></p>"
+		     admo-type admo-title)
 	     "\n#+END_HTML\n")
 	    (delete-region (point) (point-at-eol))
 	    (unless

@@ -4,6 +4,7 @@
 
 #+STARTUP: logdone
 
+#+TEMPLATE_DIR: templates
 #+URL: http://blog.example.com
 
 * Quick start
@@ -378,30 +379,19 @@ Works only with chrome.
 
 Admonitions are declared in =admonition= blocks. There are 4 types of them:
 
- - tip
- - information
+ - info
+ - success
  - warning
- - danger
+ - error
 
 #+begin_src org
-  ,#+begin_admonition <TYPE>
+  ,#+begin_admonition <TYPE> <title>
   ,Text of the admonition
   ,#+end_admonition
 #+end_src
 
 
-#+begin_admonition tip
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
-tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
-mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
-dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
-dolor. Nullam tristique diam non turpis. Cras placerat accumsan
-nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
-
-#+end_admonition
-
-#+begin_admonition information
+#+begin_admonition error
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -413,8 +403,7 @@ nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 #+end_admonition
 
 
-
-#+begin_admonition warning
+#+begin_admonition error Danger
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -425,7 +414,31 @@ nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
 #+end_admonition
 
-#+begin_admonition danger
+#+begin_admonition warning Caution
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_admonition
+
+
+
+#+begin_admonition success Tip
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_admonition
+
+#+begin_admonition info Information
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
