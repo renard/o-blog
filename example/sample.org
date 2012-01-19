@@ -4,7 +4,7 @@
 
 #+STARTUP: logdone
 
-#+TEMPLATE_DIR: templates
+#-TEMPLATE_DIR: templates
 #+URL: http://blog.example.com
 
 * Quick start
