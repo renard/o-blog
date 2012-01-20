@@ -1,5 +1,5 @@
 #+TITLE: o-blog
-#+DESCRIPTION: How to use it
+#+DESCRIPTION: standalone blogging system for org-mode
 #+DATE:
 
 #+STARTUP: logdone
@@ -53,27 +53,8 @@ Open the =~/.emacs.d/o-blog/example/sample.org= file and type =M-x
 org-publish-blog=. The result site would be published by default in
 =~/.emacs.d/o-blog/out=.
 
-See the [[file:blog/index.html][blog]] and [[file:todo.html][todo]] for more details.
+See the [[file:blog/index.html][blog]] for more details.
 
-
-* Todo
-  :PROPERTIES:
-  :PAGE:     todo.html
-  :END:
-
-[[https://github.com/renard/o-blog][o-blog]] todo:
-
-- [X] blog
-  - [X] tags
-  - [X] rss feeds
-  - [X] static pages (not only blogs)
-  - [X] html snippet usage
-  - [X] templating (with lisp interpretation)
-  - [X] file copy support
-
-- [-] documentation
-  - [X] [[file:blog/index.html][sample blog]]
-  - [ ] templates usage
 
 * Blog details
 ** Copyright
@@ -97,12 +78,11 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :END:
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.html][Home]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][Features]]
 - [[#][Documentation]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
-  - 
-  - [[file:{lisp}(ob:path-to-root){/lisp}/todo.html][Todo]]
 - [[#][Blog]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
@@ -114,6 +94,28 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
 * Documentation
+
+** Features
+  :PROPERTIES:
+  :PAGE:     features.html
+  :END:
+
+- Appearance
+  - Dynamic template system (using lisp functions)
+  - [[http://twitter.github.com/bootstrap/][bootstrap]] support
+  - [[http://lesscss.org/][lesscss]] support
+  - [[http://jquery.com/][JQuery]] support
+- Blog
+  - Static pages
+  - Tag cloud
+  - Multiple blogs
+  - Archives
+- Publication
+  - Both synchrone and asynchrone publication.
+  - Publish directly to the webserver (using tramp). 
+- [[http://orgmode.org/][Org-mode]] extra
+  - Messages box such as admonition
+
 
 ** Templates
   :PROPERTIES:
