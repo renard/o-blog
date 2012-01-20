@@ -395,14 +395,21 @@ body elements. Typically, an admonition is rendered as an offset
 block in a document, sometimes outlined or shaded, with a title
 matching the admonition type. For example:
 
-#+BEGIN_ADMONITION type
+#+BEGIN_ADMONITION type title
 Some text inside the admonition
 #+END_ADMONITION
+
+Where type can be on of:
+
+  - info
+  - success
+  - warning
+  - error
 
 This directive might be rendered something like this:
 
 +---------------------------------+
-| Type                            |
+| Title                           |
 |                                 |
 | Some text inside the admonition |
 +---------------------------------+
@@ -410,7 +417,8 @@ This directive might be rendered something like this:
 In an HTML context, previous directive would be expanded as:
 
 #+BEGIN_HTML
-<div class=\"admonition type\"><p class=\"header\">Type</p>
+<div class=\"alert-message block-message warning type\">
+<p class=\"admonition-header\"><strong>Title</strong></p>
 #+END_HTML
 Some text inside the admonition
 #+BEGIN_HTML
@@ -427,8 +435,11 @@ Some text inside the admonition
 	    (beginning-of-line)
 	    (insert
 	     "#+BEGIN_HTML\n"
-	     (format "<div class=\"alert-message block-message warning %s\"><p class=\"admonition-header\"><strong>%s</strong></p>"
-		     admo-type admo-title)
+	     (format
+	      "<div class=\"alert-message block-message warning %s\">" admo-type)
+	     (when admo-title
+	       (format "<p class=\"admonition-header\"><strong>%s</strong></p>"
+		       admo-title))
 	     "\n#+END_HTML\n")
 	    (delete-region (point) (point-at-eol))
 	    (unless
@@ -441,8 +452,9 @@ Some text inside the admonition
 	     "</div>"
 	     "\n#+END_HTML\n")
 	    (delete-region (point) (point-at-eol))))))))
-
-
+(add-to-list
+ 'org-structure-template-alist
+ '("oa" "#+begin_admonition ?\n\n#+end_admonition"))
 
 (defun ob-get-entry-text ()
   "Return entry text from point with not properties.
