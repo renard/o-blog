@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-17 21:18:43
+;; Last changed: 2012-01-20 16:13:14
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -363,7 +363,8 @@ MARKERS is a list of entries given by `org-map-entries'."
       (loop for f in linked-files
 	    do (let ((target (format "%s/%s/%s"
 				     (ob:blog-publish-dir BLOG)
-				     filepath f)))
+				     ;; file path is nil when exporting static page?
+				     (or filepath ".") f)))
 		 (mkdir (file-name-directory target) t)
 		 (copy-file f target t t t t)))
 
