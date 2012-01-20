@@ -7,6 +7,12 @@
 #-TEMPLATE_DIR: templates
 #+URL: http://blog.example.com
 
+#+POST_BUILD_SHELL: cmd 1
+#+POST_BUILD_SHELL: cmd 2
+#+POST_BUILD_SHELL: cmd 3
+#+POST_BUILD_SHELL: cmd 4
+
+
 * Quick start Guide
   :PROPERTIES:
   :PAGE:     index.html
@@ -94,6 +100,12 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
 * Documentation
+** Debug
+   :PROPERTIES:
+   :PAGE:     debug.html
+   :TEMPLATE: debug.html
+   :END:
+
 
 ** Features
   :PROPERTIES:
