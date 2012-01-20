@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-20 16:13:14
+;; Last changed: 2012-01-20 17:13:15
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -544,14 +544,14 @@ when publishing a page."
 	;; needed for thing-at-point
 	(html-mode)
 	(beginning-of-buffer)
-	(let ((open-tag "<lisp>")
-	      (close-tag "</lisp>")
+	(let ((open-tag "<lisp>\\|{lisp}\\|\\[lisp\\]")
+	      (close-tag "</lisp>\\|{/lisp}\\|\\[/lisp\\]")
 	      beg end sexp)
-	  (while (search-forward open-tag nil t)
-	    (setq beg (- (point) (length open-tag)))
-	    (when (search-forward close-tag nil t)
+	  (while (search-forward-regexp open-tag nil t)
+	    (setq beg (- (point) (length  (match-string 0))))
+	    (when (search-forward-regexp close-tag nil t)
 	      (setq end (point))
-	      (backward-char (length close-tag))
+	      (backward-char (length (match-string 0)))
 	      (backward-sexp)
 	      (setq sexp (substring-no-properties (thing-at-point 'sexp)))
 	      (delete-region beg end)
