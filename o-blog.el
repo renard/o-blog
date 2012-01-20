@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-20 18:10:32
+;; Last changed: 2012-01-20 18:48:27
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -821,12 +821,13 @@ set ISO8601 \"%Y-%m-%dT%TZ\" format would be used."
 	 (system-time-locale locale))
     (format-time-string format date)))
 
-(defun ob:get-last-post (&optional category)
-  "Get the last post in from CATEGORY or \"blog\" if not defined."
-  (let ((POST ALL-POSTS))
-    (car (ob:get-posts (lambda (x)
-			 (equal (or category "blog")
-				(ob:post-category x)))))))
+(defun ob:get-last-post (&optional category nth)
+  "Get the NTH last post in from CATEGORY or \"blog\" if not defined."
+  (let ((POST ALL-POSTS)
+	(nth (or nth 0)))
+    (nth nth (ob:get-posts (lambda (x)
+			     (equal (or category "blog")
+				    (ob:post-category x)))))))
 
 (defun ob:path-to-root ()
   "Return path to site root from `PATH-TO-ROOT' or `POST'
