@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-20 18:48:27
+;; Last changed: 2012-01-20 22:24:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -554,7 +554,8 @@ when publishing a page."
 	      (backward-char (length (match-string 0)))
 	      (backward-sexp)
 	      (setq sexp (substring-no-properties (thing-at-point 'sexp)))
-	      (delete-region beg end)
+	      (narrow-to-region beg end)
+	      (delete-region (point-min) (point-max))
 	      (insert
 	       (save-match-data
 		 (condition-case err
@@ -577,7 +578,8 @@ when publishing a page."
 		   ;; error handler
 		   (error
 		    (format "Lisp error in %s: %s" (buffer-file-name) err)))))
-	      (goto-char beg))))))))
+	      (goto-char (point-max))
+	      (widen))))))))
 
 
 ;; Publish functions
