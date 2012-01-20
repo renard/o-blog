@@ -2,6 +2,7 @@
 
 How to use https://github.com/renard/o-blog[o-blog].
 
+http://renard.github.com/o-blog[Demo site].
 
 == Quick start guide
 First you need:
@@ -46,4 +47,4 @@ org-publish-blog+. The result site would be published by default in
 See the +example/out/blog/index.html+ and +example/out/todo.html+' for more
 details.
 
-http://o-blog.chezwam.org[Demo site].
+
