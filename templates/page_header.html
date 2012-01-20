@@ -6,16 +6,16 @@
     <!-- <link rel="stylesheet" type="text/css" href="style/reset.css"> -->
     <link rel="stylesheet" type="text/less" href="<lisp>(ob:path-to-root)</lisp>/style/css/o-blog.less">
     <script src="<lisp>(ob:path-to-root)</lisp>/style/js/less-1.2.1.min.js" type="text/javascript"></script>
+    <script src="<lisp>(ob:path-to-root)</lisp>/style/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="<lisp>(ob:path-to-root)</lisp>/style/js/bootstrap-dropdown.js" type="text/javascript"></script>
     <lisp>org-export-xhtml-scripts</lisp>
   </head>
   <body>
     <div class="topbar-wrapper" style="z-index: 5;">
-      <div class="topbar">
+      <div class="topbar" data-dropdown="dropdown">
 	<div class="topbar-inner">
 	  <div class="container">
-	    <ul class="nav">
-	      <lisp>(ob:insert-template "nav_links.html")</lisp>
-	    </ul>
+	    <lisp>(ob:post-content-html (ob:get-snippet "Navigation"))</lisp>
 	  </div>
 	</div>
 

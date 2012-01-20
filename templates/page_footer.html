@@ -38,5 +38,12 @@
 	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
 	</div>
       </footer>
+      <script>
+	$('[data-dropdown] ul ul').addClass('dropdown-menu');
+	$('[data-dropdown] ul ul').parent().addClass('menu');
+	$('[data-dropdown] ul li.menu > a').addClass('menu');
+	$('.dropdown-menu li').each(function() { if ( $(this).text() == '\n') $(this).addClass('divider')});
+	$('[data-dropdown]').dropdown();
+      </script>
 </body>
 </html>

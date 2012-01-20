@@ -1,5 +1,10 @@
 <lisp>(ob:insert-template "page_header.html")</lisp>
 <article>
+  <header class="article-header">
+    <div class="row">
+      <h1 class="offset1" style="font-size: 250%;"><lisp>(ob:post-title POST)</lisp></h1>
+    </div>
+  </header>
   <div class="article-content">
     <lisp>
       (ob:post-content-html POST)
