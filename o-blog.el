@@ -578,7 +578,7 @@ when publishing a page."
 		   ;; error handler
 		   (error
 		    (format "Lisp error in %s: %s" (buffer-file-name) err)))))
-	      (goto-char (point-max))
+	      (goto-char (point-min))
 	      (widen))))))))
 
 
