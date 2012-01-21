@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-20 22:24:03
+;; Last changed: 2012-01-21 11:10:14
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -92,7 +92,8 @@ Each hook is a function that could be called with no parameter."
   static-filter
   snippet-filter
   title
-  description)
+  description
+  post-build-shell)
 
 
 (defstruct (ob:post (:type list) :named)
@@ -295,7 +296,8 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-snippet-filter blog) (or (ob:get-header "SNIPPET_FILTER") "+SNIPPET={.+}"))
     (setf (ob:blog-title blog) (or (ob:get-header "TITLE") "title"))
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
-    blog))
+    (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
+   blog))
 
 
 (defun ob-parse-entries (markers)
