@@ -370,3 +370,34 @@ article {
     .navtags(85%);
 
 }
+
+#debug {
+    table {
+	    border: 1px solid;
+	    border-collapse: collapse;
+	    padding: 0;
+	    margin: 0;
+
+	    tbody {
+		margin: 0;
+		padding: 0;
+		
+		tr {
+		    margin: 0;
+		    padding: 0;
+
+		    td {
+			margin: 0;
+			padding: 0;
+			&.property { width: 25%;}
+			&.value { width: 75%;}
+			pre {
+			    margin: 0;
+			    padding: 0;
+			    .resizable();
+			}
+		    }
+		}
+	    }
+    }
+}

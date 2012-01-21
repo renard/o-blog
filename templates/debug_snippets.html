@@ -1,8 +1,5 @@
 <div class="debug post">
-  <details>
-    <summary>Debug posts</summary>
-    <lisp>(loop for POST in SNIPPETS
-      do (ob:insert-template "debug_post.html"))
-    </lisp>
-  </details>
+  <lisp>(loop for POST in SNIPPETS
+    do (ob:insert-template "debug_post.html"))
+  </lisp>
 </div>
