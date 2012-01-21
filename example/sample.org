@@ -98,6 +98,8 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tags]]
 - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
+
 
 * Documentation
 ** Debug
@@ -113,21 +115,22 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :END:
 
 - Appearance
-  - Dynamic template system (using lisp functions)
+  - Dynamic template system (using lisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging features]]
+  - Syntax highlighting for exported code snippets
   - [[http://twitter.github.com/bootstrap/][bootstrap]] support
   - [[http://lesscss.org/][lesscss]] support
   - [[http://jquery.com/][JQuery]] support
+  - HTML5 / CSS3 ready
 - Blog
   - Static pages
-  - Tag cloud
+  - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tag cloud]]
   - Multiple blogs
-  - Archives
+  - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
 - Publication
-  - Both synchrone and asynchrone publication.
-  - Publish directly to the webserver (using tramp). 
+  - Both synchrone and asynchrone publication
+  - Publish directly to the webserver (using tramp)
 - [[http://orgmode.org/][Org-mode]] extra
   - Messages box such as admonition
-
 
 ** Templates
   :PROPERTIES:
