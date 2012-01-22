@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-23 00:11:59
+;; Last changed: 2012-01-23 00:26:23
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -157,9 +157,10 @@ Each hook is a function that could be called with no parameter."
   "Tag structure with following slots:
 
  - name: string defying the tag name.
+ - safe: web safe tag name for URL.
  - count: how many time the tag is used.
  - size: the font size in percent."
-  name count size)
+  name safe count size)
 
 
 ;;;###autoload
@@ -331,9 +332,18 @@ MARKERS is a list of entries given by `org-map-entries'."
 			       (point-at-eol)
 			       t)
     (let* ((title (match-string-no-properties 4))
-	   ;; tags must be split on comma
-	   (tags (split-string (or (org-entry-get (point) "Tags") "")
-			       "\\s-*,\\s-*" t))
+	   ;; tags is a list of `ob:tags'
+	   ;; to be compliant with org tag syntax (no "-" org space)
+	   ;; "_" would be replaced with " " and "@" by "-"
+	   (tags (loop for tn in (org-get-local-tags)
+		       with td
+		       do (setf td
+				(replace-regexp-in-string
+				 "_" " "
+				 (replace-regexp-in-string "@" "-" tn)))
+		       and collect (make-ob:tags
+				    :name td
+				    :safe (ob:sanitize-string td))))
 
 	   ;; Timestamp is taken from either the CLOSED property or the
 	   ;; current timestamp.
@@ -503,7 +513,8 @@ CONTENT-LIST is a list of all articles such as generated in
 MIN_R and MAX_R are the minimum and maximum percentage value. If
 not provided 80 and 220 are used."
   (let* ((tags (sort (loop for post in posts
-			   append (ob:post-tags post))
+			   when (ob:post-tags post)
+			   append (ob:tags-name (ob:post-tags post)))
 		     #'string<))
 	 (min_r (or min_r 80))
 	 (max_r (or max_r 220))
@@ -527,6 +538,7 @@ not provided 80 and 220 are used."
 	  collect (let ((val (cadr item)))
 		    (make-ob:tags
 		     :name (car item)
+		     :safe (ob:sanitize-string (car item))
 		     :count val
 		     ;; This is the tricky part
 		     ;; Formula is:
