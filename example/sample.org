@@ -526,11 +526,8 @@ An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode
 complex.
 
 * Blog entries
-** DONE Creating a blog
+** DONE Creating a blog					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
-  :PROPERTIES:
-  :tags:     usage, o-blog
-  :END:
 
 A blog consists of org entries. Each entry has a title, some properties and
 some text. Exporting a blog means publishing all entries with a =DONE=
@@ -568,11 +565,8 @@ Please note the blank line between the properties section and the text itself.
 Use =#+STARTUP: logdone= to automatically add a time stamp when closing an
 entry.
 
-** DONE How to use tags
+** DONE How to use tags					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
-  :PROPERTIES:
-  :tags:     usage, o-blog
-  :END:
 
 Tags are useful to classify articles. They are stored in the =tags= property
 for each entries. They are not defined as =org= tags to allows any character
@@ -583,11 +577,8 @@ tag value.
 
 If an article has more than one tag, separate them by a comma (","). 
 
-** DONE Example of some org syntax
+** DONE Example of some org syntax				  :usage:org:
    CLOSED: [2012-01-07 Sat 11:23]
-   :PROPERTIES:
-   :tags:     usage, org
-   :END:
    
 *** Titles
 
@@ -775,11 +766,8 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 - [[Creating a blog]]
 - insite (file): [[file:o-blog.el]]
 - in page (anchor): [[Literal examples]]
-** DONE Some HTML5 samples
+** DONE Some HTML5 samples					     :html_5:
    CLOSED: [2012-01-10 Tue 20:58]
-   :PROPERTIES:
-   :tags:     html5
-   :END:
 
 *** tag: <details>
 
@@ -803,11 +791,8 @@ Works only with chrome.
   ,#+HTML: </details>
 #+end_src
 
-** DONE Admonitions
+** DONE Admonitions						      :usage:
    CLOSED: [2012-01-15 Sun 20:40]
-   :PROPERTIES:
-   :tags:     usage
-   :END:
 
 Admonitions are declared in =admonition= blocks. There are 4 types of them:
 
