@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-21 11:10:14
+;; Last changed: 2012-01-23 00:11:59
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -699,7 +699,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 	with gc
 	with ret
 	do (setf gc (get-char-code-property c 'general-category))
-	if (member gc '(Lu Ll))
+	if (or (member gc '(Lu Ll Nd)) (= ?- c))
 	collect (downcase (char-to-string
 			   (car (get-char-code-property c 'decomposition))))
 	into ret
