@@ -58,7 +58,7 @@
 	<lisp>
 	  (loop for tag in (ob:post-tags POST)
 	  do (insert (format "<li><a href=\"%s/tags/%s.html\">%s</a></li>"
-	  (ob:path-to-root)tag tag)))
+	  (ob:path-to-root) (ob:tags-safe tag) (ob:tags-name tag))))
 	</lisp>
       </ul>
     </nav>
