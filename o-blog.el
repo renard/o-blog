@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-23 00:26:23
+;; Last changed: 2012-01-23 00:57:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -513,8 +513,9 @@ CONTENT-LIST is a list of all articles such as generated in
 MIN_R and MAX_R are the minimum and maximum percentage value. If
 not provided 80 and 220 are used."
   (let* ((tags (sort (loop for post in posts
-			   when (ob:post-tags post)
-			   append (ob:tags-name (ob:post-tags post)))
+			   append (loop for tn in (ob:post-tags post)
+					when (ob:tags-p tn)
+					collect (ob:tags-name tn)))
 		     #'string<))
 	 (min_r (or min_r 80))
 	 (max_r (or max_r 220))
@@ -697,7 +698,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 	  (ob-write-index-to-file "blog_tags-details.html"
 				  (format "%s/tags/%s.html"
 					  (ob:blog-publish-dir BLOG)
-					  (ob:tags-name TAG))))))
+					  (ob:tags-safe TAG))))))
 
 
 (defun ob:sanitize-string (s)
