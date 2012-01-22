@@ -5,7 +5,8 @@
 #+STARTUP: logdone
 
 #-TEMPLATE_DIR: templates
-#+URL: http://blog.example.com
+#+URL: http://renard.github.com/o-blog
+
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
