@@ -89,6 +89,8 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
+  -
+  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 - [[#][Blog]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
@@ -473,6 +475,54 @@ Add a human readable timestamp for a post:
   </time>.
 #+end_src
 
+
+** FAQ
+  :PROPERTIES:
+  :PAGE:     faq.html
+  :END:
+
+*** My page looks ugly
+
+Maybe you are using [[https://www.google.com/chrome/][google-chrome]] and try to view your site locally using a
+=file:///path/to/your/site/out/index.html= scheme. Open the javascript console
+=Ctrl+Shift+I= you should see something like:
+
+#+begin_example
+XMLHttpRequest cannot load file:///path/to/your/site/out/out/style/css/o-blog.less. Cross origin requests are only supported for HTTP.
+less-1.2.1.min.js:8Uncaught Error: NETWORK_ERR: XMLHttpRequest Exception 101
+#+end_example
+
+There is a known Chrome issue with loading local javascript files. This is a
+/security feature/ in Chrome.
+
+You can disable this with the =--allow-file-access-from-files= option to
+chrome or you can use an other browser or setup a local webserver.
+
+There are many complex solutions for a webserver such as [[http://nginx.org/][nginx]] or [[http://httpd.apache.org/][Apache]] or
+many [[http://en.wikipedia.org/wiki/Comparison_of_web_server_software][others]].
+
+You may want to prefer a lighter and simpler solution.
+
+With python simply run:
+
+#+begin_src sh
+cd /path/to/your/site && python -m SimpleHTTPServer
+#+end_src
+
+And browse http://localhost:8000
+
+Or within emacs you can run [[https://github.com/jrhbailey/emacs-http-server][emacs-http-server]]:
+
+#+begin_src emacs-lisp
+(require 'httpd)
+(setq httpd-root "/path/to/your/site")
+(httpd-start)
+#+end_src
+
+and browse http://localhost:8080
+
+An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
+complex.
 
 * Blog entries
 ** DONE Creating a blog
