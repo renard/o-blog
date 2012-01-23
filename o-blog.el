@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-23 18:12:13
+;; Last changed: 2012-01-23 18:45:27
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -199,7 +199,7 @@ defined, or interactivelly called with `prefix-arg'.
   (with-current-buffer (or
 			(get-file-buffer file)
 			(find-file file))
-    (run-hooks o-blog-before-publish-hook)
+    (run-hooks 'o-blog-before-publish-hook)
     (let* ((start-time (current-time)) ;; for statistic purposes only
 	   ;; make sure we are on the correct directory.
 	   (default-directory (file-name-directory file))
@@ -228,7 +228,7 @@ defined, or interactivelly called with `prefix-arg'.
 			      (ob:blog-template-dir BLOG)
 			      (ob:blog-style-dir BLOG))
 		      (ob:blog-publish-dir BLOG))
-      (run-hooks o-blog-after-publish-hook)
+      (run-hooks 'o-blog-after-publish-hook)
       (message (format "Blog %s published in %ss"
 		       file
 		       (format-time-string "%s.%3N"
@@ -425,7 +425,7 @@ headers and body."
 	    (org-mode)
 	    (while (<= 2 (save-match-data (funcall outline-level)))
 	      (org-promote-subtree))
-	    (run-hooks o-blog-html-plugins-hook)
+	    (run-hooks 'o-blog-html-plugins-hook)
 	    (goto-char (point-min))
 	    (when (search-forward-regexp "^\\s-*$" nil t)
 	      (goto-char (match-end 0)))
