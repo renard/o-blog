@@ -161,12 +161,12 @@ The previous snippet would be exported to something similar to:
 <h1>o-blog</h1>
 #+end_src
 
-#+begin_admonition info Information
+#+begin_o_blog_admonition info Information
 [[https://github.com/renard/o-blog][o-blog]] only needs =blog_= prefixed templates as long as they do not need any
 other templates (using =ob:insert-template= function).
 
 All other templates are defined for convenience.
-#+end_admonition
+#+end_o_blog_admonition
 
 
 *** Required templates
@@ -805,7 +805,8 @@ Works only with chrome.
 ** DONE Admonitions						      :usage:
    CLOSED: [2012-01-15 Sun 20:40]
 
-Admonitions are declared in =admonition= blocks. There are 4 types of them:
+Admonitions are declared in =o_blog_admonition= blocks. There are 4 types of
+them:
 
  - info
  - success
@@ -813,13 +814,13 @@ Admonitions are declared in =admonition= blocks. There are 4 types of them:
  - error
 
 #+begin_src org
-  ,#+begin_admonition <TYPE> <title>
+  ,#+begin_o_blog_admonition <TYPE> <title>
   ,Text of the admonition
-  ,#+end_admonition
+  ,#+end_o_blog_admonition
 #+end_src
 
 
-#+begin_admonition error
+#+begin_o_blog_admonition error
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -828,21 +829,10 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_admonition
+#+end_o_blog_admonition
 
 
-#+begin_admonition error Danger
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
-tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
-mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
-dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
-dolor. Nullam tristique diam non turpis. Cras placerat accumsan
-nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
-
-#+end_admonition
-
-#+begin_admonition warning Caution
+#+begin_o_blog_admonition error Danger
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -851,11 +841,9 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_admonition
+#+end_o_blog_admonition
 
-
-
-#+begin_admonition success Tip
+#+begin_o_blog_admonition warning Caution
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -864,9 +852,11 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_admonition
+#+end_o_blog_admonition
 
-#+begin_admonition info Information
+
+
+#+begin_o_blog_admonition success Tip
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -875,5 +865,16 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_admonition
+#+end_o_blog_admonition
+
+#+begin_o_blog_admonition info Information
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_o_blog_admonition
 
