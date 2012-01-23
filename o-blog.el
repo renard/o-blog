@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-23 00:57:16
+;; Last changed: 2012-01-23 01:06:22
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -116,8 +116,7 @@ Each hook is a function that could be called with no parameter."
  - category: category read from \"CATEGORY\" property org
    \"blog\".
 
- - tags: list of tags read from \"tags\" property (comma
-   separated).
+ - tags: list of ob:tags.
 
  - template: template to use for current post read from
    \"TEMPLATE\" property or \"blog_post.html\".

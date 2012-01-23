@@ -256,7 +256,7 @@ Example:
  - =month=: numerical month computed from =timestamp=.
  - =day=: numerical day computed from =timestamp=.
  - =category=: category read from =CATEGORY= property org =blog=.
- - =tags=: list of tags read from =tags= property (comma separated).
+ - =tags=: list of =ob:tags=.
  - =template=: template to use for current post read from =TEMPLATE=
    property or =blog_post.html=.
  - =filepath=: relative path from the blog root directory to the post
@@ -280,6 +280,7 @@ Example:
 Structure used to define a tag:
 
  - =name=: string defying the tag name.
+ - =safe=: web safe tag name for URL.
  - =count=: how many time the tag is used.
  - =size=: the font size in percent.
 
@@ -568,14 +569,16 @@ entry.
 ** DONE How to use tags					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
 
-Tags are useful to classify articles. They are stored in the =tags= property
-for each entries. They are not defined as =org= tags to allows any character
-but comma (",") to be used.
+Tags are useful to classify articles. They are stored as [[http://orgmode.org/manual/Tags.html][org-mode tags]] for
+each entries. To add or modify a tag for a post, just use =C-c C-c= and
+enter the tag value.
 
-To add or modify a tag for a post, just use =C-c C-x p tags= and enter the
-tag value.
+If an article has more than one tag, separate them by a colon (=:=).
 
-If an article has more than one tag, separate them by a comma (","). 
+Special characters used in tags:
+
+  - At sign (=@=) is converted to a dash (=-=).
+  - Underscore (=_=) is converted to a blank (= =).
 
 ** DONE Example of some org syntax				  :usage:org:
    CLOSED: [2012-01-07 Sat 11:23]
