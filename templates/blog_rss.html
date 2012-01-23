@@ -18,7 +18,7 @@
 
     (loop for tag in (ob:post-tags p)
     do (insert (format "<category scheme=\"/tags/%s.html\" term=\"%s\" label=\"%s\"/>"
-    tag tag (capitalize tag))))
+    (ob:tags-safe tag) (ob:tags-name tag) (ob:tags-name tag))))
 
     (insert
     (format "<content type=\"html\">%s</content>" (htmlize-protect-string(ob:post-content-html p)))
