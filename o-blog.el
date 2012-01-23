@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-23 01:06:22
+;; Last changed: 2012-01-23 18:12:13
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -47,6 +47,16 @@ Each hook is a function that could be called with no parameter."
 Each hook is a function that could be called with no parameter."
   :group 'o-blog
   :type 'hook)
+
+(defcustom o-blog-html-plugins-hook '(o-blog-publish-admonition)
+  "Hook to be run before exporting an entry to HTML in
+`ob-get-entry-text'. Each hook is a function that could be called
+with no parameter.
+
+This is a good place for o-blog parser plugins."
+  :group 'o-blog
+  :type 'hook)
+
 
 
 
@@ -398,75 +408,6 @@ MARKERS is a list of entries given by `org-map-entries'."
 		    ))))
 
 
-(defun o-blog-publish-admonition ()
-  "Publish an admonition in HTML mode.
-
-Admonitions are specially marked topics that can appear
-anywhere an ordinary body element can. They contain arbitrary
-body elements. Typically, an admonition is rendered as an offset
-block in a document, sometimes outlined or shaded, with a title
-matching the admonition type. For example:
-
-#+BEGIN_ADMONITION type title
-Some text inside the admonition
-#+END_ADMONITION
-
-Where type can be on of:
-
-  - info
-  - success
-  - warning
-  - error
-
-This directive might be rendered something like this:
-
-+---------------------------------+
-| Title                           |
-|                                 |
-| Some text inside the admonition |
-+---------------------------------+
-
-In an HTML context, previous directive would be expanded as:
-
-#+BEGIN_HTML
-<div class=\"alert-message block-message warning type\">
-<p class=\"admonition-header\"><strong>Title</strong></p>
-#+END_HTML
-Some text inside the admonition
-#+BEGIN_HTML
-<div>
-#+END_HTML
-"
-  (save-match-data
-    (save-excursion
-      (goto-char (point-min))
-      (let ((case-fold-search t))
-	(while (re-search-forward "^#\\+BEGIN_ADMONITION:?[ \t]+\\(info\\|success\\|warning\\|error\\)[ \t]*\\(.*\\)" nil t)
-	  (let* ((admo-type (match-string 1))
-		 (admo-title (match-string 2)))
-	    (beginning-of-line)
-	    (insert
-	     "#+BEGIN_HTML\n"
-	     (format
-	      "<div class=\"alert-message block-message warning %s\">" admo-type)
-	     (when admo-title
-	       (format "<p class=\"admonition-header\"><strong>%s</strong></p>"
-		       admo-title))
-	     "\n#+END_HTML\n")
-	    (delete-region (point) (point-at-eol))
-	    (unless
-		(re-search-forward "^#\\+END_ADMONITION" nil t)
-	      (error "#+END_ADMONITION not found in %s@%s." (buffer-file-name)
-		     (point)))
-	    (beginning-of-line)
-	    (insert
-	     "\n#+BEGIN_HTML\n"
-	     "</div>"
-	     "\n#+END_HTML\n")
-	    (delete-region (point) (point-at-eol))))))))
-(add-to-list
- 'org-structure-template-alist
- '("oa" "#+begin_admonition ?\n\n#+end_admonition"))
 
 (defun ob-get-entry-text ()
   "Return entry text from point with not properties.
@@ -484,8 +425,7 @@ headers and body."
 	    (org-mode)
 	    (while (<= 2 (save-match-data (funcall outline-level)))
 	      (org-promote-subtree))
-	    (o-blog-publish-admonition)
-
+	    (run-hooks o-blog-html-plugins-hook)
 	    (goto-char (point-min))
 	    (when (search-forward-regexp "^\\s-*$" nil t)
 	      (goto-char (match-end 0)))
