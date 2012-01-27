@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-01-23 18:45:27
+;; Last changed: 2012-01-27 18:25:01
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -387,7 +387,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 				     ;; file path is nil when exporting static page?
 				     (or filepath ".") f)))
 		 (mkdir (file-name-directory target) t)
-		 (copy-file f target t t t t)))
+		 (copy-file f target t t t)))
 
 
       (make-ob:post :title title
@@ -648,12 +648,15 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 - downcasing all letters
 - trimming leading and tailing \"-\""
   (loop for c across s
+	with cd
 	with gc
 	with ret
-	do (setf gc (get-char-code-property c 'general-category))
+	do (progn
+	     (setf gc (get-char-code-property c 'general-category))
+	     (setf cd (get-char-code-property c 'decomposition)))
 	if (or (member gc '(Lu Ll Nd)) (= ?- c))
-	collect (downcase (char-to-string
-			   (car (get-char-code-property c 'decomposition))))
+	collect (downcase
+		 (char-to-string (if cd (car cd)  c)))
 	into ret
 	else if (member gc '(Zs))
 	collect "-" into ret
