@@ -131,6 +131,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[http://twitter.github.com/bootstrap/][bootstrap]] support
   - [[http://lesscss.org/][lesscss]] support
   - [[http://jquery.com/][JQuery]] support
+  - [[https://github.com/ericmmartin/simplemodal][JQuery Simplemodal]] support
   - HTML5 / CSS3 ready
 - Blog
   - Static pages
