@@ -306,12 +306,27 @@ article {
 
 	.modal {
 	    .resizable();
+	    max-height: 50%;
+	    width: 650px;
+	    .modal-header {
+		.close {
+		    cursor: pointer;
+		}
+	    }
 	    .modal-body {
 		padding: 0;
 		pre {
 		    margin: 0;
-		    &.src {
-			.buffer-overlay();
+		    padding: 1em;
+		    .linenums {
+			padding-left: 1em;
+			margin-top:0;
+			margin-bottom:0;
+			li {
+			    padding-left: 1em;
+			    background: #2e3436;
+			    color: #eeeeec;
+			}
 		    }
 		}
 	    }
