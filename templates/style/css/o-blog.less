@@ -25,6 +25,14 @@
     border: 1px solid @grayLighter;
 }
 
+.buffer-overlay() {
+    background: #2e3436;
+    color: #eeeeec;
+}
+
+
+
+
 .navtags(@fontSize) {
     nav {
 	&.tags{
@@ -276,17 +284,6 @@ article {
 
 	img {.center-block()}
 
-	.o-blog-source {
-	    .title {
-		color: @linkColor;
-		cursor: pointer;
-	    }
-	    .content {
-		display: none;
-	    }
-	}
-
-
 	pre {
 	    &.src {
 		.buffer();
@@ -305,6 +302,22 @@ article {
 		.buffer();
 	    }
 	}
+
+
+	.modal {
+	    .resizable();
+	    .modal-body {
+		padding: 0;
+		pre {
+		    margin: 0;
+		    &.src {
+			.buffer-overlay();
+		    }
+		}
+	    }
+	}
+
+
 
 	hr {
 	    width: 50%;
@@ -380,6 +393,7 @@ article {
     .navtags(85%);
 
 }
+
 
 #debug {
     table {

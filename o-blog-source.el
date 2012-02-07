@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-02-07 14:41:11
+;; Last changed: 2012-02-07 20:32:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,7 +21,8 @@
 
 
 (defcustom o-blog-source-header
-  "<div class=\"o-blog-source\"><div class=\"title\">%s</div><div style=\"display:none;\" class=\"content\">"
+  (concat "<div class=\"btn\" data-toggle=\"modal\" data-target=\"#%s\" >%s</div>"
+	  "<div class=\"modal fade hide\" id=\"%s\"><div class=\"modal-header\">%s</div><div class=\"modal-body\">")
   "HTML fragment header to be used when publishing an source
 using `o-blog-publish-source' using `format' with source
 type as parameter. The source should be closed with
@@ -70,6 +71,8 @@ The default replacement text could be changed using variables
 		"^#\\+O_BLOG_SOURCE:?[ \t]+\\(.+?\\)\\([ \t]\+\\(.+\\)\\)?$"
 		nil t)
 	  (let* ((src-file (match-string 1))
+		 (src-file-name (file-name-nondirectory src-file))
+		 (src-file-safe (ob:sanitize-string src-file-name))
 		 (mode (match-string 2)))
 
 	    (beginning-of-line)
@@ -77,7 +80,9 @@ The default replacement text could be changed using variables
 
 	    (insert
 	     "#+BEGIN_HTML\n"
-	     (format o-blog-source-header src-file)
+	     (format o-blog-source-header
+		     src-file-safe src-file-name src-file-safe
+		     src-file-name)
 	     "\n#+END_HTML\n"
 
 	     (format
