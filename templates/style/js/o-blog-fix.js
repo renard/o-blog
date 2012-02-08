@@ -23,5 +23,12 @@ $(document).ready(
 	    if ( $(this).text() == '\n') $(this).addClass('divider')
 	});
 
+	$('div#page').css('min-height', $(window).innerHeight() -
+			  $('.footer').outerHeight() -
+			  $('div.navbar-fixed-top.navbar').outerHeight() -
+			  parseInt($('div#page').css('padding-top')) -
+			  parseInt($('div#page').css('padding-bottom')));
+
+
     }
 )
