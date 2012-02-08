@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-02-07 20:32:25
+;; Last changed: 2012-02-08 01:51:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,8 +21,8 @@
 
 
 (defcustom o-blog-source-header
-  (concat "<div class=\"btn\" data-toggle=\"modal\" data-target=\"#%s\" >%s</div>"
-	  "<div class=\"modal fade hide\" id=\"%s\"><div class=\"modal-header\">%s</div><div class=\"modal-body\">")
+  (concat "<div class=\"o-blog-source\"><a class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#%s\" >%s</a></div>"
+	  "<div class=\"modal fade hide\" id=\"%s\"><div class=\"modal-header\"><a class=\"close\" data-dismiss=\"modal\">×</a><h3>%s</h3></div><div class=\"modal-body\">")
   "HTML fragment header to be used when publishing an source
 using `o-blog-publish-source' using `format' with source
 type as parameter. The source should be closed with
@@ -108,6 +108,6 @@ The default replacement text could be changed using variables
 (add-to-list
  'org-structure-template-alist
  '("os" "#+o_blog_source ?\n"))
-
+(add-hook 'o-blog-html-plugins-hook 'o-blog-publish-source)
 
 (provide 'o-blog-source)
