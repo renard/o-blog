@@ -2,19 +2,19 @@
       <footer class="footer">
 	<div class="container">
 	  <div class="row">
-	    <section class="span4">
+	    <section class="span3">
 	      <h1>About</h1>
 	      <address>
 		<lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
 	      </address>
 	    </section>
-	    <nav id="links" class="span4">
+	    <nav id="links" class="span3">
 	      <h1>Links</h1>
 	      <ul>
 		<lisp>(ob:insert-template "nav_links.html")</lisp>
 	      </ul>
 	    </nav>
-	    <nav id="archives" class="span4">
+	    <nav id="archives" class="span3">
 	      <h1>Archives</h1>
 	      <ul>
 		<lisp>
@@ -27,7 +27,7 @@
 		</lisp>
 	      </ul>
 	    </nav>
-	    <nav class="tags span4">
+	    <nav class="tags span3">
 	      <h1>Tags</h1>
 	      <lisp>(ob:insert-template "nav_tag-cloud.html")</lisp>
 	    </nav>
@@ -38,12 +38,5 @@
 	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
 	</div>
       </footer>
-      <script>
-	$('[data-dropdown] ul ul').addClass('dropdown-menu');
-	$('[data-dropdown] ul ul').parent().addClass('menu');
-	$('[data-dropdown] ul li.menu > a').addClass('menu');
-	$('.dropdown-menu li').each(function() { if ( $(this).text() == '\n') $(this).addClass('divider')});
-	$('[data-dropdown]').dropdown();
-      </script>
 </body>
 </html>
