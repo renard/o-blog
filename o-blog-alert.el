@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-02-09 10:40:02
+;; Last changed: 2012-02-09 10:42:07
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -117,6 +117,6 @@ The default replacement text could be changed using variables
 (add-to-list
  'org-structure-template-alist
  '("oa" "#+begin_o_blog_alert ?\n\n#+end_o_blog_alert"))
-(add-hook 'o-blog-html-plugins-hook 'o-blog-alert)
+(add-hook 'o-blog-html-plugins-hook 'o-blog-publish-alert)
 
 (provide 'o-blog-alert)
