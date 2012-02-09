@@ -896,3 +896,105 @@ nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
 #+end_o_blog_alert
 
+** DONE Using modal source code				    :usage:Bootstrap:
+   CLOSED: [2012-02-09 Thu 23:13]
+
+The [[http://twitter.github.com/bootstrap/javascript.html#modals][Modal]] bootstrap script can be used to display the content of an external
+file in a modal window. The magic line is:
+
+#+begin_src org
+  ,#+O_BLOG_SOURCE: path/to/file [mode]
+#+end_src
+
+The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
+- The mandatory =/path/to/file= which is the path to the file from which
+  content should be read.
+- The optional =mode= which could be determined by if omitted.
+
+Here is an example of the =README.asciidoc= file:
+
+#+o_blog_source ../README.asciidoc adoc
+
+** DONE Adding icons					    :usage:Bootstrap:
+   CLOSED: [2012-02-10 Fri 00:19]
+
+Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
+italic style:
+
+#+html: <div class="row"><div class="span6">
+*Source example*
+#+begin_src org
+  ,/icon-calendar/ calendar  
+#+end_src
+#+html: </div><div class="span6">
+*Rendered output*
+/icon-calendar/ calendar
+#+html: </div></div>
+
+This could also be used for the top /navbar/ using something like:
+
+#+html: <div class="row"><div class="span6">
+*Source example*
+
+
+#+begin_src org
+  
+  ,- [[#][/icon-book icon-white/ Documentation]]
+  ,  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
+  ,  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
+  ,  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
+  ,  -
+  ,  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
+  
+  ,- [[#][/icon-file icon-white/ Blog]]
+  ,  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 2)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 3)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 4)){/lisp}]]
+  
+  ,- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+  
+#+end_src
+
+#+html: </div><div class="span6">
+*Rendered output*
+
+
+#+begin_html
+<div class="navbar">
+<div class="navbar-inner">
+<div class="container">
+<div class="nav-collapse">
+#+end_html
+
+- [[#][/icon-book icon-white/ Documentation]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
+  -
+  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
+
+- [[#][/icon-file icon-white/ Blog]]
+  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 2)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 3)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 4)){/lisp}]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+
+#+begin_html
+</div>
+</div>
+</div>
+</div>
+#+end_html
+
+Please note the blank line between menu items. if blanks are omitted, the
+rendered result might be damaged.
+
+#+html: </div></div>
+
+
+
