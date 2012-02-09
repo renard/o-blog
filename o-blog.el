@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-02-07 22:54:25
+;; Last changed: 2012-02-09 01:36:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -433,7 +433,7 @@ headers and body."
 	    (when (search-forward-regexp "^\\s-*$" nil t)
 	      (goto-char (match-end 0)))
 	    (save-excursion
-	      (insert "#+OPTIONS: H:5 num:nil  toc:8 d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
+	      (insert "#+OPTIONS: H:7 num:nil  toc:8 d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
 	    (buffer-substring-no-properties (point) (point-max))))))))
 
 
