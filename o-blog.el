@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-02-09 01:36:03
+;; Last changed: 2012-02-09 10:28:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -24,7 +24,7 @@
 (require 'org-xhtml nil t)
 
 (mapcar (lambda (x) (require (intern (format "o-blog-%s" x)) nil t))
-	'("admonition" "copy-files" "source"))
+	'("alert" "copy-files" "source"))
 
 
 
@@ -51,7 +51,7 @@ Each hook is a function that could be called with no parameter."
   :group 'o-blog
   :type 'hook)
 
-(defcustom o-blog-html-plugins-hook '(o-blog-publish-admonition)
+(defcustom o-blog-html-plugins-hook nil
   "Hook to be run before exporting an entry to HTML in
 `ob-get-entry-text'. Each hook is a function that could be called
 with no parameter.
