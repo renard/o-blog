@@ -1,10 +1,12 @@
 <lisp>(ob:insert-template "page_header.html")</lisp>
 <article>
   <header class="article-header">
-    <h1>Archives for <lisp>(format "%.4d / %.d2 (%s)" YEAR MONTH CATEGORY)</lisp></h1>
-    <nav class="articles-nav">
-      <ul><li class="prev"><a href="../index.html">Up</a></li></ul>
-    </nav>
+    <div class="well">
+      <h1>Archives for <lisp>(format "%.4d / %.d2 (%s)" YEAR MONTH CATEGORY)</lisp></h1>
+      <nav class="pager">
+	<ul><li class="previous"><a href="../index.html"><i class="icon-chevron-up"></i>&nbsp;Up</a></li></ul>
+      </nav>
+    </div>
   </header>    
   <div class="article-content">
     <nav class="archives">
