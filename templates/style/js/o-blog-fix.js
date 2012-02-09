@@ -6,7 +6,7 @@ $(document).ready(
     function() {
 
 	/* create the top menu bar */
-	var dropdown = $('.navbar-fixed-top .nav-collapse > ul li ul').parent();
+	var dropdown = $('.navbar-inner .nav-collapse > ul li ul').parent();
 	dropdown.parent().addClass("nav");
 
 	/* find sub menu items */
