@@ -1,5 +1,5 @@
 #+TITLE: o-blog
-#+DESCRIPTION: standalone blogging system for org-mode
+#-DESCRIPTION: standalone blogging system for org-mode
 #+DATE:
 
 #+STARTUP: logdone
@@ -84,7 +84,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :SNIPPET:  t
   :END:
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/index.html][Home]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/index.html][/icon-home icon-white/ Home]]
 - [[file:{lisp}(ob:path-to-root){/lisp}/features.html][Features]]
 - [[#][Documentation]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
@@ -224,7 +224,7 @@ available using a =(type-slot variable)= form.
 
 *** Structures
 
-**** =ob:blog=
+**** Structures: =ob:blog=
 
 Structure used to define a blog:
 
@@ -254,7 +254,7 @@ Example:
 (ob:blog-title BLOG)
 #+end_src
 
-**** =ob:post=
+**** Structures: =ob:post=
 
  - =id=: the post numerical id. Posts are sort by reversed chronological
    order. The most recent post get the id 0.
@@ -284,7 +284,7 @@ Example:
 (ob:post-content-html POST)
 #+end_src
 
-**** =ob:tags=
+**** Structures: =ob:tags=
 
 Structure used to define a tag:
 
@@ -333,7 +333,7 @@ to be used withing templates. These functions are prefixed by =ob:=.
 
 Descriptions are taken from function docstrings.
 
-*** =(ob:get-posts &optional PREDICATE COUNT SORTFUNC COLLECT)=
+*** Function: =(ob:get-posts &optional PREDICATE COUNT SORTFUNC COLLECT)=
 
 Return posts (from =POSTS= as defined in =org-publish-blog=) matching
 =PREDICATE=. Limit to =COUNT= results if defined and sorted using
@@ -391,7 +391,7 @@ For archive navigation:
   </nav>
 #+end_src
 
-*** =(ob:get-post-by-id ID)=
+*** Function: =(ob:get-post-by-id ID)=
 
 Return post which id is =ID=.
 
@@ -425,7 +425,7 @@ Posts navigation:
   </nav>
 #+end_src
 
-*** =(ob:get-snippet NAME)=
+*** Function: =(ob:get-snippet NAME)=
 
 Get first snippet matching =NAME=.
 
@@ -440,7 +440,7 @@ Insert the /About/ section in page footer:
   </address>
 #+end_src
 
-*** =(ob:get-header HEADER &optional ALL)=
+*** Function: =(ob:get-header HEADER &optional ALL)=
 
 Get =HEADER= from blog buffer as defined in =BLOG= global context variable.
 
@@ -454,7 +454,7 @@ Get the last updated header for rss export:
   <updated><lisp>(ob:format-date (ob:get-header "DATE"))</lisp></updated>
 #+end_src
 
-*** =(ob:insert-template TEMPLATE)=
+*** Function: =(ob:insert-template TEMPLATE)=
 
 Insert =TEMPLATE= in current buffer.
 
@@ -466,7 +466,7 @@ Insert html header:
   <lisp>(ob:insert-template "page_header.html")</lisp>
 #+end_src
 
-*** =(ob:format-date DATE &optional FORMAT LOCALE)=
+*** Function: =(ob:format-date DATE &optional FORMAT LOCALE)=
 
 Format =DATE= using =FORMAT= and =LOCALE=.
 
@@ -609,7 +609,16 @@ This is a level 3
 
 This is a level 4
 
-Up to 4 levels of indentation could be used.
+******* Level 5
+
+This is a level 5
+
+******** Level 6
+
+This is a level 6
+
+
+Up to 6 levels of indentation could be used.
 
 *** Praragaphs
 
