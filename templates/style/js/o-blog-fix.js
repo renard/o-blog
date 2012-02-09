@@ -6,23 +6,25 @@ $(document).ready(
     function() {
 
 	/* create the top menu bar */
-	var menu=$('.navbar-fixed-top .nav-collapse ul:first-child')
-	menu.addClass("nav");
+	var dropdown = $('.navbar-fixed-top .nav-collapse > ul li ul').parent();
+	dropdown.parent().addClass("nav");
 
 	/* find sub menu items */
-	menu.find('li ul').parent().addClass("dropdown");
+	dropdown.addClass("dropdown");
 
 	/* and add dropdown features */
-	menu.find('li.dropdown > a').addClass('dropdown-toggle')
+	dropdown.find('> a').addClass('dropdown-toggle')
 	    .attr("data-toggle", "dropdown")
-	    .append(' <b class="caret"></b>')
-	    .parent().find('ul').addClass("dropdown-menu");
+	    .append(' <b class="caret"></b>');
+
+	dropdown.find('> ul').addClass("dropdown-menu");
 
 	/* Add divider class if menu item is empty */
-	menu.find('.dropdown-menu li').each(function() {
+	dropdown.parent().find('.dropdown-menu li').each(function() {
 	    if ( $(this).text() == '\n') $(this).addClass('divider')
 	});
 
+	/* Compute page min height */
 	$('div#page').css('min-height', $(window).innerHeight() -
 			  $('#footer').outerHeight() -
 			  $('div.navbar-fixed-top.navbar').outerHeight() -

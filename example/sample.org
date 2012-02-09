@@ -85,23 +85,31 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :END:
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.html][/icon-home icon-white/ Home]]
-- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][Features]]
-- [[#][Documentation]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
+
+- [[#][/icon-book icon-white/ Documentation]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
   -
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
-- [[#][Blog]]
+
+- [[#][/icon-file icon-white/ Blog]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 2)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 3)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 4)){/lisp}]]
-- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tags]]
-- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
+
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
-- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][Changelog]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
+
 - [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
 
 * Changelog
@@ -131,7 +139,6 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[http://twitter.github.com/bootstrap/][bootstrap]] support
   - [[http://lesscss.org/][lesscss]] support
   - [[http://jquery.com/][JQuery]] support
-  - [[https://github.com/ericmmartin/simplemodal][JQuery Simplemodal]] support
   - HTML5 / CSS3 ready
 - Blog
   - Static pages
@@ -143,6 +150,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - Publish directly to the webserver (using tramp)
 - [[http://twitter.github.com/bootstrap/][Bootstrap]] extra
   - Alert boxes
+  - Icons ([[http://glyphicons.com/][glyphicons]]) support
 
 ** Templates
   :PROPERTIES:
