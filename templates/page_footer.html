@@ -1,12 +1,10 @@
       </div>
-      <footer class="footer">
+      <div id="footer">
 	<div class="container">
 	  <div class="row">
 	    <section class="span3">
 	      <h1>About</h1>
-	      <address>
-		<lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
-	      </address>
+	      <lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
 	    </section>
 	    <nav id="links" class="span3">
 	      <h1>Links</h1>
@@ -37,6 +35,6 @@
 	  <lisp>(ob:post-content-html (ob:get-snippet "Copyright"))</lisp>
 	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
 	</div>
-      </footer>
+      </div>
 </body>
 </html>
