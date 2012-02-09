@@ -141,8 +141,8 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - Publication
   - Both synchrone and asynchrone publication
   - Publish directly to the webserver (using tramp)
-- [[http://orgmode.org/][Org-mode]] extra
-  - Messages box such as admonition
+- [[http://twitter.github.com/bootstrap/][Bootstrap]] extra
+  - Alert boxes
 
 ** Templates
   :PROPERTIES:
@@ -162,12 +162,12 @@ The previous snippet would be exported to something similar to:
 <h1>o-blog</h1>
 #+end_src
 
-#+begin_o_blog_admonition info Information
+#+begin_o_blog_alert info Information
 [[https://github.com/renard/o-blog][o-blog]] only needs =blog_= prefixed templates as long as they do not need any
 other templates (using =ob:insert-template= function).
 
 All other templates are defined for convenience.
-#+end_o_blog_admonition
+#+end_o_blog_alert
 
 
 *** Required templates
@@ -812,10 +812,10 @@ Works only with chrome.
   ,#+HTML: </details>
 #+end_src
 
-** DONE Admonitions						      :usage:
+** DONE Alerts 							      :usage:
    CLOSED: [2012-01-15 Sun 20:40]
 
-Admonitions are declared in =o_blog_admonition= blocks. There are 4 types of
+Alerts are declared in =o_blog_alert= blocks. There are 4 types of
 them:
 
  - info
@@ -824,13 +824,13 @@ them:
  - error
 
 #+begin_src org
-  ,#+begin_o_blog_admonition <TYPE> <title>
-  ,Text of the admonition
-  ,#+end_o_blog_admonition
+  ,#+begin_o_blog_alert <TYPE> <title>
+  ,Text of the alert
+  ,#+end_o_blog_alert
 #+end_src
 
 
-#+begin_o_blog_admonition error
+#+begin_o_blog_alert error
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -839,21 +839,10 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_o_blog_admonition
+#+end_o_blog_alert
 
 
-#+begin_o_blog_admonition error Danger
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
-tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
-mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
-dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
-dolor. Nullam tristique diam non turpis. Cras placerat accumsan
-nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
-
-#+end_o_blog_admonition
-
-#+begin_o_blog_admonition warning Caution
+#+begin_o_blog_alert error Danger
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -862,11 +851,9 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_o_blog_admonition
+#+end_o_blog_alert
 
-
-
-#+begin_o_blog_admonition success Tip
+#+begin_o_blog_alert warning Caution
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -875,9 +862,11 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_o_blog_admonition
+#+end_o_blog_alert
 
-#+begin_o_blog_admonition info Information
+
+
+#+begin_o_blog_alert success Tip
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
 tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
@@ -886,5 +875,16 @@ dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
 dolor. Nullam tristique diam non turpis. Cras placerat accumsan
 nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
-#+end_o_blog_admonition
+#+end_o_blog_alert
+
+#+begin_o_blog_alert info Information
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+end_o_blog_alert
 
