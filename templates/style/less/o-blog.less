@@ -119,6 +119,14 @@ html {
 	}
 
 
+	.o-blog-source {
+	    display: inline-block;
+	    .btn {
+		margin-top: @baseLineHeight / 4;
+		margin-bottom: @baseLineHeight / 4;
+	    }
+	}
+
 	#footnotes {
 	    min-height: @baseLineHeight;
 	    padding-left: @baseLineHeight;
@@ -151,22 +159,20 @@ html {
 
     }
 
-    pre {
-	&.src {
-	    .buffer();
-	    span {
-		&.coderef-off { }
-		&.linenr {
-		    font-style: italic;
-		    font-weight: bold;
-		}
-		&.code-highlighted {background: darkolivegreen;}
-		
+    .modal {
+	.resizable();
+    }
+
+    pre.src, pre.example, .modal-body > pre {
+	.buffer();
+	span {
+	    &.coderef-off { }
+	    &.linenr {
+		font-style: italic;
+		font-weight: bold;
 	    }
-	}
-	
-	&.example {
-	    .buffer();
+	    &.code-highlighted {background: darkolivegreen;}
+	    
 	}
     }
 
@@ -199,6 +205,8 @@ html {
     #gradient > .vertical(@navbarBackgroundHighlight, @black);
     color: darken(@gray, 2%);
     font-size: 85%;
+
+    padding-top: @baseLineHeight * 3;
 
     a {
 	color: lighten(@gray, 15%);
