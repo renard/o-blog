@@ -921,19 +921,33 @@ Here is an example of the =README.asciidoc= file:
 Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
 italic style:
 
-#+html: <div class="row"><div class="span6">
+#+BEGIN_HTML
+<div class="row"><div class="span5 span5">
+#+END_HTML
+
+
 *Source example*
+
 #+begin_src org
   ,/icon-calendar/ calendar  
 #+end_src
-#+html: </div><div class="span6">
+
+#+o_blog_row_column 3 -3
+
 *Rendered output*
+
 /icon-calendar/ calendar
-#+html: </div></div>
+
+#+end_o_blog_row
+
+
 
 This could also be used for the top /navbar/ using something like:
 
-#+html: <div class="row"><div class="span6">
+#+BEGIN_HTML
+<div class="row"><div class="span6 span6">
+#+END_HTML
+
 *Source example*
 
 
@@ -956,8 +970,7 @@ This could also be used for the top /navbar/ using something like:
   ,- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
   
 #+end_src
-
-#+html: </div><div class="span6">
+#+o_blog_row_column 6
 *Rendered output*
 
 
@@ -994,7 +1007,61 @@ This could also be used for the top /navbar/ using something like:
 Please note the blank line between menu items. if blanks are omitted, the
 rendered result might be damaged.
 
-#+html: </div></div>
+#+BEGIN_HTML
+</div></div>
+#+END_HTML
 
 
+
+** DONE Using Bootstrap grid				    :usage:Bootstrap:
+   CLOSED: [2012-02-10 Fri 01:19]
+
+[[http://twitter.github.com/bootstrap/scaffolding.html][Bootstrap scaffolding]] could be defined using both =#+begin_o_blog_row= and
+=#+end_o_blog_row= directives (or =<og= =TAB= shortcut). A new column could
+be started using =#+o_blog_row_column= single directive (or =<ogr= =TAB=
+shortcut).
+
+
+#+begin_o_blog_row 6 0 show-grid
+*Example*
+
+#+begin_src org
+  ,#+begin_o_blog_row 2 -1 show-grid
+  ,Column 1
+  ,#+o_blog_row_column 2
+  ,Column 2
+  ,#+end_o_blog_row
+#+end_src
+
+
+#+o_blog_row_column 6
+
+*Output*
+
+#+begin_o_blog_row 2 -1 show-grid
+
+Column 1
+
+#+o_blog_row_column 2 
+
+Column 2
+
+#+end_o_blog_row
+
+#+end_o_blog_row
+
+
+The syntax is:
+
+#+begin_src org
+  ,#+begin_o_blog_row SPAN OFFSET GRID-CLASS
+  ,Column 1
+  ,#+o_blog_row_column SPAN OFFSET
+  ,Column 2
+  ,...
+  ,#+o_blog_row_column SPAN OFFSET
+  ,Column n
+  ,#+end_o_blog_row
+  
+#+end_src
 
