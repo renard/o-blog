@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-02-10 20:29:53
+;; Last changed: 2012-02-10 23:38:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -88,9 +88,8 @@ The default replacement text could be changed using variables
 	      (delete-region (point) (point-at-eol))
 
 	      (save-excursion
-		(goto-char (point-max))
 		(unless
-		    (re-search-backward "^#\\+END_O_BLOG_ROW" nil t)
+		    (re-search-forward "^#\\+END_O_BLOG_ROW" nil t)
 		  (error "#+END_O_BLOG_ROW not found in %s@%s." (buffer-file-name)
 			 (point)))
 		(beginning-of-line)
