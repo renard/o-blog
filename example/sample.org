@@ -921,9 +921,7 @@ Here is an example of the =README.asciidoc= file:
 Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
 italic style:
 
-#+BEGIN_HTML
-<div class="row"><div class="span5 span5">
-#+END_HTML
+#+begin_o_blog_row 6
 
 
 *Source example*
@@ -932,7 +930,7 @@ italic style:
   ,/icon-calendar/ calendar  
 #+end_src
 
-#+o_blog_row_column 3 -3
+#+o_blog_row_column 6
 
 *Rendered output*
 
@@ -944,12 +942,9 @@ italic style:
 
 This could also be used for the top /navbar/ using something like:
 
-#+BEGIN_HTML
-<div class="row"><div class="span6 span6">
-#+END_HTML
+#+begin_o_blog_row 6
 
 *Source example*
-
 
 #+begin_src org
   
@@ -970,7 +965,9 @@ This could also be used for the top /navbar/ using something like:
   ,- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
   
 #+end_src
+
 #+o_blog_row_column 6
+
 *Rendered output*
 
 
@@ -1007,9 +1004,8 @@ This could also be used for the top /navbar/ using something like:
 Please note the blank line between menu items. if blanks are omitted, the
 rendered result might be damaged.
 
-#+BEGIN_HTML
-</div></div>
-#+END_HTML
+#+end_o_blog_row
+
 
 
 
