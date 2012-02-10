@@ -19,6 +19,16 @@
   :PAGE:     index.html
   :END:
 
+#+begin_o_blog_row 6
+
+#+HTML: <p style="font-size: 400%;"><br/>o-blog<br/></p>
+
+
+#+HTML: <p style="font-size: 150%;"><br/><br/>Stand alone blog publication too for <a href="http://orgmode.org/">org-mode</a>.</p>
+
+
+#+o_blog_row_column 6
+
 This is a sample website to show how to use [[https://github.com/renard/o-blog][o-blog]].
 
 First you need:
@@ -28,9 +38,15 @@ First you need:
 
 If you don't have them, you should install them fist.
 
+
+#+end_o_blog_row
+
+
 ** Setup
 
-*** Using =el-get=
+#+begin_o_blog_row 6
+
+*Using el-get*
 
 If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
 is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
@@ -38,7 +54,9 @@ is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
 If you are using =el-get= 4 or greater, you only need to type: =M-x
 el-get-install o-blog=.
 
-*** Manual setup
+#+o_blog_row_column 5
+
+*Manual setup*
 
 Start by cloning the /git/ repository from [[http://github.com][Github]].
 
@@ -53,6 +71,9 @@ And add following to your =~/.emacs.d/init.el= file:
   (add-to-list 'load-path "~/.emacs.d/o-blog")
   (require 'o-blog)
 #+end_src
+
+#+end_o_blog_row
+
 
 ** Publish
 
