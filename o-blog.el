@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-02-09 10:28:17
+;; Last changed: 2012-02-10 23:55:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -95,7 +95,11 @@ This is a good place for o-blog parser plugins."
    directive.
 
  - description: blog description defined by the
-   \"#+DESCRIPTION:\" header directive."
+   \"#+DESCRIPTION:\" header directive.
+
+ - default-category: default category for posts defined by the
+   \"#DEFAULT_CATEGORY:\" header or \"Blog\".
+"
   (file nil :read-only)
   (buffer nil :read-only)
   publish-dir
@@ -106,7 +110,8 @@ This is a good place for o-blog parser plugins."
   snippet-filter
   title
   description
-  post-build-shell)
+  post-build-shell
+  default-category)
 
 
 (defstruct (ob:post (:type list) :named)
@@ -310,6 +315,7 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-title blog) (or (ob:get-header "TITLE") "title"))
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
+    (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
    blog))
 
 
@@ -368,7 +374,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (month (string-to-number (format-time-string "%m" timestamp)))
 	   (day (string-to-number (format-time-string "%d" timestamp)))
 	   
-	   (category (or (org-entry-get (point) "category") "blog"))
+	   (category (or (org-entry-get (point) "category") (ob:blog-default-category BLOG)))
 
 	   (page (org-entry-get (point) "PAGE"))
 

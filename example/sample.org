@@ -7,6 +7,8 @@
 #-TEMPLATE_DIR: templates
 #+URL: http://renard.github.com/o-blog
 
+#+DEFAULT_CATEGORY: Tips
+
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -116,12 +118,12 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   -
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
-- [[#][/icon-file icon-white/ Blog]]
-  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 2)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 3)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 4)){/lisp}]]
+- [[#][/icon-file icon-white/ Tips]]
+  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
 
@@ -977,11 +979,11 @@ This could also be used for the top /navbar/ using something like:
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
   
   ,- [[#][/icon-file icon-white/ Blog]]
-  ,  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
-  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
-  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 2)){/lisp}]]
-  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 3)){/lisp}]]
-  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 4)){/lisp}]]
+  ,  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
   
   ,- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
   
@@ -1007,11 +1009,11 @@ This could also be used for the top /navbar/ using something like:
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
 - [[#][/icon-file icon-white/ Blog]]
-  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"blog"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 0)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 1)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 2)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 3)){/lisp}]]
-  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "blog" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "blog" 4)){/lisp}]]
+  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
 
