@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-02-08 01:51:40
+;; Last changed: 2012-02-10 21:56:54
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,7 +21,7 @@
 
 
 (defcustom o-blog-source-header
-  (concat "<div class=\"o-blog-source\"><a class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#%s\" >%s</a></div>"
+  (concat "<div class=\"o-blog-source\"><a class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#%s\" ><i class=\"icon-file icon-white\"></i>&nbsp;%s</a></div>"
 	  "<div class=\"modal fade hide\" id=\"%s\"><div class=\"modal-header\"><a class=\"close\" data-dismiss=\"modal\">×</a><h3>%s</h3></div><div class=\"modal-body\">")
   "HTML fragment header to be used when publishing an source
 using `o-blog-publish-source' using `format' with source
@@ -68,12 +68,12 @@ The default replacement text could be changed using variables
       (goto-char (point-min))
       (let ((case-fold-search t))
 	(while (re-search-forward
-		"^#\\+O_BLOG_SOURCE:?[ \t]+\\(.+?\\)\\([ \t]\+\\(.+\\)\\)?$"
+		"^#\\+O_BLOG_SOURCE:?[ \t]+\\(.+?\\)\\([ \t]+\\(.+\\)\\)?$"
 		nil t)
 	  (let* ((src-file (match-string 1))
 		 (src-file-name (file-name-nondirectory src-file))
 		 (src-file-safe (ob:sanitize-string src-file-name))
-		 (mode (match-string 2)))
+		 (mode (match-string 3)))
 
 	    (beginning-of-line)
 	    (delete-region (point) (point-at-eol))
@@ -83,25 +83,13 @@ The default replacement text could be changed using variables
 	     (format o-blog-source-header
 		     src-file-safe src-file-name src-file-safe
 		     src-file-name)
-	     "\n#+END_HTML\n"
-
-	     (format
-	      "#+BEGIN_SRC %s\n"
-	      (if mode mode
-		;; remove "-mode" from major mode
-		(substring (symbol-name
-			    (with-temp-buffer
-			      (insert-file-contents src-file)
-			      (set-auto-mode)
-			      major-mode))
-			   0 -5)))
-
 	     (with-temp-buffer
 	       (insert-file-contents src-file)
-	       (buffer-string))
-	     
-	     "#+END_SRC\n"
-	     "#+BEGIN_HTML\n"
+	       (if mode
+		   (funcall (intern (format "%s-mode" mode)))
+		 (set-auto-mode))
+	       (font-lock-fontify-buffer)
+	       (htmlize-region-for-paste (point-min) (point-max)))
 	     o-blog-source-footer
 	     "\n#+END_HTML\n")))))))
 
