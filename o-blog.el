@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-04
-;; Last changed: 2012-02-10 23:55:25
+;; Last changed: 2012-02-11 01:13:18
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -554,9 +554,10 @@ when publishing a page."
 
 (defun ob-write-index()
   "Publish all indexes (default, categories, year, month)"
-  (ob-write-index-to-file "blog_archives.html"
-  			  (format "%s/archives.html"
-  				  (ob:blog-publish-dir BLOG)))
+  (let ((BREADCRUMB "Archives"))
+    (ob-write-index-to-file "blog_archives.html"
+			    (format "%s/archives.html"
+				    (ob:blog-publish-dir BLOG))))
 
   (ob-write-index-to-file "blog_rss.html"
   			  (format "%s/index.xml"
@@ -636,7 +637,8 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 (defun ob-write-tags ()
   "Publish all tags into directory named \"tags\"."
-  (let ((PATH-TO-ROOT ".."))
+  (let ((PATH-TO-ROOT "..")
+	(BREADCRUMB "Tags"))
     (ob-write-index-to-file "blog_tags.html"
 			    (format "%s/tags/index.html"
 				    (ob:blog-publish-dir BLOG)))
