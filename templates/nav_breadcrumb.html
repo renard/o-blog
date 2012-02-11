@@ -1,0 +1,62 @@
+<ul class="breadcrumb">
+  <li><a href="<lisp>(ob:path-to-root)</lisp>/index.html">Home</a> <span class="divider">/</span></li> 
+  <lisp>
+(cond
+ ;; Static page or post
+ ((boundp 'POST)
+  (let ((path (when (ob:post-filepath POST)
+		(split-string (ob:post-filepath POST) "/"))))
+    (loop for p in path
+	  with prev = (ob:path-to-root)
+	  do (progn
+	       (setf prev (format "%s/%s" prev p))
+	       (insert
+		(format
+		 "<li><a href=\"%s/index.html\">%s</a> <span class=\"divider\">/</span></li>"
+		 prev p)))))
+  (unless (and
+	   (string= "index.html" (ob:post-htmlfile POST))
+	   (string= "." (ob:post-path-to-root POST)))
+    (insert
+     (format "<li>%s</li>"
+	     (ob:post-title POST)))))
+
+ ;; archives
+ ((and (boundp 'MONTH) (boundp 'YEAR) (boundp 'CATEGORY))
+  (insert "<li><a href=\"../../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li><a href=\"../../index.html\">%s</a> <span class=\"divider\">/</span></li>"  CATEGORY))
+  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  YEAR))
+  (insert (format "<li>%.2d</li>" MONTH)))
+
+ ((and (boundp 'YEAR) (boundp 'CATEGORY))
+  (insert "<li><a href=\"../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  CATEGORY))
+  (insert (format "<li>%s</li>" YEAR)))
+
+ ((boundp 'CATEGORY)
+  (insert "<li><a href=\"../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li>%s</li>" CATEGORY)))
+
+ ((and
+   ;;(boundp 'template)
+   (string= "blog_archives.html" template))
+  (insert (format "<li>Archives</li>")))
+
+
+ ;; Tags
+ ((boundp 'TAG)
+  (insert "<li><a href=\"index.html\">Tags</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li>%s</li>" (ob:tags-name TAG))))
+
+  ((and
+    ;;(boundp 'template)
+    (string= "blog_tags.html" template))
+  (insert (format "<li>Tags</li>")))
+
+  ((boundp 'BREADCRUMB)
+   (insert (format "<li>%s</li>" BREADCRUMB))))
+
+ 
+  </lisp>
+  <ul>
+
