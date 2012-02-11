@@ -277,6 +277,8 @@ Structure used to define a blog:
  - =title=: Blog title defined by the =#+TITLE:= header directive.
  - =description=: blog description defined by the =#+DESCRIPTION:= header
    directive.
+ - =default-category=: default category for posts  defined by the
+   =#DEFAULT_CATEGORY:= header or =Blog=.
 
 Example:
 
