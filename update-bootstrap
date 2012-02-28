@@ -14,6 +14,5 @@ done
 rm -rf $DST/js/tests $DST/js/README.md
 
 sed -i \
-    -e 's,@iconSpritePath,../img/glyphicons-halflings.png,' \
-    -e 's,@iconWhiteSpritePath,../img/glyphicons-halflings-white.png,' \
+    -e 's,@\(iconSpritePath\|iconWhiteSpritePath\),"@{\1}",' \
     $DST/less/sprites.less
