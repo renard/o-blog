@@ -19,16 +19,16 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
 	<div class="container">
-	  <a class="brand" href="#"><lisp>(ob:blog-title BLOG)</lisp></a>
+	  <a class="brand" href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:blog-title BLOG)</lisp></a>
 	  <div class="nav-collapse">
 	    <lisp>(ob:post-content-html (ob:get-snippet "Navigation"))</lisp>
 	  </div>
 	</div>
       </div>
     </div>
-
-    <div class="container" style="padding-top: 80px;">
-      <lisp>(ob:insert-template "nav_breadcrumb.html")</lisp>
+    <div class="subnav subnav-fixed">
+      <div class="container">
+	<lisp>(ob:insert-template "nav_breadcrumb.html")</lisp>
+      </div>
     </div>
-
     <div id="page" class="container">

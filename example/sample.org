@@ -107,8 +107,6 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :SNIPPET:  t
   :END:
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/index.html][/icon-home icon-white/ Home]]
-
 - [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
 
 - [[#][/icon-book icon-white/ Documentation]]
