@@ -1,0 +1,19 @@
+#!/bin/sh
+
+SRC=$(dirname $0)/bootstrap
+SRC_JS=$SRC/js
+SRC_LESS=$SRC/less
+SRC_IMG=$SRC/img
+
+DST=$(dirname $0)/templates/style/bootstrap
+
+for d in $SRC_JS $SRC_LESS $SRC_IMG; do
+    cp -a $d $DST
+done
+
+rm -rf $DST/js/tests $DST/js/README.md
+
+sed -i \
+    -e 's,@iconSpritePath,../img/glyphicons-halflings.png,' \
+    -e 's,@iconWhiteSpritePath,../img/glyphicons-halflings-white.png,' \
+    $DST/less/sprites.less
