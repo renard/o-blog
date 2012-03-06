@@ -7,6 +7,11 @@ SRC_IMG=$SRC/img
 
 DST=$(dirname $0)/templates/style/bootstrap
 
+SRC_FONT_AWESOME=$(dirname $0)/Font-Awesome/font
+DST_FONT_AWESOME=$(dirname $0)/templates/style/Font-Awesome
+SRC_FONT_AWESOME_LESS=$(dirname $0)/Font-Awesome/less
+
+
 for d in $SRC_JS $SRC_LESS $SRC_IMG; do
     cp -a $d $DST
 done
@@ -16,3 +21,9 @@ rm -rf $DST/js/tests $DST/js/README.md
 sed -i \
     -e 's,@\(iconSpritePath\|iconWhiteSpritePath\),"@{\1}",' \
     $DST/less/sprites.less
+
+mkdir -p $DST_FONT_AWESOME
+cp -a $SRC_FONT_AWESOME $DST_FONT_AWESOME/..
+cp -a $SRC_FONT_AWESOME_LESS $DST_FONT_AWESOME
+
+sed -i  's,@import "sprites.less";,@import "../../Font-Awesome/font-awesome.less";,' $DST/less/bootstrap.less

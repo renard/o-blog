@@ -23,11 +23,13 @@
 
 #+begin_o_blog_row 6
 
-#+HTML: <p style="font-size: 400%;"><br/>o-blog<br/></p>
+#+HTML: <div class="hero-unit">
 
+#+HTML: <h1>o-blog</h1>
 
-#+HTML: <p style="font-size: 150%;"><br/><br/>Stand alone blog publication too for <a href="http://orgmode.org/">org-mode</a>.</p>
+A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]].
 
+#+HTML: </div>
 
 #+o_blog_row_column 6
 
@@ -138,6 +140,13 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-03-06
+  - Add support for Font-Awesome
+
+- 2012-02-28
+  - Switched to bootstrap 2.0.1
+  - Switched to lesscss 1.2.2
+
 - 2012-01-23
   - Change tag system from "Tags" to org tagging system.
 
@@ -158,6 +167,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - Dynamic template system (using lisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging features]]
   - Syntax highlighting for exported code snippets
   - [[http://twitter.github.com/bootstrap/][bootstrap]] support
+  - [[http://fortaweso.me/font-awesome/][Font-Awesome]] support
   - [[http://lesscss.org/][lesscss]] support
   - [[http://jquery.com/][JQuery]] support
   - HTML5 / CSS3 ready
@@ -289,7 +299,7 @@ Example:
 
  - =id=: the post numerical id. Posts are sort by reversed chronological
    order. The most recent post get the id 0.
- - =title=: the post title read from the entry title. 
+ - =title=: the post title read from the entry title.
  - =timestamp=: the post timestamp given by the =CLOSED= property or the
    current time.
  - =year=: numerical year computed from =timestamp=.
@@ -577,28 +587,28 @@ some text. Exporting a blog means publishing all entries with a =DONE=
 A minimal blog file could be something like:
 
 #+begin_src org
-  
+
   ,#+TITLE: Lorem ipsum
   ,#+DESCRIPTION: dolor sit amet
   ,#+DATE:
-  
+
   ,#+STARTUP: logdone
-  
+
   ,#+URL: http://blog.example.com
-  
+
   ,* DONE Lorem ipsum
   ,  CLOSED: [2012-01-07 Sat 00:13]
   ,  :PROPERTIES:
   ,  :tags:     Lorem
   ,  :END:
-  
+
   ,  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
   ,  tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt
   ,  et, mattis eget, convallis nec, purus. Cum sociis natoque penatibus et
   ,  magnis dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec
   ,  vitae dolor. Nullam tristique diam non turpis. Cras placerat accumsan
   ,  nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
-  
+
 #+end_src
 
 Please note the blank line between the properties section and the text itself.
@@ -622,7 +632,7 @@ Special characters used in tags:
 
 ** DONE Example of some org syntax				  :usage:org:
    CLOSED: [2012-01-07 Sat 11:23]
-   
+
 *** Titles
 
 This is a level 1
@@ -950,7 +960,7 @@ italic style:
 *Source example*
 
 #+begin_src org
-  ,/icon-calendar/ calendar  
+  ,/icon-calendar/ calendar
 #+end_src
 
 #+o_blog_row_column 6
@@ -970,23 +980,23 @@ This could also be used for the top /navbar/ using something like:
 *Source example*
 
 #+begin_src org
-  
+
   ,- [[#][/icon-book icon-white/ Documentation]]
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
   ,  -
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
-  
+
   ,- [[#][/icon-file icon-white/ Blog]]
   ,  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
-  
+
   ,- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
-  
+
 #+end_src
 
 #+o_blog_row_column 6
@@ -1061,7 +1071,7 @@ shortcut).
 
 Column 1
 
-#+o_blog_row_column 2 
+#+o_blog_row_column 2
 
 Column 2
 
@@ -1081,6 +1091,5 @@ The syntax is:
   ,#+o_blog_row_column SPAN OFFSET
   ,Column n
   ,#+end_o_blog_row
-  
-#+end_src
 
+#+end_src
