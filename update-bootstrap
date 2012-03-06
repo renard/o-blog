@@ -23,7 +23,7 @@ sed -i \
     $DST/less/sprites.less
 
 mkdir -p $DST_FONT_AWESOME
-cp -a $SRC_FONT_AWESOME $DST_FONT_AWESOME/..
+cp -a $SRC_FONT_AWESOME $DST_FONT_AWESOME
 cp -a $SRC_FONT_AWESOME_LESS $DST_FONT_AWESOME
 
-sed -i  's,@import "sprites.less";,@import "../../Font-Awesome/font-awesome.less";,' $DST/less/bootstrap.less
+sed -i  's,@import "sprites.less";,@import "../../Font-Awesome/less/font-awesome.less";,' $DST/less/bootstrap.less
