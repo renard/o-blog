@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-02-10 21:56:54
+;; Last changed: 2012-03-09 18:49:11
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -86,7 +86,13 @@ The default replacement text could be changed using variables
 	     (with-temp-buffer
 	       (insert-file-contents src-file)
 	       (if mode
-		   (funcall (intern (format "%s-mode" mode)))
+		   (let ((func (intern (format "%s-mode" mode))))
+		     (if (functionp func)
+			 (funcall func)
+		       (warn (concat "Mode %s not found for %s. "
+				     "Consider installing it. "
+				     "No syntax highlight would be bone this time.")
+			     mode src-file)))
 		 (set-auto-mode))
 	       (font-lock-fontify-buffer)
 	       (htmlize-region-for-paste (point-min) (point-max)))
