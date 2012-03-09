@@ -3,15 +3,15 @@
 ;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
-;; Keywords: emacs, 
+;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-02-11 01:13:18
+;; Last changed: 2012-03-09 18:25:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
 
 ;;; Commentary:
-;; 
+;;
 
 
 ;;; Code:
@@ -63,7 +63,7 @@ This is a good place for o-blog parser plugins."
 
 
 
-(defstruct (ob:blog (:type list) :named)
+(defstruct (ob:blog :named)
   "Blog structure
 
  - file: the blog source file (read-only).
@@ -114,7 +114,7 @@ This is a good place for o-blog parser plugins."
   default-category)
 
 
-(defstruct (ob:post (:type list) :named)
+(defstruct (ob:post :named)
   "Post structure
 
  - id: the post numerical id. Posts are sort by reversed
@@ -170,7 +170,7 @@ This is a good place for o-blog parser plugins."
   content-html)
 
 
-(defstruct (ob:tags (:type list) :named)
+(defstruct (ob:tags :named)
   "Tag structure with following slots:
 
  - name: string defying the tag name.
