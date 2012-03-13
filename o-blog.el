@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-09 18:25:04
+;; Last changed: 2012-03-13 17:16:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -28,7 +28,7 @@
 
 
 
-(defconst o-blog-version "0.0" "o-blog version number")
+(defconst o-blog-version "1.0" "o-blog version number")
 
 (defgroup o-blog nil "o-blog customization group"
   :group 'org-export)
