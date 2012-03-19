@@ -99,7 +99,7 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   :SNIPPET:  t
   :END:
 
-This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]] works.
+这是个解释 [[https://github.com/renard/o-blog][o-blog]] 工作机理的博客样例。
 
 ** 导航
   :PROPERTIES:
