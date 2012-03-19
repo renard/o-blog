@@ -1,22 +1,20 @@
 #+TITLE: o-blog
-#-DESCRIPTION: standalone blogging system for org-mode
+#-DESCRIPTION: 使用 org-mode 的独立博客系统
 #+DATE:
 
 #+STARTUP: logdone
 
 #-TEMPLATE_DIR: templates
-#+URL: http://renard.github.com/o-blog
+#+URL: http://exaos.github.com/o-blog
 
 #+DEFAULT_CATEGORY: Tips
-
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
 #+POST_BUILD_SHELL: cmd 3
 #+POST_BUILD_SHELL: cmd 4
 
-
-* Quick start Guide
+* 快速入门指南
   :PROPERTIES:
   :PAGE:     index.html
   :END:
@@ -27,30 +25,29 @@
 
 #+HTML: <h1>o-blog</h1>
 
-A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]].
+使用 [[http://orgmode.org/][org-mode]] 的独立博客系统。
 
 #+HTML: </div>
 
 #+o_blog_row_column 6
 
-This is a sample website to show how to use [[https://github.com/renard/o-blog][o-blog]].
+这是一个演示如何使用 [[https://github.com/renard/o-blog][o-blog]] 的站点。
 
-First you need:
+首先，你需要有：
 
-- [[http://www.gnu.org/s/emacs][emacs]] (I assume you already have it)
-- [[http://orgmode.org/][org-mode]] (same as above)
+- [[http://www.gnu.org/s/emacs][emacs]] (假设你已经有了)
+- [[http://orgmode.org/][org-mode]] (同上)
 
-If you don't have them, you should install them fist.
-
+如果没有这些程序，你应该先安装它们。
 
 #+end_o_blog_row
 
 
-** Setup
+** 设置
 
 #+begin_o_blog_row 6
 
-*Using el-get*
+*使用 el-get*
 
 If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
 is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
@@ -88,8 +85,8 @@ org-publish-blog=. The result site would be published by default in
 See the [[file:blog/index.html][blog]] for more details.
 
 
-* Blog details
-** Copyright
+* 博客详情
+** 版权
   :PROPERTIES:
   :SNIPPET:  t
   :END:
@@ -97,26 +94,26 @@ See the [[file:blog/index.html][blog]] for more details.
 Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%CA%82%C9%9B%E2%9D%A9%2520chezwam%2520%E2%9D%A8%C6%A4%C9%B5%C9%A9%C9%B2%CA%88%E2%9D%A9%2520org][Sébastien Gross]]. Published under the therm of the
 [[http://creativecommons.org/licenses/by-nc-sa/2.0/fr/][Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License]].
 
-** About
+** 关于
   :PROPERTIES:
   :SNIPPET:  t
   :END:
 
 This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]] works.
 
-** Navigation
+** 导航
   :PROPERTIES:
   :SNIPPET:  t
   :END:
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ 特性]]
 
-- [[#][/icon-book icon-white/ Documentation]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
+- [[#][/icon-book icon-white/ 文档]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][模版]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][结构]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][函数]]
   -
-  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][问答]]
 
 - [[#][/icon-file icon-white/ Tips]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
@@ -131,11 +128,11 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ 更新记录]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
 
-* Changelog
+* 更新记录
   :PROPERTIES:
   :PAGE:     changelog.html
   :END:
@@ -150,15 +147,15 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - 2012-01-23
   - Change tag system from "Tags" to org tagging system.
 
-* Documentation
-** Debug
+* 文档
+** 调试
    :PROPERTIES:
    :PAGE:     debug.html
    :TEMPLATE: debug.html
    :END:
 
 
-** Features
+** 特性
   :PROPERTIES:
   :PAGE:     features.html
   :END:
@@ -183,7 +180,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - Alert boxes
   - Icons ([[http://glyphicons.com/][glyphicons]]) support
 
-** Templates
+** 模版
   :PROPERTIES:
   :PAGE:     templates.html
   :END:
@@ -252,7 +249,7 @@ month and the whole archives.
 =page_= prefixed templates used for both html header and footer.
 
 
-** Structures
+** 结构
   :PROPERTIES:
   :PAGE:     structures.html
   :END:
@@ -363,7 +360,7 @@ Some variables may be defined in some functions:
  - =PATH-TO-ROOT= (=string=): (intern use only, use =ob:path-to-root=
    instead) path to blog root used by =ob:path-to-root=.
 
-** Functions
+** 函数
   :PROPERTIES:
   :PAGE:     functions.html
   :END:
@@ -528,7 +525,7 @@ Add a human readable timestamp for a post:
 #+end_src
 
 
-** FAQ
+** 问答
   :PROPERTIES:
   :PAGE:     faq.html
   :END:
@@ -576,8 +573,8 @@ and browse http://localhost:8080
 An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
 complex.
 
-* Blog entries
-** DONE Creating a blog					       :usage:o@blog:
+* 博客条目
+** DONE 创建一个博客条目 				       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
 
 A blog consists of org entries. Each entry has a title, some properties and
@@ -1093,3 +1090,13 @@ The syntax is:
   ,#+end_o_blog_row
 
 #+end_src
+
+* DONE 测试个新条目哦
+  CLOSED: [2012-03-20 二 02:19]
+  - State "DONE"       from ""           [2012-03-20 二 02:19]
+  :PROPERTIES:
+  :tags:     标签2
+  :END:
+
+  这是一个测试条目哟。
+

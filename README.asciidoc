@@ -1,50 +1,45 @@
-= o-blog quick start
+= o-blog 快速入门
 
-How to use https://github.com/renard/o-blog[o-blog].
+如何使用 https://github.com/renard/o-blog[o-blog].
 
-http://renard.github.com/o-blog[Demo site].
+http://renard.github.com/o-blog[演示站点].
 
-== Quick start guide
-First you need:
+== 快速入门指南
+开始之前，你需要有：
 
-- http:www.gnu.org/s/emacs[emacs] (I assume you already have it)
-- http://orgmode.org/[org-mode] (same as above)
+- http:www.gnu.org/s/emacs[emacs] (假设你已经有了)
+- http://orgmode.org/[org-mode] (同上)
 
-If you don't have them, you should install them fist.
+如果没有这些程序，你应该先安装它们。
 
-=== Setup
+=== 设置
 
-==== Using +el-get+
+==== 使用 +el-get+
 
-If you are using https://github.com/dimitri/el-get[el-get] it would be very
-easy to install. All you need to do is to add +o-blog+ to +el-get-sources+
-and type +M-x el-get-install o-blog+.
+如果你使用 https://github.com/dimitri/el-get[el-get], 安装很容易。你只需要将
++o-blog+ 添加到 +el-get-sources+ 中，然后执行 +M-x el-get-install o-blog+.
 
-If you are using +el-get+ 4 or greater, you only need to type: +M-x
-el-get-install o-blog+.
+如果你的 +el-get+ 版本为 4 或以上，你只需要执行: +M-x el-get-install o-blog+.
 
-==== Manual setup
-Start by cloning the +git+ repository from http:github.com[Github].
+==== 手动设置
+首先从 http:github.com[Github] 克隆这个 +git+ 源码仓库。
 
 ----
 cd ~/.emacs.d
 git clone https://github.com/renard/o-blog.git
 ----
 
-And add following to your +~/.emacs.d/init.el+ file:
+将后面的代码添加到你的 +~/.emacs.d/init.el+ 文件中：
 
 ----
 (add-to-list 'load-path "~/.emacs.d/o-blog")
 (require 'o-blog)
 ----
 
-=== Publish
+=== 发布
 
-Open the +~/.emacs.d/o-blog/example/sample.org+ file and type +M-x
-org-publish-blog+. The result site would be published by default in
-+~/.emacs.d/o-blog/out+.
+打开文件 +~/.emacs.d/o-blog/example/sample.org+ 然后执行 +M-x org-publish-blog+.
+生成的站点将会自动发布在 +~/.emacs.d/o-blog/out+.
 
-See the +example/out/blog/index.html+ and +example/out/todo.html+' for more
-details.
-
+详情参见 +example/out/blog/index.html+ 及 +example/out/todo.html+.
 
