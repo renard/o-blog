@@ -611,7 +611,7 @@ Please note the blank line between the properties section and the text itself.
 Use =#+STARTUP: logdone= to automatically add a time stamp when closing an
 entry.
 
-** DONE How to use tags					       :usage:o@blog:
+** DONE 如何使用标签 					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
 
 Tags are useful to classify articles. They are stored as [[http://orgmode.org/manual/Tags.html][org-mode tags]] for
@@ -1036,8 +1036,7 @@ rendered result might be damaged.
 
 
 
-
-** DONE Using Bootstrap grid				    :usage:Bootstrap:
+** DONE Using Bootstrap grid 				    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 01:19]
 
 [[http://twitter.github.com/bootstrap/scaffolding.html][Bootstrap scaffolding]] could be defined using both =#+begin_o_blog_row= and
@@ -1095,6 +1094,7 @@ The syntax is:
    - State "DONE"       from ""           [2012-03-20 二 02:19]
    :PROPERTIES:
    :tags:     标签2
+   :filename: test-new-entry
    :END:
 
    这是一个测试条目哟。

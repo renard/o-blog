@@ -378,7 +378,8 @@ MARKERS is a list of entries given by `org-map-entries'."
 
 	   (page (org-entry-get (point) "PAGE"))
 
-	   (filename (ob:sanitize-string title))
+	   ;; (filename (ob:sanitize-string title))
+	   (filename (md5 title)) ;; using md5sum as filename
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
