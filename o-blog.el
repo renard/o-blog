@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-13 17:16:33
+;; Last changed: 2012-03-20 10:51:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -24,7 +24,7 @@
 (require 'org-xhtml nil t)
 
 (mapcar (lambda (x) (require (intern (format "o-blog-%s" x)) nil t))
-	'("alert" "copy-files" "source"))
+	'("alert" "copy-files" "source" "grid"))
 
 
 
