@@ -1,8 +1,9 @@
 = o-blog 快速入门
 
-如何使用 https://github.com/renard/o-blog[o-blog].
+- 如何使用 https://github.com/renard/o-blog[o-blog].
+- http://renard.github.com/o-blog[英文演示站点].
+- http://exaos.github.com/o-blog[中文演示站点].
 
-http://renard.github.com/o-blog[演示站点].
 
 == 快速入门指南
 开始之前，你需要有：
@@ -10,7 +11,7 @@ http://renard.github.com/o-blog[演示站点].
 - http:www.gnu.org/s/emacs[emacs] (假设你已经有了)
 - http://orgmode.org/[org-mode] (同上)
 
-如果没有这些程序，你应该先安装它们。
+如果没有这些程序，你应该先安装好它们。
 
 === 设置
 
@@ -22,7 +23,7 @@ http://renard.github.com/o-blog[演示站点].
 如果你的 +el-get+ 版本为 4 或以上，你只需要执行: +M-x el-get-install o-blog+.
 
 ==== 手动设置
-首先从 http:github.com[Github] 克隆这个 +git+ 源码仓库。
+首先从 http://github.com[Github] 克隆这个 +git+ 源码仓库。
 
 ----
 cd ~/.emacs.d
@@ -39,7 +40,7 @@ git clone https://github.com/renard/o-blog.git
 === 发布
 
 打开文件 +~/.emacs.d/o-blog/example/sample.org+ 然后执行 +M-x org-publish-blog+.
-生成的站点将会自动发布在 +~/.emacs.d/o-blog/out+.
+生成的站点将会自动发布在 +~/.emacs.d/o-blog/out+ 目录下。
 
-详情参见 +example/out/blog/index.html+ 及 +example/out/todo.html+.
+然后，详情参见 +example/out/blog/index.html+ 及 +example/out/todo.html+.
 

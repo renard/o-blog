@@ -1103,7 +1103,6 @@ The syntax is:
    - State "DONE"       from ""           [2012-03-20 二 02:19]
    :PROPERTIES:
    :tags:     标签2
-   :filename: test-new-entry
    :END:
 
    这是一个测试条目哟。
