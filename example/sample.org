@@ -126,8 +126,10 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
-  -
+  - 
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
+  - 
+  - [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][Bug report]]
 
 - [[#][/icon-file icon-white/ Tips]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
@@ -154,6 +156,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - 2012-03-20
   - Add [[http://disqus.com][Disqus]] support.
   - User can select the file name sanitizer function.
+  - Add [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][bug report howto]].
 
 - 2012-03-06
   - Add support for Font-Awesome
@@ -179,7 +182,8 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :END:
 
 - Appearance
-  - Dynamic template system (using lisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging features]]
+  - Dynamic template system (using lisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging
+    features]] and easy embedded [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][bug report tool]]
   - Syntax highlighting for exported code snippets
   - [[http://twitter.github.com/bootstrap/][bootstrap]] support
   - [[http://fortaweso.me/font-awesome/][Font-Awesome]] support
@@ -191,7 +195,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tag cloud]]
   - Multiple blogs
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
-  - [[http://disqus.com][Disqus]] support.
+  - [[http://disqus.com][Disqus]] support
 - Publication
   - Both synchrone and asynchrone publication
   - Publish directly to the webserver (using tramp)
@@ -547,6 +551,53 @@ Add a human readable timestamp for a post:
     <lisp> (ob:format-date (ob:post-timestamp POST) "%A %B, %d %Y at %H:%M:%S") </lisp>
   </time>.
 #+end_src
+
+** Bug report
+  :PROPERTIES:
+  :PAGE:     bug-report.html
+  :END:
+
+To report a bug please be sure your issue is =o-blog= related.
+
+You can bootstrap a simple clean environment
+
+#+begin_src sh
+rm -rf ~/dev/.emacs.d
+mkdir -p ~/dev/.emacs.d
+cd ~/dev/.emacs.d
+git clone git://github.com/renard/o-blog.git
+git clone git://orgmode.org/org-mode.git
+mkdir adoc-mode
+cd adoc-mode
+wget http://sensorflo-emacs.googlecode.com/svn/trunk/adoc-mode/adoc-mode.el
+#+end_src
+
+
+Then launch =emacs=:
+
+#+begin_src sh
+  cd ~/dev
+  rm -rf .emacs.d/o-blog/example/out
+  emacs --debug-init -Q  -l .emacs.d/o-blog/sample-init.el --eval \
+      '(progn (setq browse-url-generic-program "x-www-browser"
+        browse-url-browser-function (quote browse-url-generic))
+        (ob-build-sample))'
+#+end_src
+
+You can change =x-www-browser= to your favorite browser.
+
+If anything runs fine emacs would exit normally. Otherwise a buffer called
+=o-blog Bug-report= is created and its content is copied to primary X
+selection (if available). This buffer contains useful information for
+debugging your issue. A browser is launch to the [[https://github.com/renard/o-blog/issues/new][o-blog new issue page]]. You
+can either paste content of the =o-blog Bug-report= buffer or the X primary
+selection (middle click).
+
+Please describe as much as possible your issue (in English). do no hesitate
+to paste your blog file to https://gist.github.com/ this might be useful to
+debug.
+
+#+o_blog_source ../sample-init.el emacs-lisp
 
 
 ** FAQ
