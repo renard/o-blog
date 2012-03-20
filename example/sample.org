@@ -8,7 +8,7 @@
 #+URL: http://renard.github.com/o-blog
 
 #+DEFAULT_CATEGORY: Tips
-
+#+DISQUS: renard-o-blog
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -140,6 +140,9 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-03-20
+  - Add [[http://disqus.com][Disqus]] support.
+
 - 2012-03-06
   - Add support for Font-Awesome
 
@@ -176,6 +179,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tag cloud]]
   - Multiple blogs
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
+  - [[http://disqus.com][Disqus]] support.
 - Publication
   - Both synchrone and asynchrone publication
   - Publish directly to the webserver (using tramp)
@@ -287,6 +291,8 @@ Structure used to define a blog:
    directive.
  - =default-category=: default category for posts  defined by the
    =#DEFAULT_CATEGORY:= header or =Blog=.
+ - =disqus=: [[http://docs.disqus.com/developers/universal/][disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this system
+   belongs to. Defined by the \"#DISQUS\" header.
 
 Example:
 

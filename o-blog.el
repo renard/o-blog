@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-20 10:51:45
+;; Last changed: 2012-03-20 11:18:53
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -99,6 +99,9 @@ This is a good place for o-blog parser plugins."
 
  - default-category: default category for posts defined by the
    \"#DEFAULT_CATEGORY:\" header or \"Blog\".
+
+ - disqus: disqus account (called a forum on Disqus) this system
+   belongs to. Defined by the \"#DISQUS\" header.
 "
   (file nil :read-only)
   (buffer nil :read-only)
@@ -111,7 +114,8 @@ This is a good place for o-blog parser plugins."
   title
   description
   post-build-shell
-  default-category)
+  default-category
+  disqus)
 
 
 (defstruct (ob:post :named)
@@ -316,6 +320,7 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
+    (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
    blog))
 
 
