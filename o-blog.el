@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-20 13:43:08
+;; Last changed: 2012-03-20 18:24:41
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -29,6 +29,9 @@
 
 
 (defconst o-blog-version "1.0" "o-blog version number")
+
+(defconst o-blog-bug-report-url "https://github.com/renard/o-blog/issues/new"
+  "Url for bug report.")
 
 (defgroup o-blog nil "o-blog customization group"
   :group 'org-export)
@@ -190,11 +193,70 @@ This is a good place for o-blog parser plugins."
 
 
 ;;;###autoload
-(defun o-blog-version ()
-  "Message the current o-blog version"
-  (interactive)
-  (message "o-blog version %s" o-blog-version))
+;;;###autoload
+(defun o-blog-version (&optional here)
+  "Message the current o-blog version. If call using
+`universal-argument', insert value in current position."
+  (interactive "P")
+  (let* ((default-directory (file-name-directory (locate-library "o-blog")))
+	 (has-git (and (file-exists-p (expand-file-name ".git"))
+		       (executable-find "git")))
+	 (version (if has-git
+		      (substring (shell-command-to-string "git describe") 0 -1)
+		    o-blog-version))
+	 (msg (format "o-blog version %s" version)))
+    (if here
+	(insert msg)
+      (message msg))))
 
+(defun o-blog-bug-report ()
+  "Copy (`kill-new') information to be posted to o-blog github
+issues page in selection buffer and open
+`o-blog-bug-report-url'. Version information can be posted in the
+message box on github page."
+  (interactive)
+  (let* ((default-directory (file-name-directory (locate-library "o-blog")))
+	 (has-git (and (file-exists-p (expand-file-name ".git"))
+		       (executable-find "git")))
+	 (version (if has-git
+		      (substring (shell-command-to-string "git describe") 0 -1)
+		    o-blog-version))
+	 (msg (format "o-blog version %s" version))
+	 (id (if has-git
+		 (shell-command-to-string "git --no-pager log -n1 --format=format:%H")
+	       ""))
+	 (submodules (if has-git
+			 (substring
+			  (shell-command-to-string "git submodule") 0 -1)
+		       ""))
+	 (msg (if has-git
+		  (format " %s o-blog (%s)\n%s" id version submodules)
+		(format "o-blog version %s" version)))
+
+	 (bug-report-str (format "
+Add your  description here
+
+**Configuration**
+
+* Emacs
+
+```
+ %s
+```
+
+* Org-mode
+
+```
+ %s
+```
+
+* o-blog
+
+```
+%s
+```" (emacs-version) (org-version) msg)))
+    (kill-new bug-report-str)
+    (browse-url o-blog-bug-report-url)))
 
 ;;;###autoload
 (defun org-publish-blog (&optional file async)
