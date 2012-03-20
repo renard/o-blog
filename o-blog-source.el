@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-01-23
-;; Last changed: 2012-03-09 18:49:11
+;; Last changed: 2012-03-20 13:29:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -94,6 +94,8 @@ The default replacement text could be changed using variables
 				     "No syntax highlight would be bone this time.")
 			     mode src-file)))
 		 (set-auto-mode))
+	       ;; Unfortunately rainbow-delimiter-mode does not work fine.
+	       ;; See https://github.com/jlr/rainbow-delimiters/issues/5
 	       (font-lock-fontify-buffer)
 	       (htmlize-region-for-paste (point-min) (point-max)))
 	     o-blog-source-footer
