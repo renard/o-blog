@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-03-20
-;; Last changed: 2012-03-20 23:46:09
+;; Last changed: 2012-03-21 00:11:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -29,6 +29,7 @@
 			    ;; line stats with "  signal(error ..."
 			    (goto-line 16)
 			    (goto-char (point-at-bol))
+			    ;; Remove null chars
 			    (replace-regexp-in-string
 			      (char-to-string 0) "^@"
 			      (buffer-substring (point) (point-max))))))
@@ -42,4 +43,5 @@
     (require 'adoc-mode)
     (require 'o-blog)
     (find-file sample)
-    (org-publish-blog sample)))
+    (org-publish-blog sample)
+    (kill-emacs)))
