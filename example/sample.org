@@ -22,7 +22,7 @@
   :PAGE:     index.html
   :END:
 
-#+begin_o_blog_row 6
+#+begin_o_blog_row 8
 
 #+HTML: <div class="hero-unit">
 
@@ -32,34 +32,44 @@ A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]
 
 #+HTML: </div>
 
-#+o_blog_row_column 6
+#+o_blog_row_column 4
 
-This is a sample website to show how to use [[https://github.com/renard/o-blog][o-blog]].
 
-First you need:
+#+HTML: <div class="hero-unit" style="font-size: 200%;">
 
-- [[http://www.gnu.org/s/emacs][emacs]] (I assume you already have it)
-- [[http://orgmode.org/][org-mode]] (same as above)
+[[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
 
-If you don't have them, you should install them fist.
+[[https://github.com/renard/o-blog][/icon-github-sign icon-white/ Github]]
 
+[[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
+
+
+
+#+HTML: </div>
 
 #+end_o_blog_row
 
 
 ** Setup
 
-#+begin_o_blog_row 6
+
+First you need to install [[http://www.gnu.org/s/emacs][emacs]] and [[http://orgmode.org/][org-mode]]. Then you have 2 ways to
+install [[https://github.com/renard/o-blog][o-blog]].
+
+#+begin_o_blog_row 5
 
 *Using el-get*
 
 If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
-is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
+is to add =o-blog= to =el-get-sources= and type:
 
-If you are using =el-get= 4 or greater, you only need to type: =M-x
-el-get-install o-blog=.
+=M-x el-get-install o-blog=
 
-#+o_blog_row_column 5
+If you are using =el-get= 4 or greater, you only need to type:
+
+=M-x el-get-install o-blog=.
+
+#+o_blog_row_column  6
 
 *Manual setup*
 
