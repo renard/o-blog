@@ -361,7 +361,8 @@ MARKERS is a list of entries given by `org-map-entries'."
 				 (replace-regexp-in-string "@" "-" tn)))
 		       and collect (make-ob:tags
 				    :name td
-				    :safe (ob:sanitize-string td))))
+				    :safe (md5 td) ;;(ob:sanitize-string td)
+				    )))
 
 	   ;; Timestamp is taken from either the CLOSED property or the
 	   ;; current timestamp.
@@ -488,7 +489,8 @@ not provided 80 and 220 are used."
 	  collect (let ((val (cadr item)))
 		    (make-ob:tags
 		     :name (car item)
-		     :safe (ob:sanitize-string (car item))
+		     ;; :safe (ob:sanitize-string (car item))
+		     :safe (md5 (car item))
 		     :count val
 		     ;; This is the tricky part
 		     ;; Formula is:
@@ -649,7 +651,8 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 	  (ob-write-index-to-file "blog_tags-details.html"
 				  (format "%s/tags/%s.html"
 					  (ob:blog-publish-dir BLOG)
-					  (ob:tags-safe TAG))))))
+					  (ob:tags-safe TAG)
+					  )))))
 
 
 (defun ob:sanitize-string (s)

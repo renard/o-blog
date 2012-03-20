@@ -72,7 +72,8 @@ The default replacement text could be changed using variables
 		nil t)
 	  (let* ((src-file (match-string 1))
 		 (src-file-name (file-name-nondirectory src-file))
-		 (src-file-safe (ob:sanitize-string src-file-name))
+		 ;; (src-file-safe (ob:sanitize-string src-file-name))
+		 (src-file-safe (md5 src-file-name))
 		 (mode (match-string 3)))
 
 	    (beginning-of-line)
