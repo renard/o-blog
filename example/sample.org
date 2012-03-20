@@ -567,9 +567,6 @@ mkdir -p ~/dev/.emacs.d
 cd ~/dev/.emacs.d
 git clone git://github.com/renard/o-blog.git
 git clone git://orgmode.org/org-mode.git
-mkdir adoc-mode
-cd adoc-mode
-wget http://sensorflo-emacs.googlecode.com/svn/trunk/adoc-mode/adoc-mode.el
 #+end_src
 
 
@@ -597,7 +594,6 @@ Please describe as much as possible your issue (in English). do no hesitate
 to paste your blog file to https://gist.github.com/ this might be useful to
 debug.
 
-#+o_blog_source ../sample-init.el emacs-lisp
 
 
 ** FAQ
@@ -1016,9 +1012,9 @@ The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
   content should be read.
 - The optional =mode= which could be determined by if omitted.
 
-Here is an example of the =README.asciidoc= file:
+Here is an example of the =sample-init.el= file:
 
-#+o_blog_source ../README.asciidoc adoc
+#+o_blog_source ../sample-init.el emacs-lisp
 
 ** DONE Adding icons					    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 00:19]

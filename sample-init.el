@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-03-20
-;; Last changed: 2012-03-21 00:11:04
+;; Last changed: 2012-03-21 00:44:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -38,9 +38,7 @@
 	 print-length print-level)
     (add-to-list 'load-path (format "%s/.emacs.d/org-mode/lisp" d))
     (add-to-list 'load-path (format "%s/.emacs.d/org-mode/contrib/lisp" d))
-    (add-to-list 'load-path (format "%s/.emacs.d/adoc-mode" d))
     (add-to-list 'load-path (format "%s/.emacs.d/o-blog" d))
-    (require 'adoc-mode)
     (require 'o-blog)
     (find-file sample)
     (org-publish-blog sample)
