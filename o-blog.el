@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-20 18:26:09
+;; Last changed: 2012-03-20 23:44:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -210,7 +210,7 @@ This is a good place for o-blog parser plugins."
 	(insert msg)
       (message msg))))
 
-(defun o-blog-bug-report ()
+(defun o-blog-bug-report (backtrace)
   "Copy (`kill-new') information to be posted to o-blog github
 issues page in selection buffer and open
 `o-blog-bug-report-url'. Version information can be posted in the
@@ -234,8 +234,11 @@ message box on github page."
 		  (format " %s o-blog (%s)\n%s" id version submodules)
 		(format "o-blog version %s" version)))
 
-	 (bug-report-str (format "
-Add your  description here
+	 (bug-report-str (format
+			  "
+Add your description here
+
+%s
 
 **Configuration**
 
@@ -255,8 +258,16 @@ Add your  description here
 
 ```
 %s
-```" (emacs-version) (org-version) msg)))
-    (kill-new bug-report-str)
+```"
+			  (if backtrace
+			      (format "**Backtrace**\n\n```\n%s\n```\n\n" backtrace)
+			    "")
+			  (emacs-version) (org-version) msg)))
+    (switch-to-buffer (get-buffer-create "o-blog Bug-report"))
+    (erase-buffer)
+    (insert bug-report-str)
+    (when (functionp 'x-set-selection)
+      (x-set-selection 'PRIMARY bug-report-str))
     (browse-url o-blog-bug-report-url)))
 
 ;;;###autoload
