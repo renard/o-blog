@@ -25,13 +25,17 @@
 #### 手动设置
 首先从 [Github](http://github.com) 克隆这个 *git* 源码仓库。
 
-```cd ~/.emacs.d
-git clone https://github.com/renard/o-blog.git```
+```
+cd ~/.emacs.d
+git clone https://github.com/renard/o-blog.git
+```
 
 将后面的代码添加到你的 `~/.emacs.d/init.el` 文件中：
 
-```(add-to-list 'load-path "~/.emacs.d/o-blog")
-(require 'o-blog)```
+```
+(add-to-list 'load-path "~/.emacs.d/o-blog")
+(require 'o-blog)
+```
 
 ### 发布
 
@@ -39,4 +43,3 @@ git clone https://github.com/renard/o-blog.git```
 生成的站点将会自动发布在 `~/.emacs.d/o-blog/out` 目录下。
 
 然后，详情参见 `example/out/blog/index.html` 及 `example/out/todo.html`.
-
