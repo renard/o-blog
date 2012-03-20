@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-20 18:24:41
+;; Last changed: 2012-03-20 18:26:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -19,6 +19,7 @@
 
 (eval-when-compile
   (require 'cl nil t)
+  (require 'browse-url nil t)
   (require 'find-func nil t))
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
