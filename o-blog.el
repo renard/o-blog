@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-20 11:18:53
+;; Last changed: 2012-03-20 13:43:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -102,6 +102,10 @@ This is a good place for o-blog parser plugins."
 
  - disqus: disqus account (called a forum on Disqus) this system
    belongs to. Defined by the \"#DISQUS\" header.
+
+ - filename-sanitizer: 1-argument function to be used to sanitize
+   post filenames. Defined by \#+FILENAME_SANITIZER:\" or
+   \"ob-sanitize-string\".
 "
   (file nil :read-only)
   (buffer nil :read-only)
@@ -115,7 +119,8 @@ This is a good place for o-blog parser plugins."
   description
   post-build-shell
   default-category
-  disqus)
+  disqus
+  filename-sanitizer)
 
 
 (defstruct (ob:post :named)
@@ -321,7 +326,12 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
     (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
-   blog))
+    (setf (ob:blog-filename-sanitizer blog)
+	  (let ((ofs (ob:get-header "FILENAME_SANITIZER")))
+	    (if (and ofs (functionp (intern ofs)))
+		(intern ofs)
+	      'ob-sanitize-string)))
+    blog))
 
 
 (defun ob-parse-entries (markers)
@@ -656,7 +666,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 					  (ob:tags-safe TAG))))))
 
 
-(defun ob:sanitize-string (s)
+(defun ob-sanitize-string (s)
   "Sanitize string S by:
 
 - converting all charcters ton pure ASCII
@@ -685,6 +695,10 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 ;; template accessible functions
 
+(defun ob:sanitize-string(s)
+  "Sanitize string S using function defined by
+`filename-sanitizer' slot in `ob:blog' structure."
+  (funcall (ob:blog-filename-sanitizer BLOG) s))
 
 (defun ob:get-posts (&optional predicate count sortfunc collect)
   "Return posts (from `POSTS' as defined in `org-publish-blog')

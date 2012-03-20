@@ -9,6 +9,7 @@
 
 #+DEFAULT_CATEGORY: Tips
 #+DISQUS: renard-o-blog
+#+FILENAME_SANITIZER: ob-sanitize-string
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -142,6 +143,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - 2012-03-20
   - Add [[http://disqus.com][Disqus]] support.
+  - User can select the file name sanitizer function.
 
 - 2012-03-06
   - Add support for Font-Awesome
@@ -293,6 +295,9 @@ Structure used to define a blog:
    =#DEFAULT_CATEGORY:= header or =Blog=.
  - =disqus=: [[http://docs.disqus.com/developers/universal/][disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this system
    belongs to. Defined by the \"#DISQUS\" header.
+ - =filename-sanitizer=: 1-argument function to be used to sanitize
+   post filenames. Defined by =#+FILENAME_SANITIZER:= or
+   =ob-sanitize-string=.
 
 Example:
 
