@@ -49,24 +49,23 @@
 
 *使用 el-get*
 
-If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
-is to add =o-blog= to =el-get-sources= and type =M-x el-get-install o-blog=.
+要使用 [[https://github.com/dimitri/el-get][el-get]], 安装起来很容易。你所要做的不过是将 =o-blog= 添加到
+=el-get-sources= 中，然后执行 =M-x el-get-install o-blog=.
 
-If you are using =el-get= 4 or greater, you only need to type: =M-x
-el-get-install o-blog=.
+如果你使用 =el-get= 4 或更高，你只需要执行: =M-x el-get-install o-blog=.
 
 #+o_blog_row_column 5
 
-*Manual setup*
+*手动安装*
 
-Start by cloning the /git/ repository from [[http://github.com][Github]].
+首先从 [[http://github.com][Github]] 克隆 /git/ 仓库源码。
 
 #+begin_src bash
 cd ~/.emacs.d
 git clone https://github.com/renard/o-blog.git
 #+end_src
 
-And add following to your =~/.emacs.d/init.el= file:
+将如下内容添加到你的 =~/.emacs.d/init.el= 文件中:
 
 #+begin_src emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/o-blog")
@@ -76,17 +75,16 @@ And add following to your =~/.emacs.d/init.el= file:
 #+end_o_blog_row
 
 
-** Publish
+** 发布
 
-Open the =~/.emacs.d/o-blog/example/sample.org= file and type =M-x
-org-publish-blog=. The result site would be published by default in
-=~/.emacs.d/o-blog/out=.
+打开文件 =~/.emacs.d/o-blog/example/sample.org= 然后执行 =M-x
+org-publish-blog=. 输出的站点默认保存在 =~/.emacs.d/o-blog/out=.
 
-See the [[file:blog/index.html][blog]] for more details.
+详情参见 [[file:blog/index.html][blog]].
 
 
 * 博客详情
-** 版权
+** Copyright
   :PROPERTIES:
   :SNIPPET:  t
   :END:
@@ -94,14 +92,14 @@ See the [[file:blog/index.html][blog]] for more details.
 Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%CA%82%C9%9B%E2%9D%A9%2520chezwam%2520%E2%9D%A8%C6%A4%C9%B5%C9%A9%C9%B2%CA%88%E2%9D%A9%2520org][Sébastien Gross]]. Published under the therm of the
 [[http://creativecommons.org/licenses/by-nc-sa/2.0/fr/][Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License]].
 
-** 关于
+** About
   :PROPERTIES:
   :SNIPPET:  t
   :END:
 
 这是个解释 [[https://github.com/renard/o-blog][o-blog]] 工作机理的博客样例。
 
-** 导航
+** Navigation
   :PROPERTIES:
   :SNIPPET:  t
   :END:
@@ -113,7 +111,7 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][结构]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][函数]]
   -
-  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][问答]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
 - [[#][/icon-file icon-white/ Tips]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
@@ -122,15 +120,15 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ 标签]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ 归档]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ 更新记录]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(调试)]]
 
 * 更新记录
   :PROPERTIES:
@@ -1091,12 +1089,13 @@ The syntax is:
 
 #+end_src
 
-* DONE 测试个新条目哦
-  CLOSED: [2012-03-20 二 02:19]
-  - State "DONE"       from ""           [2012-03-20 二 02:19]
-  :PROPERTIES:
-  :tags:     标签2
-  :END:
+** DONE 测试个新条目哦							:标签2:
+   CLOSED: [2012-03-20 二 09:46]
+   - State "DONE"       from ""           [2012-03-20 二 09:46]
+   - State "DONE"       from ""           [2012-03-20 二 02:19]
+   :PROPERTIES:
+   :tags:     标签2
+   :END:
 
-  这是一个测试条目哟。
+   这是一个测试条目哟。
 
