@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-13 17:16:33
+;; Last changed: 2012-03-20 23:44:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -19,16 +19,20 @@
 
 (eval-when-compile
   (require 'cl nil t)
+  (require 'browse-url nil t)
   (require 'find-func nil t))
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
 
 (mapcar (lambda (x) (require (intern (format "o-blog-%s" x)) nil t))
-	'("alert" "copy-files" "source"))
+	'("alert" "copy-files" "source" "grid"))
 
 
 
 (defconst o-blog-version "1.0" "o-blog version number")
+
+(defconst o-blog-bug-report-url "https://github.com/renard/o-blog/issues/new"
+  "Url for bug report.")
 
 (defgroup o-blog nil "o-blog customization group"
   :group 'org-export)
@@ -99,6 +103,13 @@ This is a good place for o-blog parser plugins."
 
  - default-category: default category for posts defined by the
    \"#DEFAULT_CATEGORY:\" header or \"Blog\".
+
+ - disqus: disqus account (called a forum on Disqus) this system
+   belongs to. Defined by the \"#DISQUS\" header.
+
+ - filename-sanitizer: 1-argument function to be used to sanitize
+   post filenames. Defined by \#+FILENAME_SANITIZER:\" or
+   \"ob-sanitize-string\".
 "
   (file nil :read-only)
   (buffer nil :read-only)
@@ -111,7 +122,9 @@ This is a good place for o-blog parser plugins."
   title
   description
   post-build-shell
-  default-category)
+  default-category
+  disqus
+  filename-sanitizer)
 
 
 (defstruct (ob:post :named)
@@ -181,11 +194,81 @@ This is a good place for o-blog parser plugins."
 
 
 ;;;###autoload
-(defun o-blog-version ()
-  "Message the current o-blog version"
-  (interactive)
-  (message "o-blog version %s" o-blog-version))
+;;;###autoload
+(defun o-blog-version (&optional here)
+  "Message the current o-blog version. If call using
+`universal-argument', insert value in current position."
+  (interactive "P")
+  (let* ((default-directory (file-name-directory (locate-library "o-blog")))
+	 (has-git (and (file-exists-p (expand-file-name ".git"))
+		       (executable-find "git")))
+	 (version (if has-git
+		      (substring (shell-command-to-string "git describe") 0 -1)
+		    o-blog-version))
+	 (msg (format "o-blog version %s" version)))
+    (if here
+	(insert msg)
+      (message msg))))
 
+(defun o-blog-bug-report (backtrace)
+  "Copy (`kill-new') information to be posted to o-blog github
+issues page in selection buffer and open
+`o-blog-bug-report-url'. Version information can be posted in the
+message box on github page."
+  (interactive)
+  (let* ((default-directory (file-name-directory (locate-library "o-blog")))
+	 (has-git (and (file-exists-p (expand-file-name ".git"))
+		       (executable-find "git")))
+	 (version (if has-git
+		      (substring (shell-command-to-string "git describe") 0 -1)
+		    o-blog-version))
+	 (msg (format "o-blog version %s" version))
+	 (id (if has-git
+		 (shell-command-to-string "git --no-pager log -n1 --format=format:%H")
+	       ""))
+	 (submodules (if has-git
+			 (substring
+			  (shell-command-to-string "git submodule") 0 -1)
+		       ""))
+	 (msg (if has-git
+		  (format " %s o-blog (%s)\n%s" id version submodules)
+		(format "o-blog version %s" version)))
+
+	 (bug-report-str (format
+			  "
+Add your description here
+
+%s
+
+**Configuration**
+
+* Emacs
+
+```
+ %s
+```
+
+* Org-mode
+
+```
+ %s
+```
+
+* o-blog
+
+```
+%s
+```"
+			  (if backtrace
+			      (format "**Backtrace**\n\n```\n%s\n```\n\n" backtrace)
+			    "")
+			  (emacs-version) (org-version) msg)))
+    (switch-to-buffer (get-buffer-create "o-blog Bug-report"))
+    (erase-buffer)
+    (insert bug-report-str)
+    (when (functionp 'x-set-selection)
+      (x-set-selection 'PRIMARY bug-report-str))
+    (browse-url o-blog-bug-report-url)))
 
 ;;;###autoload
 (defun org-publish-blog (&optional file async)
@@ -316,7 +399,13 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
-   blog))
+    (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
+    (setf (ob:blog-filename-sanitizer blog)
+	  (let ((ofs (ob:get-header "FILENAME_SANITIZER")))
+	    (if (and ofs (functionp (intern ofs)))
+		(intern ofs)
+	      'ob-sanitize-string)))
+    blog))
 
 
 (defun ob-parse-entries (markers)
@@ -361,8 +450,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 				 (replace-regexp-in-string "@" "-" tn)))
 		       and collect (make-ob:tags
 				    :name td
-				    :safe (md5 td) ;;(ob:sanitize-string td)
-				    )))
+				    :safe (ob:sanitize-string td))))
 
 	   ;; Timestamp is taken from either the CLOSED property or the
 	   ;; current timestamp.
@@ -379,8 +467,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 
 	   (page (org-entry-get (point) "PAGE"))
 
-	   ;; (filename (ob:sanitize-string title))
-	   (filename (md5 title)) ;; using md5sum as filename
+	   (filename (ob:sanitize-string title))
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
@@ -489,8 +576,7 @@ not provided 80 and 220 are used."
 	  collect (let ((val (cadr item)))
 		    (make-ob:tags
 		     :name (car item)
-		     ;; :safe (ob:sanitize-string (car item))
-		     :safe (md5 (car item))
+		     :safe (ob:sanitize-string (car item))
 		     :count val
 		     ;; This is the tricky part
 		     ;; Formula is:
@@ -651,11 +737,10 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 	  (ob-write-index-to-file "blog_tags-details.html"
 				  (format "%s/tags/%s.html"
 					  (ob:blog-publish-dir BLOG)
-					  (ob:tags-safe TAG)
-					  )))))
+					  (ob:tags-safe TAG))))))
 
 
-(defun ob:sanitize-string (s)
+(defun ob-sanitize-string (s)
   "Sanitize string S by:
 
 - converting all charcters ton pure ASCII
@@ -684,6 +769,10 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 ;; template accessible functions
 
+(defun ob:sanitize-string(s)
+  "Sanitize string S using function defined by
+`filename-sanitizer' slot in `ob:blog' structure."
+  (funcall (ob:blog-filename-sanitizer BLOG) s))
 
 (defun ob:get-posts (&optional predicate count sortfunc collect)
   "Return posts (from `POSTS' as defined in `org-publish-blog')

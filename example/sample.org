@@ -1,11 +1,12 @@
 #+TITLE: o-blog
-#-DESCRIPTION: 使用 org-mode 的独立博客系统
+#+DESCRIPTION: 使用 org-mode 的独立博客系统
 #+DATE:
 
 #+STARTUP: logdone
 
-#-TEMPLATE_DIR: templates
+#+TEMPLATE_DIR: ../templates
 #+URL: http://exaos.github.com/o-blog
+#+FILENAME_SANITIZER: md5
 
 #+DEFAULT_CATEGORY: Tips
 
@@ -74,19 +75,18 @@ git clone https://github.com/renard/o-blog.git
 
 #+end_o_blog_row
 
-
-** 发布
+** 博文发布
 
 打开文件 =~/.emacs.d/o-blog/example/sample.org= 然后执行 =M-x
 org-publish-blog=. 输出的站点默认保存在 =~/.emacs.d/o-blog/out=.
-
-详情参见 [[file:blog/index.html][blog]].
 
 ** 待办事项
 这儿列举了一些中文处理中的问题。具体的解决参见 [[github:exaos/o-blog]].
 
 1. [X] 中文文件名无法正常生成 --> 使用 MD5 取代 sanitize-string
-2. [ ] 博客设置中的 =Copyright=, =About= 及 =Navigation= 等 =SNIPPET= 不能用中文
+   * 现在，使用 =#+FILENAME_SANITIZER: md5= 代替。
+2. [X] pull upstream
+3. [ ] 博客设置中的 =Copyright=, =About= 及 =Navigation= 等 =SNIPPET= 不能用中文
    的问题。
 
 * 博客详情
@@ -114,12 +114,12 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
 
 - [[#][/icon-book icon-white/ 文档]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][模版]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][结构]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][文档结构]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][函数]]
   -
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
-- [[#][/icon-file icon-white/ Tips]]
+- [[#][/icon-file icon-white/ 近期博文]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
@@ -581,7 +581,7 @@ An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode
 complex.
 
 * 博客条目
-** DONE 创建一个博客条目 				       :usage:o@blog:
+** DONE 创建一个博客条目					  :用例:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
 
 A blog consists of org entries. Each entry has a title, some properties and
@@ -620,7 +620,7 @@ Please note the blank line between the properties section and the text itself.
 Use =#+STARTUP: logdone= to automatically add a time stamp when closing an
 entry.
 
-** DONE 如何使用标签 					       :usage:o@blog:
+** DONE 如何使用标签						  :用例:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
 
 Tags are useful to classify articles. They are stored as [[http://orgmode.org/manual/Tags.html][org-mode tags]] for
@@ -634,7 +634,7 @@ Special characters used in tags:
   - At sign (=@=) is converted to a dash (=-=).
   - Underscore (=_=) is converted to a blank (= =).
 
-** DONE Example of some org syntax				  :usage:org:
+** DONE 一些 org 语法示例 					     :用例:org:
    CLOSED: [2012-01-07 Sat 11:23]
 
 *** Titles
@@ -832,7 +832,7 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 - [[Creating a blog]]
 - insite (file): [[file:o-blog.el]]
 - in page (anchor): [[Literal examples]]
-** DONE Some HTML5 samples					     :html_5:
+** DONE 一些 HTML5 示例 					     :html_5:
    CLOSED: [2012-01-10 Tue 20:58]
 
 *** tag: <details>
@@ -857,7 +857,7 @@ Works only with chrome.
   ,#+HTML: </details>
 #+end_src
 
-** DONE Alerts 							      :usage:
+** DONE 警告 								 :用例:
    CLOSED: [2012-01-15 Sun 20:40]
 
 Alerts are declared in =o_blog_alert= blocks. There are 4 types of
@@ -933,7 +933,7 @@ nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
 #+end_o_blog_alert
 
-** DONE Using modal source code				    :usage:Bootstrap:
+** DONE Using modal source code				       :用例:Bootstrap:
    CLOSED: [2012-02-09 Thu 23:13]
 
 The [[http://twitter.github.com/bootstrap/javascript.html#modals][Modal]] bootstrap script can be used to display the content of an external
@@ -948,11 +948,11 @@ The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
   content should be read.
 - The optional =mode= which could be determined by if omitted.
 
-Here is an example of the =README.asciidoc= file:
+Here is an example of the =README.md= file:
 
-#+o_blog_source ../README.asciidoc
+#+o_blog_source ../README.md markdown
 
-** DONE Adding icons					    :usage:Bootstrap:
+** DONE 添加图标 					    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 00:19]
 
 Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
@@ -1097,7 +1097,7 @@ The syntax is:
 
 #+end_src
 
-** DONE 测试个新条目哦							:标签2:
+** DONE 中文测试 							 :中文:
    CLOSED: [2012-03-20 二 09:46]
    - State "DONE"       from ""           [2012-03-20 二 09:46]
    - State "DONE"       from ""           [2012-03-20 二 02:19]
@@ -1105,5 +1105,8 @@ The syntax is:
    :tags:     标签2
    :END:
 
-   这是一个测试条目哟。
+这是一个测试条目哟。
+
+博客页面的文件名默认使用 =ob-sanitize-string= 从标题生成, 这样会导致中文标题的博文无法正常生成。因此，对于中文博客，需要在你的 *org* 文档头中添加
+: #+FILENAME_SANITIZER: md5
 
