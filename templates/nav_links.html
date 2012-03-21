@@ -1,4 +1,4 @@
-  <li class="home"><a href="<lisp>(ob:path-to-root)</lisp>/index.html">Home</a></li>
+  <li class="home"><a href="<lisp>(ob:path-to-root)</lisp>/index.html">首页</a></li>
   <li class="blog"><a href="<lisp>
 	       (let ((POSTS ALL-POSTS))
 	       (format "%s/%s"
@@ -6,7 +6,7 @@
 			      (ob:post-htmlfile
 			      (car (ob:get-posts (lambda (x)
 			      (equal "Tips" (ob:post-category x))))))))
-					   </lisp>">Blog</a></li>
-  <li class="tags"><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html">Tags</a></li>
-  <li class="archives"><a href="<lisp>(ob:path-to-root)</lisp>/archives.html">Archives</a></li>
+					   </lisp>">博文</a></li>
+  <li class="tags"><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html">标签</a></li>
+  <li class="archives"><a href="<lisp>(ob:path-to-root)</lisp>/archives.html">归档</a></li>
   <li class="rss"><a href="<lisp>(ob:path-to-root)</lisp>/index.xml">RSS</a></li>
