@@ -6,9 +6,10 @@
 
 #+TEMPLATE_DIR: ../templates
 #+URL: http://exaos.github.com/o-blog
-#+FILENAME_SANITIZER: md5
 
 #+DEFAULT_CATEGORY: Tips
+#+DISQUS: exaos-o-blog
+#+FILENAME_SANITIZER: md5
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -20,7 +21,7 @@
   :PAGE:     index.html
   :END:
 
-#+begin_o_blog_row 6
+#+begin_o_blog_row 8
 
 #+HTML: <div class="hero-unit">
 
@@ -30,23 +31,28 @@
 
 #+HTML: </div>
 
-#+o_blog_row_column 6
+#+o_blog_row_column 4
 
-这是一个演示如何使用 [[https://github.com/renard/o-blog][o-blog]] 的站点。
+#+HTML: <div class="hero-unit" style="font-size: 200%;">
 
-首先，你需要有：
+[[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ 特性]]
 
-- [[http://www.gnu.org/s/emacs][emacs]] (假设你已经有了)
-- [[http://orgmode.org/][org-mode]] (同上)
+[[https://github.com/renard/o-blog][/icon-github-sign icon-white/ 源代码 (github)]]
 
-如果没有这些程序，你应该先安装它们。
+[[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ 更新记录]]
+
+
+
+#+HTML: </div>
 
 #+end_o_blog_row
 
 
 ** 设置
 
-#+begin_o_blog_row 6
+首先，你需要安装有 [[http://www.gnu.org/s/emacs][emacs]] 和 [[http://orgmode.org/][org-mode]] ，如果没有这些程序，你应该先安装它们。
+
+#+begin_o_blog_row 5
 
 *使用 el-get*
 
@@ -55,7 +61,7 @@
 
 如果你使用 =el-get= 4 或更高，你只需要执行: =M-x el-get-install o-blog=.
 
-#+o_blog_row_column 5
+#+o_blog_row_column 6
 
 *手动安装*
 
@@ -140,7 +146,16 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   :PAGE:     changelog.html
   :END:
 
-- 2012-03-24
+- 2012-03-21
+  - 合并上述代码，更新中文演示模版，修改 snippet 为中文。
+  - 添加 Disqus 中文讨论。
+
+- 2012-03-20
+  - Add [[http://disqus.com][Disqus]] support.
+  - User can select the file name sanitizer function.
+  - Add [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][bug report howto]].
+
+- 2012-03-19
   - 使用 MD5SUM 作为 tags-safe 及 post filename, 解决中文名称的问题 (exaos)
 
 - 2012-03-06
