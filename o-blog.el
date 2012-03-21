@@ -318,7 +318,7 @@ defined, or interactivelly called with `prefix-arg'.
       (copy-directory (format "%s/%s"
 			      (ob:blog-template-dir BLOG)
 			      (ob:blog-style-dir BLOG))
-		      (ob:blog-publish-dir BLOG))
+		      (concat (ob:blog-publish-dir BLOG) "/style/"))
       (run-hooks 'o-blog-after-publish-hook)
       (message (format "Blog %s published in %ss"
 		       file
