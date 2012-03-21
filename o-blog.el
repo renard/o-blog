@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-20 23:44:17
+;; Last changed: 2012-03-21 23:12:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -23,6 +23,7 @@
   (require 'find-func nil t))
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
+(require 'dired-sync nil t)
 
 (mapcar (lambda (x) (require (intern (format "o-blog-%s" x)) nil t))
 	'("alert" "copy-files" "source" "grid"))
@@ -315,10 +316,12 @@ defined, or interactivelly called with `prefix-arg'.
       (ob-write-posts)
       (ob-write-tags)
       (ob-write-index)
-      (copy-directory (format "%s/%s"
-			      (ob:blog-template-dir BLOG)
-			      (ob:blog-style-dir BLOG))
-		      (ob:blog-publish-dir BLOG))
+      (let ((syncf (if (functionp 'dired-do-sync)
+		       'dired-do-sync 'copy-directory)))
+	(funcall syncf (format "%s/%s"
+			       (ob:blog-template-dir BLOG)
+			       (ob:blog-style-dir BLOG))
+		 (ob:blog-publish-dir BLOG)))
       (run-hooks 'o-blog-after-publish-hook)
       (message (format "Blog %s published in %ss"
 		       file
