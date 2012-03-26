@@ -43,6 +43,7 @@ A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]
 
 [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
 
+[[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][/icon-fire icon-white/ Bug report]]
 
 
 #+HTML: </div>
