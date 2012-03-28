@@ -41,6 +41,7 @@
 
 [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ 更新记录]]
 
+[[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][/icon-fire icon-white/ Bug report]]
 
 
 #+HTML: </div>
@@ -50,7 +51,7 @@
 
 ** 设置
 
-首先，你需要安装有 [[http://www.gnu.org/s/emacs][emacs]] 和 [[http://orgmode.org/][org-mode]] ，如果没有这些程序，你应该先安装它们。
+首先，你需要安装有 [[http://www.gnu.org/s/emacs][emacs]] (在版本 23 下测试，在 24 下可能也行) 和 [[http://orgmode.org/][org-mode]] (版本 7.8 或更高)。然后你有两种方法可以安装 [[https://github.com/renard/o-blog][o-blog]].
 
 #+begin_o_blog_row 5
 
