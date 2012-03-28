@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-21 23:12:40
+;; Last changed: 2012-03-28 13:43:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -102,6 +102,8 @@ This is a good place for o-blog parser plugins."
  - description: blog description defined by the
    \"#+DESCRIPTION:\" header directive.
 
+ - url: Blog base URL defined by the \"#+URL:\" header.
+
  - default-category: default category for posts defined by the
    \"#DEFAULT_CATEGORY:\" header or \"Blog\".
 
@@ -122,6 +124,7 @@ This is a good place for o-blog parser plugins."
   snippet-filter
   title
   description
+  url
   post-build-shell
   default-category
   disqus
@@ -400,6 +403,7 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-snippet-filter blog) (or (ob:get-header "SNIPPET_FILTER") "+SNIPPET={.+}"))
     (setf (ob:blog-title blog) (or (ob:get-header "TITLE") "title"))
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
+    (setf (ob:blog-url blog) (or (ob:get-header "URL") ""))
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
     (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))

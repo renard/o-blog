@@ -155,6 +155,9 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-03-28
+  - Add support for [[http://en.wikipedia.org/wiki/QR_code][QR-code]].
+
 - 2012-03-20
   - Add [[http://disqus.com][Disqus]] support.
   - User can select the file name sanitizer function.
@@ -198,6 +201,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - Multiple blogs
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
   - [[http://disqus.com][Disqus]] support
+  - [[http://en.wikipedia.org/wiki/QR_code][QR code]] support
 - Publication
   - Both synchrone and asynchrone publication
   - Publish directly to the webserver (using tramp)
@@ -307,6 +311,7 @@ Structure used to define a blog:
  - =title=: Blog title defined by the =#+TITLE:= header directive.
  - =description=: blog description defined by the =#+DESCRIPTION:= header
    directive.
+ - =url=: Blog base URL defined by the =#+URL:= header.
  - =default-category=: default category for posts  defined by the
    =#DEFAULT_CATEGORY:= header or =Blog=.
  - =disqus=: [[http://docs.disqus.com/developers/universal/][disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this system
