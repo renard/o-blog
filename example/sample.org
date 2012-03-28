@@ -147,6 +147,9 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   :PAGE:     changelog.html
   :END:
 
+- 2012-03-28
+  - Add support for [[http://en.wikipedia.org/wiki/QR_code][QR-code]].
+
 - 2012-03-21
   - 合并上述代码，更新中文演示模版，修改 snippet 为中文。
   - 添加 Disqus 中文讨论。
@@ -182,8 +185,9 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   :PAGE:     features.html
   :END:
 
+<<<<<<< HEAD
 - 外观
-  - 带[[file:{lisp}(ob:path-to-root){/lisp}/debug.html][调试功能]]的动态模版系统 (使用 lisp 函数)
+  - 带[[file:{lisp}(ob:path-to-root){/lisp}/debug.html][调试功能]]的动态模版系统 (使用 lisp 函数), 方便嵌入 [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][错误报告工具]]
   - 输出的代码片断带有语法加亮
   - 支持 [[http://twitter.github.com/bootstrap/][bootstrap]]
   - 支持 [[http://fortaweso.me/font-awesome/][Font-Awesome]]
@@ -195,6 +199,8 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][云标签]]
   - 多个博客
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][博文归档]]
+  - 支持 [[http://disqus.com][Disqus]]
+  - 支持 [[http://en.wikipedia.org/wiki/QR_code][QR code]]
 - 博文发布
   - 同时支持同步与异步发布
   - 直接发布到网站服务器上 (通过 tramp)
@@ -296,6 +302,7 @@ Structure used to define a blog:
  - =title=: Blog title defined by the =#+TITLE:= header directive.
  - =description=: blog description defined by the =#+DESCRIPTION:= header
    directive.
+ - =url=: Blog base URL defined by the =#+URL:= header.
  - =default-category=: default category for posts  defined by the
    =#DEFAULT_CATEGORY:= header or =Blog=.
 
