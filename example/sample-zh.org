@@ -1,23 +1,23 @@
 #+TITLE: o-blog
-#-DESCRIPTION: standalone blogging system for org-mode
+#+DESCRIPTION: 使用 org-mode 的独立博客系统
 #+DATE:
 
 #+STARTUP: logdone
 
-#-TEMPLATE_DIR: templates
-#+URL: http://renard.github.com/o-blog
+#+TEMPLATE_DIR: ../templates-zh
+#+STYLE: ../templates/style
+#+URL: http://exaos.github.com/o-blog
 
 #+DEFAULT_CATEGORY: Tips
-#+DISQUS: renard-o-blog
-#+FILENAME_SANITIZER: ob-sanitize-string
+#+DISQUS: exaos-o-blog
+#+FILENAME_SANITIZER: md5
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
 #+POST_BUILD_SHELL: cmd 3
 #+POST_BUILD_SHELL: cmd 4
 
-
-* Quick start Guide
+* 快速入门指南
   :PROPERTIES:
   :PAGE:     index.html
   :END:
@@ -28,20 +28,19 @@
 
 #+HTML: <h1>o-blog</h1>
 
-A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]].
+使用 [[http://orgmode.org/][org-mode]] 的独立博客系统。
 
 #+HTML: </div>
 
 #+o_blog_row_column 4
 
-
 #+HTML: <div class="hero-unit" style="font-size: 200%;">
 
-[[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
+[[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ 特性]]
 
-[[https://github.com/renard/o-blog][/icon-github-sign icon-white/ Github]]
+[[https://github.com/renard/o-blog][/icon-github-sign icon-white/ 源代码 (github)]]
 
-[[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
+[[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ 更新记录]]
 
 [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][/icon-fire icon-white/ Bug report]]
 
@@ -51,38 +50,31 @@ A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]
 #+end_o_blog_row
 
 
-** Setup
+** 设置
 
-
-First you need to install [[http://www.gnu.org/s/emacs][emacs]] (test with version 23, might work with 24)
-and [[http://orgmode.org/][org-mode]] (version 7.8 or greater). Then you have 2 ways to install
-[[https://github.com/renard/o-blog][o-blog]].
+首先，你需要安装有 [[http://www.gnu.org/s/emacs][emacs]] (在版本 23 下测试，在 24 下可能也行) 和 [[http://orgmode.org/][org-mode]] (版本 7.8 或更高)。然后你有两种方法可以安装 [[https://github.com/renard/o-blog][o-blog]].
 
 #+begin_o_blog_row 5
 
-*Using el-get*
+*使用 el-get*
 
-If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
-is to add =o-blog= to =el-get-sources= and type:
+要使用 [[https://github.com/dimitri/el-get][el-get]], 安装起来很容易。你所要做的不过是将 =o-blog= 添加到
+=el-get-sources= 中，然后执行 =M-x el-get-install o-blog=.
 
-=M-x el-get-install o-blog=
+如果你使用 =el-get= 4 或更高，你只需要执行: =M-x el-get-install o-blog=.
 
-If you are using =el-get= 4 or greater, you only need to type:
+#+o_blog_row_column 6
 
-=M-x el-get-install o-blog=.
+*手动安装*
 
-#+o_blog_row_column  6
-
-*Manual setup*
-
-Start by cloning the /git/ repository from [[http://github.com][Github]].
+首先从 [[http://github.com][Github]] 克隆 /git/ 仓库源码。
 
 #+begin_src bash
 cd ~/.emacs.d
 git clone https://github.com/renard/o-blog.git
 #+end_src
 
-And add following to your =~/.emacs.d/init.el= file:
+将如下内容添加到你的 =~/.emacs.d/init.el= 文件中:
 
 #+begin_src emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/o-blog")
@@ -92,17 +84,14 @@ And add following to your =~/.emacs.d/init.el= file:
 #+end_o_blog_row
 
 
-** Publish
+** 发布博文
+打开文件 =~/.emacs.d/o-blog/example/sample.org= 然后执行 =M-x
+org-publish-blog=. 输出的站点默认保存在 =~/.emacs.d/o-blog/out=.
 
-Open the =~/.emacs.d/o-blog/example/sample.org= file and type =M-x
-org-publish-blog=. The result site would be published by default in
-=~/.emacs.d/o-blog/out=.
+详情参见 [[file:blog/index.html][博文]]。
 
-See the [[file:blog/index.html][blog]] for more details.
-
-
-* Blog details
-** Copyright
+* 博客设置
+** 版权
   :PROPERTIES:
   :SNIPPET:  t
   :END:
@@ -110,47 +99,45 @@ See the [[file:blog/index.html][blog]] for more details.
 Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%CA%82%C9%9B%E2%9D%A9%2520chezwam%2520%E2%9D%A8%C6%A4%C9%B5%C9%A9%C9%B2%CA%88%E2%9D%A9%2520org][Sébastien Gross]]. Published under the therm of the
 [[http://creativecommons.org/licenses/by-nc-sa/2.0/fr/][Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License]].
 
-** About
+** 关于
   :PROPERTIES:
   :SNIPPET:  t
   :END:
 
-This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]] works.
+这是个解释 [[https://github.com/renard/o-blog][o-blog]] 工作机理的博客样例。
 
-** Navigation
+** 导航
   :PROPERTIES:
   :SNIPPET:  t
   :END:
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ 特性]]
 
-- [[#][/icon-book icon-white/ Documentation]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
-  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
-  - 
+- [[#][/icon-book icon-white/ 文档]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][模版]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][文档结构]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][函数]]
+  -
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
-  - 
-  - [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][Bug report]]
 
-- [[#][/icon-file icon-white/ Tips]]
+- [[#][/icon-file icon-white/ 近期博文]]
   - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ 标签]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ 归档]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ 更新记录]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(调试)]]
 
-* Changelog
+* 更新记录
   :PROPERTIES:
   :PAGE:     changelog.html
   :END:
@@ -158,10 +145,17 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - 2012-03-28
   - Add support for [[http://en.wikipedia.org/wiki/QR_code][QR-code]].
 
+- 2012-03-21
+  - 合并上述代码，更新中文演示模版，修改 snippet 为中文。
+  - 添加 Disqus 中文讨论。
+
 - 2012-03-20
   - Add [[http://disqus.com][Disqus]] support.
   - User can select the file name sanitizer function.
   - Add [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][bug report howto]].
+
+- 2012-03-19
+  - 使用 MD5SUM 作为 tags-safe 及 post filename, 解决中文名称的问题 (exaos)
 
 - 2012-03-06
   - Add support for Font-Awesome
@@ -173,112 +167,104 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - 2012-01-23
   - Change tag system from "Tags" to org tagging system.
 
-* Documentation
-** Debug
+* 文档
+** 调试
    :PROPERTIES:
    :PAGE:     debug.html
    :TEMPLATE: debug.html
    :END:
 
 
-** Features
+** 特性
   :PROPERTIES:
   :PAGE:     features.html
   :END:
 
-- Appearance
-  - Dynamic template system (using lisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging
-    features]] and easy embedded [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][bug report tool]]
-  - Syntax highlighting for exported code snippets
-  - [[http://twitter.github.com/bootstrap/][bootstrap]] support
-  - [[http://fortaweso.me/font-awesome/][Font-Awesome]] support
-  - [[http://lesscss.org/][lesscss]] support
-  - [[http://jquery.com/][JQuery]] support
-  - HTML5 / CSS3 ready
-- Blog
-  - Static pages
-  - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tag cloud]]
-  - Multiple blogs
-  - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
-  - [[http://disqus.com][Disqus]] support
-  - [[http://en.wikipedia.org/wiki/QR_code][QR code]] support
-- Publication
-  - Both synchrone and asynchrone publication
-  - Publish directly to the webserver (using tramp)
-- [[http://twitter.github.com/bootstrap/][Bootstrap]] extra
-  - Alert boxes
-  - Icons ([[http://glyphicons.com/][glyphicons]]) support
+<<<<<<< HEAD
+- 外观
+  - 带[[file:{lisp}(ob:path-to-root){/lisp}/debug.html][调试功能]]的动态模版系统 (使用 lisp 函数), 方便嵌入 [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][错误报告工具]]
+  - 输出的代码片断带有语法加亮
+  - 支持 [[http://twitter.github.com/bootstrap/][bootstrap]]
+  - 支持 [[http://fortaweso.me/font-awesome/][Font-Awesome]]
+  - 支持 [[http://lesscss.org/][lesscss]]
+  - 支持 [[http://jquery.com/][JQuery]]
+  - 支持 HTML5 / CSS3
+- 博客
+  - 静态页面 
+  - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][云标签]]
+  - 多个博客
+  - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][博文归档]]
+  - 支持 [[http://disqus.com][Disqus]]
+  - 支持 [[http://en.wikipedia.org/wiki/QR_code][QR code]]
+- 博文发布
+  - 同时支持同步与异步发布
+  - 直接发布到网站服务器上 (通过 tramp)
+- [[http://twitter.github.com/bootstrap/][Bootstrap]] 额外功能
+  - 警告框
+  - 支持图标 ([[http://glyphicons.com/][glyphicons]])
 
-** Templates
+** 模版
   :PROPERTIES:
   :PAGE:     templates.html
   :END:
 
-Templates which are a big part of the [[https://github.com/renard/o-blog][o-blog]] export process, are HTML-based
-files. Lisp code could be interpreted as long as =<lisp>= tags surrounds it.
+在 [[https://github.com/renard/o-blog][o-blog]] 导出过程中占重头戏的是模版，一组 HTML 的文件。可解析的 Lisp 源码以
+=<lisp>= 标签嵌入其中。
 
 #+begin_src html
 <h1><lisp>(ob:blog-title BLOG)</lisp></h1>
 #+end_src
 
-The previous snippet would be exported to something similar to:
+上面的代码片断可导出为如下类似的内容：
 
 #+begin_src html
 <h1>o-blog</h1>
 #+end_src
 
 #+begin_o_blog_alert info Information
-[[https://github.com/renard/o-blog][o-blog]] only needs =blog_= prefixed templates as long as they do not need any
-other templates (using =ob:insert-template= function).
+如果不需要其它模版, [[https://github.com/renard/o-blog][o-blog]] 只用以 =blog_= 打头的模版文件就够了（通过函数
+=ob:insert-template= ）。
 
-All other templates are defined for convenience.
+所有其它的模版只是为了方便而定义。
 #+end_o_blog_alert
 
 
-*** Required templates
+*** 必要的模版
 
-=blog_= prefixed templates.
+=blog_= 打头的模版。
 
- - =blog_static.html=: exports any static page (function =ob-write-static=).
- - =blog_post.html=: exports a blog post (function =ob-write-posts=).
- - =blog_tags.html=: exports a tag cloud page (function =ob-write-tags=).
- - =blog_tags-detail.html=: exports page matching a specific tag (function
-   =ob-write-tags=).
- - =blog_archive.html=: exports the whole archives (all categories, all
-   years, all months) page (function =ob-write-index=).
- - =blog_rss.html=: exports the rss feed (function =ob-write-index=).
- - =blog_index_month.html= export index page for a given month (function
-   =ob-write-index=).
- - =blog_index_year.html= export index page for a given year (function
-   =ob-write-index=).
- - =blog_index_catery.html= export index page for a given category (function
-   =ob-write-index=).
+ - =blog_static.html=: 导出任何静态页面 (函数 =ob-write-static=).
+ - =blog_post.html=: 导出一篇博文 (函数 =ob-write-posts=).
+ - =blog_tags.html=: 导出云标签页面 (函数 =ob-write-tags=).
+ - =blog_tags-detail.html=: 导出匹配特定标签的页面 (函数 =ob-write-tags=).
+ - =blog_archive.html=: 导出全部归档 (所有类别、所有年、所有月) 页面 (函数 =ob-write-index=).
+ - =blog_rss.html=: 导出 RSS 订阅 (函数 =ob-write-index=).
+ - =blog_index_month.html= 导出指定月的索引页面 (函数 =ob-write-index=).
+ - =blog_index_year.html= 导出指定月的索引页面 (函数 =ob-write-index=).
+ - =blog_index_catery.html= 导出指定类别的索引页面 (函数 =ob-write-index=).
 
-*** index templates
+*** 索引模版
 
-=index_= prefixed templates. They are used my all =blog_index_*.html=
-templates to generate a list of articles matching given category, year and
-month and the whole archives.
+以 =index_= 打头的模版。它们使用所有的 =blog_index_*.html= 模版来生成一组匹配指定类别、年、月和全部归档的文章列表。
 
  - =index_archives.html=
  - =index_category.html=
  - =index_month.html=
  - =index_year.html=
 
-*** Navigation templates
+*** 导航模版
 
-=nav_= prefixed templates used to generate navigation snippets:
+以 =nav_= 开头的模版用于生成导航片断：
 
- - =nav_links.html=: used to generate navigation menu used in both page
-   header and footer.
- - =nav_tag-cloud.html=: used to generate tag cloud on page bottom.
+ - =nav_links.html=: 用于生成用于页首和页尾的的导航菜单。
+ - =nav_tag-cloud.html=: 用于生成页尾的云标签。
 
-*** Page templates
+*** 页面模版
 
-=page_= prefixed templates used for both html header and footer.
+以 =page_= 开头的模版用于生成 HTML 的页头及页尾。
 
 
-** Structures
+** 结构
   :PROPERTIES:
   :PAGE:     structures.html
   :END:
@@ -287,7 +273,7 @@ Some variables are available when publishing lisp parts of templates. These
 variables are defined using [[http://www.gnu.org/software/emacs/manual/html_node/cl/Structures.html][defstruct]], then any slot (or property) is
 available using a =(type-slot variable)= form.
 
-*** Structures
+*** 文档结构
 
 **** Structures: =ob:blog=
 
@@ -314,11 +300,6 @@ Structure used to define a blog:
  - =url=: Blog base URL defined by the =#+URL:= header.
  - =default-category=: default category for posts  defined by the
    =#DEFAULT_CATEGORY:= header or =Blog=.
- - =disqus=: [[http://docs.disqus.com/developers/universal/][disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this system
-   belongs to. Defined by the \"#DISQUS\" header.
- - =filename-sanitizer=: 1-argument function to be used to sanitize
-   post filenames. Defined by =#+FILENAME_SANITIZER:= or
-   =ob-sanitize-string=.
 
 Example:
 
@@ -373,7 +354,7 @@ Example:
 (ob:tags-name TAG)
 #+end_src
 
-*** Variables
+*** 变量
 
 Following variables are always available when publishing a blog:
 
@@ -395,7 +376,7 @@ Some variables may be defined in some functions:
  - =PATH-TO-ROOT= (=string=): (intern use only, use =ob:path-to-root=
    instead) path to blog root used by =ob:path-to-root=.
 
-** Functions
+** 函数
   :PROPERTIES:
   :PAGE:     functions.html
   :END:
@@ -559,7 +540,7 @@ Add a human readable timestamp for a post:
   </time>.
 #+end_src
 
-** Bug report
+** 报告软件臭虫 (BUG)
   :PROPERTIES:
   :PAGE:     bug-report.html
   :END:
@@ -603,24 +584,28 @@ debug.
 
 
 
-** FAQ
+** 问答
   :PROPERTIES:
   :PAGE:     faq.html
   :END:
 
-*** My page looks ugly
+*** 页面看起来丑丑的～～
 
 Maybe you are using [[https://www.google.com/chrome/][google-chrome]] and try to view your site locally using a
 =file:///path/to/your/site/out/index.html= scheme. Open the javascript console
 =Ctrl+Shift+I= you should see something like:
+
+如果你使用的是 [[https://www.google.com/chrome/][google-chrome]] 并且用 =file:///path/to/your/site/out/index.html= 这
+种方式来查看页面的话，用 =Ctrl+Shift+I= 打开 JavaScript 控制台，你可能会看到如下
+类似的提示：
 
 #+begin_example
 XMLHttpRequest cannot load file:///path/to/your/site/out/out/style/css/o-blog.less. Cross origin requests are only supported for HTTP.
 less-1.2.1.min.js:8Uncaught Error: NETWORK_ERR: XMLHttpRequest Exception 101
 #+end_example
 
-There is a known Chrome issue with loading local javascript files. This is a
-/security feature/ in Chrome.
+这是 Chrome 载入本地 JavaScript 文件时的一个特点，这也是 Chrome 中的一个
+/安全特性/ 。
 
 You can disable this with the =--allow-file-access-from-files= option to
 chrome or you can use an other browser or setup a local webserver.
@@ -651,8 +636,8 @@ and browse http://localhost:8080
 An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
 complex.
 
-* Blog entries
-** DONE Creating a blog					       :usage:o@blog:
+* 博客条目
+** DONE 创建一个博客条目					  :用例:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
 
 A blog consists of org entries. Each entry has a title, some properties and
@@ -691,7 +676,7 @@ Please note the blank line between the properties section and the text itself.
 Use =#+STARTUP: logdone= to automatically add a time stamp when closing an
 entry.
 
-** DONE How to use tags					       :usage:o@blog:
+** DONE 如何使用标签						  :用例:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
 
 Tags are useful to classify articles. They are stored as [[http://orgmode.org/manual/Tags.html][org-mode tags]] for
@@ -705,7 +690,7 @@ Special characters used in tags:
   - At sign (=@=) is converted to a dash (=-=).
   - Underscore (=_=) is converted to a blank (= =).
 
-** DONE Example of some org syntax				  :usage:org:
+** DONE 一些 org 语法示例 					     :用例:org:
    CLOSED: [2012-01-07 Sat 11:23]
 
 *** Titles
@@ -903,7 +888,7 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 - [[Creating a blog]]
 - insite (file): [[file:o-blog.el]]
 - in page (anchor): [[Literal examples]]
-** DONE Some HTML5 samples					     :html_5:
+** DONE 一些 HTML5 示例 					     :html_5:
    CLOSED: [2012-01-10 Tue 20:58]
 
 *** tag: <details>
@@ -928,7 +913,7 @@ Works only with chrome.
   ,#+HTML: </details>
 #+end_src
 
-** DONE Alerts 							      :usage:
+** DONE 警告 								 :用例:
    CLOSED: [2012-01-15 Sun 20:40]
 
 Alerts are declared in =o_blog_alert= blocks. There are 4 types of
@@ -1004,7 +989,7 @@ nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
 #+end_o_blog_alert
 
-** DONE Using modal source code				    :usage:Bootstrap:
+** DONE 使用 modal 显示源代码 				       :用例:Bootstrap:
    CLOSED: [2012-02-09 Thu 23:13]
 
 The [[http://twitter.github.com/bootstrap/javascript.html#modals][Modal]] bootstrap script can be used to display the content of an external
@@ -1019,11 +1004,15 @@ The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
   content should be read.
 - The optional =mode= which could be determined by if omitted.
 
-Here is an example of the =sample-init.el= file:
+这是显示 =README.md= 文件的示例：
+
+#+o_blog_source ../README.md markdown
+
+这是显示 elisp 代码的示例：
 
 #+o_blog_source ../sample-init.el emacs-lisp
 
-** DONE Adding icons					    :usage:Bootstrap:
+** DONE 添加图标					       :用例:Bootstrap:
    CLOSED: [2012-02-10 Fri 00:19]
 
 Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
@@ -1115,9 +1104,7 @@ rendered result might be damaged.
 #+end_o_blog_row
 
 
-
-
-** DONE Using Bootstrap grid				    :usage:Bootstrap:
+** DONE 使用 Bootstrap 分格 				       :用例:Bootstrap:
    CLOSED: [2012-02-10 Fri 01:19]
 
 [[http://twitter.github.com/bootstrap/scaffolding.html][Bootstrap scaffolding]] could be defined using both =#+begin_o_blog_row= and
@@ -1168,3 +1155,26 @@ The syntax is:
   ,#+end_o_blog_row
 
 #+end_src
+
+** DONE 中文测试 							 :中文:
+   CLOSED: [2012-03-20 二 09:46]
+   - State "DONE"       from ""           [2012-03-20 二 09:46]
+   - State "DONE"       from ""           [2012-03-20 二 02:19]
+   :PROPERTIES:
+   :tags:     标签2
+   :END:
+
+这是一个测试条目哟。
+
+博客页面的文件名默认使用 =ob-sanitize-string= 从标题生成, 这样会导致中文标题的博文无法正常生成。因此，对于中文博客，需要在你的 *org* 文档头中添加
+: #+FILENAME_SANITIZER: md5
+
+
+- 待办事项
+  这儿列举了一些中文处理中的问题。具体的解决参见 [[github:exaos/o-blog]].
+
+  1. [X] 中文文件名无法正常生成 --> 使用 MD5 取代 sanitize-string
+     * 现在，使用 =#+FILENAME_SANITIZER: md5= 代替。
+  2. [X] pull upstream
+  3. [X] 博客设置中的 =Copyright=, =About= 及 =Navigation= 等 =SNIPPET= 不能用中文的问题。
+
