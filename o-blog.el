@@ -474,7 +474,8 @@ MARKERS is a list of entries given by `org-map-entries'."
 
 	   (page (org-entry-get (point) "PAGE"))
 
-	   (filename (ob:sanitize-string title))
+	   (filename (or (org-entry-get (point) "CUSTOM_ID")
+			 (ob:sanitize-string title)))
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 

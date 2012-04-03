@@ -639,6 +639,9 @@ complex.
 * 博客条目
 ** DONE 创建一个博客条目					  :用例:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
+   :PROPERTIES:
+   :CUSTOM_ID: create-new-post
+   :END:
 
 A blog consists of org entries. Each entry has a title, some properties and
 some text. Exporting a blog means publishing all entries with a =DONE=
@@ -678,6 +681,9 @@ entry.
 
 ** DONE 如何使用标签						  :用例:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
+   :PROPERTIES:
+   :CUSTOM_ID: use-tags
+   :END:
 
 Tags are useful to classify articles. They are stored as [[http://orgmode.org/manual/Tags.html][org-mode tags]] for
 each entries. To add or modify a tag for a post, just use =C-c C-c= and
@@ -692,6 +698,9 @@ Special characters used in tags:
 
 ** DONE 一些 org 语法示例 					     :用例:org:
    CLOSED: [2012-01-07 Sat 11:23]
+   :PROPERTIES:
+   :CUSTOM_ID: syntax-org-mode
+   :END:
 
 *** Titles
 
@@ -890,6 +899,9 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 - in page (anchor): [[Literal examples]]
 ** DONE 一些 HTML5 示例 					     :html_5:
    CLOSED: [2012-01-10 Tue 20:58]
+   :PROPERTIES:
+   :CUSTOM_ID: html5-example
+   :END:
 
 *** tag: <details>
 
@@ -915,6 +927,9 @@ Works only with chrome.
 
 ** DONE 警告 								 :用例:
    CLOSED: [2012-01-15 Sun 20:40]
+   :PROPERTIES:
+   :CUSTOM_ID: warning
+   :END:
 
 Alerts are declared in =o_blog_alert= blocks. There are 4 types of
 them:
@@ -991,6 +1006,9 @@ nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
 
 ** DONE 使用 modal 显示源代码 				       :用例:Bootstrap:
    CLOSED: [2012-02-09 Thu 23:13]
+   :PROPERTIES:
+   :CUSTOM_ID: use-modal
+   :END:
 
 The [[http://twitter.github.com/bootstrap/javascript.html#modals][Modal]] bootstrap script can be used to display the content of an external
 file in a modal window. The magic line is:
@@ -1014,6 +1032,9 @@ The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
 
 ** DONE 添加图标					       :用例:Bootstrap:
    CLOSED: [2012-02-10 Fri 00:19]
+   :PROPERTIES:
+   :CUSTOM_ID: add-icons
+   :END:
 
 Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
 italic style:
@@ -1106,6 +1127,9 @@ rendered result might be damaged.
 
 ** DONE 使用 Bootstrap 分格 				       :用例:Bootstrap:
    CLOSED: [2012-02-10 Fri 01:19]
+   :PROPERTIES:
+   :CUSTOM_ID: use-bootstrap
+   :END:
 
 [[http://twitter.github.com/bootstrap/scaffolding.html][Bootstrap scaffolding]] could be defined using both =#+begin_o_blog_row= and
 =#+end_o_blog_row= directives (or =<og= =TAB= shortcut). A new column could
@@ -1161,7 +1185,7 @@ The syntax is:
    - State "DONE"       from ""           [2012-03-20 二 09:46]
    - State "DONE"       from ""           [2012-03-20 二 02:19]
    :PROPERTIES:
-   :tags:     标签2
+   :CUSTOM_ID: use-chinese
    :END:
 
 这是一个测试条目哟。
@@ -1173,8 +1197,9 @@ The syntax is:
 - 待办事项
   这儿列举了一些中文处理中的问题。具体的解决参见 [[github:exaos/o-blog]].
 
-  1. [X] 中文文件名无法正常生成 --> 使用 MD5 取代 sanitize-string
-     * 现在，使用 =#+FILENAME_SANITIZER: md5= 代替。
+  1. [X] 中文文件名无法正常生成
+     * 现在，使用 =#+FILENAME_SANITIZER: md5= 生成默认为 =YYYY/MM/DD_(MD5).html= 的文件名。
+     * 或者在每个条目下添加属性 =CUSTOM_ID=, 生成为 =YYYY/MM/DD_(CUSTOM_ID).html= 形式的文件名。
   2. [X] pull upstream
   3. [X] 博客设置中的 =Copyright=, =About= 及 =Navigation= 等 =SNIPPET= 不能用中文的问题。
 
