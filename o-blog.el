@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-04-06 13:59:34
+;; Last changed: 2012-04-06 14:01:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -474,7 +474,8 @@ MARKERS is a list of entries given by `org-map-entries'."
 
 	   (page (org-entry-get (point) "PAGE"))
 
-	   (filename (ob:sanitize-string title))
+	   (filename (or (org-entry-get (point) "CUSTOM_ID")
+			 (ob:sanitize-string title)))
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
