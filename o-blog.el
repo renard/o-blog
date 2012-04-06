@@ -19,11 +19,11 @@
 
 (eval-when-compile
   (require 'cl nil t)
-  (require 'browse-url nil t)
-  (require 'find-func nil t))
+  (require 'browse-url nil t))
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
 (require 'dired-sync nil t)
+(require 'find-func nil t)
 
 (mapcar (lambda (x) (require (intern (format "o-blog-%s" x)) nil t))
 	'("alert" "copy-files" "source" "grid"))
