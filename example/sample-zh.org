@@ -1025,9 +1025,9 @@ The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
   content should be read.
 - The optional =mode= which could be determined by if omitted.
 
-这是显示 =README.md= 文件的示例：
+这是显示 =README-zh.md= 文件的示例：
 
-#+o_blog_source ../README.md markdown
+#+o_blog_source ../README-zh.md markdown
 
 这是显示 elisp 代码的示例：
 
