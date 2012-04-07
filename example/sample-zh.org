@@ -4,8 +4,9 @@
 
 #+STARTUP: logdone
 
-#+TEMPLATE_DIR: ../templates-zh
-#+STYLE: ../templates/style
+#+TEMPLATE_DIR: ../templates
+#+LANGUAGE: zh
+#+STYLE: style
 #+URL: http://exaos.github.com/o-blog
 
 #+DEFAULT_CATEGORY: Tips
@@ -142,6 +143,9 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   :PAGE:     changelog.html
   :END:
 
+- 2012-04-07
+  - 添加多语言模版支持
+
 - 2012-03-28
   - Add support for [[http://en.wikipedia.org/wiki/QR_code][QR-code]].
 
@@ -180,7 +184,6 @@ Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%
   :PAGE:     features.html
   :END:
 
-<<<<<<< HEAD
 - 外观
   - 带[[file:{lisp}(ob:path-to-root){/lisp}/debug.html][调试功能]]的动态模版系统 (使用 lisp 函数), 方便嵌入 [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][错误报告工具]]
   - 输出的代码片断带有语法加亮
@@ -1200,6 +1203,6 @@ The syntax is:
   1. [X] 中文文件名无法正常生成
      * 现在，使用 =#+FILENAME_SANITIZER: md5= 生成默认为 =YYYY/MM/DD_(MD5).html= 的文件名。
      * 或者在每个条目下添加属性 =CUSTOM_ID=, 生成为 =YYYY/MM/DD_(CUSTOM_ID).html= 形式的文件名。
-  2. [X] pull upstream
-  3. [X] 博客设置中的 =Copyright=, =About= 及 =Navigation= 等 =SNIPPET= 不能用中文的问题。
+  2. [X] 博客设置中的 =Copyright=, =About= 及 =Navigation= 等 =SNIPPET= 不能用中文的问题。
+  3. [X] 多语言模版支持。你需要在文件头中定义 =#+LANGUAGE: zh=, 然后在 =templates/zh= 目录下放置需要翻译成中文的模版文件即可
 
