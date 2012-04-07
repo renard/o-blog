@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-03-28 13:43:49
+;; Last changed: 2012-04-06 14:01:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -19,11 +19,11 @@
 
 (eval-when-compile
   (require 'cl nil t)
-  (require 'browse-url nil t)
-  (require 'find-func nil t))
+  (require 'browse-url nil t))
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
 (require 'dired-sync nil t)
+(require 'find-func nil t)
 
 (mapcar (lambda (x) (require (intern (format "o-blog-%s" x)) nil t))
 	'("alert" "copy-files" "source" "grid"))
@@ -536,7 +536,7 @@ headers and body."
 	    (when (search-forward-regexp "^\\s-*$" nil t)
 	      (goto-char (match-end 0)))
 	    (save-excursion
-	      (insert "#+OPTIONS: H:7 num:nil  toc:8 d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
+	      (insert "#+OPTIONS: H:7 num:nil  toc:nil d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
 	    (buffer-substring-no-properties (point) (point-max))))))))
 
 
@@ -544,6 +544,7 @@ headers and body."
   "Convert STRING to html using `org-mode' syntax."
   (with-temp-buffer
     (insert string)
+    (org-mode)
     (substring-no-properties (org-export-as-html nil nil nil 'string t))))
 
 
