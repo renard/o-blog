@@ -22,7 +22,7 @@
 #+end_src
 
 #+CALL: my-sanitizer()
-#+FILENAME_SANITIZER: el-sanitizer
+#+FILENAME_SANITIZER: md5
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -911,7 +911,7 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 - [[Creating a blog]]
 - insite (file): [[file:o-blog.el]]
 - in page (anchor): [[Literal examples]]
-** DONE 一些 HTML5 示例 					     :html_5:
+** DONE 一些 HTML5 示例						     :html_5:
    CLOSED: [2012-01-10 Tue 20:58]
    :PROPERTIES:
    :CUSTOM_ID: html5-example
