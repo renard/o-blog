@@ -5,13 +5,24 @@
 #+STARTUP: logdone
 
 #+TEMPLATE_DIR: ../templates
-#+LANGUAGE: zh
+#+LANGUAGE: zh-CN
 #+STYLE: style
 #+URL: http://exaos.github.com/o-blog
 
 #+DEFAULT_CATEGORY: Tips
 #+DISQUS: exaos-o-blog
-#+FILENAME_SANITIZER: md5
+
+#+NAME: my-sanitizer
+#+begin_src emacs-lisp
+(defun el-sanitizer(s)
+  "Sanitize string S"
+  (if (eq (ob-sanitize-string s) "")
+      (md5 s)
+    (ob-sanitize-string s)))
+#+end_src
+
+#+CALL: my-sanitizer()
+#+FILENAME_SANITIZER: el-sanitizer
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -1196,6 +1207,20 @@ The syntax is:
 博客页面的文件名默认使用 =ob-sanitize-string= 从标题生成, 这样会导致中文标题的博文无法正常生成。因此，对于中文博客，需要在你的 *org* 文档头中添加
 : #+FILENAME_SANITIZER: md5
 
+另外的一个办法就是在文件头添加一段你自己定义的 =emacs-lisp= 代码，比如：
+#+begin_example
+#+NAME: my-sanitizer
+#+begin_src emacs-lisp
+(defun el-sanitizer(s)
+  "Sanitize string S"
+  (if (eq (ob-sanitize-string s) "")
+      (md5 s)
+    (ob-sanitize-string s)))
+#+end_src
+
+#+CALL: my-sanitizer()
+#+FILENAME_SANITIZER: el-sanitizer
+#+end_example
 
 - 待办事项
   这儿列举了一些中文处理中的问题。具体的解决参见 [[github:exaos/o-blog]].
