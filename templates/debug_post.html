@@ -1,8 +1,8 @@
 <div class="debug post">
   <h2><lisp>(ob:post-title POST)</lisp></h2>
   <table>
-    <caption>Dump information for post <lisp>(ob:post-title POST)</lisp></caption>
-    <thead><tr><th>Property</th><th>Value</th></tr></thead>
+    <caption><lisp>(ob:gettext :debug-post)</lisp> <lisp>(ob:post-title POST)</lisp></caption>
+    <thead><tr><th><lisp>(ob:gettext :debug-property)<lisp></th><th><lisp>(ob:gettext :debug-value)<lisp></th></tr></thead>
     <tbody>
       <tr><td class="property"><code>id</code></td><td class="value"><pre><lisp>(htmlize-protect-string (format "%S" (ob:post-id POST)))</lisp></pre></td></tr>
       <tr><td class="property"><code>title</code></td><td class="value"><pre><lisp>(htmlize-protect-string (format "%S" (ob:post-title POST)))</lisp></pre></td></tr>

@@ -1,12 +1,12 @@
-  <li class="home"><a href="<lisp>(ob:path-to-root)</lisp>/index.html">Home</a></li>
-  <li class="blog"><a href="<lisp>
-	       (let ((POSTS ALL-POSTS))
-	       (format "%s/%s"
-			      (ob:path-to-root)
-			      (ob:post-htmlfile
-			      (car (ob:get-posts (lambda (x)
-			      (equal "Tips" (ob:post-category x))))))))
-					   </lisp>">Blog</a></li>
-  <li class="tags"><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html">Tags</a></li>
-  <li class="archives"><a href="<lisp>(ob:path-to-root)</lisp>/archives.html">Archives</a></li>
-  <li class="rss"><a href="<lisp>(ob:path-to-root)</lisp>/index.xml">RSS</a></li>
+<li class="home"><a href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:gettext :home)</lisp></a></li>
+<li class="blog"><a href="<lisp>
+			  (let ((POSTS ALL-POSTS))
+			  (format "%s/%s"
+					 (ob:path-to-root)
+					 (ob:post-htmlfile
+					 (car (ob:get-posts (lambda (x)
+					 (equal "Tips" (ob:post-category x))))))))
+						      </lisp>">Blog</a></li>
+<li class="tags"><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html"><lisp>(ob:gettext :tags)</lisp></a></li>
+<li class="archives"><a href="<lisp>(ob:path-to-root)</lisp>/archives.html"><lisp>(ob:gettext :archives)</lisp></a></li>
+<li class="rss"><a href="<lisp>(ob:path-to-root)</lisp>/index.xml"><lisp>(ob:gettext :rss)</lisp></a></li>
