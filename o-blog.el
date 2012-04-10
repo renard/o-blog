@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-04-06 14:01:08
+;; Last changed: 2012-04-10 16:30:10
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -104,6 +104,9 @@ This is a good place for o-blog parser plugins."
 
  - url: Blog base URL defined by the \"#+URL:\" header.
 
+ - language: Blog language defined by the \"#+LANGUAGE:\" header
+   or \"en\".
+
  - default-category: default category for posts defined by the
    \"#DEFAULT_CATEGORY:\" header or \"Blog\".
 
@@ -125,6 +128,7 @@ This is a good place for o-blog parser plugins."
   title
   description
   url
+  language
   post-build-shell
   default-category
   disqus
@@ -404,6 +408,7 @@ defined, or interactivelly called with `prefix-arg'.
     (setf (ob:blog-title blog) (or (ob:get-header "TITLE") "title"))
     (setf (ob:blog-description blog) (or (ob:get-header "DESCRIPTION") "Description"))
     (setf (ob:blog-url blog) (or (ob:get-header "URL") ""))
+    (setf (ob:blog-language blog) (or (ob:get-header "LANGUAGE") "en"))
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
     (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
@@ -913,5 +918,18 @@ path-to-root slot."
    ((boundp 'PATH-TO-ROOT) PATH-TO-ROOT)
    ((boundp 'POST) (ob:post-path-to-root POST))
    (t ".")))
+
+(defun ob:gettext (text &optional lang)
+  "Return part of `o-blog-i18n' that matches TEXT in LANG.
+
+If LANG is not defined, the blog \"#+LANGUAGE:\" header would be
+used. If not found, English (en) is used as a fall-back."
+  (let* ((lang (or lang (when (boundp 'BLOG) (ob:blog-language BLOG)) "en"))
+	 (default-text-list (cdr (assoc "en" o-blog-i18n)))
+	 (text-list (or
+		     (cdr (assoc lang o-blog-i18n))
+		     default-text-list)))
+    (or (plist-get text-list text)
+	(plist-get text-list default-text-list))))
 
 (provide 'o-blog)

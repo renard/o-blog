@@ -3,17 +3,17 @@
 	<div class="container">
 	  <div class="row">
 	    <section class="span3">
-	      <h1>About</h1>
+	      <h1><lisp>(ob:gettext :about)</lisp></h1>
 	      <lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
 	    </section>
 	    <nav id="links" class="span3">
-	      <h1>Links</h1>
+	      <h1><lisp>(ob:gettext :links)</lisp></h1>
 	      <ul>
 		<lisp>(ob:insert-template "nav_links.html")</lisp>
 	      </ul>
 	    </nav>
 	    <nav id="archives" class="span3">
-	      <h1>Archives</h1>
+	      <h1><lisp>(ob:gettext :archives)</lisp></h1>
 	      <ul>
 		<lisp>
 		  (loop for p in (ob:get-posts nil 10)
@@ -26,14 +26,14 @@
 	      </ul>
 	    </nav>
 	    <nav class="tags span3">
-	      <h1>Tags</h1>
+	      <h1><lisp>(ob:gettext :tags)</lisp></h1>
 	      <lisp>(ob:insert-template "nav_tag-cloud.html")</lisp>
 	    </nav>
 	  </div>
 	</div>
 	<div class="copyright" style="text-align: center;">
 	  <lisp>(ob:post-content-html (ob:get-snippet "Copyright"))</lisp>
-	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
+	  <p>(ob:gettext powered-by) <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
 	</div>
       </div>
 </body>
