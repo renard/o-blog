@@ -1,0 +1,40 @@
+      </div>
+      <div id="footer">
+	<div class="container">
+	  <div class="row">
+	    <section class="span3">
+	      <h1>关于</h1>
+	      <lisp>(ob:post-content-html (ob:get-snippet "关于"))</lisp>
+	    </section>
+	    <nav id="links" class="span3">
+	      <h1>链接</h1>
+	      <ul>
+		<lisp>(ob:insert-template "nav_links.html")</lisp>
+	      </ul>
+	    </nav>
+	    <nav id="archives" class="span3">
+	      <h1>归档</h1>
+	      <ul>
+		<lisp>
+		  (loop for p in (ob:get-posts nil 10)
+		  do (insert (format "<li><a href=\"%s/%s\">%s</a></li> "
+		  (ob:path-to-root)
+		  (ob:post-htmlfile p)
+		  (ob:post-title p)
+		  )))
+		</lisp>
+	      </ul>
+	    </nav>
+	    <nav class="tags span3">
+	      <h1>标签</h1>
+	      <lisp>(ob:insert-template "nav_tag-cloud.html")</lisp>
+	    </nav>
+	  </div>
+	</div>
+	<div class="copyright" style="text-align: center;">
+	  <lisp>(ob:post-content-html (ob:get-snippet "版权"))</lisp>
+	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
+	</div>
+      </div>
+</body>
+</html>

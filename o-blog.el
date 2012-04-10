@@ -871,7 +871,12 @@ Returns only fist match except if ALL is defined."
    (with-temp-buffer
      "*Org-Publish-Template*"
      (erase-buffer)
-     (insert-file-contents (format "%s/%s" (ob:blog-template-dir BLOG) template))
+     (insert-file-contents
+      (concat (ob:blog-template-dir BLOG) "/"
+	      (if (file-exists-p (format "%s/%s/%s" (ob:blog-template-dir BLOG)
+					 (ob:get-header "LANGUAGE") template))
+		  (concat (ob:get-header "LANGUAGE") "/"))
+	      template))
      (ob-eval-lisp)
      (buffer-string))))
 
