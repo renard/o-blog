@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-04-10
-;; Last changed: 2012-04-10 16:28:42
+;; Last changed: 2012-04-12 17:07:48
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -38,6 +38,27 @@
      :debug-posts-header "Posts"
      :debug-static-pages-header "Static pages"
      :debug-snippet-header "Snippets"
+     :debug-tags-header "Tags")
+    ("fr"
+     :posted-on "Posté le"
+     :post-timestamp "%A %d %B %Y à %H:%M:%S"
+     :related-tags "Tags associés"
+     :home "Accueil"
+     :tags "Tags"
+     :archives "Archives"
+     :rss "RSS"
+     :about "À propos"
+     :links "Liens"
+     :powered-by "Réalisé avec"
+     :debug-blog "Contenu du blog"
+     :debug-post "Contenu des articles"
+     :debug-tag "Contenu des tags"
+     :debug-property "Propriété"
+     :debug-value "Valeur"
+     :debug-blog-header "Blog"
+     :debug-posts-header "Articles"
+     :debug-static-pages-header "Pages statiques"
+     :debug-snippet-header "Fragments"
      :debug-tags-header "Tags")
     ("zh-CN"  ;; simplified Chinese, traditional Chinese may use zh-TW or zh-HK
      :posted-on "发布于"
