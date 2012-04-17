@@ -54,8 +54,8 @@ A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]
 ** Setup
 
 
-First you need to install [[http://www.gnu.org/s/emacs][emacs]] (test with version 23, might work with 24)
-and [[http://orgmode.org/][org-mode]] (version 7.8.09 or greater). Then you have 2 ways to install
+First you need to install [[http://www.gnu.org/s/emacs][emacs]] (tested with version 24, might work with 23)
+and [[http://orgmode.org/][org-mode]] (tested with version 7.8.09, other might greater). Then you have 2 ways to install
 [[https://github.com/renard/o-blog][o-blog]].
 
 #+begin_o_blog_row 5
@@ -165,7 +165,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - Add i18n support.
 
 - 2012-04-06
-  - Add org-mode CUSTOM_ID.
+  - Add org-mode CUSTOM\_ID.
 
 - 2012-03-28
   - Add support for [[http://en.wikipedia.org/wiki/QR_code][QR-code]].
