@@ -155,6 +155,18 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-04-17
+  - Update to:
+    - less 1.3.0.
+    - Font-Awesome v1.0.0-7-g563a6f3.
+    - bootstrap v2.0.2-3-g6506ede.
+
+- 2012-04-10
+  - Add i18n support.
+
+- 2012-04-06
+  - Add org-mode CUSTOM_ID.
+
 - 2012-03-28
   - Add support for [[http://en.wikipedia.org/wiki/QR_code][QR-code]].
 
