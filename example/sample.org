@@ -134,7 +134,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][Bug report]]
 
 - [[#][/icon-file icon-white/ Tips]]
-  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
@@ -1064,7 +1064,7 @@ This could also be used for the top /navbar/ using something like:
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
   ,- [[#][/icon-file icon-white/ Blog]]
-  ,  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
@@ -1094,7 +1094,7 @@ This could also be used for the top /navbar/ using something like:
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
 - [[#][/icon-file icon-white/ Blog]]
-  - [[file:{lisp}(format%20"%25s/%25s"%20(ob:path-to-root)%20(ob:post-htmlfile%20(ob:get-last-post%20"Tips"%200))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
