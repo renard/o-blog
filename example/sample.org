@@ -55,8 +55,8 @@ A stand-alone blogging and publication tool for [[http://orgmode.org/][org-mode]
 
 
 First you need to install [[http://www.gnu.org/s/emacs][emacs]] (tested with version 24, might work with 23)
-and [[http://orgmode.org/][org-mode]] (tested with version 7.8.09, other might greater). Then you have 2 ways to install
-[[https://github.com/renard/o-blog][o-blog]].
+and [[http://orgmode.org/][org-mode]] (tested with version 7.8.09, other /might/ work as well). Then
+you have 2 ways to install [[https://github.com/renard/o-blog][o-blog]].
 
 #+begin_o_blog_row 5
 

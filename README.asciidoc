@@ -8,7 +8,7 @@ http://renard.github.com/o-blog[Demo site].
 First you need:
 
 - http:www.gnu.org/s/emacs[emacs] (tested with version 24, might work with 23)
-- http://orgmode.org/[org-mode] (tested with version 7.8.09, greater might)
+- http://orgmode.org/[org-mode] (tested with version 7.8.09, greater might work as well)
 
 If you don't have them, you should install them fist.
 
