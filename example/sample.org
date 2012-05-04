@@ -155,6 +155,10 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-05-04
+  - Update to:
+    - bootstrap v2.0.3-5-gb261f97.
+
 - 2012-04-17
   - Update to:
     - less 1.3.0.
