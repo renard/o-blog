@@ -36,7 +36,7 @@ $(document).ready(
 	 * Org exports html starting from h3.
 	 * This promotes all nodes 2 steps up.
 	 */
-	var article_content = $('#page article .article-content');
+	var article_content = $('#page.container div.article-content');
 	for (var i=1; i<=6; i++) {
 	    article_content.find('h'+(i+2)).each(function() {
 		$(this).replaceWith($('<h'+i+'/>').html($(this).html()));
