@@ -16,7 +16,7 @@ for d in $SRC_JS $SRC_LESS $SRC_IMG; do
     cp -a $d $DST
 done
 
-rm -rf $DST/js/tests $DST/js/README.md
+rm -rf $DST/js/tests $DST/less/tests $DST/js/README.md
 
 mkdir -p $DST_FONT_AWESOME
 cp -a $SRC_FONT_AWESOME $DST_FONT_AWESOME
