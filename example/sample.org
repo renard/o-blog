@@ -1338,3 +1338,95 @@ Look, I'm in a well!
 #+end_o_blog_well
 
 #+end_o_blog_row
+
+** DONE Add a custom font			     :usage:Bootstrap:o@blog:
+   CLOSED: [2012-05-07 Mon 16:38]
+
+[[http://www.google.com/webfonts][Google webfonts]] can be easily used in o-blog in 2 different ways: using
+google API or by providing resources in the =templates/style= directory.
+
+Both example are given using the [[http://www.yanone.de/typedesign/kaffeesatz/][Yanone Kaffeesatz]] font.
+
+*** Using Google API
+
+The [[http://www.google.com/webfonts#QuickUsePlace:quickUse/Family:][quick use]] provides an import snippet such as:
+
+#+BEGIN_SRC css
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700&subset=latin,latin-ext);
+#+END_SRC
+
+That line should be included into the
+=templates/style/less/o-blog-default.less= file in which you should also add
+something like:
+
+#+BEGIN_SRC css
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Yanone Kaffeesatz", sans-serif;
+}
+#+END_SRC
+
+And that's it.
+
+*** Providing resources
+
+That is less efficient in terms of network resources but provide a good
+alternative for offline publications.
+
+First you need to download all fonts from
+http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700&subset=latin,latin-ext
+into the =templates/style/font= directory.
+
+#+BEGIN_SRC sh
+wget -O templates/style/font/yanone-kaffeesatz-regular.woff http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/YDAoLskQQ5MOAgvHUQCcLcvyhSUCWNe0YoQkk3OBepg.woff
+wget -O templates/style/font/yanone-kaffeesatz-bold.woff http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/We_iSDqttE3etzfdfhuPRWkfAKtHZKhf5n1BtpfNX_k.woff
+wget -O templates/style/font/yanone-kaffeesatz-light.woff http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/We_iSDqttE3etzfdfhuPRYeadfj-6pacmJkCVgsbjK4.woff
+wget -O templates/style/font/yanone-kaffeesatz-extralight.woff http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/We_iSDqttE3etzfdfhuPRem2G_Og_te2ADNUqKDN50k.woff
+#+END_SRC
+
+Then you should declare them into =templates/style/less/o-blog-default.less=:
+
+#+BEGIN_SRC css
+@font-face {
+  font-family: 'Yanone Kaffeesatz Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Regular'),
+  local('YanoneKaffeesatz-Regular'),
+  url('../font/yanone-kaffeesatz-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yanone Kaffeesatz Bold';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Bold'),
+  local('YanoneKaffeesatz-Bold'),
+  url('../font/yanone-kaffeesatz-bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yanone Kaffeesatz Light';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Light'),
+  local('YanoneKaffeesatz-Light'),
+  url('../font/yanone-kaffeesatz-light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yanone Kaffeesatz Extralight';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Extralight'),
+  local('YanoneKaffeesatz-Extralight'),
+  url('../font/yanone-kaffeesatz-extralight.woff') format('woff');
+}
+#+END_SRC
+
+Add declare its use like in the Google API version:
+
+#+BEGIN_SRC css
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Yanone Kaffeesatz Regular", sans-serif;
+}
+#+END_SRC
