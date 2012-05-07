@@ -1184,3 +1184,157 @@ The syntax is:
   ,#+end_o_blog_row
 
 #+end_src
+
+** DONE Some bootstrap features				    :usage:Bootstrap:
+   CLOSED: [2012-05-03 Thu 21:40]
+
+*** Hero-unit
+
+#+begin_o_blog_row 7
+
+#+BEGIN_SRC org
+  ,#+begin_o_blog_hero_unit
+  ,#+HTML: <h1>Heading</h1>
+
+  , tagline
+
+  ,#+BEGIN_HTML
+  ,    <a class="btn btn-primary btn-large">
+  ,      Learn more
+  ,    </a>
+  ,#+END_HTML
+  ,#+end_o_blog_hero_unit
+#+END_SRC
+
+#+o_blog_row_column 4
+
+#+begin_o_blog_hero_unit
+
+#+HTML: <h1>Heading</h1>
+
+tagline
+
+#+BEGIN_HTML
+    <a class="btn btn-primary btn-large">
+      Learn more
+    </a>
+#+END_HTML
+#+end_o_blog_hero_unit
+
+#+end_o_blog_row
+
+*** Page header
+
+#+begin_o_blog_row 7
+
+#+BEGIN_SRC org
+  ,#+begin_o_blog_page_header
+  ,#+HTML: <h1>Page header</h1>
+  ,Some text
+  ,#+end_o_blog_page_header
+#+END_SRC
+
+#+o_blog_row_column 4
+
+#+begin_o_blog_page_header
+#+HTML: <h1>Page header</h1>
+Some text
+#+end_o_blog_page_header
+
+#+end_o_blog_row
+
+*** Using labels
+
+    Label and annotate text using a =label:TYPE= link prefix where =TYPE= is
+    one of =default=, =success=, =warning=, =important=, =info= or
+    =reverse=. The URL part of the link is used as the label text.
+
+#+begin_o_blog_row 7
+
+#+BEGIN_SRC txt
+   [[ob-label:default][Default]]
+   [[ob-label:success][Success]]
+   [[ob-label:warning][Warning]]
+   [[ob-label:important][Important]]
+   [[ob-label:info][Info]]
+   [[ob-label:inverse][Inverse]]
+#+END_SRC
+
+#+o_blog_row_column 4
+   - [[ob-label:default][Default]]
+   - [[ob-label:success][Success]]
+   - [[ob-label:warning][Warning]]
+   - [[ob-label:important][Important]]
+   - [[ob-label:info][Info]]
+   - [[ob-label:inverse][Inverse]]
+#+end_o_blog_row
+
+*** Using badges
+
+    Indicators and unread counts as for labels. Use the =badge:TYPE= link
+    prefix.
+
+#+begin_o_blog_row 7
+
+#+BEGIN_SRC  text
+   [[ob-badge:default][Label]]
+   [[ob-badge:success][Success]]
+   [[ob-badge:warning][Warning]]
+   [[ob-badge:important][Important]]
+   [[ob-badge:info][Info]]
+   [[ob-badge:inverse][Inverse]]
+#+END_SRC
+
+#+o_blog_row_column 4
+   - [[ob-badge:default][Label]]
+   - [[ob-badge:success][Success]]
+   - [[ob-badge:warning][Warning]]
+   - [[ob-badge:important][Important]]
+   - [[ob-badge:info][Info]]
+   - [[ob-badge:inverse][Inverse]]
+#+end_o_blog_row
+
+*** Using progress bars
+
+    For loading, redirecting, or action status. Use a =progress:TYPE= link
+    where =TYPE= is one of =info=, =success=, =warning= or
+    =danger=. Additional classes (=striped= or =active=) can be added using comma.
+    The URL is the progress percent.
+
+#+begin_o_blog_row 7
+
+#+BEGIN_SRC  text
+    [[ob-progress:info][25]]
+    [[ob-progress:success,striped][50]]
+    [[ob-progress:warning,striped,active][75]]
+    [[ob-progress:danger][100]]
+#+END_SRC
+
+#+o_blog_row_column 4
+    [[ob-progress:info][25]]
+    [[ob-progress:success,striped][50]]
+    [[ob-progress:warning,striped,active][75]]
+    [[ob-progress:danger][100]]
+#+end_o_blog_row
+
+
+*** Well
+
+Use the well as a simple effect on an element to give it an inset effect.
+
+#+begin_o_blog_row 7
+
+#+BEGIN_SRC  text
+ , #+begin_o_blog_well
+ , Look, I'm in a well!
+ , #+end_o_blog_well
+#+END_SRC
+
+#+o_blog_row_column 4
+
+
+#+begin_o_blog_well
+Look, I'm in a well!
+#+end_o_blog_well
+
+#+end_o_blog_row
