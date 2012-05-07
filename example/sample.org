@@ -60,7 +60,7 @@ you have 2 ways to install [[https://github.com/renard/o-blog][o-blog]].
 
 #+begin_o_blog_row 5
 
-*Using el-get*
+#+HTML: <h4>Using el-get</h4>
 
 If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to do
 is to add =o-blog= to =el-get-sources= and type:
@@ -73,7 +73,7 @@ If you are using =el-get= 4 or greater, you only need to type:
 
 #+o_blog_row_column  6
 
-*Manual setup*
+#+HTML: <h4>Manual setup</h4>
 
 Start by cloning the /git/ repository from [[http://github.com][Github]].
 
