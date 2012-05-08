@@ -6,28 +6,25 @@
 @baseFontSize: 18px;
 @baseLineHeight: @baseFontSize * (18/13);
 
+@linkColor: #933;
+
 
 @import "font-Yanone-Kaffeesatz.less";
-@import "font-Nobile.less";
 @import "font-Ubuntu-Mono.less";
+@import "font-Andika.less";
+
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Yanone Kaffeesatz", sans-serif;
+    font-family: "Yanone Kaffeesatz", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 
-@monoFontFamily: "Ubuntu Mono", sans-serif;
+@monoFontFamily: "Ubuntu Mono", Menlo, Monaco, Consolas, "Courier New";
+@sansFontFamily: "Andika", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-
-#page.container {
-    .article-content {
-	p, ul {
-	    font-family: "Nobile", sans-serif;
-	}
-    }
+nav a:hover {
+    zoom: 1.1;
 }
-
-
 
 .navbar, .breadcrumb {
     font-size: @baseFontSize / (18/13);
