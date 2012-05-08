@@ -2,10 +2,10 @@
  * Define you own style here (overrides bootstrap's variables.less)
  */
 
-/*
-  @baseFontSize: 18px;
-  @baseLineHeight: 25px;
-  */
+
+@baseFontSize: 18px;
+@baseLineHeight: @baseFontSize * (18/13);
+
 
 @import "font-Yanone-Kaffeesatz.less";
 @import "font-Nobile.less";
@@ -24,9 +24,16 @@ h1, h2, h3, h4, h5, h6 {
 	p, ul {
 	    font-family: "Nobile", sans-serif;
 	}
-	p, ul, li, dt, dd, blockquote small, address  {
-	    font-size: 18px;
-	    line-height: 24px;
-	}
     }
+}
+
+
+
+.navbar, .breadcrumb {
+    font-size: @baseFontSize / (18/13);
+    line-height: 0.76 * @baseLineHeight  / (18/13);
+}
+
+.breadcrumb {
+    padding: 3px 14px;
 }

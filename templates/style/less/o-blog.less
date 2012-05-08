@@ -55,7 +55,7 @@ html {
 
 .subnav-fixed {
     position: fixed;
-    top: 40px;
+    top: @navbarHeight;
     left: 0;
     right: 0;
     z-index: 999;
@@ -69,7 +69,7 @@ html {
 
 .subnav {
     width: 100%;
-    height: 36px;
+    height: @navbarHeight - 9;
 
     background-color: #EEE;
     #gradient > .vertical(#f5f5f5, #eeeeee);
@@ -228,12 +228,18 @@ html {
 
 }
 
+.footer-font-size() {
+    font-size: 0.85 * @baseFontSize / (18/13);
+    line-height: 0.95 * @baseLineHeight / (18/13);
+}
+
 #footer {
     #gradient > .vertical(@navbarBackgroundHighlight, @black);
     color: darken(@gray, 2%);
-    font-size: 85%;
 
-    padding-top: @baseLineHeight * 3;
+    .footer-font-size();
+
+    padding-top: @baseLineHeight * 3 / (18/13);
 
     a {
 	color: lighten(@gray, 15%);
@@ -254,8 +260,11 @@ html {
     ul {
 	list-style-type: none;
 	margin: 0;
+	li {
+	    .footer-font-size();
+	}
     }
 
-    .navtags(85%);
+    .navtags(100%);
 
 }
