@@ -1361,6 +1361,11 @@ Look, I'm in a well!
 [[http://www.google.com/webfonts][Google webfonts]] can be easily used in o-blog in 2 different ways: using
 google API or by providing resources in the =templates/style= directory.
 
+#+begin_o_blog_alert warning Caution
+Using many font styles can slow down your webpage, so only select the font
+styles that you actually need on your webpage.
+#+end_o_blog_alert
+
 Both example are given using the [[http://www.yanone.de/typedesign/kaffeesatz/][Yanone Kaffeesatz]] font.
 
 *** Using Google API
