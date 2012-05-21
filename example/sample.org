@@ -155,6 +155,9 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-05-21
+  - Use responsive bootstrap features.
+
 - 2012-05-07
   - Update to:
     - less.js v1.0-547-ga2df119
@@ -223,6 +226,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[http://jquery.com/][JQuery]] support
   - HTML5 / CSS3 ready
   - Custom [[http://www.google.com/webfonts][Google webfonts]] support.
+  - [[http://twitter.github.com/bootstrap/scaffolding.html#responsive][Responsive design]].
 - Blog
   - Static pages
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tag cloud]]
