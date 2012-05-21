@@ -98,7 +98,7 @@ Open the =~/.emacs.d/o-blog/example/sample.org= file and type =M-x
 org-publish-blog=. The result site would be published by default in
 =~/.emacs.d/o-blog/out=.
 
-See the [[file:blog/index.html][blog]] for more details.
+See the [[file:tips/index.html][tips]] for more details.
 
 
 * Blog details
