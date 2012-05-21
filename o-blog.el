@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-05-07 14:13:47
+;; Last changed: 2012-05-22 00:09:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -475,7 +475,10 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (month (string-to-number (format-time-string "%m" timestamp)))
 	   (day (string-to-number (format-time-string "%d" timestamp)))
 	   
-	   (category (or (org-entry-get (point) "category") (ob:blog-default-category BLOG)))
+	   (category (or (org-entry-get (point) "category")
+			 (car (last (org-get-outline-path)))
+			 (org-entry-get (point) "ARCHIVE_OLPATH")
+			 (ob:blog-default-category BLOG)))
 
 	   (page (org-entry-get (point) "PAGE"))
 
