@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-05-03
-;; Last changed: 2012-05-07 14:12:41
+;; Last changed: 2012-05-18 17:10:41
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -92,7 +92,7 @@ OPTS are comma separated options:
   (let ((extra (loop for elm in (split-string path ",")
 		     collect (cond
 			      ((or
-				(member elm ob-bootstrap-alert-conotations)
+				(member elm ob-bootstrap-alert-connotations)
 				(string= elm "striped"))
 			       (format "progress-%s" elm))
 			      (t elm))
