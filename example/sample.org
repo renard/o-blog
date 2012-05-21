@@ -1145,7 +1145,6 @@ rendered result might be damaged.
 
 
 
-
 ** DONE Using Bootstrap grid				    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 01:19]
 
@@ -1409,3 +1408,26 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Yanone Kaffeesatz", sans-serif;
 }
 #+END_SRC
+** DONE Create static pages			     :usage:Bootstrap:o@blog:
+   CLOSED: [2012-05-21 Mon 12:48]
+
+#+begin_o_blog_row 7
+
+
+Static pages are create exactly like blog pages. The only thing you need to
+add is a =PAGE= property. The exported path is relative to =#+PUBLISH_DIR:=.
+
+You can also specify a custom template for your static page by adding a
+=TEMPLATE= property. The template path is relative to =#+TEMPLATE_DIR:=.
+
+#+o_blog_row_column 4
+
+#+BEGIN_SRC org
+  ,* Static page
+  ,   :PROPERTIES:
+  ,   :PAGE:     path/to/static/page.html
+  ,   :TEMPLATE: static-page.html
+  ,   :END:
+#+END_SRC
+
+#+end_o_blog_row
