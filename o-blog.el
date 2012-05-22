@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-05-22 00:09:56
+;; Last changed: 2012-05-22 03:00:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -303,15 +303,16 @@ defined, or interactivelly called with `prefix-arg'.
 	   ;; make sure we are on the correct directory.
 	   (default-directory (file-name-directory file))
 	   (BLOG (ob-parse-blog-headers))
+	   (STATIC (ob-parse-entries
+		    (org-map-entries 'point-marker
+				     (ob:blog-static-filter BLOG)
+				     'file-with-archives)))
 	   (POSTS (ob-parse-entries
 	   	   (org-map-entries 'point-marker
 	   			    (ob:blog-posts-filter BLOG)
 	   			    'file-with-archives)))
 	   (ALL-POSTS POSTS)
-	   (STATIC (ob-parse-entries
-		    (org-map-entries 'point-marker
-				     (ob:blog-static-filter BLOG)
-				     'file-with-archives)))
+
 	   (SNIPPETS (ob-parse-entries
 		      (org-map-entries 'point-marker
 				       (ob:blog-snippet-filter BLOG)
@@ -370,25 +371,53 @@ defined, or interactivelly called with `prefix-arg'.
 
 ;; Internal functions
 
-(defun ob-get-linked-files (s)
-  "Return a lis of linked files from S."
+(defun o-blog-publish-linked-files()
+  "Copy files (defined by \"file:\" link prefix) to page related directory."
   (save-match-data
-    (with-temp-buffer
-      (insert s)
-      (beginning-of-buffer)
+    (save-excursion
+      (goto-char (point-min))
       (let (ret)
-	(while (re-search-forward org-any-link-re nil t)
-	  (loop for s in (list (match-string-no-properties 2)
-			       (match-string-no-properties 4))
-		when s
-		do (let ((f (save-match-data
-			      (string-match "^\\(file:\\)?\\(.+\\)" s)
-			      (match-string 2 s))))
-		     (when (and f
-				(file-exists-p f))
-		       ;; use add-to-list to prevent from coping a file twice.
-		       (add-to-list 'ret f)))))
-	ret))))
+	(while (re-search-forward "\\(\\[file:\\)\\([^]]+\\)\\(\\]\\)" nil t)
+	  (let ((prefix (match-string-no-properties 1))
+		(file  (match-string-no-properties 2))
+		(suffix (match-string-no-properties 3)))
+
+	    (when (file-exists-p file)
+	      (replace-match
+	       (format "%s%s/%s/%s%s"
+		       prefix
+		       (file-relative-name "." filepath)
+		       (file-name-sans-extension htmlfile)
+		       (file-name-nondirectory file) suffix ))
+
+	      (add-to-list 'ret file))))
+
+	(when ret
+	  ;; create a redirection page as index.html into files' directory
+	  (with-temp-buffer
+	    (insert
+	     (mapconcat 'identity
+			`(,(format "* Redirect from (%s)" title)
+			  ":PROPERTIES:"
+			  ,(format ":PAGE: %s/index.html" (file-name-sans-extension htmlfile))
+			  ":TEMPLATE: page_redirect.html"
+			  ":END:")
+			"\n"))
+	    (org-mode)
+	    (goto-char (point-min))
+	    (setf STATIC (append STATIC (list (ob-parse-entry)))))
+
+	  ;; copy all files into their target directory.
+	  (loop for f in ret
+		do (let ((target (format "%s/%s/%s"
+					 (ob:blog-publish-dir BLOG)
+					 ;; file path is nil when exporting static page?
+					 ;;(or filepath ".")
+					 (file-name-sans-extension htmlfile)
+					 (file-name-nondirectory f))))
+		     (mkdir (file-name-directory target) t)
+		     (copy-file f target t t t))))))))
+
 
 (defun ob-parse-blog-headers (&optional file)
   "Parse blog related variable from current-buffer."
@@ -487,22 +516,12 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (filepath (format "%s/%.4d/%.2d" category year month))
 	   (htmlfile (format "%s/%.2d_%s.html" filepath day filename))
 
-	   (content (ob-get-entry-text))
-	   (linked-files (ob-get-linked-files content)))
+	   (content (ob-get-entry-text)))
 
       (when page
 	(setq htmlfile page
 	      filename (file-name-sans-extension (file-name-nondirectory htmlfile))
 	      filepath (file-name-directory htmlfile)))
-
-      (loop for f in linked-files
-	    do (let ((target (format "%s/%s/%s"
-				     (ob:blog-publish-dir BLOG)
-				     ;; file path is nil when exporting static page?
-				     (or filepath ".") f)))
-		 (mkdir (file-name-directory target) t)
-		 (copy-file f target t t t)))
-
 
       (make-ob:post :title title
 		    :tags tags
