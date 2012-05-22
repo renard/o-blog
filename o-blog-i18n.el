@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-04-10
-;; Last changed: 2012-04-12 17:07:48
+;; Last changed: 2012-05-22 00:29:14
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -28,6 +28,9 @@
      :rss "RSS"
      :about "About"
      :links "Links"
+     :redirect-header "Redirect"
+     :redirect-text "Oups! you shouln't be here. Please wait for redirection."
+     :redirect-link "Click here for homepage."
      :powered-by "Powered by"
      :debug-blog "Dump information for blog"
      :debug-post "Dump information for post"
@@ -49,6 +52,9 @@
      :rss "RSS"
      :about "À propos"
      :links "Liens"
+     :redirect-header "Redirection"
+     :redirect-text "Oups! Vous ne devriez pas être ici. Merci de patienter pour une redirection."
+     :redirect-link "Cliquez ici pour l'accueil."
      :powered-by "Réalisé avec"
      :debug-blog "Contenu du blog"
      :debug-post "Contenu des articles"
