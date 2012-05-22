@@ -682,7 +682,7 @@ and browse http://localhost:8080
 An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
 complex.
 
-* Blog entries
+* Tips
 ** DONE Creating a blog					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
 
