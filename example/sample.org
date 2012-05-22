@@ -346,7 +346,7 @@ Structure used to define a blog:
  - =default-category=: default category for posts  defined by the
    =#DEFAULT_CATEGORY:= header or =Blog=.
  - =disqus=: [[http://docs.disqus.com/developers/universal/][disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this system
-   belongs to. Defined by the \"#DISQUS\" header.
+   belongs to. Defined by the =#+DISQUS:= header.
  - =filename-sanitizer=: 1-argument function to be used to sanitize
    post filenames. Defined by =#+FILENAME_SANITIZER:= or
    =ob-sanitize-string=.
