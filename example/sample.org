@@ -24,13 +24,11 @@
 
 #+begin_o_blog_row 8
 
-#+HTML: <div class="hero-unit">
-
+#+begin_o_blog_hero_unit
 #+HTML: <h1>o-blog</h1>
 
 A stand-alone blog and publication tool for [[http://orgmode.org/][org-mode]].
-
-#+HTML: </div>
+#+end_o_blog_hero_unit
 
 #+o_blog_row_column 4
 
