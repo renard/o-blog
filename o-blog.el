@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-05-22 03:00:09
+;; Last changed: 2012-05-22 22:36:35
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -336,6 +336,24 @@ defined, or interactivelly called with `prefix-arg'.
 		       (format-time-string "%s.%3N"
 					   (time-subtract (current-time) start-time)))))))
 
+
+(defun ob-do-copy (src dst &optional copyf args)
+  "Copy SRC into DST. If `dired-do-sync' is found it would be
+preferred. Otherwise, `copy-directory' or `copy-files' would be
+used.
+
+A copy function COPYF and its arguments ARGS could be specified."
+  (let* ((dirp (file-directory-p src))
+	 (copyf (cond
+		 (copyf copyf)
+		 ((functionp 'dired-do-sync) 'dired-do-sync)
+		 (dirp 'copy-directory)
+		 (t 'copy-file)))
+	 (args (or args
+		   (when (eq 'copy-file copyf) '(t t t)))))
+    (apply copyf src dst args)))
+
+
 (defun org-blog-publish-run-processes-sentinel (proc change)
   "Sentinel in charge of cleaning `org-publish-blog-async' on success."
   (when (eq (process-status proc) 'exit)
@@ -416,7 +434,7 @@ defined, or interactivelly called with `prefix-arg'.
 					 (file-name-sans-extension htmlfile)
 					 (file-name-nondirectory f))))
 		     (mkdir (file-name-directory target) t)
-		     (copy-file f target t t t))))))))
+		     (ob-do-copy f target))))))))
 
 
 (defun ob-parse-blog-headers (&optional file)
