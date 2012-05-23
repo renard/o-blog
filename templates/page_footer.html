@@ -9,7 +9,7 @@
 	    <nav id="links" class="span3">
 	      <h1><lisp>(ob:gettext :links)</lisp></h1>
 	      <ul>
-		<lisp>(ob:insert-template "nav_links.html")</lisp>
+		<lisp>(ob:post-content-html (ob:get-snippet "Navigation Footer"))</lisp>
 	      </ul>
 	    </nav>
 	    <nav id="archives" class="span3">

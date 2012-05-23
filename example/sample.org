@@ -148,6 +148,21 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
 
+** Navigation Footer
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.html][/icon-home icon-white/ {lisp}(ob:gettext :home){/lisp}]]
+
+  - [[file:{lisp}(let ((POSTS ALL-POSTS)) (format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (car (ob:get-posts (lambda (x) (equal "Tips" (ob:post-category x)))))))){/lisp}][/icon-file icon-white/ Tips]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
+
 * Changelog
   :PROPERTIES:
   :PAGE:     changelog.html
