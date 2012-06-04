@@ -516,7 +516,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 	   (timestamp (apply 'encode-time
 			     (org-parse-time-string
 			      (or (org-entry-get (point) "CLOSED")
-				  (time-stamp-string)))))
+                      (time-stamp-string "%:y-%02m-%02d %02H:%02M:%02S %u")))))
 	   ;; Some other time variables
 	   (year (string-to-number (format-time-string "%Y" timestamp)))
 	   (month (string-to-number (format-time-string "%m" timestamp)))
