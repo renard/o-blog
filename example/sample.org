@@ -171,6 +171,11 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     changelog.html
   :END:
 
+- 2012-06-05
+  - Update to
+    - Font-Awesome 2.0.0-6-g35fca03
+    - bootstrap 2.0.4
+
 - 2012-05-21
   - Use responsive bootstrap features.
 
