@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-05-22 22:36:35
+;; Last changed: Tue Jun  5 17:55:57 2012 (cest)
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -302,11 +302,13 @@ defined, or interactivelly called with `prefix-arg'.
     (let* ((start-time (current-time)) ;; for statistic purposes only
 	   ;; make sure we are on the correct directory.
 	   (default-directory (file-name-directory file))
+	   STATIC
 	   (BLOG (ob-parse-blog-headers))
-	   (STATIC (ob-parse-entries
-		    (org-map-entries 'point-marker
-				     (ob:blog-static-filter BLOG)
-				     'file-with-archives)))
+	   (STATIC (append STATIC
+			   (ob-parse-entries
+			    (org-map-entries 'point-marker
+					     (ob:blog-static-filter BLOG)
+					     'file-with-archives))))
 	   (POSTS (ob-parse-entries
 	   	   (org-map-entries 'point-marker
 	   			    (ob:blog-posts-filter BLOG)
@@ -435,7 +437,7 @@ A copy function COPYF and its arguments ARGS could be specified."
 					 (file-name-nondirectory f))))
 		     (mkdir (file-name-directory target) t)
 		     (ob-do-copy f target))))))))
-
+(add-hook 'o-blog-html-plugins-hook 'o-blog-publish-linked-files)
 
 (defun ob-parse-blog-headers (&optional file)
   "Parse blog related variable from current-buffer."
