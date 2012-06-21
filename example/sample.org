@@ -10,6 +10,7 @@
 #+DEFAULT_CATEGORY: Tips
 #+DISQUS: renard-o-blog
 #+FILENAME_SANITIZER: ob-sanitize-string
+#+POST_SORTER: ob-sort-posts-by-title
 
 #+POST_BUILD_SHELL: cmd 1
 #+POST_BUILD_SHELL: cmd 2
@@ -170,6 +171,9 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PROPERTIES:
   :PAGE:     changelog.html
   :END:
+
+- 2012-06-21
+  - Add a post-sorter option.
 
 - 2012-06-05
   - Update to
@@ -373,6 +377,8 @@ Structure used to define a blog:
  - =filename-sanitizer=: 1-argument function to be used to sanitize
    post filenames. Defined by =#+FILENAME_SANITIZER:= or
    =ob-sanitize-string=.
+ - =post-sorter=: a 2-argument function to be used to sort the
+   posts. Defined by =#+POST_SORTER:= or =ob-sort-posts-by-date=.
 
 Example:
 

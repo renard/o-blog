@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: Tue Jun  5 17:55:57 2012 (cest)
+;; Last changed: Thu Jun 21 18:16:41 2012 (cest)
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -116,6 +116,10 @@ This is a good place for o-blog parser plugins."
  - filename-sanitizer: 1-argument function to be used to sanitize
    post filenames. Defined by \#+FILENAME_SANITIZER:\" or
    \"ob-sanitize-string\".
+
+ - post-sorter: a 2-argument function to be used to sort the
+   posts. Defined by \"#+POST_SORTER:\"
+   or \"ob-sort-posts-by-date\".
 "
   (file nil :read-only)
   (buffer nil :read-only)
@@ -132,7 +136,8 @@ This is a good place for o-blog parser plugins."
   post-build-shell
   default-category
   disqus
-  filename-sanitizer)
+  filename-sanitizer
+  posts-sorter)
 
 
 (defstruct (ob:post :named)
@@ -466,6 +471,12 @@ A copy function COPYF and its arguments ARGS could be specified."
 	    (if (and ofs (functionp (intern ofs)))
 		(intern ofs)
 	      'ob-sanitize-string)))
+    (setf (ob:blog-posts-sorter blog)
+	  (let ((ops (ob:get-header "POST_SORTER")))
+	    (if (and ops (functionp (intern ops)))
+		(intern ops)
+	      'ob-sort-posts-by-date)))
+
     blog))
 
 
@@ -482,7 +493,7 @@ MARKERS is a list of entries given by `org-map-entries'."
 		    (ob-parse-entry))
 	  into posts
 	  ;; Then wee need to set the post id in all all sorted posts.
-	  finally return (loop for post in (sort posts 'ob-sort-posts-by-date)
+	  finally return (loop for post in (sort posts (ob:blog-posts-sorter BLOG))
 			       with id = 0
 			       do (setf (ob:post-id post) id)
 			       and do (incf id 1)
