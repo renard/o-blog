@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-25 14:30:03
+;; Last changed: 2012-06-25 15:00:20
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -118,16 +118,16 @@ This is a good place for o-blog parser plugins."
    \"ob-sanitize-string\".
 
  - post-sorter: a 2-argument function to be used to sort the
-   posts. Defined by \"#+POST_SORTER:\"
+   posts. Defined by \"#+POSTS_SORTER:\"
    or \"ob-sort-posts-by-date\".
 
  - post-filepath: a 3-argument function to be used to generate
    the post path in output directory. Defined by
-   \"#+POST_FILEPATH:\" or \"ob-set-default-filepath\".
+   \"#+POSTS_FILEPATH:\" or \"ob-set-default-filepath\".
 
  - post-htmlfile: a 3-argument function to be used to generate
    the post html filename in output directory. Defined by
-   \"#+POST_HTMLFILE:\" or \"ob-set-default-htmlfile\".
+   \"#+POSTS_HTMLFILE:\" or \"ob-set-default-htmlfile\".
 "
   (file nil :read-only)
   (buffer nil :read-only)
@@ -482,18 +482,18 @@ A copy function COPYF and its arguments ARGS could be specified."
 		(intern ofs)
 	      'ob-sanitize-string)))
     (setf (ob:blog-posts-sorter blog)
-	  (let ((ops (ob:get-header "POST_SORTER")))
+	  (let ((ops (ob:get-header "POSTS_SORTER")))
 	    (if (and ops (functionp (intern ops)))
 		(intern ops)
 	      'ob-sort-posts-by-date)))
 
     (setf (ob:blog-posts-filepath blog)
-	  (let ((ops (ob:get-header "POST_FILEPATH")))
+	  (let ((ops (ob:get-header "POSTS_FILEPATH")))
 	    (if (and ops (functionp (intern ops)))
 		(intern ops)
 	      'ob-set-default-filepath)))
     (setf (ob:blog-posts-htmlfile blog)
-	  (let ((ops (ob:get-header "POST_HTMLFILE")))
+	  (let ((ops (ob:get-header "POSTS_HTMLFILE")))
 	    (if (and ops (functionp (intern ops)))
 		(intern ops)
 	      'ob-set-default-htmlfile)))
