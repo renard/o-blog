@@ -770,6 +770,9 @@ when publishing a page."
   			  (format "%s/index.xml"
   				  (ob:blog-publish-dir BLOG)))
 
+    (ob-write-index-to-file "blog_sitemap.html"
+  			  (format "%s/sitemap.xml"
+  				  (ob:blog-publish-dir BLOG)))
 
   (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
 	with PATH-TO-ROOT = ".."
@@ -797,11 +800,11 @@ Template is read from TEMPLATE file.
 
 If provided CATEGORY YEAR and MONTH are used to select articles."
   (let* ((fp (format "%s/%s/index.html"
-		     (ob:blog-publish-dir BLOG)
-		     (cond
-		      ((and category year month) (format "%s/%.4d/%.2d" category year month))
-		      ((and category year) (format "%s/%.4d" category year))
-		      (t category))))
+                     (ob:blog-publish-dir BLOG)
+                     (cond
+                      ((and category year month) (format "%s/%.4d/%.2d" (ob-sanitize-string category) year month))
+                      ((and category year) (format "%s/%.4d" (ob-sanitize-string category) year))
+                      (t (ob-sanitize-string category) ))))
 
 	 (POSTS (ob:get-posts
 		 (lambda (x) (and
