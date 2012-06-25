@@ -801,12 +801,13 @@ Template is read from TEMPLATE file.
 
 If provided CATEGORY YEAR and MONTH are used to select articles."
   (let* ((fp (format "%s/%s/index.html"
-		     (ob:blog-publish-dir BLOG)
-		     (cond
-		      ((and category year month) (format "%s/%.4d/%.2d" category year month))
-		      ((and category year) (format "%s/%.4d" category year))
-		      (t category))))
 
+                     (ob:blog-publish-dir BLOG)
+                     (cond
+                      ((and category year month) (format "%s/%.4d/%.2d" (ob-sanitize-string category) year month))
+                      ((and category year) (format "%s/%.4d" (ob-sanitize-string category) year))
+                      (t (ob-sanitize-string category) ))))
+                     
 	 (POSTS (ob:get-posts
 		 (lambda (x) (and
 			      (if category (equal category (ob:post-category x)) t)
