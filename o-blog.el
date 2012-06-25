@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-25 15:00:20
+;; Last changed: 2012-06-25 15:30:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -170,6 +170,8 @@ This is a good place for o-blog parser plugins."
  - category: category read from \"CATEGORY\" property org
    \"blog\".
 
+ - category-safe: A html safe version of category.
+
  - tags: list of ob:tags.
 
  - template: template to use for current post read from
@@ -196,6 +198,7 @@ This is a good place for o-blog parser plugins."
   month
   day
   category
+  category-safe
   tags
   template
   filepath
@@ -585,6 +588,8 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 			 (org-entry-get (point) "ARCHIVE_OLPATH")
 			 (ob:blog-default-category BLOG)))
 
+	   (category-safe (ob-sanitize-string category))
+
 	   (page (org-entry-get (point) "PAGE"))
 
 	   (filename (or (org-entry-get (point) "CUSTOM_ID")
@@ -614,6 +619,7 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 		    :content content
 		    :content-html (ob-export-string-to-html content)
 		    :category category
+		    :category-safe category-safe
 		    ))))
 
 
