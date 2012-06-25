@@ -589,8 +589,8 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 
 	   (filename (or (org-entry-get (point) "CUSTOM_ID")
 			 (ob:sanitize-string title)))
-	   (filepath (ob-set-default-filepath category year month))
-	   (htmlfile (ob-set-default-htmlfile filepath day filename))
+	   (filepath (funcall (ob:blog-posts-filepath BLOG) category year month))
+	   (htmlfile (funcall (ob:blog-posts-htmlfile BLOG) filepath day filename))
 
 	   (content (ob-get-entry-text)))
 
