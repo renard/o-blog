@@ -170,8 +170,6 @@ This is a good place for o-blog parser plugins."
  - category: category read from \"CATEGORY\" property org
    \"blog\".
 
- - category-safe: A html safe version of category.
-
  - tags: list of ob:tags.
 
  - template: template to use for current post read from
@@ -198,7 +196,6 @@ This is a good place for o-blog parser plugins."
   month
   day
   category
-  category-safe
   tags
   template
   filepath
