@@ -53,7 +53,7 @@
 	  (search-forward "<div " nil t)
 	(delete-region (point-min) (point-at-bol)))
       (setf (ob:post-content-html post) (buffer-string))
-            (write-file (concat (ob:post-source-file post) ".html") nil)
+      (write-file (concat (ob:post-source-file post) ".html") nil)
       (kill-buffer buffer-name))))
 
 
