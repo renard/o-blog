@@ -1040,4 +1040,21 @@ used. If not found, English (en) is used as a fall-back."
     (or (plist-get text-list text)
 	(plist-get text-list default-text-list))))
 
+(defun ob:lesser (a b)
+  "Emulate `<' in templates."
+  (< a b))
+
+(defun ob:lesser-or-equal (a b)
+  "Emulate `<=' in templates."
+  (<= a b))
+
+(defun ob:greater (a b)
+  "Emulate `>' in templates."
+  (> a b))
+
+(defun ob:greater-or-equal (a b)
+  "Emulate `>=' in templates."
+  (>= a b))
+
+
 (provide 'o-blog)
