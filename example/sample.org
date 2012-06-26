@@ -43,6 +43,8 @@ A stand-alone blog and publication tool for [[http://orgmode.org/][org-mode]].
 
 [[https://github.com/renard/o-blog][/icon-github-sign icon-white/ Github]]
 
+[[file:{lisp}(ob:path-to-root){/lisp}/who-uses.html][/icon-comments-alt/ Who uses]]
+
 [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
 
 [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][/icon-fire icon-white/ Bug report]]
@@ -146,6 +148,8 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
 
+- [[file:{lisp}(ob:path-to-root){/lisp}/who-uses.html][/icon-comments-alt/ Who uses]]
+
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
@@ -164,6 +168,8 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/who-uses.html][/icon-comments-alt/ Who uses]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
@@ -662,6 +668,77 @@ Please describe as much as possible your issue (in English). do no hesitate
 to paste your blog file to https://gist.github.com/ this might be useful to
 debug.
 
+
+
+** Who uses it?
+  :PROPERTIES:
+  :PAGE:     who-uses.html
+  :TEMPLATE: blog_static_no_title.html
+  :END:
+
+#+begin_o_blog_row 6
+
+
+#+HTML: <h1>What they say</h1>
+
+#+begin_quote
+o-blog, great static site generator from emacs org-mode.
+
+-- Pierre-Yves Ritschard [[https://twitter.com/pyr/status/160466727195521024][@pyr]]
+
+-- Sergey Konoplev [[http://twitter.com/gray_hemp][@gray\_hemp]]
+
+-- Olivier Berger [[http://twitter.com/olberger][@olberger]]
+
+-- Dimitri Fontaine [[http://twitter.com/tapoueh][@tapoueh]]
+
+-- Julien Danjou [[http://twitter.com/juldanjou][@juldanjou]]
+
+-- Daniel Farina [[http://twitter.com/danfarina][@danfarina]]
+#+end_quote
+
+#+begin_quote
+o-blog, a cool static blog generator from org-mode markup with some nice
+Bootstrap integration.
+
+-- [[http://from-the-cloud.com/en/Random/2012/06/17_sites-back.html][Fabián Ezequiel Gallina]]
+#+end_quote
+
+#+begin_quote
+Thank you so much for the truly excellent elisp app. I am learning many
+things from it.
+
+-- [[https://github.com/priyadarshan][priyadarshan]]
+#+end_quote
+
+#+begin_quote
+o-blog looks awesome!
+
+-- [[https://github.com/djcb][Dirk-Jan C. Binnema]]
+#+end_quote
+
+
+#+o_blog_row_column 6
+
+#+begin_o_blog_hero_unit
+
+#+HTML: <h1>They use it</h1>
+
+- [[enard.github.com/o-blog][O-blog Project]]
+- [[http://docs.chezwam.org][Mes doc à moi]]
+- [[http://from-the-cloud.com/][From the cloud]]
+- [[http://exaos.github.com/o-blog/][exaos]]
+- [[http://mikio.github.com/index.html][Mikio Kun]]
+
+#+end_o_blog_hero_unit
+
+
+#+begin_o_blog_hero_unit
+If you do use o-blog, please [[https://github.com/renard/o-blog/issues/new][drop me a line]].
+#+end_o_blog_hero_unit
+
+
+#+end_o_blog_row
 
 
 ** FAQ
