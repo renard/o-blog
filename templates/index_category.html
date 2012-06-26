@@ -2,7 +2,7 @@
   <lisp>
     (loop for YEAR in (ob:get-posts nil nil nil 'year)
     do (progn
-    (insert (format "<li><a href=\"%s/%s/%.4d/index.html\">%.2d</a>" (ob:path-to-root) CATEGORY YEAR  YEAR))
+    (insert (format "<li><a href=\"%s/%s/%.4d/index.html\">%.2d</a>" (ob:path-to-root) <lisp>(ob:sanitize-string CATEGORY)</lisp> YEAR  YEAR))
       (let ((POSTS (ob:get-posts (lambda(x) (= YEAR (ob:post-year x))))))
       (ob:insert-template "index_year.html")
       )
