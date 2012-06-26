@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-06-01
-;; Last changed: 2012-06-26 16:10:02
+;; Last changed: 2012-06-26 18:06:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,10 +21,17 @@
 (defun ob-asciidoc-parse-items (dir)
   ""
   (loop for f in (ob-find-project-files dir t "\\.txt$") 
-	collect (make-ob:post :content (with-temp-buffer
-					 (insert-file-contents f)
-					 (buffer-string))
-			      :source-file f)))
+	collect
+	(with-temp-buffer
+	  (insert-file-contents f)
+	  (let* ((content (buffer-string))
+		 (category (or (car (ob-asciidoc-get-header "category")) "blog"))
+		 (tags (loop for tag in (ob-asciidoc-get-header "tags")
+			     collect (make-ob:tags :name tag))))
+	    (make-ob:post :content content
+			  :tags tags
+			  :category category
+			  :source-file f)))))
 
 
 (defun ob-asciidoc-export-process (post)
