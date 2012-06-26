@@ -233,6 +233,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
    :PROPERTIES:
    :PAGE:     debug.html
    :TEMPLATE: debug.html
+   :SITEMAP:  f
    :END:
 
 

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-26 10:02:31
+;; Last changed: 2012-06-26 10:23:20
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -189,7 +189,10 @@ This is a good place for o-blog parser plugins."
 
  - content: raw content of the post (org-mode format).
 
- - content-html: HTML export of the post."
+ - content-html: HTML export of the post.
+
+ - sitemap: Whether to publish in sitemap."
+  
   id
   title
   timestamp
@@ -204,7 +207,8 @@ This is a good place for o-blog parser plugins."
   htmlfile
   path-to-root
   content
-  content-html)
+  content-html
+  sitemap)
 
 
 (defstruct (ob:tags :named)
@@ -624,6 +628,7 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 		    :category (make-ob:category
 			       :name category
 			       :safe category-safe)
+                    :sitemap (or (org-entry-get (point) "SITEMAP"))
 		    ))))
 
 
@@ -772,6 +777,10 @@ when publishing a page."
 
   (ob-write-index-to-file "blog_rss.html"
   			  (format "%s/index.xml"
+  				  (ob:blog-publish-dir BLOG)))
+
+  (ob-write-index-to-file "blog_sitemap.html"
+  			  (format "%s/sitemap.xml"
   				  (ob:blog-publish-dir BLOG)))
 
 
