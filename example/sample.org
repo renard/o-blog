@@ -724,7 +724,7 @@ o-blog looks awesome!
 
 #+HTML: <h1>They use it</h1>
 
-- [[enard.github.com/o-blog][O-blog Project]]
+- [[http://renard.github.com/o-blog][O-blog Project]]
 - [[http://docs.chezwam.org][Mes doc à moi]]
 - [[http://from-the-cloud.com/][From the cloud]]
 - [[http://exaos.github.com/o-blog/][exaos]]
