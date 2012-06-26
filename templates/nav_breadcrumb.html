@@ -5,15 +5,16 @@
  ;; Static page or post
  ((boundp 'POST)
   (let ((path (when (ob:post-filepath POST)
-		(split-string (ob:post-filepath POST) "/"))))
-    (loop for p in path
+		(cdr (split-string (ob:post-filepath POST) "/")))))
+
+    (loop for p in (if (ob:greater (length path) 1) (cons (ob:post-category POST) path) path)
 	  with prev = (ob:path-to-root)
 	  do (progn
-	       (setf prev (format "%s/%s" prev p))
+	       (setf prev (format "%s/%s" prev (if (ob:category-p p) (ob:category-safe p) p)))
 	       (insert
 		(format
 		 "<li><a href=\"%s/index.html\">%s</a> <span class=\"divider\">/</span></li>"
-		 prev p)))))
+		 prev (if (ob:category-p p) (ob:category-name p) p))))))
   (unless (and
 	   (string= "index.html" (ob:post-htmlfile POST))
 	   (string= "." (ob:post-path-to-root POST)))
@@ -24,18 +25,18 @@
  ;; archives
  ((and (boundp 'MONTH) (boundp 'YEAR) (boundp 'CATEGORY))
   (insert "<li><a href=\"../../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
-  (insert (format "<li><a href=\"../../index.html\">%s</a> <span class=\"divider\">/</span></li>"  CATEGORY))
+  (insert (format "<li><a href=\"../../index.html\">%s</a> <span class=\"divider\">/</span></li>"  (ob:category-name CATEGORY)))
   (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  YEAR))
   (insert (format "<li>%.2d</li>" MONTH)))
 
  ((and (boundp 'YEAR) (boundp 'CATEGORY))
   (insert "<li><a href=\"../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
-  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  CATEGORY))
+  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  (ob:category-name CATEGORY)))
   (insert (format "<li>%s</li>" YEAR)))
 
  ((boundp 'CATEGORY)
   (insert "<li><a href=\"../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
-  (insert (format "<li>%s</li>" CATEGORY)))
+  (insert (format "<li>%s</li>" (ob:category-name CATEGORY))))
 
  ((and
    ;;(boundp 'template)
