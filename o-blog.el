@@ -190,7 +190,10 @@ This is a good place for o-blog parser plugins."
 
  - content: raw content of the post (org-mode format).
 
- - content-html: HTML export of the post."
+ - content-html: HTML export of the post.
+
+ - sitemap: Whether to publish in sitemap."
+  
   id
   title
   timestamp
@@ -206,7 +209,8 @@ This is a good place for o-blog parser plugins."
   htmlfile
   path-to-root
   content
-  content-html)
+  content-html
+  sitemap)
 
 
 (defstruct (ob:tags :named)
@@ -620,6 +624,7 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 		    :content-html (ob-export-string-to-html content)
 		    :category category
 		    :category-safe category-safe
+                    :sitemap (or (org-entry-get (point) "SITEMAP"))
 		    ))))
 
 

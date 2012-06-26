@@ -8,10 +8,13 @@
   </url>
   
   <lisp>(loop for POST in STATIC
-    do (ob:insert-template "sitemap_static.html"))
+    do (when (not (ob:post-sitemap POST)) 
+    (ob:insert-template "sitemap_static.html")))
   </lisp>
 
   <lisp>(loop for POST in POSTS
-    do (ob:insert-template "sitemap_post.html"))
+    do (when (not (ob:post-sitemap POST)) 
+    (ob:insert-template "sitemap_post.html")))
   </lisp>
 </urlset>
+
