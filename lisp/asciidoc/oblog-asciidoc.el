@@ -61,7 +61,7 @@
   ""
   (loop for i in items
 	collect (ob-asciidoc-export-process i) into ret
-	finally return ret))
+	finally return (notany 'null ret)))
 
 
 (defun ob-asciidoc-get-header (header)
