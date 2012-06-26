@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-06-01
-;; Last changed: 2012-06-26 16:07:05
+;; Last changed: 2012-06-26 16:10:02
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -65,19 +65,20 @@
 
 
 (defun ob-asciidoc-get-header (header)
-  "Search HEADER attribute entry in current document.
-If a header is repeated several times only the first match is returned.
-"
+  "Search all HEADER attribute entries in current document.
+
+Return a list of matched attributes."
   (save-excursion
     (save-restriction
-      (widen)
-      (goto-char (point-min))
-      (when (search-forward-regexp
-	     ;; Regexp based upon `adoc-re-attribute-entry' found in adoc-mode.el
-	     (format "^\\(:%s[^.\n]*?\\(?:\\..*?\\)?:[ \t]*\\)\\(.*?\\)$" header)
-	     nil t)
-	(match-string-no-properties 2)))))
-
+      (save-match-data
+	(widen)
+	(goto-char (point-min))
+	(loop while
+	      (search-forward-regexp
+	       ;; Regexp based upon `adoc-re-attribute-entry' found in adoc-mode.el
+	       (format "^\\(:%s[^.\n]*?\\(?:\\..*?\\)?:[ \t]*\\)\\(.*?\\)$" header)
+	       nil t)
+	      collect (match-string-no-properties 2))))))
 
 (provide 'oblog-asciidoc)
 
