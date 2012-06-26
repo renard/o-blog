@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-26 09:59:40
+;; Last changed: 2012-06-26 10:02:31
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -978,7 +978,7 @@ Returns only fist match except if ALL is defined."
 	  (widen)
 	  (goto-char (point-min))
 	  (let (values)
-	    (while (re-search-forward (format "^#\\+%s:?[ \t]+\\(.*\\)" header) nil t)
+	    (while (re-search-forward (format "^#\\+%s:?[ \t]*\\(.*\\)" header) nil t)
 	      (add-to-list 'values (substring-no-properties (match-string 1))))
 	    (if all
 		values
