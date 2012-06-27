@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-27 14:00:26
+;; Last changed: 2012-06-27 16:43:10
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,6 +21,8 @@
   (require 'cl nil t)
   (require 'browse-url nil t))
 (require 'htmlize nil t)
+(require 'sgml-mode nil t)
+(require 'html2text nil t)
 (require 'time-stamp nil t)
 (require 'org-xhtml nil t)
 (require 'dired-sync nil t)
