@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: standalone blogging system for org-mode
-#+DATE: 2012-06-27 17:39:01
+#+DATE: 2012-06-27 19:47:56
 
 #+STARTUP: logdone
 
@@ -144,7 +144,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/tags.html][/icon-tags icon-white/ Tags]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
 
@@ -167,7 +167,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
   - [[file:{lisp}(let ((POSTS ALL-POSTS)) (format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips")))){/lisp}][/icon-file icon-white/ Tips]]
 
-  - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][/icon-tags icon-white/ Tags]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/tags.html][/icon-tags icon-white/ Tags]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
 
@@ -727,6 +727,13 @@ things from it.”/
 -- [[https://github.com/djcb][Dirk-Jan C. Binnema]] ([[http://research.nokia.com/][Nokia research center]] engineer)
 #+end_quote
 
+#+begin_quote
+/“o-blog is amazing. After using Wordpress seemingly since the dawn of time, then Jekyll for a couple of years, this is like a spring breeze after a long, cold winter.”/
+
+-- [[https://github.com/fravashi][Farasha Euker]]
+#+end_quote
+
+
 
 #+o_blog_row_column 6
 
@@ -739,6 +746,7 @@ things from it.”/
 - [[http://from-the-cloud.com/][From the cloud]]
 - [[http://exaos.github.com/o-blog/][exaos]]
 - [[http://mikio.github.com/index.html][Mikio Kun]]
+- [[http://mimes.is/][Journal of the creative imagination]]
 
 #+end_o_blog_hero_unit
 
