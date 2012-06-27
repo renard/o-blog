@@ -741,6 +741,29 @@ If you do use o-blog, please [[https://github.com/renard/o-blog/issues/new][drop
 #+end_o_blog_row
 
 
+** Roadmap
+  :PROPERTIES:
+  :PAGE:     roadmap.html
+  :END:
+
+Here are some ideas for future versions
+
+- Use other source engines such as
+  - [[http://www.methods.co.nz/asciidoc/][AsciiDoc]]
+  - [[http://mwolson.org/projects/EmacsMuse.html][Emacs Muse]]
+  - etc...
+
+- Find a other name for the project such as
+  - Web Hypertext Otimized Rendering Easy System
+  - Building the Interweb from Texts Classic Hypermedia
+  - Build All Internet Standard E-documents
+  - Publication Unifiée de Tous E-documents
+
+
+If you have any ideas please [[https://github.com/renard/o-blog/issues/new][drop me a line]].
+
+
+
 ** FAQ
   :PROPERTIES:
   :PAGE:     faq.html
