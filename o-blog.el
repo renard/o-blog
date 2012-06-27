@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-26 10:23:20
+;; Last changed: 2012-06-27 14:00:26
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -1066,5 +1066,23 @@ used. If not found, English (en) is used as a fall-back."
   "Emulate `>=' in templates."
   (>= a b))
 
+(defun ob:get-post-excerpt (post &optional words ellipsis)
+  "Return the first WORDS from POST html content.
+
+The return string would be unformatted plain text postfixed by
+ELLIPSIS if defined.."
+  (with-temp-buffer
+    (insert (ob:post-content-html post))
+    (let ((words (or words 100))
+	  (ellipsis (ellipsis or ""))
+	  (html2text-remove-tag-list
+	   (loop for tag in html-tag-alist
+		 c-collect-line-comments (car tag))))
+      (html2text)
+      (goto-char (point-min))
+      (loop for x from 0 below words do (forward-word))
+      (concat
+       (buffer-substring-no-properties (point-min) (point))
+       ellipsis))))
 
 (provide 'o-blog)
