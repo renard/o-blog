@@ -20,7 +20,7 @@
 	   (insert (format "<h3>%s</h3><ul>" (ob:tags-name TAG)))
 	   (loop for post in POSTS
 		 do (when (member (ob:tags-safe TAG) (mapcar 'ob:tags-safe (ob:post-tags post)))
-		      (insert (format "<li><a href=\"%s/%s\">%s</a><br/>"
+		      (insert (format "<li><a href=\"%s/%s\">%s</a></li>"
 				      (ob:path-to-root) (ob:post-htmlfile post) (ob:post-title post)
 				      ))))
 	   (insert "</ul>")))
