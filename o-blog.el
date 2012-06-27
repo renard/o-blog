@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-27 18:19:31
+;; Last changed: 2012-06-27 19:21:12
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -1079,7 +1079,7 @@ ELLIPSIS if defined.."
 	  (ellipsis (or ellipsis ""))
 	  (html2text-remove-tag-list
 	   (loop for tag in html-tag-alist
-		 c-collect-line-comments (car tag))))
+		 collect (car tag))))
       (html2text)
       (goto-char (point-min))
       (loop for x from 0 below words do (forward-word))
