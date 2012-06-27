@@ -43,7 +43,7 @@ A stand-alone blog and publication tool for [[http://orgmode.org/][org-mode]].
 
 [[https://github.com/renard/o-blog][/icon-github-sign icon-white/ Github]]
 
-[[file:{lisp}(ob:path-to-root){/lisp}/who-uses.html][/icon-comments-alt/ Who uses]]
+[[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][/icon-comments-alt/ Testimonials]]
 
 [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
 
@@ -148,7 +148,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/who-uses.html][/icon-comments-alt/ Who uses]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][/icon-comments-alt/ Testimonials]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
@@ -169,7 +169,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
 
-  - [[file:{lisp}(ob:path-to-root){/lisp}/who-uses.html][/icon-comments-alt/ Who uses]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][/icon-comments-alt/ Testimonials]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
 
@@ -670,51 +670,51 @@ debug.
 
 
 
-** Who uses it?
+** Testimonials
   :PROPERTIES:
-  :PAGE:     who-uses.html
+  :PAGE:     testimonials.html
   :TEMPLATE: blog_static_no_title.html
   :END:
 
 #+begin_o_blog_row 6
 
 
-#+HTML: <h1>What they say</h1>
+#+HTML: <h1>Testimonials</h1>
 
 #+begin_quote
-o-blog, great static site generator from emacs org-mode.
+/“o-blog, great static site generator from emacs org-mode.”/
 
--- Pierre-Yves Ritschard [[https://twitter.com/pyr/status/160466727195521024][@pyr]]
+-- Pierre-Yves Ritschard [[https://twitter.com/pyr/status/160466727195521024][@pyr]] ([[http://openbds.org][OpenBSD]] relayd original author)
 
--- Sergey Konoplev [[http://twitter.com/gray_hemp][@gray\_hemp]]
+-- Sergey Konoplev [[http://twitter.com/gray_hemp][@gray\_hemp]] ([[http://PostgreSQL-Consulting.com][PostgreSQL Consultant]])
 
--- Olivier Berger [[http://twitter.com/olberger][@olberger]]
+-- Olivier Berger [[http://twitter.com/olberger][@olberger]] ([[http://www.april.org][APRIL administrator]])
 
--- Dimitri Fontaine [[http://twitter.com/tapoueh][@tapoueh]]
+-- Dimitri Fontaine [[http://twitter.com/tapoueh][@tapoueh]] ([[http://tapoueh.org/projects.html][el-get and other]] author)
 
--- Julien Danjou [[http://twitter.com/juldanjou][@juldanjou]]
+-- Julien Danjou [[http://twitter.com/juldanjou][@juldanjou]] ([[http://awesome.naquadah.org/][Awesome window manager]] and [[http://julien.danjou.info/software/][other]] author)
 
--- Daniel Farina [[http://twitter.com/danfarina][@danfarina]]
+-- Daniel Farina [[http://twitter.com/danfarina][@danfarina]] (member of the [[http://www.heroku.com/][Heroku]] Department of Data)
 #+end_quote
 
 #+begin_quote
-o-blog, a cool static blog generator from org-mode markup with some nice
-Bootstrap integration.
+/“o-blog, a cool static blog generator from org-mode markup with some nice
+Bootstrap integration.”/
 
 -- [[http://from-the-cloud.com/en/Random/2012/06/17_sites-back.html][Fabián Ezequiel Gallina]]
 #+end_quote
 
 #+begin_quote
-Thank you so much for the truly excellent elisp app. I am learning many
-things from it.
+/“Thank you so much for the truly excellent elisp app. I am learning many
+things from it.”/
 
 -- [[https://github.com/priyadarshan][priyadarshan]]
 #+end_quote
 
 #+begin_quote
-o-blog looks awesome!
+/“o-blog looks awesome!”/
 
--- [[https://github.com/djcb][Dirk-Jan C. Binnema]]
+-- [[https://github.com/djcb][Dirk-Jan C. Binnema]] ([[http://research.nokia.com/][Nokia research center]] engineer)
 #+end_quote
 
 
