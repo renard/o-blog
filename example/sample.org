@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: standalone blogging system for org-mode
-#+DATE: 2012-06-27 16:41:21
+#+DATE: 2012-06-27 17:39:01
 
 #+STARTUP: logdone
 
@@ -176,6 +176,12 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][/icon-tasks icon-white/ Roadmap]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][/icon-rss icon-white/ RSS]]
+
+** Articles by tags
+  :PROPERTIES:
+  :PAGE:     tags.html
+  :TEMPLATE: blog_post-by-tags.html
+  :END:
 
 * Changelog
   :PROPERTIES:

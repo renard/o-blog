@@ -275,3 +275,17 @@ html {
     .navtags(100%);
 
 }
+
+
+.multicolumn(@cols, @gap)  {
+	-moz-column-count: @cols;
+	-moz-column-gap: @gap;
+	-webkit-column-count: @cols;
+	-webkit-column-gap: @gap;
+	column-count: @cols;
+	column-gap: @gap;
+}
+
+.multicolumn3  {
+    .multicolumn(3, 20px)
+}
