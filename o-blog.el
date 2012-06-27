@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-27 16:43:10
+;; Last changed: 2012-06-27 18:19:31
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -1076,7 +1076,7 @@ ELLIPSIS if defined.."
   (with-temp-buffer
     (insert (ob:post-content-html post))
     (let ((words (or words 100))
-	  (ellipsis (ellipsis or ""))
+	  (ellipsis (or ellipsis ""))
 	  (html2text-remove-tag-list
 	   (loop for tag in html-tag-alist
 		 c-collect-line-comments (car tag))))
