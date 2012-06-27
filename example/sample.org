@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: standalone blogging system for org-mode
-#+DATE:
+#+DATE: 2012-06-27 16:41:21
 
 #+STARTUP: logdone
 
@@ -148,11 +148,13 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list icon-white/ Archives]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][/icon-comments-alt/ Testimonials]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][/icon-comments-alt icon-white/ Testimonials]]
 
-- [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
+- [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][/icon-rss icon-white/ RSS]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][/icon-pencil icon-white/ Changelog]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][/icon-tasks icon-white/ Roadmap]]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
 
@@ -171,7 +173,9 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][/icon-comments-alt/ Testimonials]]
 
-  - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][RSS]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][/icon-tasks icon-white/ Roadmap]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][/icon-rss icon-white/ RSS]]
 
 * Changelog
   :PROPERTIES:
