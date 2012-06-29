@@ -62,7 +62,7 @@
       <ul>
 	<lisp>
 	  (loop for tag in (ob:post-tags POST)
-	  do (insert (format "<li class=\"label small\"><a href=\"%s/tags/%s.html\">%s</a></li>"
+	  do (insert (format "<li class=\"label label-inverse small\"><a href=\"%s/tags/%s.html\">%s</a></li>"
 	  (ob:path-to-root) (ob:tags-safe tag) (ob:tags-name tag))))
 	</lisp>
       </ul>
