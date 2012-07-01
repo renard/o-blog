@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: standalone blogging system for org-mode
-#+DATE: 2012-07-01 19:20:19
+#+DATE: 2012-07-01 22:59:45
 
 #+STARTUP: logdone
 
@@ -747,6 +747,7 @@ things from it.”/
 - [[http://exaos.github.com/o-blog/][exaos]]
 - [[http://mikio.github.com/index.html][Mikio Kun]]
 - [[http://mimes.is/][Journal of the creative imagination]]
+- [[http://www.djcbsoftware.nl][DJCB Software]]
 
 #+end_o_blog_hero_unit
 
