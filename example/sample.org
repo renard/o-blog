@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: standalone blogging system for org-mode
-#+DATE: 2012-06-27 19:47:56
+#+DATE: 2012-07-01 19:20:19
 
 #+STARTUP: logdone
 
@@ -724,7 +724,7 @@ things from it.”/
 #+begin_quote
 /“o-blog looks awesome!”/
 
--- [[https://github.com/djcb][Dirk-Jan C. Binnema]] ([[http://research.nokia.com/][Nokia research center]] engineer)
+-- [[https://github.com/djcb][Dirk-Jan C. Binnema]] (Author of [[http://www.djcbsoftware.nl/code/mu4e][mu4e]] and [[http://emacs-fu.blogspot.com][emacs-fu]])
 #+end_quote
 
 #+begin_quote
