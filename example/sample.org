@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: standalone blogging system for org-mode
-#+DATE: 2012-07-01 22:59:45
+#+DATE: 2012-07-02 22:29:39
 
 #+STARTUP: logdone
 
@@ -777,7 +777,10 @@ Here are some ideas for future versions
   - Building the Interweb from Texts Classic Hypermedia
   - Build All Internet Standard E-documents
   - Publication Unifiée de Tous E-documents
-
+  - el-site
+  - el-sitemanage
+  - el-sitepublish
+  - el-sitepress
 
 If you have any ideas please [[https://github.com/renard/o-blog/issues/new][drop me a line]].
 
