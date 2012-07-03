@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-06-27 19:21:12
+;; Last changed: 2012-07-03 22:38:00
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -328,7 +328,10 @@ defined, or interactivelly called with `prefix-arg'.
 			(get-file-buffer file)
 			(find-file file))
     (run-hooks 'o-blog-before-publish-hook)
-    (let* ((start-time (current-time)) ;; for statistic purposes only
+    (let* (;; Make sure `org-todo-keyword' is not set to a particular value
+	   ;; by user.
+	   (org-todo-keyword (default-value 'org-todo-keywords))
+	   (start-time (current-time)) ;; for statistic purposes only
 	   ;; make sure we are on the correct directory.
 	   (default-directory (file-name-directory file))
 	   STATIC
