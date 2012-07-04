@@ -29,7 +29,7 @@
      :about "About"
      :links "Links"
      :redirect-header "Redirect"
-     :redirect-text "Oups! you shouln't be here. Please wait for redirection."
+     :redirect-text "Oups! you shouldn't be here. Please wait for redirection."
      :redirect-link "Click here for homepage."
      :powered-by "Powered by"
      :debug-blog "Dump information for blog"
