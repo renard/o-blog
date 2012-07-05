@@ -8,7 +8,7 @@
 	  <div class=" date-m"><lisp>
 	      (format "<a href=\"%s/%s/%s/%s/index.html\">%s</a>"
 	      (ob:path-to-root)
-	      (ob:post-category POST)
+	      (ob:category-safe (ob:post-category POST))
 	      (ob:format-date (ob:post-timestamp POST) "%Y")
 	      (ob:format-date (ob:post-timestamp POST) "%m")
 	      (ob:format-date (ob:post-timestamp POST) "%b"))</lisp></div>
@@ -16,7 +16,7 @@
 	      <lisp>
 		(format "<a href=\"%s/%s/%s/index.html\">%s</a>"
 		(ob:path-to-root)
-		(ob:post-category POST)
+		(ob:category-safe (ob:post-category POST))
 		(ob:format-date (ob:post-timestamp POST) "%Y")
 		(ob:format-date (ob:post-timestamp POST) "%Y"))
 	      </lisp>
