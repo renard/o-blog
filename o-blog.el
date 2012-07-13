@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-07-03 22:45:15
+;; Last changed: 2012-07-13 12:38:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -20,6 +20,7 @@
 (eval-when-compile
   (require 'cl nil t)
   (require 'browse-url nil t))
+(require 'ob-ditaa nil t)
 (require 'htmlize nil t)
 (require 'sgml-mode nil t)
 (require 'html2text nil t)
@@ -668,7 +669,27 @@ headers and body."
   (with-temp-buffer
     (insert string)
     (org-mode)
-    (substring-no-properties (org-export-as-html nil nil nil 'string t))))
+    (goto-char (point-min))
+    ;; exporting block with ditaa is kinda messy since it requires a real
+    ;; file (does not work with a temp-buffer which is not associated to any
+    ;; file).
+    (let ((saved-file
+	   (when
+	       (re-search-forward "^#\\+BEGIN_SRC:?[ \t]+\\(ditaa\\)" nil t)
+	     (format "/%s/%s/%s.src.org"
+		     default-directory
+		     (ob:blog-publish-dir BLOG)
+		     ;; variable inherited from `ob-parse-entry'
+		     htmlfile)))
+	  (org-confirm-babel-evaluate nil)
+	  ret)
+      (when saved-file
+	(mkdir (file-name-directory saved-file) t)
+	(write-file saved-file))
+      (setq ret (substring-no-properties (org-export-as-html nil nil nil 'string t)))
+      (when saved-file
+	(delete-file saved-file))
+      ret)))
 
 
 (defun ob-compute-tags (posts &optional min_r max_r)
