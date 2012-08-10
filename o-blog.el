@@ -684,8 +684,7 @@ headers and body."
 	  (org-confirm-babel-evaluate nil)
 	  ret)
       (when saved-file
-	(mkdir (file-name-directory saved-file) t)
-	(write-file saved-file))
+	(ob-write-file saved-file))
       (setq ret (substring-no-properties (org-export-as-html nil nil nil 'string t)))
       (when saved-file
 	(delete-file saved-file))
