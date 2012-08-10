@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-07-13 12:38:17
+;; Last changed: 2012-08-10 10:11:59
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -791,7 +791,11 @@ when publishing a page."
 (defun ob-write-file (file)
   "Write current buffer to FILE and create full path if necessary."
   (mkdir (file-name-directory file) t)
-  (write-file file))
+  (let ((coding-system-for-write
+	 (with-current-buffer
+	     (ob:blog-buffer BLOG)
+	   buffer-file-coding-system)))
+    (write-file file)))
 
 (defun ob-write-index()
   "Publish all indexes (default, categories, year, month)"
