@@ -1,5 +1,5 @@
 #+TITLE: o-blog
-#-DESCRIPTION: standalone blogging system for org-mode
+#-DESCRIPTION: A stand-alone blogging system for Org-mode
 #+DATE: 2012-08-10 10:25:58
 
 #+STARTUP: logdone
@@ -29,7 +29,7 @@
 #+begin_o_blog_hero_unit
 #+HTML: <h1>o-blog</h1>
 
-A stand-alone blog and publication tool for [[http://orgmode.org/][org-mode]].
+A stand-alone blog and publication tool for [[http://orgmode.org/][Org-mode]].
 #+end_o_blog_hero_unit
 
 #+HTML: <h1 style="font-size: 500%;">Quick start guide</h1>
@@ -57,9 +57,8 @@ A stand-alone blog and publication tool for [[http://orgmode.org/][org-mode]].
 
 ** Setup
 
-
-First you need to install [[http://www.gnu.org/s/emacs][emacs]] (tested with version 24, might work with 23)
-and [[http://orgmode.org/][org-mode]] (tested with version 7.8.09, other /might/ work as well). Then
+First you need to install [[http://www.gnu.org/s/emacs][Emacs]] (tested with version 24, might work with 23)
+and [[http://orgmode.org/][Org-mode]] (tested with version 7.8.09, other /might/ work as well). Then
 you have 2 ways to install [[https://github.com/renard/o-blog][o-blog]].
 
 #+begin_o_blog_row 5
@@ -183,6 +182,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :TEMPLATE: blog_post-by-tags.html
   :END:
 
+
 * Changelog
   :PROPERTIES:
   :PAGE:     changelog.html
@@ -244,6 +244,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 - 2012-01-23
   - Change tag system from "Tags" to org tagging system.
 
+
 * Documentation
 ** Debug
    :PROPERTIES:
@@ -258,52 +259,57 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   :PAGE:     features.html
   :END:
 
-- Appearance
-  - Dynamic template system (using lisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging
+o-blog transforms the simple and powerful markup of Org-mode documents
+to a full-featured, easily deployed web site, ready to serve online to
+a wide range of devices.
+
+- Appearance - modern, dynamic, and customizable:
+  - Dynamic template system (using elisp functions) with [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][nice debugging
     features]] and easy embedded [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][bug report tool]]
   - Syntax highlighting for exported code snippets
-  - [[http://twitter.github.com/bootstrap/][bootstrap]] support
+  - [[http://twitter.github.com/bootstrap/][Bootstrap 2]] support
   - [[http://fortaweso.me/font-awesome/][Font-Awesome]] support
-  - [[http://lesscss.org/][lesscss]] support
-  - [[http://jquery.com/][JQuery]] support
+  - [[http://lesscss.org/][LESS CSS]] support
+  - [[http://jquery.com/][jQuery]] support
   - HTML5 / CSS3 ready
-  - Custom [[http://www.google.com/webfonts][Google webfonts]] support.
-  - [[http://twitter.github.com/bootstrap/scaffolding.html#responsive][Responsive design]].
-- Blog
+  - Custom [[http://www.google.com/webfonts][Google web fonts]] support
+  - [[http://twitter.github.com/bootstrap/scaffolding.html#responsive][Responsive design]] for many devices
+- Blog - all the key features are here:
   - Static pages
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags/index.html][Tag cloud]]
   - Multiple blogs
   - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][Archives]]
   - [[http://disqus.com][Disqus]] support
   - [[http://en.wikipedia.org/wiki/QR_code][QR code]] support
-- Publication
-  - Both synchrone and asynchrone publication
+- Publication - fast and convenient:
+  - Both synchronous and asynchronous publication
   - Publish directly to the webserver (using tramp)
-- [[http://twitter.github.com/bootstrap/][Bootstrap]] extra
+- [[http://twitter.github.com/bootstrap/][Bootstrap]] flair and widgets:
   - Alert boxes
   - Icons ([[http://glyphicons.com/][glyphicons]]) support
-  - widgets (labels, badges, progress bar, well, etc…)
+  - Widgets such as labels, badges, progress bar, well, etc.
 
 ** Templates
   :PROPERTIES:
   :PAGE:     templates.html
   :END:
 
-Templates which are a big part of the [[https://github.com/renard/o-blog][o-blog]] export process, are HTML-based
-files. Lisp code could be interpreted as long as =<lisp>= tags surrounds it.
+Templates, which are a big part of the [[https://github.com/renard/o-blog][o-blog]] export process, are
+HTML-based files. Within templates, Lisp code can be interpreted as
+long as =<lisp>= tags surrounds the code.
 
 #+begin_src html
 <h1><lisp>(ob:blog-title BLOG)</lisp></h1>
 #+end_src
 
-The previous snippet would be exported to something similar to:
+The above would be exported to something like:
 
 #+begin_src html
 <h1>o-blog</h1>
 #+end_src
 
 #+begin_o_blog_alert info Information
-[[https://github.com/renard/o-blog][o-blog]] only needs =blog_= prefixed templates as long as they do not need any
+[[https://github.com/renard/o-blog][o-blog]] only needs =blog_= prefixed templates, as long as they do not need any
 other templates (using =ob:insert-template= function).
 
 All other templates are defined for convenience.
@@ -314,26 +320,26 @@ All other templates are defined for convenience.
 
 =blog_= prefixed templates.
 
- - =blog_static.html=: exports any static page (function =ob-write-static=).
- - =blog_post.html=: exports a blog post (function =ob-write-posts=).
- - =blog_tags.html=: exports a tag cloud page (function =ob-write-tags=).
- - =blog_tags-detail.html=: exports page matching a specific tag (function
+ - =blog_static.html=: Exports any static page (function =ob-write-static=).
+ - =blog_post.html=: Exports a blog post (function =ob-write-posts=).
+ - =blog_tags.html=: Exports a tag cloud page (function =ob-write-tags=).
+ - =blog_tags-detail.html=: Exports page matching a specific tag (function
    =ob-write-tags=).
- - =blog_archive.html=: exports the whole archives (all categories, all
+ - =blog_archive.html=: Exports the whole archives (all categories, all
    years, all months) page (function =ob-write-index=).
- - =blog_rss.html=: exports the rss feed (function =ob-write-index=).
- - =blog_index_month.html= export index page for a given month (function
+ - =blog_rss.html=: Exports the rss feed (function =ob-write-index=).
+ - =blog_index_month.html= Export index page for a given month (function
    =ob-write-index=).
- - =blog_index_year.html= export index page for a given year (function
+ - =blog_index_year.html= Export index page for a given year (function
    =ob-write-index=).
- - =blog_index_catery.html= export index page for a given category (function
+ - =blog_index_catery.html= Export index page for a given category (function
    =ob-write-index=).
 
-*** index templates
+*** Index-page templates
 
-=index_= prefixed templates. They are used my all =blog_index_*.html=
+=index_= prefixed templates. They are used by all =blog_index_*.html=
 templates to generate a list of articles matching given category, year and
-month and the whole archives.
+month, and the entire archives.
 
  - =index_archives.html=
  - =index_category.html=
@@ -342,15 +348,15 @@ month and the whole archives.
 
 *** Navigation templates
 
-=nav_= prefixed templates used to generate navigation snippets:
+=nav_= prefixed templates are used to generate navigation snippets:
 
- - =nav_links.html=: used to generate navigation menu used in both page
-   header and footer.
- - =nav_tag-cloud.html=: used to generate tag cloud on page bottom.
+ - =nav_links.html=: Used to generate navigation menu used in both the
+   page header and footer.
+ - =nav_tag-cloud.html=: Used to generate tag cloud on page bottom.
 
 *** Page templates
 
-=page_= prefixed templates used for both html header and footer.
+=page_= prefixed templates used for both HTML header and footer.
 
 
 ** Structures
@@ -368,33 +374,33 @@ available using a =(type-slot variable)= form.
 
 Structure used to define a blog:
 
- - =file=: the blog source file (read-only).
- - =buffer=: buffer visiting the blog file (read-only).
- - =publish-dir=: where to publish the blog defined by the =#+PUBLISH_DIR:=
+ - =file=: The blog source file (read-only).
+ - =buffer=: Buffer visiting the blog file (read-only).
+ - =publish-dir=: Where to publish the blog, defined by the =#+PUBLISH_DIR:=
    header directive or =out= in the same directory as the blog source file.
- - =template-dir=: location of the template directory defined by the
+ - =template-dir=: Location of the template directory defined by the
    =#+TEMPLATE_DIR:= header directive or the =templates= directory of the
    =o-blog= library.
- - =style-dir=: path of the /css/ files defined by the =#STYLE_DIR:= header
+ - =style-dir=: Path of the /css/ files defined by the =#STYLE_DIR:= header
    directive or =style=. This directory is relative to =template-dir=.
- - =posts-filter=: default filter for post defined by the =#POSTS_FILTER:=
+ - =posts-filter=: Default filter for posts defined by the =#POSTS_FILTER:=
    header directive or =+TODO={DONE}=.
- - =static-filter=: default filter for static pages defined by the
+ - =static-filter=: Default filter for static pages defined by the
    =#STATIC_FILTER:= header directive or =+PAGES={.*}=.
- - =snippet-filter=  default filter for snippets defined by the
+ - =snippet-filter=  Default filter for snippets defined by the
    =#SNIPPET_FILTER:= header directive or =+SNIPPET={.*}=.
  - =title=: Blog title defined by the =#+TITLE:= header directive.
- - =description=: blog description defined by the =#+DESCRIPTION:= header
+ - =description=: Blog description defined by the =#+DESCRIPTION:= header
    directive.
  - =url=: Blog base URL defined by the =#+URL:= header.
- - =default-category=: default category for posts  defined by the
+ - =default-category=: Default category for posts defined by the
    =#DEFAULT_CATEGORY:= header or =Blog=.
- - =disqus=: [[http://docs.disqus.com/developers/universal/][disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this system
-   belongs to. Defined by the =#+DISQUS:= header.
- - =filename-sanitizer=: 1-argument function to be used to sanitize
+ - =disqus=: The [[http://docs.disqus.com/developers/universal/][Disqus]] account (called a forum on [[http://disqus.com][Disqus]]) this o-blog
+   site belongs to. Defined by the =#+DISQUS:= header.
+ - =filename-sanitizer=: A 1-argument function to be used to sanitize
    post filenames. Defined by =#+FILENAME_SANITIZER:= or
    =ob-sanitize-string=.
- - =post-sorter=: a 2-argument function to be used to sort the
+ - =post-sorter=: A 2-argument function to be used to sort the
    posts. Defined by =#+POST_SORTER:= or =ob-sort-posts-by-date=.
 
 Example:
@@ -406,31 +412,31 @@ Example:
 
 **** Structures: =ob:post=
 
- - =id=: the post numerical id. Posts are sort by reversed chronological
+ - =id=: The post's numerical id. Posts are sort by reversed chronological
    order. The most recent post get the id 0.
- - =title=: the post title read from the entry title.
- - =timestamp=: the post timestamp given by the =CLOSED= property or the
+ - =title=: The post title, read from the entry title.
+ - =timestamp=: The post timestamp given by the =CLOSED= property or the
    current time.
- - =year=: numerical year computed from =timestamp=.
- - =month=: numerical month computed from =timestamp=.
- - =day=: numerical day computed from =timestamp=.
- - =category=: category read from =CATEGORY= property org =blog=.
- - =tags=: list of =ob:tags=.
- - =template=: template to use for current post read from =TEMPLATE=
+ - =year=: Numerical year computed from =timestamp=.
+ - =month=: Numerical month computed from =timestamp=.
+ - =day=: Numerical day computed from =timestamp=.
+ - =category=: Category read from =CATEGORY= property org =blog=.
+ - =tags=: List of =ob:tags=.
+ - =template=: Template to use for current post read from =TEMPLATE=
    property or =blog_post.html=.
- - =filepath=: relative path from the blog root directory to the post
+ - =filepath=: Relative path from the blog root directory to the post
    directory (directory only).
- - =filename=: sanitized filename generated from =title=.
- - =htmlfile=: full relative path to the post html file (file and
+ - =filename=: Sanitized filename generated from =title=.
+ - =htmlfile=: Full relative path to the post html file (file and
    directory).
- - =path-to-root=: relative path from the post html file to the blog root.
- - =content=: raw content of the post (org-mode format).
+ - =path-to-root=: Relative path from the post html file to the blog root.
+ - =content=: Raw content of the post (Org-mode format).
  - =content-html=: HTML export of the post.
 
 Example:
 
 #+begin_src emacs-lisp
-;; get the HTML content of the post defined in variable POST.
+;; Get the HTML content of the post defined in variable POST.
 (ob:post-content-html POST)
 #+end_src
 
@@ -438,10 +444,10 @@ Example:
 
 Structure used to define a tag:
 
- - =name=: string defying the tag name.
- - =safe=: web safe tag name for URL.
- - =count=: how many time the tag is used.
- - =size=: the font size in percent.
+ - =name=: The string defining the tag name.
+ - =safe=: Web/URL-safe tag name.
+ - =count=: How many times the tag is used across posts.
+ - =size=: The font size in percent.
 
 Example:
 
@@ -452,34 +458,35 @@ Example:
 
 *** Variables
 
-Following variables are always available when publishing a blog:
+The following variables are always available when publishing a blog:
 
- - =BLOG= (=ob:blog=): information about the blog being published.
- - =POSTS= (list of =ob:post=): list of all posts of the blog or restricted
-   list of posts (depending what is exported).
- - =ALL-POSTS=: A copy of =POSTS= except this *always* contents all the
+ - =BLOG= (=ob:blog=): Information about the blog being published.
+ - =POSTS= (list of =ob:post=): List of all posts of the blog or restricted
+   list of posts (depending on what is exported).
+ - =ALL-POSTS=: A copy of =POSTS= except this *always* contains all the
    posts from the blog.
- - =STATIC= (list of =ob:post=): list of static pages.
- - =SNIPPETS= (list of =ob:post=): list of snippets pages.
- - =TAGS= (list of =ob:tags=): list of all tags.
+ - =STATIC= (list of =ob:post=): List of static pages.
+ - =SNIPPETS= (list of =ob:post=): List of snippets pages.
+ - =TAGS= (list of =ob:tags=): List of all tags.
 
 Some variables may be defined in some functions:
 
- - =POST= (=ob:post=): post (or static page) being currently published.
- - =TAG= (=ob:tags=): tag being currently published.
- - =CATEGORY= (=string=): the category being published.
- - =YEAR=, =MONTH (=integer=): the year and month being published.
- - =PATH-TO-ROOT= (=string=): (intern use only, use =ob:path-to-root=
-   instead) path to blog root used by =ob:path-to-root=.
+ - =POST= (=ob:post=): The post (or static page) being currently published.
+ - =TAG= (=ob:tags=): The tag being currently published.
+ - =CATEGORY= (=string=): The category being published.
+ - =YEAR=, =MONTH (=integer=): The year and month being published.
+ - =PATH-TO-ROOT= (=string=): (internal use only, use =ob:path-to-root=
+   instead) Path to blog root used by =ob:path-to-root=.
 
 ** Functions
   :PROPERTIES:
   :PAGE:     functions.html
   :END:
 
-Basically any lisp function could be used withing a blog template as long as
-they are known when exporting. Meanwhile some of them are specifically made
-to be used withing templates. These functions are prefixed by =ob:=.
+Basically any elisp function could be used within an o-blog template,
+as long as they are known when exporting. Meanwhile some functions are
+specifically made to be used within templates. These functions are
+prefixed by =ob:=.
 
 Descriptions are taken from function docstrings.
 
@@ -489,24 +496,25 @@ Return posts (from =POSTS= as defined in =org-publish-blog=) matching
 =PREDICATE=. Limit to =COUNT= results if defined and sorted using
 =SORTFUNC=.
 
-=PREDICATE= is a function run for each post with the post itself as
-argument. If =PREDICATE= is nil, no filter would be done on posts.
+=PREDICATE= is a function that runs for each post, with the post
+itself as argument. If =PREDICATE= is nil, no filtering will be done
+on posts.
 
-=SORTFUNC= is used a =sort= =PREDICATE=.
+=SORTFUNC= uses a =sort= =PREDICATE=.
 
 If =COLLECT= is defined, only returns the =COLLECT= field of a
 =ob:post= structure.
 
 Examples:
 
-Getting last 10 posts:
+Getting the last 10 posts:
 
 #+begin_src emacs-lisp
    (ob:get-posts nil 10)
 #+end_src
 
 
-Getting post from January 2012:
+Getting posts from January 2012:
 
 #+begin_src emacs-lisp
    (ob:get-posts
@@ -543,11 +551,11 @@ For archive navigation:
 
 *** Function: =(ob:get-post-by-id ID)=
 
-Return post which id is =ID=.
+Return post whose id is =ID=.
 
 **** Template usages
 
-Posts navigation:
+Posts navigation, setting up links to previous and next post:
 
 #+begin_src html
   <nav class="articles-nav">
@@ -594,11 +602,11 @@ Insert the /About/ section in page footer:
 
 Get =HEADER= from blog buffer as defined in =BLOG= global context variable.
 
-Returns only fist match except if =ALL= is defined.
+Returns only the first match, unless =ALL= is defined.
 
 **** Template usages
 
-Get the last updated header for rss export:
+Get the last updated header for RSS export:
 
 #+begin_src html
   <updated><lisp>(ob:format-date (ob:get-header "DATE"))</lisp></updated>
@@ -620,15 +628,15 @@ Insert html header:
 
 Format =DATE= using =FORMAT= and =LOCALE=.
 
-=DATE= can heither be string suitable for =parse-time-string= or a list of
-interger using =current-time= format.
+=DATE= can either be a string suitable for =parse-time-string= or a list of
+integers using =current-time= format.
 
 =FORMAT= is a =format-time-string= compatible definition. If not
-set ISO8601 =%Y-%m-%dT%TZ= format would be used.
+set, ISO8601 =%Y-%m-%dT%TZ= format will be used.
 
 **** Template usages
 
-Add a human readable timestamp for a post:
+Add a human-readable timestamp for a post:
 
 #+begin_src html
   Posted on <time datetime="<lisp> (ob:format-date (ob:post-timestamp POST)) </lisp>">
@@ -643,7 +651,7 @@ Add a human readable timestamp for a post:
 
 To report a bug please be sure your issue is =o-blog= related.
 
-You can bootstrap a simple clean environment
+You can bootstrap a simple clean environment:
 
 #+begin_src sh
 rm -rf ~/dev/.emacs.d
@@ -667,16 +675,17 @@ Then launch =emacs=:
 
 You can change =x-www-browser= to your favorite browser.
 
-If anything runs fine emacs would exit normally. Otherwise a buffer called
-=o-blog Bug-report= is created and its content is copied to primary X
-selection (if available). This buffer contains useful information for
-debugging your issue. A browser is launch to the [[https://github.com/renard/o-blog/issues/new][o-blog new issue page]]. You
-can either paste content of the =o-blog Bug-report= buffer or the X primary
-selection (middle click).
+If everything runs fine emacs will exit normally. Otherwise a buffer
+called =o-blog Bug-report= is created and its content is copied to
+primary X selection (if available). This buffer contains useful
+information for debugging your issue. A browser window will open to
+the [[https://github.com/renard/o-blog/issues/new][o-blog new issue page]]. Then you can either paste content of the
+=o-blog Bug-report= buffer, or use the X primary selection (middle
+click).
 
-Please describe as much as possible your issue (in English). do no hesitate
-to paste your blog file to https://gist.github.com/ this might be useful to
-debug.
+Please describe as much as possible your issue (in English). Do not hesitate
+to paste your blog file to https://gist.github.com/ as this might be useful in
+debugging.
 
 
 
@@ -692,7 +701,7 @@ debug.
 #+HTML: <h1>Testimonials</h1>
 
 #+begin_quote
-/“o-blog, great static site generator from emacs org-mode.”/
+/“o-blog, great static site generator from emacs Org-mode.”/
 
 -- Pierre-Yves Ritschard [[https://twitter.com/pyr/status/160466727195521024][@pyr]] ([[http://openbds.org][OpenBSD]] relayd original author)
 
@@ -792,37 +801,36 @@ If you have any ideas please [[https://github.com/renard/o-blog/issues/new][drop
   :PAGE:     faq.html
   :END:
 
-*** My page looks ugly
+*** Why does my page look ugly/un-styled?
 
-Maybe you are using [[https://www.google.com/chrome/][google-chrome]] and try to view your site locally using a
-=file:///path/to/your/site/out/index.html= scheme. Open the javascript console
-=Ctrl+Shift+I= you should see something like:
+Maybe you are using [[https://www.google.com/chrome/][Google Chrome]] and you're trying to view your site
+locally using a =file:///path/to/your/site/out/index.html= scheme.
+Open the JavaScript console =Ctrl+Shift+I= and you should see
+something like:
 
 #+begin_example
 XMLHttpRequest cannot load file:///path/to/your/site/out/out/style/css/o-blog.less. Cross origin requests are only supported for HTTP.
 less-1.2.1.min.js:8Uncaught Error: NETWORK_ERR: XMLHttpRequest Exception 101
 #+end_example
 
-There is a known Chrome issue with loading local javascript files. This is a
-/security feature/ in Chrome.
+If so, that is a known Chrome issue with loading local javascript
+files, and is actually a /security feature/ in Chrome.
 
-You can disable this with the =--allow-file-access-from-files= option to
-chrome or you can use an other browser or setup a local webserver.
+You can disable this with the =--allow-file-access-from-files= option
+in Chrome, or you can use another browser like Firefox, or setup a
+local webserver.
 
-There are many complex solutions for a webserver such as [[http://nginx.org/][nginx]] or [[http://httpd.apache.org/][Apache]] or
-many [[http://en.wikipedia.org/wiki/Comparison_of_web_server_software][others]].
-
-You may want to prefer a lighter and simpler solution.
-
-With python simply run:
+To use a local webserver, there are many complex solutions such as
+[[http://nginx.org/][nginx]] or [[http://httpd.apache.org/][Apache]] or many [[http://en.wikipedia.org/wiki/Comparison_of_web_server_software][others]]. If you prefer a lighter and simpler
+solution using Python, simply run:
 
 #+begin_src sh
 cd /path/to/your/site && python -m SimpleHTTPServer
 #+end_src
 
-And browse http://localhost:8000
+...and browse http://localhost:8000
 
-Or within emacs you can run [[https://github.com/jrhbailey/emacs-http-server][emacs-http-server]]:
+Or within Emacs you can run the [[https://github.com/jrhbailey/emacs-http-server][emacs-http-server]]:
 
 #+begin_src emacs-lisp
 (require 'httpd)
@@ -830,20 +838,24 @@ Or within emacs you can run [[https://github.com/jrhbailey/emacs-http-server][em
 (httpd-start)
 #+end_src
 
-and browse http://localhost:8080
+...and browse http://localhost:8080
 
-An other alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
+Another alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
 complex.
+
 
 * Tips
 ** DONE Creating a blog					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
 
-A blog consists of org entries. Each entry has a title, some properties and
-some text. Exporting a blog means publishing all entries with a =DONE=
-=TODO=.
+In o-blog, a site is contained in a single Org-mode file specifying
+both pages and a blog; in turn, the blog consists of Org-mode entries,
+specifically, [[http://orgmode.org/manual/TODO-Items.html#TODO-Items][Org-mode TODO items]]. Each entry has a headline/title,
+some properties and some text. Exporting a blog means publishing all
+the entries of an Org-mode file (to their own HTML5 files) that are
+=TODO= items marked =DONE=.
 
-A minimal blog file could be something like:
+A minimal o-blog Org-mode file could look like:
 
 #+begin_src org
 
@@ -878,8 +890,9 @@ entry.
 ** DONE How to use tags					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:28]
 
-Tags are useful to classify articles. They are stored as [[http://orgmode.org/manual/Tags.html][org-mode tags]] for
-each entries. To add or modify a tag for a post, just use =C-c C-c= and
+Tags are useful to classify o-blog articles/posts (but not for pages).
+They are stored as [[http://orgmode.org/manual/Tags.html][Org-mode tags]] for each entry. To add or modify a
+tag for a post, just use =C-c C-c= when on an Org-mode headline, and
 enter the tag value.
 
 If an article has more than one tag, separate them by a colon (=:=).
@@ -918,7 +931,7 @@ This is a level 5
 This is a level 6
 
 
-Up to 6 levels of indentation could be used.
+Up to 6 levels of indentation can be used.
 
 *** Praragaphs
 
@@ -976,7 +989,7 @@ but not any simpler
 
 *** Lists
 
-As taken from org manual:
+As taken from the Org-mode manual:
 
 My favorite scenes are (in this order)
         1. The attack of the Rohirrim
@@ -994,7 +1007,7 @@ Important actors in this film are:
 
 *** Footnotes
 
-The Org homepage[fn:1] now looks a lot better than it used to.
+The Org-mode homepage[fn:1] now looks a lot better than it used to.
 
 [fn:1] The link is: http://orgmode.org
 
@@ -1002,7 +1015,7 @@ The Org homepage[fn:1] now looks a lot better than it used to.
 
 You can make words *bold*, /italic/, _underlined_, =code= and ~verbatim~,
 and, if you must, ‘+strike-through+’. Text in the code and verbatim string
-is not processed for Org mode specific syntax; it is exported verbatim.
+is not processed for Org-mode specific syntax; it is exported verbatim.
 
 *** Horizontal rules
 
@@ -1017,7 +1030,7 @@ As shown previously.
 
 Lines starting with ‘#’ in column zero are treated as comments and will
 never be exported. If you want an indented line to be treated as a comment,
-start it with ‘#+ ’. Also entire subtrees starting with the word ‘COMMENT’
+start it with ‘#+ ’. Also, entire subtrees starting with the word ‘COMMENT’
 will never be exported. Finally, regions surrounded by ‘#+BEGIN\_COMMENT’
 ... ‘#+END\_COMMENT’ will not be exported.
 
@@ -1092,7 +1105,7 @@ the sun is R_{sun} = 6.96 x 10^8 m.
 
 *** tag: <details>
 
-Works only with chrome.
+This tag works only with the Chrome browser.
 
 #+HTML: <details>
 #+HTML: <summary>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</summary>
@@ -1201,7 +1214,7 @@ file in a modal window. The magic line is:
 The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
 - The mandatory =/path/to/file= which is the path to the file from which
   content should be read.
-- The optional =mode= which could be determined by if omitted.
+- The optional =mode= parameter, which can be determined if omitted.
 
 Here is an example of the =sample-init.el= file:
 
@@ -1210,8 +1223,8 @@ Here is an example of the =sample-init.el= file:
 ** DONE Adding icons					    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 00:19]
 
-Icons from [[http://glyphicons.com/][glyphicons]] are supported support by simply naming the icon using
-italic style:
+Icons from [[http://glyphicons.com/][glyphicons]] are supported, by simply naming the icon using
+italics style forward-slashes:
 
 #+begin_o_blog_row 6
 
@@ -1232,7 +1245,7 @@ italic style:
 
 
 
-This could also be used for the top /navbar/ using something like:
+Icons can also be used for the top /navbar/ using something like:
 
 #+begin_o_blog_row 6
 
@@ -1293,7 +1306,7 @@ This could also be used for the top /navbar/ using something like:
 </div>
 #+end_html
 
-Please note the blank line between menu items. if blanks are omitted, the
+Please note the blank line between menu items. If blanks are omitted, the
 rendered result might be damaged.
 
 #+end_o_blog_row
@@ -1303,8 +1316,8 @@ rendered result might be damaged.
 ** DONE Using Bootstrap grid				    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 01:19]
 
-[[http://twitter.github.com/bootstrap/scaffolding.html][Bootstrap scaffolding]] could be defined using both =#+begin_o_blog_row= and
-=#+end_o_blog_row= directives (or =<og= =TAB= shortcut). A new column could
+[[http://twitter.github.com/bootstrap/scaffolding.html][Bootstrap scaffolding]] can be defined using both =#+begin_o_blog_row= and
+=#+end_o_blog_row= directives (or =<og= =TAB= shortcut). A new column can
 be started using =#+o_blog_row_column= single directive (or =<ogr= =TAB=
 shortcut).
 
@@ -1510,14 +1523,14 @@ Look, I'm in a well!
    CLOSED: [2012-05-07 Mon 16:38]
 
 [[http://www.google.com/webfonts][Google webfonts]] can be easily used in o-blog in 2 different ways: using
-google API or by providing resources in the =templates/style= directory.
+the Google API, or by providing resources in the =templates/style= directory.
 
 #+begin_o_blog_alert warning Caution
 Using many font styles can slow down your webpage, so only select the font
 styles that you actually need on your webpage.
 #+end_o_blog_alert
 
-Both example are given using the [[http://www.yanone.de/typedesign/kaffeesatz/][Yanone Kaffeesatz]] font.
+Both examples below use the [[http://www.yanone.de/typedesign/kaffeesatz/][Yanone Kaffeesatz]] font.
 
 *** Using Google API
 
@@ -1541,7 +1554,7 @@ And that's it.
 
 *** Providing resources
 
-That is less efficient in terms of network resources but provide a good
+That is less efficient in terms of network resources but provides a good
 alternative for offline publications.
 
 
@@ -1561,7 +1574,7 @@ And add the font declaration in =templates/style/less/o-blog-default.less=:
 @import "font-Yanone-Kaffeesatz.less";
 #+END_SRC
 
-Add declare its use like in the Google API version:
+Finally, declare its use as in the Google API version:
 
 #+BEGIN_SRC css
 h1, h2, h3, h4, h5, h6 {
