@@ -42,7 +42,7 @@ And add following to your +~/.emacs.d/init.el+ file:
 
 Open the +~/.emacs.d/o-blog/example/sample.org+ file and type +M-x
 org-publish-blog+. The result site would be published by default in
-+~/.emacs.d/o-blog/out+.
++~/.emacs.d/o-blog/example/out+.
 
 See the +example/out/blog/index.html+ and +example/out/todo.html+' for more
 details.
