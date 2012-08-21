@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode
-#+DATE: 2012-08-10 10:25:58
+#+DATE: 2012-08-21 11:02:33
 
 #+STARTUP: logdone
 
@@ -758,6 +758,7 @@ things from it.”/
 - [[http://mimes.is/][Journal of the creative imagination]]
 - [[http://www.djcbsoftware.nl][DJCB Software]]
 - [[http://dimilar.com/de/index.html][Erlang Vision]]
+- [[http://pharos-alexandria.github.com][Pharos (Annette von Stockhausen)]]
 
 #+end_o_blog_hero_unit
 
