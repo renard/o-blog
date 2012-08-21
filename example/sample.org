@@ -1605,3 +1605,55 @@ You can also specify a custom template for your static page by adding a
 #+END_SRC
 
 #+end_o_blog_row
+** DONE Adding an image into a post			       :usage:o@blog:
+   CLOSED: [2012-08-21 Tue 10:43]
+
+
+#+begin_o_blog_row 8
+
+Adding an image to a post is pretty simple since
+[[http://orgmode.org][Org-mode]] offers a special link scheme for
+that. Image source file can be stored anywhere since its path is
+valid. During the export process, the image file is copied into a folder
+related to the post and all links are corrected to point to its new
+location.
+
+
+#+begin_o_blog_row 5
+
+For example, the following piece of code will copy the =emacs-logo.png= from the current
+directory and is is then copied into it into
+=tips/2012/08/21_adding-an-image-into-a-post/emacs-logo.png=.
+
+#+o_blog_row_column 3
+
+
+#+BEGIN_SRC org
+ file:emacs-logo.png
+#+END_SRC
+
+#+end_o_blog_row
+
+
+
+#+o_blog_row_column 4
+[[file:emacs-logo.png]]
+
+#+end_o_blog_row
+
+
+
+The HTML result is something similar to:
+
+#+BEGIN_SRC html
+ <img src="21_adding-an-image-into-a-post/emacs-logo.png"  alt="21_adding-an-image-into-a-post/emacs-logo.png" />
+#+END_SRC
+
+
+
+A best practice is to have all files info a =/files= folder. Then you can
+create a sub-folder for each posts such as:
+ - =/files/post1/file1=
+ - =/files/post1/file2=
+ - =/files/post2/file=
+ - ...
