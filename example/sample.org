@@ -845,6 +845,28 @@ Another alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode]
 complex.
 
 
+*** Why html pages are not minified?
+
+HTML compression very tricky. Things can easily go wrong. Using a
+[[http://betterexplained.com/articles/how-to-optimize-your-site-with-gzip-compression/][GZip
+compression]] would be more efficient.
+
+Anyway if you still want to minify your pages, you can have a look to
+[[http://code.google.com/p/htmlcompressor/][htmlcompressor]],
+[[http://developer.yahoo.com/yui/compressor/][yuicompressor]] and
+[[https://developers.google.com/closure/compiler/][Closure compiler]]. You
+can also read Juriy Zaytsev's articles on
+[[http://perfectionkills.com/optimizing-html/][optimizing HTML]] and
+[[http://perfectionkills.com/experimenting-with-html-minifier/][experimenting
+with html minifier]].
+
+So here is the magic! Once your site is generated, you can run the following command:
+
+#+BEGIN_SRC sh
+htmlcompressor --compress-js --compress-css --recursive --mask '*.js;*.html;*.xml;*.css;*.less' -o /path/to/out/ /path/to/out
+#+END_SRC
+
+
 * Tips
 ** DONE Creating a blog					       :usage:o@blog:
   CLOSED: [2012-01-07 Sat 00:13]
