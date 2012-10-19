@@ -138,6 +138,7 @@ This is a good place for o-blog parser plugins."
   publish-dir
   template-dir
   style-dir
+  assets-dir
   posts-filter
   static-filter
   snippet-filter
@@ -361,6 +362,11 @@ defined, or interactivelly called with `prefix-arg'.
       (ob-write-index)
       (let ((syncf (if (functionp 'dired-do-sync)
 		       'dired-do-sync 'copy-directory)))
+	(funcall syncf (format "%s"
+                               (ob:blog-assets-dir BLOG))
+		 (ob:blog-publish-dir BLOG)))
+      (let ((syncf (if (functionp 'dired-do-sync)
+		       'dired-do-sync 'copy-directory)))
 	(funcall syncf (format "%s/%s"
 			       (ob:blog-template-dir BLOG)
 			       (ob:blog-style-dir BLOG))
@@ -496,6 +502,7 @@ A copy function COPYF and its arguments ARGS could be specified."
 					     (find-library-name "o-blog")))
 					   "templates")))
     (setf (ob:blog-style-dir blog) (or (ob:get-header "STYLE_DIR") "style"))
+    (setf (ob:blog-assets-dir blog) (or (ob:get-header "ASSETS_DIR") "assets"))
     (setf (ob:blog-posts-filter blog) (or (ob:get-header "POSTS_FILTER") "+TODO=\"DONE\""))
     (setf (ob:blog-static-filter blog) (or (ob:get-header "STATIC_FILTER") "+PAGE={.+\.html}"))
     (setf (ob:blog-snippet-filter blog) (or (ob:get-header "SNIPPET_FILTER") "+SNIPPET={.+}"))
