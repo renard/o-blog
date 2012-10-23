@@ -1,0 +1,812 @@
+#+Language: en
+#+TITLE: oblog
+#+DESCRIPTION:
+#+AUTHOR:
+#+PROPERTIES: tangle no
+#+COLUMNS: %25ITEM %30tangle %10PAGE %4SNIPPET
+
+A minimum sandpit for o-blog, aimed at reproducing the bootstrap starter-template.html.
+
+* introduction
+
+This file contains a complete set of code you will need to develop
+exactly one page of a static web site using [[https://github.com/renard/o-blog][o-blog]] and [[http://twitter.github.com/bootstrap][bootstrap]].
+
+[[file:sample.org]] is a much better starting point if you're looking to
+dive straight in.  I wrote oblog-min because I was learning about
+bootstrap at the same time as learning about o-blog.
+
+Development workflow consists of the the creation/modification of:
+1. html [[file:~/git/o-blog/templates/][templates]]. The templates section below contains the source
+   block for a simple template.
+2. [[file:~/git/o-blog/templates/style/less/][less]] file. The style section below contains the minimum code needed
+   to specify the less style.
+3. content. The content section contains similar data to the bootstrap
+  starter template - a few words of text and some navigation links.
+4. publish the page is a simple two command process:
+   - M-x org-tangle (C-c C-v t)
+   - M-c org-publish-blog
+
+That's it! But how about the awesomeness that is org-mode. To be
+able to completely wrap a boiler-plate web development process within
+a single clean org file is extremely satisfying.
+
+
+** tasks
+The process of /replication/ of the other bootstrap examples is an obvious
+next step. Before this though it would be useful to *nail* the
+starter-template.html exactly.  At the moment, there are a few differences:
+- different directories for styles
+  - =styles= for oblog
+  - =assets= for bootstrap
+- use of =less= rather than =css=
+- no favicon, touch or html5shim
+- js at the start
+- an extra =article= container
+
+* templates
+** starter-template
+:PROPERTIES:
+:tangle:   ../templates/starter-template.html
+:END:
+*** title
+ #+begin_src html
+       <!DOCTYPE html>
+       <html lang="<lisp>(ob:blog-language BLOG)</lisp>">
+         <head>
+           <meta charset="utf-8"/>
+           <title><lisp>(if (boundp 'POST) (ob:post-title POST) (ob:blog-title BLOG))</lisp></title>
+           <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+           <link rel="stylesheet" type="text/less" href="<lisp>(ob:path-to-root)</lisp>/style/less/oblog-min.less"/>
+   #+end_src
+*** le js
+#+begin_src html
+    <script src="<lisp>(ob:path-to-root)</lisp>/style/js/less-1.3.0.min.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap-modal.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap-transition.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap-dropdown.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap-collapse.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/prettify.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/o-blog.linenumber.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/o-blog-fix.js" type="text/javascript"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/sandpit.js" type="text/javascript"></script>
+#+end_src
+
+*** xhtml-scripts
+#+begin_src html
+      <lisp>(when (boundp 'org-export-xhtml-scripts) org-export-xhtml-scripts)</lisp>
+#+end_src
+
+*** head->body
+#+begin_src html
+  </head>
+  <body>
+#+end_src  
+*** navbar
+:PROPERTIES:
+:tangle:   no
+:END:
+#+begin_src html
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:blog-title BLOG)</lisp></a>
+        <div class="nav-collapse collapse">
+          <lisp>(ob:post-content-html (ob:get-snippet "Navigation"))</lisp>
+        </div>
+      </div>
+    </div>
+  </div>
+#+end_src
+
+
+*** navbar hardwired
+#+begin_src html
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:blog-title BLOG)</lisp></a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="#"><i>icon-cog icon-white</i> Home1</a></li>
+            <li><a href="#"><i>icon-cog icon-white</i> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+#+end_src
+
+*** page content
+#+begin_src html
+<article>
+  <div class="article-content">
+    <lisp>
+      (ob:post-content-html POST)
+    </lisp>
+  </div>
+</article>
+#+end_src
+
+*** end
+#+begin_src html
+  </body>
+  </html>
+#+end_src
+
+
+* style
+** oblog-min
+:PROPERTIES:
+:tangle:   ../templates/style/less/oblog-min.less
+:END:
+#+begin_src css
+  @import "../bootstrap/less/bootstrap.less";
+  @import "../bootstrap/less/responsive.less";     
+#+end_src
+
+#+begin_src css
+  .redclass { 
+      color: #fff 
+  }
+#+end_src
+
+
+** oblog
+:PROPERTIES:
+:tangle:   ../templates/style/less/oblog.less
+:END:
+#+begin_src css
+    @media (min-width: 768px) {
+      @import "font-Yanone-Kaffeesatz.less";
+      @import "font-Ubuntu-Mono.less";
+      @import "font-Andika.less";
+      @monoFontFamily: "Ubuntu Mono", Menlo, Monaco, Consolas, "Courier New";
+      @sansFontFamily: "Andika", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
+  }
+  @import "../bootstrap/less/bootstrap.less";
+  @import "../bootstrap/less/responsive.less";
+  @import "o-blog-default.less";
+  
+  @ob-background: #2e3436;
+  @ob-foreground: #eeeeec;
+  
+  
+  .text-left()   {text-align: left;}
+  .text-center() {text-align: center;}
+  .text-right()  {text-align: right;}
+  
+  
+  .buffer-color() {
+      background: @ob-background;
+      color: @ob-foreground;
+  }
+  
+  
+  .buffer() {
+      .resizable(both);
+      .box-shadow(0 3px 7px rgba(0,0,0,0.3));
+      border: 1px solid @grayLighter;
+      .buffer-color();
+  }
+  
+  
+  .navtags(@fontSize) {
+      nav {
+          &.tags{
+              ul {
+                  font-size: @fontSize;
+                  margin: 2em auto;
+                  line-height: 2;
+                  .text-center();
+                  li {
+                      display: inline;
+                  }
+              }
+          }
+      }
+  }
+  
+  
+  html {
+      height: 100%;
+      background: @black;
+  }
+  
+  
+  .icon-white {
+      opacity: 0.5;
+  }
+  
+  
+  
+  .subnav-fixed {
+      position: fixed;
+      top: @navbarHeight;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      border-color: #D5D5D5;
+      border-width: 0 0 1px;
+      .border-radius(4px);
+      -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+      -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+      box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  }
+  
+  .subnav {
+      width: 100%;
+      height: @navbarHeight - 9;
+  
+      background-color: #EEE;
+      #gradient > .vertical(#f5f5f5, #eeeeee);
+      border: 1px solid #E5E5E5;
+      .border-radius(4px);
+  }
+  
+  
+  #page {
+  
+      padding-top: 3 * @navbarHeight;
+      marging-top: @navbarHeight;
+  
+  
+      .article-header{
+  
+          .date {
+              border: 1px solid @grayLight;
+              display: inline-block;
+              width: 2.3em;
+              .text-center();
+              a {
+                  display: block;
+                  color: fade(@linkColor, 50%);
+              }
+              .date-d {
+                  font-size: 1.5em;
+              }
+              .date-m {
+                  text-transform: uppercase;
+                  font-size: 1em;
+                  font-weight: bolder;
+              }
+              .date-y {
+                  background: @grayLight;
+                  font-size: 1em;
+                  font-weight: bolder;
+              }
+          }
+  
+          .pager {
+                margin-bottom: 0;
+                margin-top: @baseLineHeight;
+          }
+      }
+  
+  
+      .article-content {
+          @outlineShift: 1em;
+          .outline-1 { margin-left: 1 * @outlineShift; }
+          .outline-2 { margin-left: 2 * @outlineShift; }
+          .outline-3 { margin-left: 3 * @outlineShift; }
+          .outline-4 { margin-left: 4 * @outlineShift; }
+          .outline-5 { margin-left: 5 * @outlineShift; }
+          .outline-6 { margin-left: 6 * @outlineShift; }
+  
+  
+          .alert-heading {
+              font-weight: bolder;
+          }
+  
+          img {.center-block()}
+  
+          .show-grid [class*="span"] {
+              background-color: @grayLighter;
+              .border-radius(3px);
+              .show-grid  [class*="span"] {
+                  background-color: darken(@grayLighter, 10%);
+                  .show-grid  [class*="span"] {
+                      background-color: darken(@grayLighter, 20%);
+                  }
+  
+              }
+          }
+  
+  
+          .o-blog-source {
+              display: inline-block;
+              .btn {
+                  margin-top: @baseLineHeight / 4;
+                  margin-bottom: @baseLineHeight / 4;
+              }
+          }
+  
+          #footnotes {
+              min-height: @baseLineHeight;
+              padding-left: @baseLineHeight;
+              padding-right: @baseLineHeight;
+              margin-bottom: @baseLineHeight;
+              background: lighten(#f5f5f5, 2%);
+              border: 1px solid #eee;
+              border: 1px solid rgba(0,0,0,.05);
+              .border-radius(4px);
+              .box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+              font-size: 75%;
+  
+              h2 {
+                  &.footnotes {font-size: 90%;}
+              }
+              div {
+                  &.text-footnotes {
+                      p {
+                          font-size: 90%;
+                          &.footnote {
+                              a {
+                                  &.footnum {}
+                              }
+                          }
+                      }
+                  }
+              }
+  
+          }
+  
+      }
+  
+      .modal {
+          .resizable(both)
+      }
+  
+      .modal-body {
+          ol.linenums {
+              margin-left: 4 * @baseFontSize;
+          }
+      }
+  
+      pre.src, pre.example, .modal-body > pre {
+          .buffer();
+          span {
+              &.coderef-off { }
+              &.linenr {
+                  font-style: italic;
+                  font-weight: bold;
+              }
+              &.code-highlighted {background: darkolivegreen;}
+  
+          }
+      }
+  
+  
+      .navtags(350%);
+  
+  
+      .article-footer {
+          &.well {
+              background: lighten(#f5f5f5, 1%);
+  
+              h1 {
+                  font-size: 1.0em;
+                  margin: 0;
+              }
+              .tag-cloud ul {
+                  margin-bottom: 0;
+                  li {
+                      display: inline;
+                      padding-right: 0.5em;
+                      margin-left: 0.5em;
+                      font-size: 0.80 * @baseFontSize / (18/13);
+                      line-height: 0.92 * @baseLineHeight / (18/13);
+                      a {
+                          color: lighten(#f5f5f5, 1%);
+                      }
+                      a:hover {
+                          zoom: 1;
+                      }
+                  }
+              }
+          }
+      }
+  
+  
+  }
+  
+  .footer-font-size() {
+      font-size: 0.85 * @baseFontSize / (18/13);
+      line-height: 0.95 * @baseLineHeight / (18/13);
+  }
+  
+  #footer {
+      #gradient > .vertical(lighten(@black, 15%), @black);
+  
+      color: darken(@gray, 2%);
+  
+      .footer-font-size();
+  
+      padding-top: @baseLineHeight * 3 / (18/13);
+  
+      a {
+          color: lighten(@gray, 15%);
+      }
+  
+      h1 {
+          color: darken(@blue, 20%);
+          a {
+              color: darken(@blue, 20%);
+          }
+          a:hover {
+              zoom: 1.1;
+          }
+      }
+  
+      .copyright {
+          opacity:  0.35;
+          margin-top: 3em;
+          p {
+              font-size: 80%;
+          }
+      }
+  
+      ul {
+          list-style-type: none;
+          margin: 0;
+          li {
+              .footer-font-size();
+          }
+      }
+  
+      .navtags(100%);
+  
+  }
+  
+  
+  .multicolumn(@cols, @gap)  {
+          -moz-column-count: @cols;
+          -moz-column-gap: @gap;
+          -webkit-column-count: @cols;
+          -webkit-column-gap: @gap;
+          column-count: @cols;
+          column-gap: @gap;
+  }
+  
+  .multicolumn3  {
+      .multicolumn(3, 20px)
+  }
+  
+  #toc {
+      a {
+          font-size: 75%;
+          line-height: 15px;
+      }
+  }
+  
+  
+  @media (min-width: 768px) {
+    @import "font-Yanone-Kaffeesatz.less";
+    @import "font-Ubuntu-Mono.less";
+    @import "font-Andika.less";
+    @monoFontFamily: "Ubuntu Mono",Menlo, Monaco, Consolas, "Courier New";
+    @sansFontFamily: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  @navbarCollapseWidth:             692px;
+  
+  @scarceLink:      rgb(210,210,210);
+  @scarceLinkActive: #7eb8ba;
+  @scarceBackground:     hsl(201,24%,2%);
+  @scarceDarkBlue:       #0a1f38;
+  @grooveBlack:          #282828;
+  @grooveBlue:           #3892fb;
+  @grooveOrange:         #f47120;
+  @scarceDarkBackground: #040706;
+  @scarceEndBack:        #030605;
+  @scarceStartBack:      #4d6d7e;
+  @scarceLastBorder:     hsl(201, 24%, -7.5%);
+  @oldColorHover: #b9d0d0;
+  @linkColorHover:        @scarceLinkActive;
+  @navbarInverseBackgroundHighlight:       @scarceStartBack;
+  @navbarInverseLinkColorHover:            @scarceLinkActive;
+  
+  @import url("http://fonts.googleapis.com/css?family=Droid+Serif:400,200,300,700&subset=latin,latin-ext");
+  @import url("http://fonts.googleapis.com/css?family=Droid+Sans:400,200,300,700&subset=latin,latin-ext");
+  
+  
+  h1, h2, h3, h4, h5, h6 {
+      font-family: "Droid Serif","Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  p, body {
+      font-family: "Droid Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  @monoFontFamily: "Ubuntu Mono",Menlo, Monaco, Consolas, "Courier New";
+  @sansFontFamily: "Droid Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
+  
+  .btn-custom {
+      background-color: @scarceBackground !important;
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="@scarceStartBack", endColorstr="@scarceEndBack");
+      background-image: -khtml-gradient(linear, left top, left bottom, from(@scarceStartBack), to(@scarceEndBack));
+      background-image: -moz-linear-gradient(top, @scarceStartBack, @scarceEndBack);
+      background-image: -ms-linear-gradient(top, @scarceStartBack, @scarceEndBack);
+      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @scarceStartBack), color-stop(100%, @scarceEndBack));
+      background-image: -webkit-linear-gradient(top, @scarceStartBack, @scarceEndBack);
+      background-image: -o-linear-gradient(top, @scarceStartBack, @scarceEndBack);
+      background-image: linear-gradient(@scarceStartBack, @scarceEndBack);
+      border-color: @scarceEndBack @scarceEndBack @scarceLastBorder;
+      color: @scarceLink;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+      -webkit-font-smoothing: antialiased;
+  }
+  
+  .btn-custom:hover {
+      background-color: @scarceBackground !important;
+      color: @scarceLinkActive;
+  }
+  
+  .hero-unit {
+      background-image: url(../../assets/img/grid.png);
+      background-size: auto;
+      background-repeat: repeat;
+      background-color: transparent
+  }
+  
+  @nudge: 1.9px;
+  .navbar .brand {
+        line-height: @baseLineHeight;
+        padding: ((@navbarHeight - @baseLineHeight) / 2)-@nudge 20px ((@navbarHeight - @baseLineHeight) / 2)+@nudge 30px;    
+  }
+  .navbar {
+    margin-bottom: 4px
+  }
+  
+  li {
+      line-height: @baseLineHeight;
+  }
+  
+  #page {
+  
+      padding-top: 10px;
+      margin-top: 0px;
+  }
+  
+  #footer {
+      color: #333;
+      background-color: #fff;
+      background-image: nil;
+      padding-top: 20px;
+      .copyright {
+          opacity:  1;
+          margin-top: 0em;
+          p {
+              font-size: 100%;
+          }
+      }
+  }
+  
+  @scarceCollapseColor1: #fff;
+    @scarceCollapseColor2: #fff;
+    @scarceLastBorder2: #fff;
+  
+  #t1 {
+      background-color: @scarceBackground !important;
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="@scarceCollapseColor1", endColorstr="@scarceCollapseColor2");
+      background-image: -khtml-gradient(linear, left top, left bottom, from(@scarceCollapseColor1), to(@scarceCollapseColor2));
+      background-image: -moz-linear-gradient(top, @scarceCollapseColor1, @scarceCollapseColor2);
+      background-image: -ms-linear-gradient(top, @scarceCollapseColor1, @scarceCollapseColor2);
+      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @scarceCollapseColor1), color-stop(100%, @scarceCollapseColor2));
+      background-image: -webkit-linear-gradient(top, @scarceCollapseColor1, @scarceCollapseColor2);
+      background-image: -o-linear-gradient(top, @scarceCollapseColor1, @scarceCollapseColor2);
+      background-image: linear-gradient(@scarceCollapseColor1, @scarceCollapseColor2);
+      border-color: @scarceCollapseColor2 @scarceCollapseColor2 @scarceLastBorder2;
+      color: @scarceLink;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+      -webkit-font-smoothing: antialiased;
+    }
+  
+  
+#+end_src
+
+
+
+* content
+** Sandpit
+  :PROPERTIES:
+  :PAGE:     index.html
+  :TEMPLATE: starter-template.html
+  :END:
+
+*** oblog bootstrap starter template
+
+#+begin_html
+
+<div class="btn">Make Red</div>
+
+<div id="t1" class="btn">Be Red</div>
+
+#+end_html
+
+Use this document as a way to quick start any new project.
+
+All you get is:
++ this message, 
++ a barebones HTML template, and 
++ a navigation snippet
+
+** Navigation
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+- [[#][/icon-cog icon-white/ Home]]
+- [[#about][/icon-file icon-white/ About]]
+- [[#contact][/icon-tags icon-white/ Contact]]
+
+
+* js
+:PROPERTIES:
+:tangle:   ../templates/style/js/sandpit.js
+:END:
+
+#+begin_src js
+<script type="text/javascript">
+    function makeRed()
+    {
+      $j('#t1').toggleClass('redclass');
+    }
+    $j('div.btn:contains(Make Red)').click(makeRed);
+</script>         
+#+end_src
+
+
+* original starter-template.html from bootstrap
+
+#+begin_src html :tangle no
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>Bootstrap, from Twitter</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+  
+      <!-- Le styles -->
+      <link href="../assets/css/bootstrap.css" rel="stylesheet">
+      <style>
+        body {
+          padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+      </style>
+      <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+  
+      <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+      <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+  
+      <!-- Le fav and touch icons -->
+      <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    </head>
+  
+    <body>
+  
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Project name</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+  
+      <div class="container">
+  
+        <h1>Bootstrap starter template</h1>
+        <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+  
+      </div> <!-- /container -->
+  
+      <!-- Le javascript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="../assets/js/jquery.js"></script>
+      <script src="../assets/js/bootstrap-transition.js"></script>
+      <script src="../assets/js/bootstrap-alert.js"></script>
+      <script src="../assets/js/bootstrap-modal.js"></script>
+      <script src="../assets/js/bootstrap-dropdown.js"></script>
+      <script src="../assets/js/bootstrap-scrollspy.js"></script>
+      <script src="../assets/js/bootstrap-tab.js"></script>
+      <script src="../assets/js/bootstrap-tooltip.js"></script>
+      <script src="../assets/js/bootstrap-popover.js"></script>
+      <script src="../assets/js/bootstrap-button.js"></script>
+      <script src="../assets/js/bootstrap-collapse.js"></script>
+      <script src="../assets/js/bootstrap-carousel.js"></script>
+      <script src="../assets/js/bootstrap-typeahead.js"></script>
+  
+    </body>
+  </html>
+#+end_src
+
+
+
+
+
+
+
+
+
+
+
+
+* sandpit
+:PROPERTIES:
+:tangle:   no
+:END:
+
+
+- [X] starter-template navbar
+- [X] add oblog.less
+- [X] add raw html 
+- add scarce.less
+
+
+** Testing of the collapsing bootstrap stuff
+
+#+begin_html
+  <button type="button" class="btn btn-danger" data-toggle="collapse"
+   data-target=".demo">
+    simple collapsible
+  </button>
+ 
+<div id="t1" class="demo collapse in">
+<h1> This line will disappear!</h1>
+</div>
+
+<div id="t2" class="demo collapse in">
+<h1> But will this line?</h1>
+</div>
+
+#+end_html
+
+** w3
+
+
+#+begin_src html :tangle sandpit.html
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <title>Title of the document</title>
+  </head>  
+  <body>
+    <a href="http://www.scarcecapital.com">scarce.</a>
+    <div>division</div>
+  </body>
+  </html>
+#+end_src
