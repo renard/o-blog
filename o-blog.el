@@ -360,17 +360,16 @@ defined, or interactivelly called with `prefix-arg'.
       (ob-write-posts)
       (ob-write-tags)
       (ob-write-index)
-      (let ((syncf (if (functionp 'dired-do-sync)
-		       'dired-do-sync 'copy-directory)))
-	(funcall syncf (format "%s"
-                               (ob:blog-assets-dir BLOG))
-		 (ob:blog-publish-dir BLOG)))
-      (let ((syncf (if (functionp 'dired-do-sync)
-		       'dired-do-sync 'copy-directory)))
-	(funcall syncf (format "%s/%s"
-			       (ob:blog-template-dir BLOG)
+
+      (ob-do-copy (format "%s"
+			  (ob:blog-assets-dir BLOG))
+		  (ob:blog-publish-dir BLOG))
+
+      (ob-do-copy (format "%s/%s"
+			  (ob:blog-template-dir BLOG)
 			       (ob:blog-style-dir BLOG))
-		 (ob:blog-publish-dir BLOG)))
+		  (ob:blog-publish-dir BLOG))
+
       (run-hooks 'o-blog-after-publish-hook)
       (message (format "Blog %s published in %ss"
 		       file
