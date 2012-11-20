@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-08-21 11:44:41
+;; Last changed: 2012-11-20 11:55:30
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -1070,7 +1070,7 @@ set ISO8601 \"%Y-%m-%dT%TZ\" format would be used."
 
 (defun ob:get-last-post (&optional category nth)
   "Get the NTH last post in from CATEGORY or \"blog\" if not defined."
-  (let ((POST ALL-POSTS)
+  (let ((POSTS ALL-POSTS)
 	(nth (or nth 0)))
     (nth nth (ob:get-posts (lambda (x)
 			     (equal (or category "blog")
