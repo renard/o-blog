@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2012-11-20 11:57:02
+#+DATE: 2012-11-20 12:28:04
 
 #+STARTUP: logdone
 
@@ -1651,15 +1651,15 @@ this sample.org file) to its target location of
 #+o_blog_row_column 3
 
 #+BEGIN_SRC org
-# NOTE: double square brackets should surround file:emacs-logo.png but are not shown:
-file:emacs-logo.png
+  ,# NOTE: The link should be complete.
+  ,[[file:emacs-logo.png][file:emacs-logo.png]]
 #+END_SRC
 
 #+end_o_blog_row
 
 
 #+o_blog_row_column 4
-[[file:emacs-logo.png]]
+[[file:emacs-logo.png][file:emacs-logo.png]]
 
 #+end_o_blog_row
 
