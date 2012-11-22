@@ -117,6 +117,10 @@ This is a good place for o-blog parser plugins."
  - disqus: disqus account (called a forum on Disqus) this system
    belongs to. Defined by the \"#DISQUS\" header.
 
+ - analytics: Property ID (UA-XXXXX-Y) of google analytics
+   account to use for analytics on this site. Defined by the
+   \"#ANALYTICS\" header.
+
  - filename-sanitizer: 1-argument function to be used to sanitize
    post filenames. Defined by \#+FILENAME_SANITIZER:\" or
    \"ob-sanitize-string\".
@@ -149,6 +153,7 @@ This is a good place for o-blog parser plugins."
   post-build-shell
   default-category
   disqus
+  analytics
   filename-sanitizer
   posts-sorter
   posts-filepath
@@ -513,6 +518,7 @@ A copy function COPYF and its arguments ARGS could be specified."
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
     (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
+    (setf (ob:blog-analytics blog) (ob:get-header "ANALYTICS"))
     (setf (ob:blog-filename-sanitizer blog)
 	  (let ((ofs (ob:get-header "FILENAME_SANITIZER")))
 	    (if (and ofs (functionp (intern ofs)))
