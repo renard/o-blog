@@ -1,6 +1,6 @@
 #+TITLE: o-blog
-#-DESCRIPTION: A stand-alone blogging system for Org-mode
-#+DATE: 2012-08-21 11:02:33
+#-DESCRIPTION: A stand-alone blogging system for Org-mode.
+#+DATE: 2012-11-20 12:28:04
 
 #+STARTUP: logdone
 
@@ -164,7 +164,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/index.html][/icon-home icon-white/ {lisp}(ob:gettext :home){/lisp}]]
 
-  - [[file:{lisp}(let ((POSTS ALL-POSTS)) (format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips")))){/lisp}][/icon-file icon-white/ Tips]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips"))){/lisp}][/icon-file icon-white/ Tips]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/tags.html][/icon-tags icon-white/ Tags]]
 
@@ -1388,7 +1388,7 @@ The syntax is:
 
 #+end_src
 
-** DONE Some bootstrap features				    :usage:Bootstrap:
+** DONE Some Bootstrap features                            :usage:Bootstrap:
    CLOSED: [2012-05-03 Thu 21:40]
 
 *** Hero-unit
@@ -1633,39 +1633,38 @@ You can also specify a custom template for your static page by adding a
 
 #+begin_o_blog_row 8
 
-Adding an image to a post is pretty simple since
-[[http://orgmode.org][Org-mode]] offers a special link scheme for
-that. Image source file can be stored anywhere since its path is
-valid. During the export process, the image file is copied into a folder
-related to the post and all links are corrected to point to its new
-location.
+Adding an image to a post is simple since [[http://orgmode.org][Org-mode]] offers a special
+link scheme for that. An image file can be stored anywhere in your
+local directory structure with a valid path. During the export
+process, the image file is copied into a folder related to the post,
+and all exported links are corrected to point to its new location.
 
 
 #+begin_o_blog_row 5
 
-For example, the following piece of code will copy the =emacs-logo.png= from the current
-directory and is is then copied into it into
+For example, the Org-mode markup of =file:emacs-logo.png= surrounded
+by [[http://orgmode.org/org.html#Link-format][double square brackets]] will result (upon export/publishing) in
+copying that image from its current location (in the same directory as
+this sample.org file) to its target location of
 =tips/2012/08/21_adding-an-image-into-a-post/emacs-logo.png=.
 
 #+o_blog_row_column 3
 
-
 #+BEGIN_SRC org
- file:emacs-logo.png
+  ,# NOTE: The link should be complete.
+  ,[[file:emacs-logo.png][file:emacs-logo.png]]
 #+END_SRC
 
 #+end_o_blog_row
 
 
-
 #+o_blog_row_column 4
-[[file:emacs-logo.png]]
+[[file:emacs-logo.png][file:emacs-logo.png]]
 
 #+end_o_blog_row
 
 
-
-The HTML result is something similar to:
+The exported HTML result will resemble:
 
 #+BEGIN_SRC html
  <img src="21_adding-an-image-into-a-post/emacs-logo.png"  alt="21_adding-an-image-into-a-post/emacs-logo.png" />
@@ -1673,9 +1672,10 @@ The HTML result is something similar to:
 
 
 
-A best practice is to have all files info a =/files= folder. Then you can
-create a sub-folder for each posts such as:
- - =/files/post1/file1=
- - =/files/post1/file2=
- - =/files/post2/file=
- - ...
+To keep files organized, you can place all files under a subfolder,
+e.g. =media/=. Then you can create a sub-folder for each post, such
+as:
+- =/media/post1/file1=
+- =/media/post1/file2=
+- =/media/post2/file=
+- etc.
