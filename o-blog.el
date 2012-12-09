@@ -376,6 +376,62 @@ defined, or interactivelly called with `prefix-arg'.
 		       (format-time-string "%s.%3N"
 					   (time-subtract (current-time) start-time)))))))
 
+;;;###autoload
+(defun org-publish-blog-sync-include-files (file)
+  "Publish FILE synchronously, with proper treatment of include files."
+   (with-temp-buffer
+    (erase-buffer)
+    (insert-buffer (or
+                    (get-file-buffer file)
+                    (find-file file)))
+    (org-export-handle-include-files)
+    (run-hooks 'o-blog-before-publish-hook)
+    (let* (;; Make sure `org-todo-keyword' is not set to a particular value
+           ;; by user.
+           (org-todo-keywords (default-value 'org-todo-keywords))
+           (start-time (current-time)) ;; for statistic purposes only
+           ;; make sure we are on the correct directory.
+           (default-directory (file-name-directory file))
+           STATIC
+           (BLOG (ob-parse-blog-headers))
+           (STATIC (append STATIC
+                           (ob-parse-entries
+                            (org-map-entries 'point-marker
+                                             (ob:blog-static-filter BLOG)
+                                             'file))))
+           (POSTS (ob-parse-entries
+                   (org-map-entries 'point-marker
+                                    (ob:blog-posts-filter BLOG)
+                                    'file)))
+           (ALL-POSTS POSTS)
+
+           (SNIPPETS (ob-parse-entries
+                      (org-map-entries 'point-marker
+                                       (ob:blog-snippet-filter BLOG)
+                                       'file)))
+
+           (TAGS (ob-compute-tags POSTS)))
+
+      (ob-write-static)
+      (ob-write-posts)
+      (ob-write-tags)
+      (ob-write-index)
+
+      (ob-do-copy (format "%s"
+			  (ob:blog-assets-dir BLOG))
+                  (ob:blog-publish-dir BLOG))
+      
+      (ob-do-copy (format "%s/%s"
+                          (ob:blog-template-dir BLOG)
+                          (ob:blog-style-dir BLOG))
+                  (ob:blog-publish-dir BLOG))
+
+      (run-hooks 'o-blog-after-publish-hook)
+      (message (format "Blog %s published in %ss"
+                       file
+                       (format-time-string "%s.%3N"
+                                           (time-subtract
+      (current-time) start-time)))))))
 
 (defun ob-do-copy (src dst &optional copyf args)
   "Copy SRC into DST. If `dired-do-sync' is found it would be
