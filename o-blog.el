@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
 ;; Created: 2012-01-04
-;; Last changed: 2012-11-20 12:29:11
+;; Last changed: 2013-01-26 02:38:06
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -703,7 +703,13 @@ headers and body."
 	  ret)
       (when saved-file
 	(ob-write-file saved-file))
-      (setq ret (substring-no-properties (org-export-as-html nil nil nil 'string t)))
+      (setq ret (substring-no-properties
+		 ;; `org-export-as-html' arguments has changed on new
+		 ;; org-version. First try old function signature, then on
+		 ;; faillure use new argument call.
+		 (or
+		  (ignore-errors (org-export-as-html nil nil nil 'string t))
+		  (org-export-as-html nil nil 'string t))))
       (when saved-file
 	(delete-file saved-file))
       ret)))
