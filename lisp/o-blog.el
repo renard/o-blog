@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2013-01-22 14:13:22
+;; Last changed: 2013-01-22 16:46:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -42,7 +42,10 @@ current buffer."
 		   (o-blog-guess-backend-from-file file)))
 	 (blog (funcall backend file)))
     (ob:parse-config blog)
-    (ob:parse-entries blog)))
+    (ob:parse-entries blog)
+    (loop for article in (oref blog articles)
+	  do (ob:convert-article blog article))
+    blog))
     
 
 
