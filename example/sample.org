@@ -127,7 +127,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
 
 - [[file:{lisp}(ob:path-to-root){/lisp}/features.html][/icon-cog icon-white/ Features]]
 
-- [[#][/icon-book icon-white/ Documentation]]
+- [[file:#][/icon-book icon-white/ Documentation]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
@@ -136,7 +136,7 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - 
   - [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][Bug report]]
 
-- [[#][/icon-file icon-white/ Tips]]
+- [[file:#][/icon-file icon-white/ Tips]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
@@ -1276,14 +1276,14 @@ Icons can also be used for the top /navbar/ using something like:
 
 #+begin_src org
 
-  ,- [[#][/icon-book icon-white/ Documentation]]
+  ,- [[file:#][/icon-book icon-white/ Documentation]]
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
   ,  -
   ,  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
-  ,- [[#][/icon-file icon-white/ Blog]]
+  ,- [[file:#][/icon-file icon-white/ Blog]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   ,  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
@@ -1306,14 +1306,14 @@ Icons can also be used for the top /navbar/ using something like:
 <div class="nav-collapse">
 #+end_html
 
-- [[#][/icon-book icon-white/ Documentation]]
+- [[file:#][/icon-book icon-white/ Documentation]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
   - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
   -
   - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
 
-- [[#][/icon-file icon-white/ Blog]]
+- [[file:#][/icon-file icon-white/ Blog]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
   - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
