@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2013-02-08 19:05:49
+#+DATE: 2013-02-08 19:33:26
 
 #+STARTUP: logdone
 
@@ -296,7 +296,7 @@ a wide range of devices.
 
 Templates, which are a big part of the [[https://github.com/renard/o-blog][o-blog]] export process, are
 HTML-based files. Within templates, Lisp code can be interpreted as
-long as =<lisp>= tags surrounds the code.
+long as =&lt;lisp>= tags surrounds the code.
 
 #+begin_src html
 <h1><lisp>(ob:blog-title BLOG)</lisp></h1>
