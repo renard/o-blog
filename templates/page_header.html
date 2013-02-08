@@ -16,6 +16,7 @@
     <script src="<lisp>(ob:path-to-root)</lisp>/style/js/o-blog.linenumber.js" type="text/javascript"></script>
     <script src="<lisp>(ob:path-to-root)</lisp>/style/js/o-blog-fix.js" type="text/javascript"></script>
     <lisp>(when (boundp 'org-export-xhtml-scripts) org-export-xhtml-scripts)</lisp>
+    <lisp>(when (ob:blog-analytics BLOG) (ob:insert-template "plugin_analytics.html"))</lisp>
   </head>
   <body>
 
