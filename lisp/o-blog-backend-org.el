@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-01-26 02:04:41
+;; Last changed: 2013-02-08 23:27:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -179,7 +179,14 @@ headers and body."
       (set-slot-value
        article 'html
        (substring-no-properties
-	(org-export-as-html nil nil nil 'string t)))
+	;; `org-export-as-html' arguments has changed on new
+	;; org-version, then again with the new exporter.
+	;; First try old function signatures, then on failure
+	;; use new argument call.
+	(or
+	 (ignore-errors (org-export-as-html nil nil nil 'string t))
+	 (ignore-errors (org-export-as-html nil nil 'string t))
+	 (org-export-as 'html nil nil t nil))))
       (when saved-file
 	(delete-file saved-file))
       article)))
