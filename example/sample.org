@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2012-11-20 12:28:04
+#+DATE: 2013-02-08 19:05:49
 
 #+STARTUP: logdone
 
@@ -1037,13 +1037,13 @@ The Org-mode homepage[fn:1] now looks a lot better than it used to.
 *** Emphasis and monospace
 
 You can make words *bold*, /italic/, _underlined_, =code= and ~verbatim~,
-and, if you must, ‘+strike-through+’. Text in the code and verbatim string
+and, if you must, =+strike-through+=. Text in the code and verbatim string
 is not processed for Org-mode specific syntax; it is exported verbatim.
 
 *** Horizontal rules
 
 A line consisting of only dashes, and at least 5 of them, will be exported
-as a horizontal line (‘<hr/>’ in HTML and \hrule in LaTeX).
+as a horizontal line (=&lt;hr/>= in HTML and =\hrule= in LaTeX).
 
 ------
 
@@ -1051,11 +1051,11 @@ As shown previously.
 
 *** Comment lines
 
-Lines starting with ‘#’ in column zero are treated as comments and will
+Lines starting with =#= in column zero are treated as comments and will
 never be exported. If you want an indented line to be treated as a comment,
-start it with ‘#+ ’. Also, entire subtrees starting with the word ‘COMMENT’
-will never be exported. Finally, regions surrounded by ‘#+BEGIN\_COMMENT’
-... ‘#+END\_COMMENT’ will not be exported.
+start it with =#+ =. Also, entire subtrees starting with the word =COMMENT=
+will never be exported. Finally, regions surrounded by =#+BEGIN\_COMMENT=
+... =#+END\_COMMENT= will not be exported.
 
 #+begin_comment
 C-c ;
