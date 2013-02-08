@@ -705,11 +705,13 @@ headers and body."
 	(ob-write-file saved-file))
       (setq ret (substring-no-properties
 		 ;; `org-export-as-html' arguments has changed on new
-		 ;; org-version. First try old function signature, then on
-		 ;; faillure use new argument call.
+		 ;; org-version, then again with the new exporter.
+		 ;; First try old function signatures, then on failure
+		 ;; use new argument call.
 		 (or
 		  (ignore-errors (org-export-as-html nil nil nil 'string t))
-		  (org-export-as-html nil nil 'string t))))
+		  (ignore-errors (org-export-as-html nil nil 'string t))
+		  (org-export-as 'html nil nil t nil))))
       (when saved-file
 	(delete-file saved-file))
       ret)))
