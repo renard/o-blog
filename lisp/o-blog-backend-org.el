@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-09 10:37:40
+;; Last changed: 2013-02-09 11:20:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -97,7 +97,7 @@ headers and body."
       self)
 
 
-(defmethod ob:parse-entry ((self ob:backend:org) marker)
+(defmethod ob:parse-entry ((self ob:backend:org) marker type)
   "Parse an org-mode entry at position defined by MARKER."
   (save-excursion
     (with-current-buffer (marker-buffer marker)
@@ -105,26 +105,28 @@ headers and body."
       (when (search-forward-regexp org-complex-heading-regexp
 				   (point-at-eol)
 				   t)
-	(let ((article (ob:article marker)))
+	(let* ((type (or type 'article))
+	       (class (intern (format "ob:%s" type)))
+	       (entry (funcall class marker)))
 
 	  (set-slot-value
-	   article 'title
+	   entry 'title
 	   (match-string-no-properties 4))
 
 	  (set-slot-value
-	   article 'timestamp
+	   entry 'timestamp
 	   (apply 'encode-time
 		  (org-parse-time-string
 		   (or (org-entry-get (point) "CLOSED")
 		       (time-stamp-string "%:y-%02m-%02d %02H:%02M:%02S %u")))))
 
-	  (ob:article:compute-dates article)
+	  (ob:entry:compute-dates entry)
 
 	  (set-slot-value
-	   article 'source
+	   entry 'source
 	   (ob:org-get-entry-text self))
 
-	  article)))))
+	  entry)))))
 
 
 (defmethod ob:parse-entries-1 ((self ob:backend:org) type)
@@ -132,17 +134,18 @@ headers and body."
 using `ob:parse-entry'."
   (let ((markers (org-map-entries
 		  'point-marker
-		  (slot-value self (intern (format "%s-filter" type)))
+		  (slot-value self (intern (format "%ss-filter" type)))
 		  'file-with-archives)))
     (loop for marker in markers
-	  collect (ob:parse-entry self marker))))
+	  collect (ob:parse-entry self marker type))))
 
 (defmethod ob:parse-entries ((self ob:backend:org))
   "Parse all entries (articles, pages and snippets from current org tree."
   (ob:with-source-buffer
    self
-   (loop for type in '(articles pages snippets)
-	 do (set-slot-value self type (ob:parse-entries-1 self type)))
+   (loop for type in '(article page snippet)
+	 for class-type = (intern (format "%ss" type))
+	 do (set-slot-value self class-type (ob:parse-entries-1 self type)))
    self))
 
 
@@ -184,10 +187,10 @@ using `ob:parse-entry'."
 
     (buffer-substring-no-properties (point-min) (point-max))))
 
-(defmethod ob:convert-article ((self ob:backend:org) article)
-  "Convert ARTICLE to html using `org-mode' syntax."
+(defmethod ob:convert-entry ((self ob:backend:org) entry)
+  "Convert ENTRY to html using `org-mode' syntax."
   (with-temp-buffer
-    (insert (oref article source))
+    (insert (oref entry source))
     (org-mode)
     (goto-char (point-min))
     ;; exporting block with ditaa is kinda messy since it requires a real
@@ -214,11 +217,11 @@ using `ob:parse-entry'."
 		    (ignore-errors (org-export-as-html nil nil nil 'string t))
 		    (ignore-errors (org-export-as-html nil nil 'string t))
 		    (org-export-as 'html nil nil t nil)))))
-	(set-slot-value article 'html
+	(set-slot-value entry 'html
 			(ob:org-fix-html self html)))
       (when saved-file
 	(delete-file saved-file))
-      article)))
+      entry)))
 
 (provide 'o-blog-backend-org)
 
