@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-09 11:20:03
+;; Last changed: 2013-02-09 12:29:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -120,14 +120,19 @@ headers and body."
 	   entry 'title
 	   (match-string-no-properties 4))
 
-	  (set-slot-value
-	   entry 'timestamp
-	   (apply 'encode-time
-		  (org-parse-time-string
-		   (or (org-entry-get (point) "CLOSED")
-		       (time-stamp-string "%:y-%02m-%02d %02H:%02M:%02S %u")))))
+	  (when (slot-exists-p entry 'timestamp)
+	    (set-slot-value
+	     entry 'timestamp
+	     (apply 'encode-time
+		    (org-parse-time-string
+		     (or (org-entry-get (point) "CLOSED")
+			 (time-stamp-string
+			  "%:y-%02m-%02d %02H:%02M:%02S %u")))))
+	    (ob:entry:compute-dates entry))
 
-	  (ob:entry:compute-dates entry)
+	  (when (slot-exists-p entry 'tags)
+	    (set-slot-value entry 'tags
+			    (ob:get-tags-list self)))
 
 	  (set-slot-value
 	   entry 'source
