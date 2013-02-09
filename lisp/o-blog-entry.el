@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-02-09 11:16:10
+;; Last changed: 2013-02-09 11:28:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -25,7 +25,22 @@
   ((title :initarg :title
 	  :type string
 	  :documentation "")
-   (timestamp :initarg :timestamp
+   (source :initarg :source
+	   :type string
+	   :documentation "Article raw source")
+   (html :initarg :html
+	 :type string
+	 :documentation "Article html result")
+   )
+  "Object type handeling o-blog entries.")
+
+
+
+
+;; Class aliases
+
+(defclass ob:article (ob:entry)
+  ((timestamp :initarg :timestamp
 	      :type list
 	      :documentation "")
    (year :initarg :year
@@ -37,17 +52,12 @@
    (day :initarg :day
 	 :type integer
 	 :documentation "")
-   (source :initarg :source
-	   :type string
-	   :documentation "Article raw source")
-   (html :initarg :html
-	 :type string
-	 :documentation "Article html result")
-   )
-  "Object type handeling o-blog entries.")
+   (tags :initarg :tag
+	 :type list
+	 :documentation "List of ob:tag"))
+  "O-blog page article")
 
-
-(defmethod ob:entry:compute-dates ((self ob:entry))
+(defmethod ob:entry:compute-dates ((self ob:article))
   ""
   (let ((timestamp (oref self timestamp)))
     (when timestamp
@@ -57,12 +67,8 @@
 		(string-to-number
 		 (format-time-string f timestamp)))))))
 
-
-;; Class aliases
 
-(defclass ob:article (ob:entry)
-  nil
-  "O-blog page article")
+
 (defclass ob:page (ob:entry)
   nil
   "O-blog page class")
@@ -72,4 +78,4 @@
 
 (provide 'o-blog-entry)
 
-;; o-blog-article.el ends here
+;; o-blog-entry.el ends here
