@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-01-22 01:13:01
+;; Last changed: 2013-02-09 14:52:21
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -45,13 +45,13 @@
 		 path).")
    (articles :initarg :articles
 	     :type list
-	     :documentation "")
+	     :documentation "List of ob:article")
    (pages :initarg :pages
 	  :type list
-	  :documentation "")
+	  :documentation "List of ob:page")
    (snippets :initarg :snippets
 	     :type list
-	     :documentation ""))
+	     :documentation "List of ob:snippet"))
 
   
   "Object type handeling o-blog backend. All file or directory
