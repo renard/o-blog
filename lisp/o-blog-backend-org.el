@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-08 23:27:39
+;; Last changed: 2013-02-09 01:13:41
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -144,16 +144,43 @@ headers and body."
    self))
 
 
+(defmethod ob:org-fix-html-level-numbering ((self ob:backend:org))
+  "Promote every org-generated heading level by one in current buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (save-match-data
+      (while
+	  ;;(rx (group "foo") ":" (backref 1))
+	  ;; as defined in `org-html-level-start'
+	  (re-search-forward "\n<div id=\"outline-container-\\([^\"]+?\\)\" class=\"outline-\\([1-9]+\\)\">\n<h\\2 id=\"\\([^\"]+\\)\">\\(.*?\\\)</h\\2>\n\\(<div class=\"outline-text-\\2\" id=\"\\([^\"]+?\\)\">\n\\)?" nil t)
+	(let ((container (match-string-no-properties 1))
+	      (level (1- (string-to-int (match-string-no-properties 2))))
+	      (title-class (match-string-no-properties 3))
+	      (title (match-string-no-properties 4))
+	      (text (match-string-no-properties 5))
+	      (text-id (match-string-no-properties 6)))
+	  (goto-char (match-beginning 0))
+	  ;;(narrow-to-region (match-beginning 0) (match-end 0))
+	  (delete-region (match-beginning 0) (match-end 0))
+	  (insert
+	   (format
+	    "<div id=\"outline-container-%s\" class=\"outline-%d\">\n"
+	    container level)
+	   (format
+	    "<h%d id=\"%s\">%s</h%d>\n" level title-class title level))
+	  (when text
+	    (insert (format
+		     "<div class=\"\outline-text-%d\" id=\"%s\">\n"
+		     level text-id))))))))
 
 (defmethod ob:org-fix-html ((self ob:backend:org) html)
   ""
   (with-temp-buffer
     (insert html)
     (goto-char (point-min))
-    (save-match-data
-      (while (re-search-forward
-"\\n<div id=\\\"outline-container-%s\\\" class=\\\"outline-%d%s\\\">\\n<h%d id=\"%s\\\">%s%s</h%d>\\n<div class=\\\"outline-text-%d\\\" id=\\\"text-%s\\\">"
-)))))
+    (ob:org-fix-html-level-numbering self)
+
+    (buffer-substring-no-properties (point-min) (point-max))))
 
 (defmethod ob:convert-article ((self ob:backend:org) article )
   "Convert ARTICLE to html using `org-mode' syntax."
@@ -176,17 +203,18 @@ headers and body."
 	  ret)
       (when saved-file
 	(ob-write-file saved-file))
-      (set-slot-value
-       article 'html
-       (substring-no-properties
-	;; `org-export-as-html' arguments has changed on new
-	;; org-version, then again with the new exporter.
-	;; First try old function signatures, then on failure
-	;; use new argument call.
-	(or
-	 (ignore-errors (org-export-as-html nil nil nil 'string t))
-	 (ignore-errors (org-export-as-html nil nil 'string t))
-	 (org-export-as 'html nil nil t nil))))
+      (let ((html (substring-no-properties
+		   ;; `org-export-as-html' arguments has changed on new
+		   ;; org-version, then again with the new exporter.
+		   ;; First try old function signatures, then on failure
+		   ;; use new argument call.
+		   (or
+		    (ignore-errors (org-export-as-html nil nil nil 'string t))
+		    (ignore-errors (org-export-as-html nil nil 'string t))
+		    (org-export-as 'html nil nil t nil)))))
+	(set-slot-value
+	 article 'html
+	 (ob:org-fix-html self html)))
       (when saved-file
 	(delete-file saved-file))
       article)))
