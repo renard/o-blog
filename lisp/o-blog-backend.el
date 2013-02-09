@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-09 14:52:21
+;; Last changed: 2013-02-09 19:45:32
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -51,8 +51,10 @@
 	  :documentation "List of ob:page")
    (snippets :initarg :snippets
 	     :type list
-	     :documentation "List of ob:snippet"))
-
+	     :documentation "List of ob:snippet")
+   (tags :initarg :tags
+	 :type list
+	 :documentation "List of ob:tag"))
   
   "Object type handeling o-blog backend. All file or directory
 paths are relative to the o-blog configuration file."
@@ -150,47 +152,47 @@ MIN_R and MAX_R are the minimum and maximum percentage value. If
 not provided 80 and 220 are used. This means ob:size is always
 within MIN_R and MAX_R inclusive."
   (let* ((tags (sort
-		(loop for article in (oref self articles)
-		      nconc (oref article tags))
+		(loop for article in (slot-value self 'articles)
+		      append (slot-value article 'tags))
 		#'(lambda (a b) (string< (aref a object-name) 
 					 (aref b object-name)))))
-	     (min_r (or min_r 80))
-	     (max_r (or max_r 220))
-	     (min_f (length tags))
-	     (max_f 0))
-    (loop for (count tag) in
-	  ;; Here extract uniq tags and count occurrences
-	  ;; (such as uniq -c does)
-	  ;; Each item of returned list is
-	  ;; (VALUE COUNT)
-	  ;; See http://stackoverflow.com/a/6055795
-	  (loop for (i . j) on tags
-		with k = 1
-		when (and
-		      j
-		      (string= (aref i object-name)
-			       (aref (car j) object-name)))
-		do (incf k)
-		else
-		collect (progn
-			  (when (> k max_f) (setf max_f k))
-			  (when (< k min_f) (setf min_f k))
-			  (setf k 1)
-			  (list k i)))
-	  do (progn
-	       (set-slot-value tag 'count count)
-	       ;; This is the tricky part
-	       ;; Formula is:
-	       ;; % = min_r + (count - min_f) * (max_r - min_r) / (max_f - min_f)
-	       ;; the `max' is on purpose in case of max_f = min_f
-	       (set-slot-value tag 'size
-			       (+ min_r
-				  (/
-				   (* (- count min_f) (- max_r min_r))
-				   (max 1.0 (float (- max_f min_f)))))))
-	  collect tag)))
-
-
+	 (min_r (or min_r 80))
+	 (max_r (or max_r 220))
+	 (min_f (length tags))
+	 (max_f 0))
+    (set-slot-value
+     self 'tags
+     (loop for (count tag) in
+    	   ;; Here extract uniq tags and count occurrences
+    	   ;; (such as uniq -c does)
+    	   ;; Each item of returned list is
+    	   ;; (VALUE COUNT)
+    	   ;; See http://stackoverflow.com/a/6055795
+    	   (loop for (i . j) on tags
+    		 with k = 1
+    		 when (and
+    		       j
+    		       (string= (aref i object-name)
+    				(aref (car j) object-name)))
+    		 do (incf k)
+    		 else
+    		 collect (progn
+    			   (when (> k max_f) (setf max_f k))
+    			   (when (< k min_f) (setf min_f k))
+    			   (list k i))
+		 and do (setf k 1))
+    	   do (progn
+    		(set-slot-value tag 'count count)
+    		;; This is the tricky part
+    		;; Formula is:
+    		;; % = min_r + (count - min_f) * (max_r - min_r) / (max_f - min_f)
+    		;; the `max' is on purpose in case of max_f = min_f
+    		(set-slot-value tag 'size
+    				(+ min_r
+    				   (/
+    				    (* (- count min_f) (- max_r min_r))
+    				    (max 1.0 (float (- max_f min_f)))))))
+    	   collect tag))))
 
 
 (provide 'o-blog-backend)
