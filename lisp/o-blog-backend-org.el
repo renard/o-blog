@@ -97,6 +97,13 @@ headers and body."
       self)
 
 
+(defmethod ob:get-tags-list ((self ob:backend:org))
+  ""
+  (loop for tn in (org-get-local-tags)
+	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
+	for ts = (ob:sanitize-string td)
+	collect (ob:tag tn :display td :safe ts)))
+
 (defmethod ob:parse-entry ((self ob:backend:org) marker type)
   "Parse an org-mode entry at position defined by MARKER."
   (save-excursion
