@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-09 01:13:41
+;; Last changed: 2013-02-09 10:37:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -79,7 +79,7 @@ headers and body."
 	    (when (search-forward-regexp "^\\s-*$" nil t)
 	      (goto-char (match-end 0)))
 	    (save-excursion
-	      (insert "#+OPTIONS: H:7 num:nil  toc:nil d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
+	      (insert "#+OPTIONS: H:7 num:nil toc:nil d:nil todo:nil <:nil pri:nil tags:nil\n\n"))
 	    (buffer-substring-no-properties (point) (point-max))))))))
 
 
@@ -98,7 +98,7 @@ headers and body."
 
 
 (defmethod ob:parse-entry ((self ob:backend:org) marker)
-  ""
+  "Parse an org-mode entry at position defined by MARKER."
   (save-excursion
     (with-current-buffer (marker-buffer marker)
       (goto-char (marker-position marker))
@@ -128,15 +128,17 @@ headers and body."
 
 
 (defmethod ob:parse-entries-1 ((self ob:backend:org) type)
+  "Collect all entries defined by TYPE from current org tree
+using `ob:parse-entry'."
   (let ((markers (org-map-entries
 		  'point-marker
 		  (slot-value self (intern (format "%s-filter" type)))
 		  'file-with-archives)))
-    
     (loop for marker in markers
 	  collect (ob:parse-entry self marker))))
 
 (defmethod ob:parse-entries ((self ob:backend:org))
+  "Parse all entries (articles, pages and snippets from current org tree."
   (ob:with-source-buffer
    self
    (loop for type in '(articles pages snippets)
@@ -174,7 +176,7 @@ headers and body."
 		     level text-id))))))))
 
 (defmethod ob:org-fix-html ((self ob:backend:org) html)
-  ""
+  "Perform some html fixes on org html export."
   (with-temp-buffer
     (insert html)
     (goto-char (point-min))
@@ -182,7 +184,7 @@ headers and body."
 
     (buffer-substring-no-properties (point-min) (point-max))))
 
-(defmethod ob:convert-article ((self ob:backend:org) article )
+(defmethod ob:convert-article ((self ob:backend:org) article)
   "Convert ARTICLE to html using `org-mode' syntax."
   (with-temp-buffer
     (insert (oref article source))
@@ -212,9 +214,8 @@ headers and body."
 		    (ignore-errors (org-export-as-html nil nil nil 'string t))
 		    (ignore-errors (org-export-as-html nil nil 'string t))
 		    (org-export-as 'html nil nil t nil)))))
-	(set-slot-value
-	 article 'html
-	 (ob:org-fix-html self html)))
+	(set-slot-value article 'html
+			(ob:org-fix-html self html)))
       (when saved-file
 	(delete-file saved-file))
       article)))
