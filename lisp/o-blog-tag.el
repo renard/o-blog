@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-02-09
-;; Last changed: 2013-02-09 14:39:49
+;; Last changed: 2013-02-10 15:46:48
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -16,24 +16,33 @@
 
 ;;; Code:
 
-(defclass ob:tag ()
+
+(defclass ob:category ()
   ((display :initarg :display
 	    :type string
 	    :documentation "Displayed tag name string")
    (safe :initarg :safe
 	 :type string
-	 :documentation "HTML safe tag form")
-   (count :initarg :count
-	 :type integer
-	 :documentation "Tag occurance in all articles")
-   (size :initarg :size
-	 :type float
-	 :documentation "Tag html size")
-
-
-)
+	 :documentation "HTML safe tag form"))
   "")
 
+(defmethod ob:category:init ((self ob:category))
+  ""
+  (let ((name (aref self object-name)))
+    (set-slot-value self 'display name)
+    (set-slot-value self 'safe (ob:sanitize-string name)))
+  self)
+
+
+
+(defclass ob:tag (ob:category)
+  ((count :initarg :count
+	  :type integer
+	  :documentation "Tag occurance in all articles")
+   (size :initarg :size
+	 :type float
+	 :documentation "Tag html size"))
+  "")
 
 
 (provide 'o-blog-tag)
