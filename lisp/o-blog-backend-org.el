@@ -134,6 +134,15 @@ headers and body."
 	    (set-slot-value entry 'tags
 			    (ob:get-tags-list self)))
 
+	  (when (slot-exists-p entry 'category)
+	    (let ((cat (or (org-entry-get (point) "category")
+			   (car (last (org-get-outline-path))))))
+	    (set-slot-value entry
+			    'category
+			    (ob:category:init (ob:category cat)))))
+
+	  (ob:entry:set-path entry)
+
 	  (set-slot-value
 	   entry 'source
 	   (ob:org-get-entry-text self))
