@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-02-09
-;; Last changed: 2013-02-10 15:46:48
+;; Last changed: 2013-03-25 12:47:38
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -28,7 +28,7 @@
 
 (defmethod ob:category:init ((self ob:category))
   ""
-  (let ((name (aref self object-name)))
+  (let ((name (ob:get-name self)))
     (set-slot-value self 'display name)
     (set-slot-value self 'safe (ob:sanitize-string name)))
   self)
@@ -43,6 +43,14 @@
 	 :type float
 	 :documentation "Tag html size"))
   "")
+
+
+(defmethod ob:get-name ((self ob:category))
+  "Return class name"
+  (if (boundp 'object-name)
+      (aref self object-name)
+    (eieio-object-name-string self)))
+
 
 
 (provide 'o-blog-tag)

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-09 19:45:32
+;; Last changed: 2013-03-25 12:50:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -67,8 +67,9 @@ paths are relative to the o-blog configuration file."
 
 (defmethod ob:get-name ((self ob:backend))
   "Return class name"
-  (aref self object-name))
-
+  (if (boundp 'object-name)
+      (aref self object-name)
+    (eieio-object-name-string self)))
 
 
 ;; Useful functions / macros
@@ -122,7 +123,7 @@ overriden in subclasses."
 ;; Basic primitives
 (defmethod ob:get-configuration-file ((self ob:backend))
   "Return o-blog configuration file, which is SELF instance name."
-  (aref self object-name))
+  (ob:get-name self))
 
 (defmethod ob:get-source-directory ((self ob:backend))
   "Return o-blog source directory from ob:backend SELF object."
@@ -154,8 +155,8 @@ within MIN_R and MAX_R inclusive."
   (let* ((tags (sort
 		(loop for article in (slot-value self 'articles)
 		      append (slot-value article 'tags))
-		#'(lambda (a b) (string< (aref a object-name) 
-					 (aref b object-name)))))
+		#'(lambda (a b) (string< (ob:get:name  a)
+					 (ob:get:name  b)))))
 	 (min_r (or min_r 80))
 	 (max_r (or max_r 220))
 	 (min_f (length tags))
@@ -172,8 +173,8 @@ within MIN_R and MAX_R inclusive."
     		 with k = 1
     		 when (and
     		       j
-    		       (string= (aref i object-name)
-    				(aref (car j) object-name)))
+    		       (string= (ob:get-name i)
+    				(ob:get-name (car j))))
     		 do (incf k)
     		 else
     		 collect (progn
