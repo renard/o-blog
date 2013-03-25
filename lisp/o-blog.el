@@ -42,6 +42,7 @@ current buffer."
 	   file
 	   (buffer-file-name)
 	   (read-file-name "O-blog file to publish: " nil nil t)))
+	 (default-directory (file-name-directory file))
 	 (backend (or
 		   backend
 		   (o-blog-guess-backend-from-file file)))
@@ -55,6 +56,21 @@ current buffer."
 	   ;; Just an alias for backward compatibility
 	   ;; TODO: Remove me
 	   (BLOG blog))
+      (ob:parse-config blog)
+      (ob:parse-entries blog)
+      (loop for type in '(articles pages snippets)
+	    do (loop for entry in (slot-value blog type)
+		     do (ob:convert-entry blog entry)))
+
+      ;; (loop for type in '(articles pages)
+      ;; 	  do (loop for entry in (slot-value blog type)
+      ;; 		   do (ob:convert-entry blog entry)))
+      
+      ;;blog
+
+      (ob:entry:publish (car (oref blog articles)))
+      
+      )))
 
   
 (defun ob:parse-blog-config (&optional file type)
