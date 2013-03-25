@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-25 12:50:03
+;; Last changed: 2013-03-25 14:13:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -34,11 +34,16 @@
 		 :type list
 		 :documentation "List of o-blog source files")
    (publish-dir :initarg :publish-dir
+		:initform "out"
 		:type string
 		:documentation "Path to publishing
 		directory (relative to o-blog configuration file
 		path).")
    (template-dir :initarg :publish-dir
+		 :initform (expand-file-name
+			    (concat (file-name-directory
+				     (find-library-name "o-blog"))
+				    "../templates"))
 		 :type string
 		 :documentation "Path to publishing
 		 directory (relative to o-blog configuration file
