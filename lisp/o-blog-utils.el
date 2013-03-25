@@ -49,6 +49,12 @@ result string."
 			'(("--+" "-")
 			  ("^-+\\|-+$" "")))))
 
+(defun ob:write-file (file)
+  "Write current buffer to FILE. Ensure FILE directories are present."
+  (mkdir (file-name-directory file) t)
+  (let ((buffer (current-buffer)))
+    (with-temp-file file
+      (insert (with-current-buffer buffer (buffer-string))))))
 (provide 'o-blog-utils)
 
 ;; o-blog-utils.el ends here
