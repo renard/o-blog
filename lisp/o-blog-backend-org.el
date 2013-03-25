@@ -21,6 +21,7 @@
   (require 'o-blog-backend nil t))
 
 
+;;;###autoload
 (defclass ob:backend:org (ob:backend)
   ((articles-filter :initarg :articles-filter
 		    :type string

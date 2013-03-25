@@ -26,6 +26,7 @@
 			 (symbol-name major-mode) 0 -5))))
       (intern (format "ob:backend:%s" type)))))
 
+;;;###autoload
 (defun o-blog-publish(&optional file backend)
   "Publish FILE using o-blog BACKEND.
 
