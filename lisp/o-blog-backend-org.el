@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-25 13:52:37
+;; Last changed: 2013-03-25 15:36:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -22,7 +22,6 @@
   (require 'ox))
 
 
-;;;###autoload
 (defclass ob:backend:org (ob:backend)
   ((articles-filter :initarg :articles-filter
 		    :type string
