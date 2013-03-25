@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-25 14:13:17
+;; Last changed: 2013-03-25 16:57:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -18,6 +18,7 @@
 
 
 (eval-when-compile
+  (require 'find-func nil t)
   (require 'eieio nil t))
 
 
