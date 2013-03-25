@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-02-09 12:29:25
+;; Last changed: 2013-03-25 12:05:05
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -43,7 +43,8 @@
   (ob:find-files-1 self '("org")))
 
 (defmethod ob:org-get-header ((self ob:backend:org) header &optional all)
-  ""
+  "Return value of HEADER option as a string from current org-buffer. If ALL is
+T, returns all occurrences of HEADER in a list."
   (ob:with-source-buffer
    self
    (save-excursion
