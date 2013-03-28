@@ -231,6 +231,13 @@ string."
      (buffer-string))))
 
 
+(defun ob:backend:get (value &optional entry)
+  ""
+  (let ((entry (or entry
+		   (when (boundp 'BLOG) BLOG))))
+    (slot-value entry value)))
+
+
 (provide 'o-blog-backend)
 
 ;; o-blog-backend.el ends here
