@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-25 15:36:16
+;; Last changed: 2013-03-28 14:39:24
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -143,7 +143,10 @@ headers and body."
 			    'category
 			    (ob:category:init (ob:category cat)))))
 
-	  (ob:entry:set-path entry)
+	  (if (eq 'page type)
+	      (ob:entry:set-path entry
+				 (org-entry-get (point) "PAGE"))
+	    (ob:entry:set-path entry))
 
 	  (set-slot-value
 	   entry 'source

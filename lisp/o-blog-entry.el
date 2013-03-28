@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-03-25 18:27:07
+;; Last changed: 2013-03-28 14:38:54
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -114,6 +114,8 @@
 
 
 
+
+
 (defmethod ob:entry:publish ((self ob:entry) &optional blog-obj)
   ""
   (let ((blog-obj (or blog-obj
@@ -139,6 +141,21 @@
 	     :type string
 	     :documentation "Template file to use for publication"))
   "O-blog page class")
+
+(defmethod ob:entry:set-path ((self ob:page) page)
+  ""
+  (set-slot-value self 'path ".")
+  (set-slot-value self 'file page)
+  (set-slot-value
+   self 'htmlfile (format "%s/%s"
+			  (oref self path)
+			  (oref self file))))
+
+
+
+
+
+
 (defclass ob:snippet (ob:entry)
   nil
   "O-blog snippet class")
