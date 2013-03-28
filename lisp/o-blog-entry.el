@@ -151,14 +151,19 @@
 			  (oref self path)
 			  (oref self file))))
 
-
-
-
-
-
 (defclass ob:snippet (ob:entry)
   nil
   "O-blog snippet class")
+
+
+
+(defun ob:entry:get (value &optional entry)
+  ""
+  (let ((entry (or entry
+		   (when (boundp 'POST) POST))))
+    (slot-value entry value)))
+
+
 
 (provide 'o-blog-entry)
 
