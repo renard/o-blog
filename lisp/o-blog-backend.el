@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-25 16:57:03
+;; Last changed: 2013-03-28 15:05:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -231,6 +231,14 @@ string."
      (buffer-string))))
 
 
+
+(defmethod ob:publish ((self ob:backend))
+  ""
+  (loop for type in '(articles pages)
+	do (loop for POST in (slot-value blog type)
+		 do (ob:entry:publish POST))))
+
+  
 (defun ob:backend:get (value &optional entry)
   ""
   (let ((entry (or entry
