@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-03-25 16:59:35
+;; Last changed: 2013-03-25 18:27:07
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -114,22 +114,23 @@
 
 
 
-(defmethod ob:entry:publish ((self ob:entry))
+(defmethod ob:entry:publish ((self ob:entry) &optional blog-obj)
   ""
-  (cond
-   ((boundp 'BLOG) (ob:entry:publish self BLOG))
-   ((boundp 'blog) (ob:entry:publish self blog))
-   (t (error "`ob:entry:publish' run with no blog not defined."))))
-  
-
-(defmethod ob:entry:publish ((self ob:entry) blog)
-  ""
-  (when (slot-exists-p self 'template)
-    (with-temp-buffer
-      (ob:insert-template (oref self template))
-      (ob:write-file (format "%s/%s"
-			     (oref blog publish-dir)
-			     (oref self htmlfile))))))
+  (let ((blog-obj (or blog-obj
+		      (when (boundp 'BLOG) BLOG)
+		      (when (boundp 'blog) blog))))
+    (unless (ob:backend-child-p blog-obj)
+      (error "`ob:entry:publish': blog-obj is not an `ob:backend' child class."))
+    (when (slot-exists-p self 'template)
+      (with-temp-buffer
+	(ob:insert-template (oref self template))
+	(message "Write to: %s"
+		 (expand-file-name (format "%s/%s"
+					   (oref blog publish-dir)
+					   (oref self htmlfile))))
+	(ob:write-file (format "%s/%s"
+			       (oref blog publish-dir)
+			       (oref self htmlfile)))))))
 
 
 (defclass ob:page (ob:entry)
