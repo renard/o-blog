@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-03-28 14:38:54
+;; Last changed: 2013-03-28 16:13:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -40,6 +40,9 @@
    (htmlfile :initarg :htmlfile
 	   :type string
 	   :documentation "")
+   (path-to-root :initarg :path-to-root
+		 :type string
+		 :documentation "")
    )
   "Object type handeling o-blog entries.")
 
@@ -110,11 +113,11 @@
   (set-slot-value
    self 'htmlfile (format "%s/%s"
 		      (oref self path)
-		      (oref self file))))
-
-
-
-
+		      (oref self file)))
+  (set-slot-value
+   self 'path-to-root (file-relative-name
+		       "."
+		       (oref self path))))
 
 (defmethod ob:entry:publish ((self ob:entry) &optional blog-obj)
   ""
@@ -134,7 +137,6 @@
 			       (oref blog publish-dir)
 			       (oref self htmlfile)))))))
 
-
 (defclass ob:page (ob:entry)
   ((template :initarg :template
 	     :initform "page.html"
@@ -149,7 +151,11 @@
   (set-slot-value
    self 'htmlfile (format "%s/%s"
 			  (oref self path)
-			  (oref self file))))
+			  (oref self file)))
+  (set-slot-value
+   self 'path-to-root (file-relative-name
+		       "."
+		       (oref self path))))
 
 (defclass ob:snippet (ob:entry)
   nil
