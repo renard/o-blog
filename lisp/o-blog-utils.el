@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-03-28 16:11:48
+;; Last changed: 2013-03-28 19:01:48
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -132,7 +132,22 @@ path-to-root slot."
    (t ".")))
 
 
+(defun ob:get (slot &optional object)
+  "Try to get SLOT from OBJECT.
 
+If object is `nil' try to get SLOT from:
+
+- TAG
+- CATEGORY
+- POST
+- BLOG"
+  (if object
+      (when (slot-exists-p object slot)
+	(slot-value object slot))
+    (loop for o in '(TAG CATEGORY POST BLOG)
+	  when (and (boundp o) (slot-exists-p (eval o) slot))
+	  return (slot-value (eval o) slot))))
+    
 (provide 'o-blog-utils)
 
 ;; o-blog-utils.el ends here
