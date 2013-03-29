@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2013-03-25 16:23:17
+;; Last changed: 2013-03-29 22:51:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -62,15 +62,12 @@ current buffer."
       (loop for type in '(articles pages snippets)
 	    do (loop for entry in (slot-value blog type)
 		     do (ob:convert-entry blog entry)))
-
-      ;; (loop for type in '(articles pages)
-      ;; 	  do (loop for entry in (slot-value blog type)
-      ;; 		   do (ob:convert-entry blog entry)))
       
       ;;blog
+      (ob:compute-tags blog)
+      (ob:publish blog)
+      blog)))
 
-      (ob:entry:publish (car (oref blog articles)))
-      
 (defun o-blog-publish-async-processes-sentinel (proc change)
   "Sentinel in charge of cleaning `org-publish-blog-async' on success."
   (when (eq (process-status proc) 'exit)
