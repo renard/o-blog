@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 14:26:16
+;; Last changed: 2013-03-29 14:52:57
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -206,7 +206,8 @@ using `ob:parse-entry'."
 
 
 (defmethod ob:org-fix-icons ((self ob:backend:org))
-  ""
+  "Convert all \"<i>icon-...</i>\" to \"<i class=\"icon-...\"/>\"
+in current-buffer."
   (save-excursion
     (goto-char (point-min))
     (save-match-data
@@ -216,7 +217,7 @@ using `ob:parse-entry'."
 	  (goto-char (match-beginning 0))
 	  (delete-region (match-beginning 0) (match-end 0))
 	  (insert (format
-		   "<i class=\"%s\"></i>" icon)))))))
+		   "<i class=\"%s\"/i>" icon)))))))
 
 (defmethod ob:org-fix-html ((self ob:backend:org) html)
   "Perform some html fixes on org html export."
