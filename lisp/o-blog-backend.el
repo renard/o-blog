@@ -214,34 +214,10 @@ within MIN_R and MAX_R inclusive."
     				    (max 1.0 (float (- max_f min_f)))))))
     	   collect tag))))
 
-
-
-
-
-
 
 ;;
 ;; Publishing functions
 ;;
-
-(defmethod ob:insert-template (template)
-  ""
-  (cond
-   ((boundp 'BLOG) (ob:insert-template BLOG template))
-   ((boundp 'blog) (ob:insert-template blog template))
-   (t (error "`ob:insert-template' run with no blog not defined."))))
-
-(defmethod ob:insert-template ((self ob:backend) template)
-  "Return the lisp evaluated (see `ob:eval-lisp') content of
-TEMPLATE (relative from `ob:backend' `template' slot) as a
-string."
-  (insert
-   (with-temp-buffer
-     ;;"*Org-Publish-Template*"
-     (erase-buffer)
-     (insert-file-contents (format "%s/%s" (oref self template-dir) template))
-     (ob:eval-lisp)
-     (buffer-string))))
 
 
 

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-03-29 20:03:23
+;; Last changed: 2013-03-29 20:49:07
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -159,6 +159,17 @@ If object is `nil' try to get SLOT from:
     (eieio-object-name-string object)))
 
 
+;; FIXME: do no use ob-bck-end
+(defun ob:insert-template (template &optional ob-bck-end)
+  "Return the lisp evaluated (see `ob:eval-lisp') content of
+TEMPLATE (relative from `ob:backend' `template' slot) as a
+string."
+  (insert
+   (with-temp-buffer
+     (insert-file-contents
+      (format "%s/%s" (ob:get 'template-dir ob-bck-end) template))
+     (ob:eval-lisp)
+     (buffer-string))))
 
 (provide 'o-blog-utils)
 
