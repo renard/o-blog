@@ -164,7 +164,7 @@ using `ob:parse-entry'."
 		  'file-with-archives)))
     (loop for marker in markers
 	  collect (ob:parse-entry self marker type) into items
-	  finally return (loop for item in (sort items (ob:get 'port-sorter self))
+	  finally return (loop for item in (sort items (ob:get 'posts-sorter self))
 			      for id = 0 then (incf id)
 			      do (set-slot-value item 'id id)
 			      and collect item))))
