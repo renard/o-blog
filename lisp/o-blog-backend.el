@@ -227,18 +227,6 @@ within MIN_R and MAX_R inclusive."
 	do (loop for POST in (slot-value blog type)
 		 do (ob:entry:publish POST))))
 
-  
-(defun ob:backend:get (value &optional entry)
-  ""
-  (let ((entry (or entry
-		   (when (boundp 'BLOG) BLOG))))
-    (slot-value entry value)))
-
-
-
-
-
-
 
 
 
