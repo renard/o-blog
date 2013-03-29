@@ -71,7 +71,48 @@ current buffer."
 
       (ob:entry:publish (car (oref blog articles)))
       
+(defun o-blog-publish-async-processes-sentinel (proc change)
+  "Sentinel in charge of cleaning `org-publish-blog-async' on success."
+  (when (eq (process-status proc) 'exit)
+    (let ((status  (process-exit-status proc))
+	  (cmd (process-get proc :cmd))
+	  (cmd-buf (process-get proc :cmd-buf)))
+      (if (not (eq 0 status))
+	  (progn
+	    (when (process-buffer proc)
+	      (set-window-buffer (selected-window) cmd-buf))
+	    (error "o-blog ERROR: %s" cmd))
+	(message  "o-blog OK: %s" cmd))
+      ;;(when cmd-buf (kill-buffer cmd-buf))
       )))
+
+;;;###autoload
+(defun o-blog-publish-async (file backend)
+  "Publish FILE synchronously using BACKEND."
+  (let* ((cmd-line (append command-line-args
+			   `("--batch"
+			     "-l" ,(concat (file-name-as-directory
+					    user-emacs-directory)
+					   "init.el")
+			     ;;,@ob-async-opts
+			     "--eval"
+			     ,(format "(o-blog-publish \"%s\" '%s)"
+				      file backend))))
+	 (cmd-cli (mapconcat 'shell-quote-argument cmd-line " "))
+	 (cmd-buf (get-buffer-create (format "o-blog build %s" file)))
+	 (proc (progn
+		 (with-current-buffer cmd-buf
+		   (insert (format "Run: %s\n\n" cmd-cli)))
+		 (apply 'start-process (car cmd-line)
+			cmd-buf (car cmd-line) (cdr cmd-line)))))
+    (set-window-buffer (selected-window) cmd-buf)
+    (message "Run: %s" cmd-cli)
+    (process-put proc :cmd (format "Build %s" file))
+    (process-put proc :cmd-buf cmd-buf)
+    (set-process-sentinel proc 'o-blog-publish-async-processes-sentinel)))
+
+
+
 
   
 (defun ob:parse-blog-config (&optional file type)
