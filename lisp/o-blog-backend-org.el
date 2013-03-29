@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 14:52:57
+;; Last changed: 2013-03-29 19:30:29
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -163,7 +163,11 @@ using `ob:parse-entry'."
 		  (slot-value self (intern (format "%ss-filter" type)))
 		  'file-with-archives)))
     (loop for marker in markers
-	  collect (ob:parse-entry self marker type))))
+	  collect (ob:parse-entry self marker type) into items
+	  finally return (loop for item in (sort items (ob:get 'port-sorter self))
+			      for id = 0 then (incf id)
+			      do (set-slot-value item 'id id)
+			      and collect item))))
 
 (defmethod ob:parse-entries ((self ob:backend:org))
   "Parse all entries (articles, pages and snippets from current org tree."
