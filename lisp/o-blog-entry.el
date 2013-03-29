@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-03-28 16:13:40
+;; Last changed: 2013-03-29 15:24:27
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -22,7 +22,10 @@
 
 
 (defclass ob:entry ()
-  ((title :initarg :title
+  ((id :initarg :id
+       :type integer
+       :documentation "entry ID")
+   (title :initarg :title
 	  :type string
 	  :documentation "")
    (source :initarg :source
@@ -86,8 +89,6 @@
    self 'htmlfile (format "%s/%s"
 		      (oref self path)
 		      (oref self path))))
-
-
 
 (defmethod ob:entry:compute-dates ((self ob:article))
   ""
@@ -168,6 +169,17 @@
   (let ((entry (or entry
 		   (when (boundp 'POST) POST))))
     (slot-value entry value)))
+
+
+(defun ob:entry:sort-by-date (a b)
+  "Sort both A and B posts by date (newer posts first)."
+  (> (float-time (ob:get 'timestamp a))
+     (float-time (ob:get 'timestamp b))))
+
+(defun ob:get-post-by-id (id)
+  "Return post which id is ID"
+  (when (>= id 0)
+    (nth id POSTS)))
 
 
 

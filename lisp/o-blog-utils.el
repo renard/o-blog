@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-03-28 19:01:48
+;; Last changed: 2013-03-29 19:29:34
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -147,7 +147,16 @@ If object is `nil' try to get SLOT from:
     (loop for o in '(TAG CATEGORY POST BLOG)
 	  when (and (boundp o) (slot-exists-p (eval o) slot))
 	  return (slot-value (eval o) slot))))
-    
+
+
+(defun ob:get-post-by-id (id)
+  "Return post which id is ID"
+  (let ((POSTS (or (when (boundp 'POSTS) POSTS)
+		   (ob:get 'articles BLOG))))
+    (when (>= id 0)
+      (nth id POSTS))))
+
+
 (provide 'o-blog-utils)
 
 ;; o-blog-utils.el ends here
