@@ -217,7 +217,7 @@ in current-buffer."
 	  (goto-char (match-beginning 0))
 	  (delete-region (match-beginning 0) (match-end 0))
 	  (insert (format
-		   "<i class=\"%s\"/i>" icon)))))))
+		   "<i class=\"%s\"></i>" icon)))))))
 
 (defmethod ob:org-fix-html ((self ob:backend:org) html)
   "Perform some html fixes on org html export."
