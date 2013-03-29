@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-28 14:39:24
+;; Last changed: 2013-03-29 14:26:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -204,6 +204,20 @@ using `ob:parse-entry'."
 		     "<div class=\"\outline-text-%d\" id=\"%s\">\n"
 		     level text-id))))))))
 
+
+(defmethod ob:org-fix-icons ((self ob:backend:org))
+  ""
+  (save-excursion
+    (goto-char (point-min))
+    (save-match-data
+      (while
+	  (re-search-forward "<i>\\(icon-\\(?:[[:alpha:]]\\|[- ]\\)+\\)</i>" nil t)
+	(let ((icon (match-string-no-properties 1)))
+	  (goto-char (match-beginning 0))
+	  (delete-region (match-beginning 0) (match-end 0))
+	  (insert (format
+		   "<i class=\"%s\"></i>" icon)))))))
+
 (defmethod ob:org-fix-html ((self ob:backend:org) html)
   "Perform some html fixes on org html export."
   (with-temp-buffer
@@ -216,7 +230,7 @@ using `ob:parse-entry'."
       (goto-char (point-max))
       (delete-region (point-at-bol) (point-at-eol)))
     (ob:org-fix-html-level-numbering self)
-
+    (ob:org-fix-icons self)
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defmethod ob:convert-entry ((self ob:backend:org) entry)
