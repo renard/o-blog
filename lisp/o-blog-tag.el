@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-02-09
-;; Last changed: 2013-03-28 18:05:08
+;; Last changed: 2013-03-29 20:16:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -43,16 +43,6 @@
 	 :type float
 	 :documentation "Tag html size"))
   "")
-
-
-(defmethod ob:get-name ((self ob:category))
-  "Return class name"
-  (if (boundp 'object-name)
-      (aref self object-name)
-    (eieio-object-name-string self)))
-
-
-
 
 (defun ob:category:get (value &optional entry)
   ""
