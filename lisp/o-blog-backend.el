@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-28 15:05:36
+;; Last changed: 2013-03-29 13:04:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -60,7 +60,15 @@
 	     :documentation "List of ob:snippet")
    (tags :initarg :tags
 	 :type list
-	 :documentation "List of ob:tag"))
+	 :documentation "List of ob:tag")
+   (title :initarg :title
+	  :type string
+	  :documentation "Site title")
+   (description :initarg :description
+		:type string
+		:documentation "Site description")
+
+   )
   
   "Object type handeling o-blog backend. All file or directory
 paths are relative to the o-blog configuration file."
@@ -161,8 +169,8 @@ within MIN_R and MAX_R inclusive."
   (let* ((tags (sort
 		(loop for article in (slot-value self 'articles)
 		      append (slot-value article 'tags))
-		#'(lambda (a b) (string< (ob:get:name  a)
-					 (ob:get:name  b)))))
+		#'(lambda (a b) (string< (ob:get-name  a)
+					 (ob:get-name  b)))))
 	 (min_r (or min_r 80))
 	 (max_r (or max_r 220))
 	 (min_f (length tags))
@@ -244,6 +252,80 @@ string."
   (let ((entry (or entry
 		   (when (boundp 'BLOG) BLOG))))
     (slot-value entry value)))
+
+
+
+
+
+
+
+
+
+(defun ob:get-posts (&optional predicate count sortfunc collect)
+  "Return posts (from `POSTS' as defined in `org-publish-blog')
+matching PREDICATE. Limit to COUNT results if defined and sorted
+using SORTFUNC.
+
+PREDICATE is a function run for each post with the post itself as
+argument. If PREDICATE is nil, no filter would be done on posts.
+
+SORTFUNC is used a `sort' PREDICATE.
+
+If COLLECT is defined, only returns the COLLECT field of a
+`ob:post' structure.
+
+Examples:
+
+ - Getting last 10 posts:
+   \(ob:get-posts nil 10\)
+
+ - Getting post from January 2012:
+   \(ob:get-posts
+      \(lambda \(x\)
+         \(and \(= 2012 \(ob:post-year x\)\)
+              \(= 1 \(ob:post-month x\)\)\)\)\)
+
+ - getting all categories
+    \(ob:get-posts nil nil nil 'category\)
+
+"
+  (let* ((posts (if predicate
+		    (loop for post in POSTS
+			  when (funcall predicate post)
+			  collect post)
+		  POSTS))
+	 (len (length posts)))
+    (when (and count (> count 0) (< count len))
+      (setq posts (butlast posts (- len count))))
+    (when sortfunc
+      (setq posts (sort posts sortfunc)))
+    (when collect
+      (setq posts
+	    (loop for post in posts
+		  with ret = nil
+		  collect (ob:get collect post)
+		  into ret
+		  finally return (delete-dups ret))))
+    posts))
+
+
+
+(defun ob:get-snippet (name &optional slot blog)
+  ""
+  (let* ((blog (or
+		blog
+		(when (boundp 'BLOG) BLOG)
+		(when (boundp 'blog) blog)))
+	 (POSTS (ob:get 'snippets blog))
+	 (snippet (car
+		   (ob:get-posts
+		    (lambda(x)
+		      (equal name (ob:get 'title x)))))))
+    (if (and slot snippet)
+	(ob:get slot snippet)
+      snippet)))
+
+
 
 
 (provide 'o-blog-backend)
