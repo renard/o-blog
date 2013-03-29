@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 19:30:10
+;; Last changed: 2013-03-29 19:57:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -108,7 +108,14 @@ paths are relative to the o-blog configuration file."
 
 (defmethod ob:find-files-1 ((self ob:backend) extension
 			    &optional dir ignore-dir original-dir)
-  ""
+  "List all files under and `ob:backend' `source-dir' or DIR
+whose extensions are defined in EXTENSION list.
+
+IGNORE-DIR is a list of directory to ignore, by default (\"..\"
+\".\" \".git\")
+
+ORIGINAL-DIR is used to keep trace of source directory when
+called recursively."
   (let* ((dir (or dir (ob:get-source-directory self)))
 	 (original-dir (or original-dir dir))
 	 (extension (if (listp extension) extension (list extension)))
