@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 19:57:40
+;; Last changed: 2013-03-29 20:03:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -82,12 +82,6 @@ paths are relative to the o-blog configuration file."
   "Publish a new blog."
   (ob:find-files self)
   (ob:parse-config self))
-
-(defmethod ob:get-name ((self ob:backend))
-  "Return class name"
-  (if (boundp 'object-name)
-      (aref self object-name)
-    (eieio-object-name-string self)))
 
 
 ;; Useful functions / macros

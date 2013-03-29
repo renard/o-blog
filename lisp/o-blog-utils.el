@@ -1,11 +1,11 @@
-;;; o-blog-utils.el --- 
+;;; o-blog-utils.el --- Some generic function used in o-blog.
 
 ;; Copyright © 2013 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-03-29 19:29:34
+;; Last changed: 2013-03-29 20:03:23
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -102,8 +102,6 @@ when publishing a page."
 	      (goto-char (point-min))
 	      (widen))))))))
 
-
-
 (defun ob:format-date (date &optional format locale)
   "Format DATE using FORMAT and LOCALE.
 
@@ -122,7 +120,6 @@ set ISO8601 \"%Y-%m-%dT%TZ\" format would be used."
 	 (system-time-locale locale))
     (format-time-string format date)))
 
-
 (defun ob:path-to-root ()
   "Return path to site root from `PATH-TO-ROOT' or `POST'
 path-to-root slot."
@@ -130,7 +127,6 @@ path-to-root slot."
    ((boundp 'PATH-TO-ROOT) PATH-TO-ROOT)
    ((boundp 'POST) (ob:entry:get 'path-to-root POST))
    (t ".")))
-
 
 (defun ob:get (slot &optional object)
   "Try to get SLOT from OBJECT.
@@ -148,13 +144,20 @@ If object is `nil' try to get SLOT from:
 	  when (and (boundp o) (slot-exists-p (eval o) slot))
 	  return (slot-value (eval o) slot))))
 
-
 (defun ob:get-post-by-id (id)
   "Return post which id is ID"
   (let ((POSTS (or (when (boundp 'POSTS) POSTS)
 		   (ob:get 'articles BLOG))))
     (when (>= id 0)
       (nth id POSTS))))
+
+
+(defun ob:get-name (object)
+  "Return OBJECT class name."
+  (if (boundp 'object-name)
+      (aref object object-name)
+    (eieio-object-name-string object)))
+
 
 
 (provide 'o-blog-utils)
