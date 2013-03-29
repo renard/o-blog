@@ -209,6 +209,12 @@ using `ob:parse-entry'."
   (with-temp-buffer
     (insert html)
     (goto-char (point-min))
+    ;; Org export html wrapped within <div id="content">...</div>
+    ;; remove that div.
+    (save-excursion
+      (delete-region (point-at-bol) (point-at-eol))
+      (goto-char (point-max))
+      (delete-region (point-at-bol) (point-at-eol)))
     (ob:org-fix-html-level-numbering self)
 
     (buffer-substring-no-properties (point-min) (point-max))))
