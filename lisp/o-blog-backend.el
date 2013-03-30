@@ -223,11 +223,16 @@ within MIN_R and MAX_R inclusive."
 
 (defmethod ob:publish ((self ob:backend))
   ""
+  ;; Publish both articles static pages
   (loop for type in '(articles pages)
 	do (loop for POST in (slot-value blog type)
-		 do (ob:entry:publish POST))))
+		 do (ob:entry:publish POST)))
 
-
+  ;; publish tags
+  (with-temp-buffer
+    (ob:insert-template "page_tags.html")
+    (ob:write-file (format "%s/tags/index.html"
+			   (oref blog publish-dir)))))
 
 
 (defun ob:get-posts (&optional predicate count sortfunc collect)
