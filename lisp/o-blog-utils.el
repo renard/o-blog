@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-03-29 20:49:07
+;; Last changed: 2013-03-30 20:18:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -170,6 +170,13 @@ string."
       (format "%s/%s" (ob:get 'template-dir ob-bck-end) template))
      (ob:eval-lisp)
      (buffer-string))))
+
+(defun ob:eval-template-to-file (template file)
+  "Evaluate TEMPLATE an write it to FILE."
+  (with-temp-buffer
+    	(ob:insert-template template)
+	(ob:write-file file)))
+
 
 (provide 'o-blog-utils)
 

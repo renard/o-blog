@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 20:54:45
+;; Last changed: 2013-03-30 20:23:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -79,10 +79,49 @@ paths are relative to the o-blog configuration file."
   :abstract t)
 
 (defmethod ob:publish ((self ob:backend))
-  "Publish a new blog."
-  (ob:find-files self)
-  (ob:parse-config self))
+  "Publish a new blog.
 
+Some global variables are set:
+- `BLOG': the full `ob:backend' child class.
+- `POSTS': a list of all sorted posts.
+- `TAGS': a list of all tags as `ob:tags' class.
+
+"
+  (ob:find-files self)
+  (ob:parse-config self)
+  (ob:parse-entries self)
+  (ob:compute-tags self)
+  
+  (let* ((BLOG self)
+	 (POSTS (ob:get 'articles BLOG))
+	 (ALL-POSTS POSTS)
+	 (TAGS  (ob:get 'tags BLOG)))
+
+    ;; Convert each entry to HTML format
+    (loop for type in '(articles pages snippets)
+	  do (loop for entry in (slot-value BLOG type)
+		   do (ob:convert-entry BLOG entry)))
+
+    ;; Publish both articles static pages
+    (loop for type in '(articles pages)
+	  do (loop for POST in (slot-value BLOG type)
+		   do (ob:entry:publish POST)))
+
+
+    ;; publish tags
+    (let ((PATH-TO-ROOT ".."))
+      (ob:eval-template-to-file "page_tags.html"
+				(format "%s/tags/index.html"
+					(ob:get 'publish-dir BLOG)))
+      (loop for TAG in TAGS
+	    do
+	    (ob:eval-template-to-file "page_tags-posts-by-tag.html"
+				      (format "%s/tags/%s.html"
+					      (ob:get 'publish-dir BLOG)
+					      (ob:get 'safe TAG)))))
+    )
+  self)
+    
 
 ;; Useful functions / macros
 
@@ -221,18 +260,30 @@ within MIN_R and MAX_R inclusive."
 
 
 
-(defmethod ob:publish ((self ob:backend))
-  ""
-  ;; Publish both articles static pages
-  (loop for type in '(articles pages)
-	do (loop for POST in (slot-value blog type)
-		 do (ob:entry:publish POST)))
+;; (defmethod ob:publish ((self ob:backend))
+;;   ""
+;;   ;; Publish both articles static pages
+;;   (loop for type in '(articles pages)
+;; 	do (loop for POST in (slot-value blog type)
+;; 		 do (ob:entry:publish POST)))
 
-  ;; publish tags
-  (with-temp-buffer
-    (ob:insert-template "page_tags.html")
-    (ob:write-file (format "%s/tags/index.html"
-			   (oref blog publish-dir)))))
+;;   ;; publish tags
+;;   (with-temp-buffer
+;;     (ob:insert-template "page_tags.html")
+;;     (ob:write-file (format "%s/tags/index.html"
+;; 			   (oref blog publish-dir))))
+
+;;     ;; publish tags
+;;   (with-temp-buffer
+;;     (ob:insert-template "page_tags.html")
+;;     (ob:write-file (format "%s/tags/index.html"
+;; 			   (oref blog publish-dir))))
+;;   (loop for TAG in TAGS
+;; 	do
+;; 	(ob-write-index-to-file "blog_tags-details.html"
+;; 				(format "%s/tags/%s.html"
+;; 					(ob:blog-publish-dir BLOG)
+;; 					(ob:tags-safe TAG)))))
 
 
 (defun ob:get-posts (&optional predicate count sortfunc collect)

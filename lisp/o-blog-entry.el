@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-03-29 15:24:27
+;; Last changed: 2013-03-30 20:03:47
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -132,10 +132,10 @@
 	(ob:insert-template (oref self template))
 	(message "Write to: %s"
 		 (expand-file-name (format "%s/%s"
-					   (oref blog publish-dir)
+					   (oref BLOG publish-dir)
 					   (oref self htmlfile))))
 	(ob:write-file (format "%s/%s"
-			       (oref blog publish-dir)
+			       (oref BLOG publish-dir)
 			       (oref self htmlfile)))))))
 
 (defclass ob:page (ob:entry)
