@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2013-03-29 22:51:56
+;; Last changed: 2013-03-29 23:11:47
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -84,7 +84,7 @@ current buffer."
       )))
 
 ;;;###autoload
-(defun o-blog-publish-async (file backend)
+(defun o-blog-publish-async (file)
   "Publish FILE synchronously using BACKEND."
   (let* ((cmd-line (append command-line-args
 			   `("--batch"
@@ -93,8 +93,8 @@ current buffer."
 					   "init.el")
 			     ;;,@ob-async-opts
 			     "--eval"
-			     ,(format "(o-blog-publish \"%s\" '%s)"
-				      file backend))))
+			     ,(format "(o-blog-publish \"%s\")"
+				      file))))
 	 (cmd-cli (mapconcat 'shell-quote-argument cmd-line " "))
 	 (cmd-buf (get-buffer-create (format "o-blog build %s" file)))
 	 (proc (progn
@@ -102,14 +102,11 @@ current buffer."
 		   (insert (format "Run: %s\n\n" cmd-cli)))
 		 (apply 'start-process (car cmd-line)
 			cmd-buf (car cmd-line) (cdr cmd-line)))))
-    (set-window-buffer (selected-window) cmd-buf)
+    ;;(set-window-buffer (selected-window) cmd-buf)
     (message "Run: %s" cmd-cli)
     (process-put proc :cmd (format "Build %s" file))
     (process-put proc :cmd-buf cmd-buf)
     (set-process-sentinel proc 'o-blog-publish-async-processes-sentinel)))
-
-
-
 
   
 (defun ob:parse-blog-config (&optional file type)
