@@ -21,7 +21,8 @@
   (require 'o-blog-tag)
   (require 'o-blog-entry)
   (require 'o-blog-i18n)
-  (require 'o-blog-backend))
+  (require 'o-blog-backend)
+  (require 'o-blog-obsolete))
 
 (defun o-blog-guess-backend-from-file (file)
   "Try to guess o-blog back from FILE or current buffer."
