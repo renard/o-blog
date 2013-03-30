@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 20:03:33
+;; Last changed: 2013-03-29 20:54:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -236,17 +236,17 @@ within MIN_R and MAX_R inclusive."
 
 
 (defun ob:get-posts (&optional predicate count sortfunc collect)
-  "Return posts (from `POSTS' as defined in `org-publish-blog')
-matching PREDICATE. Limit to COUNT results if defined and sorted
-using SORTFUNC.
+  "Return posts (from `POSTS' list of `ob:entry' as defined in
+`o-blog-publish') matching PREDICATE. Limit to COUNT results if
+defined and sorted using SORTFUNC.
 
 PREDICATE is a function run for each post with the post itself as
 argument. If PREDICATE is nil, no filter would be done on posts.
 
 SORTFUNC is used a `sort' PREDICATE.
 
-If COLLECT is defined, only returns the COLLECT field of a
-`ob:post' structure.
+If COLLECT is defined, only returns the COLLECT slot of
+`ob:entry' class.
 
 Examples:
 
@@ -256,8 +256,8 @@ Examples:
  - Getting post from January 2012:
    \(ob:get-posts
       \(lambda \(x\)
-         \(and \(= 2012 \(ob:post-year x\)\)
-              \(= 1 \(ob:post-month x\)\)\)\)\)
+         \(and \(= 2012 \(ob:get 'year x\)\)
+              \(= 1 \(ob:get 'month x\)\)\)\)\)
 
  - getting all categories
     \(ob:get-posts nil nil nil 'category\)
