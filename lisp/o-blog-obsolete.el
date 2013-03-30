@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-03-30
-;; Last changed: 2013-03-30 20:48:07
+;; Last changed: 2013-03-30 23:22:37
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -27,6 +27,8 @@
     (fset func
 	  `(lambda (X)
 	     "Access to deprecated o-blog structure."
+	     (warn "`%s' is obsolete consider using `ob:get' instead: (ob:get '%s %s)."
+		   (quote ,func) (quote ,slot) (upcase (symbol-name (quote ,structure))))
 	     (ob:get (quote ,slot) X)))
     (make-obsolete func 'ob:get)))
     
