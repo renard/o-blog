@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-03-30 20:18:25
+;; Last changed: 2013-04-05 19:47:43
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -176,6 +176,32 @@ string."
   (with-temp-buffer
     	(ob:insert-template template)
 	(ob:write-file file)))
+
+
+
+
+
+
+
+
+(defun ob:lesser (a b)
+  "Emulate `<' in templates."
+  (< a b))
+
+(defun ob:lesser-or-equal (a b)
+  "Emulate `<=' in templates."
+  (<= a b))
+
+(defun ob:greater (a b)
+  "Emulate `>' in templates."
+  (> a b))
+
+(defun ob:greater-or-equal (a b)
+  "Emulate `>=' in templates."
+  (>= a b))
+
+
+
 
 
 (provide 'o-blog-utils)
