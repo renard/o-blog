@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-03-30
-;; Last changed: 2013-03-30 23:22:37
+;; Last changed: 2013-04-05 21:19:27
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -23,13 +23,16 @@
 
 (defun ob:make-obsolete (structure slot)
   ""
-  (let ((func (intern (format "ob:%s-%s" structure slot))))
+
+  (let* ((orig (if (listp slot) (car slot) slot))
+	 (new (if (listp slot) (cadr slot) slot))
+	 (func (intern (format "ob:%s-%s" structure orig))))
     (fset func
 	  `(lambda (X)
 	     "Access to deprecated o-blog structure."
 	     (warn "`%s' is obsolete consider using `ob:get' instead: (ob:get '%s %s)."
-		   (quote ,func) (quote ,slot) (upcase (symbol-name (quote ,structure))))
-	     (ob:get (quote ,slot) X)))
+		   (quote ,func) (quote ,new) (upcase (symbol-name (quote ,structure))))
+	     (ob:get (quote ,new) X)))
     (make-obsolete func 'ob:get)))
     
 
@@ -42,14 +45,16 @@
 
 (loop for s in '(id title timestamp year month day category tags
   template filepath filename htmlfile path-to-root content
-  content-html sitemap)
+  (content-html html) sitemap)
         do (ob:make-obsolete 'post s))
 
 
-(loop for s in '(name safe count size)
+
+
+(loop for s in '((name display) safe count size)
         do (ob:make-obsolete 'tags s))
 
-(loop for s in '(name safe)
+(loop for s in '((name display) safe)
         do (ob:make-obsolete 'category s))
 
 
