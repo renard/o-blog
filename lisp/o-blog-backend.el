@@ -110,12 +110,12 @@ Some global variables are set:
 
     ;; publish tags
     (let ((PATH-TO-ROOT ".."))
-      (ob:eval-template-to-file "page_tags.html"
+      (ob:eval-template-to-file "blog_tags.html"
 				(format "%s/tags/index.html"
 					(ob:get 'publish-dir BLOG)))
       (loop for TAG in TAGS
 	    do
-	    (ob:eval-template-to-file "page_tags-posts-by-tag.html"
+	    (ob:eval-template-to-file "blog_tags-details.html"
 				      (format "%s/tags/%s.html"
 					      (ob:get 'publish-dir BLOG)
 					      (ob:get 'safe TAG)))))

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-03-30 20:03:47
+;; Last changed: 2013-04-05 19:43:12
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -74,7 +74,7 @@
 	     ;;	   :type ob:category
 	   :documentation "")
    (template :initarg :template
-	     :initform "article.html"
+	     :initform "blog_post.html"
 	     :type string
 	     :documentation "Template file to use for publication")
    )
@@ -140,7 +140,7 @@
 
 (defclass ob:page (ob:entry)
   ((template :initarg :template
-	     :initform "page.html"
+	     :initform "blog_static.html"
 	     :type string
 	     :documentation "Template file to use for publication"))
   "O-blog page class")
