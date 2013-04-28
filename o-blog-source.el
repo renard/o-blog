@@ -86,14 +86,15 @@ The default replacement text could be changed using variables
 	     (with-temp-buffer
 	       (insert-file-contents src-file)
 	       (if mode
-		   (let ((func (intern (format "%s-mode" mode))))
-		     (if (functionp func)
-			 (funcall func)
-		       (warn (concat "Mode %s not found for %s. "
-				     "Consider installing it. "
-				     "No syntax highlight would be bone this time.")
-			     mode src-file)))
-		 (set-auto-mode))
+                   (setq func (intern (format "%s-mode" mode)))
+                 (setq func (assoc-default src-file auto-mode-alist
+                                           'string-match)))
+               (if (functionp func)
+                   (funcall func)
+                 (warn (concat "Mode %s not found for %s. "
+                               "Consider installing it. "
+                               "No syntax highlight would be bone this time.")
+                       mode src-file))
 	       ;; Unfortunately rainbow-delimiter-mode does not work fine.
 	       ;; See https://github.com/jlr/rainbow-delimiters/issues/5
 	       (font-lock-fontify-buffer)
