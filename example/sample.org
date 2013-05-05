@@ -784,10 +784,6 @@ Here are some ideas for future versions
   - etc...
 
 - Find a other name for the project such as
-  - Web Hypertext Otimized Rendering Easy System
-  - Building the Interweb from Texts Classic Hypermedia
-  - Build All Internet Standard E-documents
-  - Publication Unifiée de Tous E-documents
   - el-site
   - el-sitemanage
   - el-sitepublish
