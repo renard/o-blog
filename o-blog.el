@@ -180,6 +180,8 @@ This is a good place for o-blog parser plugins."
  - category: category read from \"CATEGORY\" property org
    \"blog\".
 
+ - abstract: abstract read from \"ABSTRACT\" property
+
  - tags: list of ob:tags.
 
  - template: template to use for current post read from
@@ -209,6 +211,7 @@ This is a good place for o-blog parser plugins."
   month
   day
   category
+  abstract
   tags
   template
   filepath
@@ -236,7 +239,6 @@ This is a good place for o-blog parser plugins."
  - safe: web safe category name for URL."
   name safe)
 
-
 ;;;###autoload
 ;;;###autoload
 (defun o-blog-version (&optional here)
@@ -628,6 +630,9 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 			 (org-entry-get (point) "ARCHIVE_OLPATH")
 			 (ob:blog-default-category BLOG)))
 	   (category-safe (ob:sanitize-string category))
+
+	   (abstract (org-entry-get (point) "abstract"))
+
 	   (page (org-entry-get (point) "PAGE"))
 
 	   (filename (or (org-entry-get (point) "CUSTOM_ID")
@@ -658,6 +663,7 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 		      :category (make-ob:category
 				 :name category
 				 :safe category-safe)
+		      :abstract abstract
 		      :sitemap (or (org-entry-get (point) "SITEMAP"))
 		      )))))
 
