@@ -1,4 +1,4 @@
-;;; o-blog-i18n.el --- Internationalization for o-blog.
+﻿;;; o-blog-i18n.el --- Internationalization for o-blog.
 
 ;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
@@ -42,6 +42,30 @@
      :debug-static-pages-header "Static pages"
      :debug-snippet-header "Snippets"
      :debug-tags-header "Tags")
+    ("ru"
+     :posted-on "Опубликовано"
+     :post-timestamp "%d.%m.%Y в %H:%M:%S"
+     :related-tags "Похожие теги"
+     :home "Домой"
+     :tags "Теги"
+     :archives "Архив"
+     :rss "RSS"
+     :about "О сайте"
+     :links "Ссылки"
+     :redirect-header "Redirect"
+     :redirect-text "Ой! Вам не сюда. Пожалуйста, дождитесь переадресации."
+     :redirect-link "Нажмите здесь для перехода на домашнюю страницу."
+     :powered-by "Создано с помощью"
+     :debug-blog "Содержимое блога"
+     :debug-post "Содержимое записи"
+     :debug-tag "Содержимое тега"
+     :debug-property "Свойство"
+     :debug-value "Значение"
+     :debug-blog-header "Блог"
+     :debug-posts-header "Записи"
+     :debug-static-pages-header "Статичные страницы"
+     :debug-snippet-header "Код"
+     :debug-tags-header "Теги")
     ("fr"
      :posted-on "Posté le"
      :post-timestamp "%A %d %B %Y à %H:%M:%S"

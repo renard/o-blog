@@ -516,7 +516,7 @@ A copy function COPYF and its arguments ARGS could be specified."
     (setf (ob:blog-url blog) (or (ob:get-header "URL") ""))
     (setf (ob:blog-language blog) (or (ob:get-header "LANGUAGE") "en"))
     (setf (ob:blog-post-build-shell blog) (ob:get-header "POST_BUILD_SHELL" t))
-    (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
+    (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") (ob:gettext :debug-blog-header (ob:blog-language blog))))
     (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
     (setf (ob:blog-analytics blog) (ob:get-header "ANALYTICS"))
     (setf (ob:blog-filename-sanitizer blog)
@@ -832,7 +832,7 @@ when publishing a page."
 
 (defun ob-write-index()
   "Publish all indexes (default, categories, year, month)"
-  (let ((BREADCRUMB "Archives"))
+  (let ((BREADCRUMB (ob:gettext :archives)))
     (ob-write-index-to-file "blog_archives.html"
 			    (format "%s/archives.html"
 				    (ob:blog-publish-dir BLOG))))
@@ -926,7 +926,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 (defun ob-write-tags ()
   "Publish all tags into directory named \"tags\"."
   (let ((PATH-TO-ROOT "..")
-	(BREADCRUMB "Tags"))
+	(BREADCRUMB (ob:gettext :tags)))
     (ob-write-index-to-file "blog_tags.html"
 			    (format "%s/tags/index.html"
 				    (ob:blog-publish-dir BLOG)))

@@ -24,35 +24,35 @@
 
  ;; archives
  ((and (boundp 'MONTH) (boundp 'YEAR) (boundp 'CATEGORY))
-  (insert "<li><a href=\"../../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li><a href=\"../../../archives.html\">%s</a> <span class=\"divider\">/</span></li>" (ob:gettext :archives)))
   (insert (format "<li><a href=\"../../index.html\">%s</a> <span class=\"divider\">/</span></li>"  (ob:category-name CATEGORY)))
   (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  YEAR))
   (insert (format "<li>%.2d</li>" MONTH)))
 
  ((and (boundp 'YEAR) (boundp 'CATEGORY))
-  (insert "<li><a href=\"../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li><a href=\"../../archives.html\">%s</a> <span class=\"divider\">/</span></li>" (ob:gettext :archives)))
   (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  (ob:category-name CATEGORY)))
   (insert (format "<li>%s</li>" YEAR)))
 
  ((boundp 'CATEGORY)
-  (insert "<li><a href=\"../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li><a href=\"../archives.html\">%s</a> <span class=\"divider\">/</span></li>" (ob:gettext :archives)))
   (insert (format "<li>%s</li>" (ob:category-name CATEGORY))))
 
  ((and
    ;;(boundp 'template)
    (string= "blog_archives.html" template))
-  (insert (format "<li>Archives</li>")))
+  (insert (format "<li>%s</li>" (ob:gettext :archives))))
 
 
  ;; Tags
  ((boundp 'TAG)
-  (insert "<li><a href=\"index.html\">Tags</a> <span class=\"divider\">/</span></li>")
+  (insert (format "<li><a href=\"index.html\">%s</a> <span class=\"divider\">/</span></li>" (ob:gettext :tags)))
   (insert (format "<li>%s</li>" (ob:tags-name TAG))))
 
   ((and
     ;;(boundp 'template)
     (string= "blog_tags.html" template))
-  (insert (format "<li>Tags</li>")))
+  (insert (format "<li>%s</li>" (ob:gettext :tags))))
 
   ((boundp 'BREADCRUMB)
    (insert (format "<li>%s</li>" BREADCRUMB))))
