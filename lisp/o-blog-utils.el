@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-04-05 19:47:43
+;; Last changed: 2013-06-07 19:26:58
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -202,7 +202,29 @@ string."
 
 
 
-
+(defun ob:string-template (template)
+  "Evaluate TEMPLATE and return a string.
+- strings are return as it
+- symbols are evaluated
+- lists are concatenated or evaluated depending on their first element."
+  (message "%S" template)
+  (cond
+   ((stringp template) template)
+   ((symbolp template)
+    (if (boundp template)
+	(if (eq nil template)
+	    ""
+	  (format "%s" (symbol-value template)))
+      (symbol-name template)))
+   ((listp template)
+    (if (and (symbolp (car template))
+	     (fboundp (car template)))
+	(eval template)
+      (mapconcat 'identity
+		 (loop for i in template
+		       collect (ob:string-template i))
+		 "")))
+   (t (format "%s" template))))
 
 (provide 'o-blog-utils)
 
