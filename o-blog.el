@@ -422,7 +422,7 @@ A copy function COPYF and its arguments ARGS could be specified."
 			     "-l" ,(concat (file-name-as-directory
 					    user-emacs-directory)
 					   "init.el")
-			     ,@ob-async-opts
+			     ,@o-blog-async-opts
 			     "--eval"
 			     ,(format "(org-publish-blog \"%s\")" file))))
 	 (cmd-buf (get-buffer-create (format "ORG blog build %s" file)))
