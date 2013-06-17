@@ -4,10 +4,11 @@
 
 $(document).ready(
     function() {
-
 	/* create the top menu bar */
+	$('.navbar-inner .nav-collapse > ul').addClass("nav");
+
+	/* find the dropdown menu */
 	var dropdown = $('.navbar-inner .nav-collapse > ul li ul').parent();
-	dropdown.parent().addClass("nav");
 
 	/* find sub menu items */
 	dropdown.addClass("dropdown");
