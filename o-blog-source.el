@@ -3,7 +3,7 @@
 ;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
-;; Keywords: emacs, 
+;; Keywords: emacs,
 ;; Created: 2012-01-23
 ;; Last changed: 2012-03-20 13:29:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
@@ -11,7 +11,7 @@
 ;; This file is NOT part of GNU Emacs.
 
 ;;; Commentary:
-;; 
+;;
 
 
 ;;; Code:
@@ -47,7 +47,7 @@ A source file is defined using:
 
     #+O_BLOG_SOURCE: path/to/file [mode]
 
-and is converted to 
+and is converted to
 
     #+BEGIN_HTML
     <div class=\"o-blog-source\">
@@ -84,7 +84,7 @@ The default replacement text could be changed using variables
 		     src-file-safe src-file-name src-file-safe
 		     src-file-name)
 	     (with-temp-buffer
-	       (insert-file-contents src-file)
+	       (insert-file-contents src-file :no-visit)
 	       (if mode
                    (setq func (intern (format "%s-mode" mode)))
                  (setq func (assoc-default src-file auto-mode-alist

@@ -1,6 +1,6 @@
 ;;; o-blog.el --- Org-blog exporter
 
-;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
+;; Copyright © 2012, 2013 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs,
@@ -201,7 +201,7 @@ This is a good place for o-blog parser plugins."
  - content-html: HTML export of the post.
 
  - sitemap: Whether to publish in sitemap."
-  
+
   id
   title
   timestamp
@@ -622,7 +622,7 @@ See also `ob-set-default-filepath', `ob-parse-entry'."
 	   (year (string-to-number (format-time-string "%Y" timestamp)))
 	   (month (string-to-number (format-time-string "%m" timestamp)))
 	   (day (string-to-number (format-time-string "%d" timestamp)))
-	   
+
 	   (category (or (org-entry-get (point) "category")
 			 (car (last (org-get-outline-path)))
 			 (org-entry-get (point) "ARCHIVE_OLPATH")
@@ -898,7 +898,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
     "*ORG blog publish index*"
     (erase-buffer)
     (insert-file-contents
-     (format "%s/%s" (ob:blog-template-dir BLOG) template))
+     (format "%s/%s" (ob:blog-template-dir BLOG) template) :no-visit)
     (ob-eval-lisp)
     (ob-write-file outfile)))
 
@@ -1061,7 +1061,8 @@ Returns only fist match except if ALL is defined."
    (with-temp-buffer
      "*Org-Publish-Template*"
      (erase-buffer)
-     (insert-file-contents (format "%s/%s" (ob:blog-template-dir BLOG) template))
+     (insert-file-contents (format "%s/%s" (ob:blog-template-dir BLOG) template)
+                           :no-visit)
      (ob-eval-lisp)
      (buffer-string))))
 
