@@ -20,6 +20,7 @@
 (eval-when-compile
   (require 'cl nil t)
   (require 'browse-url nil t))
+(require 'org nil t)
 (require 'ob-ditaa nil t)
 (require 'htmlize nil t)
 (require 'sgml-mode nil t)
