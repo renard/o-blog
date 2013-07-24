@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-29 19:30:29
+;; Last changed: 2013-07-24 18:49:23
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -238,12 +238,14 @@ in current-buffer."
     (ob:org-fix-icons self)
     (buffer-substring-no-properties (point-min) (point-max))))
 
+
 (defmethod ob:convert-entry ((self ob:backend:org) entry)
   "Convert ENTRY to html using `org-mode' syntax."
   (with-temp-buffer
     (insert (oref entry source))
     (org-mode)
     (goto-char (point-min))
+    (ob:org-fix-org)
     ;; exporting block with ditaa is kinda messy since it requires a real
     ;; file (does not work with a temp-buffer which is not associated to any
     ;; file).
@@ -273,6 +275,154 @@ in current-buffer."
       (when saved-file
 	(delete-file saved-file))
       entry)))
+
+
+
+
+;;(defmethod ob:org-fix-org ((self ob:backend:org))
+(defun ob:org-fix-org ()
+  "Fix some org syntax."
+  ;; This is a VERY ugly trick to ensure backward compatibility.
+  (let*
+      ((compute-bootstrap-grid-args
+	(lambda (a1 a2)
+	  (let* ((i2c
+		  (lambda (x)
+		    (let ((x (if x (string-to-int x) 0)))
+		      (cond
+		       ((= 0 x) "")
+		       ((< 0 x) (format "span%d" x))
+		       ((> 0 x) (format "offset%d" (- x))))))))
+	    (format "%s %s"
+		    (funcall i2c a1)
+		    (funcall i2c a2)))))
+       (subst-list
+	'(
+	  ;; alerts
+	  ("^#\\+BEGIN_O_BLOG_ALERT:?[ \t]+\\(info\\|success\\|warning\\|error\\)[ \t]*\\(.*\\)"
+	   ("<div class=\"alert alert-" (match-string 1) "\">"
+	    (when (match-string 2)
+	      (mapconcat
+	       'identity
+	       (list "<p class=\"alert-heading\">"
+		     (match-string 2) "</p>")
+	       "")))
+	   "^#\\+END_O_BLOG_ALERT" "</div>")
+	  ;; Hero unit
+	  ("^#\\+BEGIN_O_BLOG_HERO_UNIT"
+	   "<div class=\"hero-unit\">\n"
+	   "^#\\+END_O_BLOG_HERO_UNIT"
+	   "</div>\n")
+	  ;; Hero unit
+	  ("^#\\+BEGIN_O_BLOG_PAGE_HEADER"
+	   "<div class=\"page-header\">\n"
+	   "^#\\+END_O_BLOG_PAGE_HEADER"
+	   "</div>\n")
+	  ;; Well
+	  ("^#\\+BEGIN_O_BLOG_WELL"
+	   "<div class=\"well\">\n"
+	   "^#\\+END_O_BLOG_WELL"
+	   "</div>\n")
+	  ;;grid
+	  ("^#\\+BEGIN_O_BLOG_ROW:?[ \t]+\\(.*\\)"
+	   (let* ((args (when (stringp (match-string 1))
+	   		  (split-string (match-string-no-properties 1)))))
+	     (format "<div class=\"row %s\"><div class=\"%s\"><!-- %S -->"
+		     (or (nth 2 args) "")
+	   	     (funcall compute-bootstrap-grid-args
+			      (nth 0 args)
+			      (nth 1 args))
+		     args))
+	   "^#\\+END_O_BLOG_ROW"
+	   "</div></div>")
+	  ;; grid column
+	  ("^#\\+O_BLOG_ROW_COLUMN:?[ \t]+\\(-?[0-9]+\\)\\([ \t]+\\(-?[0-9]+\\)\\)?"
+	   (let* ((args (when (stringp (match-string 1))
+	   		  (split-string (match-string-no-properties 1)))))
+	     (format "</div><div class=\"%s\"><!-- %S -->"
+	   	     (funcall compute-bootstrap-grid-args
+			      (nth 0 args)
+			      (nth 1 args))
+		     args)))
+	  ;;badge or label
+	  ("\\([^,]\\)\\[\\[ob-\\(badge\\|label\\):\\(default\\|success\\|warning\\|important\\|info\\|inverse\\)\\]\\[\\(.+?\\)\\]\\]"
+	   (let* ((first (match-string 1))
+		  (type  (match-string 2))
+		  (style (match-string 3))
+		  (data  (match-string 4)))
+	     (format "%s<span class=\"%s %s-%s\">%s</span>"
+		     first type type style data)))
+	  ;; progress
+	  ("\\([^,]\\)\\[\\[ob-progress:\\(info\\|success\\|warning\\|danger\\),?\\([^]]+\\)?\\]\\[\\(.+?\\)\\]\\]"
+	   (let ((first  (match-string 1))
+		 (style  (match-string 2))
+		 (value  (match-string 4))
+		 (extra (loop for elm in (split-string (or (match-string 3) "") ",")
+			      collect (if (string= elm "striped")
+					  (format "progress-%s" elm)
+					elm)
+			      into ret
+			      finally return (mapconcat 'identity ret " "))))
+	     (format
+	      "%s<div class=\"progress progress-%s %s\"><div class=\"bar\" style=\"width: %s%%;\"></div></div>"
+	      first
+	      style
+	      extra
+	      value)))
+	  ;; modal source
+	  ("^#\\+O_BLOG_SOURCE:?[ \t]+\\(.+?\\)\\([ \t]+\\(.+\\)\\)?$"
+	   (let* ((src-file (match-string 1))
+		  (src-file-name (file-name-nondirectory src-file))
+		  (src-file-safe (ob:sanitize-string src-file-name))
+		  (mode (match-string 3)))
+	     (format "<div class=\"o-blog-source\"><a class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#%s\" ><i class=\"icon-file icon-white\"></i>&nbsp;%s</a></div><div class=\"modal fade hide\" id=\"%s\"><div class=\"modal-header\"><a class=\"close\" data-dismiss=\"modal\">×</a><h3>%s</h3></div><div class=\"modal-body\">%s</div></div>"
+		     src-file-safe src-file-name src-file-safe
+		     src-file-name
+		     (with-temp-buffer
+		       (insert-file-contents src-file)
+		       (if mode
+			   (setq func (intern (format "%s-mode" mode)))
+			 (setq func (assoc-default src-file auto-mode-alist
+						   'string-match)))
+		       (if (functionp func)
+			   (funcall func)
+			 (warn (concat "Mode %s not found for %s. "
+				       "Consider installing it. "
+				       "No syntax highlight would be bone this time.")
+			       mode src-file))
+		       ;; Unfortunately rainbow-delimiter-mode does not work fine.
+		       ;; See https://github.com/jlr/rainbow-delimiters/issues/5
+		       (font-lock-fontify-buffer)
+		       (htmlize-region-for-paste (point-min) (point-max))))))
+	  )))
+    (loop for (re_start sub_start re_end sub_end)
+	  in subst-list
+	  do (save-match-data
+	       (save-excursion
+		 (goto-char (point-min))
+		 (while (re-search-forward re_start nil t)
+		   (beginning-of-line)
+		   (insert
+		    "#+BEGIN_HTML\n"
+		    (ob:string-template sub_start)
+		    "\n#+END_HTML\n")
+		   (delete-region (point) (point-at-eol))
+		   (when re_end
+		     (save-excursion
+		       (unless
+			   (re-search-forward re_end nil t)
+			 (error "%s not found in %s@%s." re_end
+				(buffer-file-name)
+				(point)))
+		       (beginning-of-line)
+		       (insert
+			"\n#+BEGIN_HTML\n"
+			(ob:string-template sub_end)
+			"\n#+END_HTML\n")
+		       (delete-region (point) (point-at-eol))))))))))
+
+
+
 
 (provide 'o-blog-backend-org)
 
