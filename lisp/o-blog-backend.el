@@ -340,6 +340,16 @@ Examples:
 
 
 
+
+(defun ob:get-last-post (&optional category nth)
+  "Get the NTH last post in from CATEGORY or \"blog\" if not defined."
+  (let ((POSTS ALL-POSTS)
+	(nth (or nth 0)))
+    (nth nth (ob:get-posts (lambda (x)
+			     (equal (or category "blog")
+				    (ob:get-name (ob:get 'category x))))))))
+
+
 (defun ob:get-snippet (name &optional slot blog)
   ""
   (let* ((blog (or
