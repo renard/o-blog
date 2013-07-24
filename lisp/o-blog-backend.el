@@ -124,9 +124,77 @@ Some global variables are set:
 				      (format "%s/tags/%s.html"
 					      (ob:get 'publish-dir BLOG)
 					      (ob:get 'safe TAG)))))
-    )
-  self)
+
+    (let ((BREADCRUMB "Archives"))
+      (ob:eval-template-to-file "blog_archives.html"
+				(format "%s/archives.html"
+					(ob:get 'publish-dir BLOG))))
     
+    (ob:eval-template-to-file "blog_rss.html"
+			      (format "%s/index.xml"
+				      (ob:get 'publish-dir BLOG)))
+
+    (ob:eval-template-to-file "blog_sitemap.html"
+			      (format "%s/sitemap.xml"
+				      (ob:get 'publish-dir BLOG)))
+
+    (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	  with PATH-TO-ROOT = ".."
+	  do
+	  (loop for YEAR in (ob:get-posts
+			     (lambda (x)
+			       (equal CATEGORY (ob:get 'category x)))
+			     nil nil 'year)
+		with PATH-TO-ROOT = "../.."
+		do
+		(loop for MONTH in (ob:get-posts
+				    (lambda (x)
+				      (and
+				       (equal CATEGORY (ob:get 'category x))
+				       (= YEAR (ob:get 'year x))))
+				    nil nil 'month)
+		      with PATH-TO-ROOT = "../../.."
+		      do (ob-process-index "blog_index_month.html" CATEGORY YEAR MONTH))
+		and do (ob-process-index "blog_index_year.html" CATEGORY YEAR))
+	  and do (unless (equal "." CATEGORY)
+		   (ob-process-index "blog_index_category.html" CATEGORY)))
+    )
+  (ob:publish-style self)
+  self)
+
+(defun ob-process-index (template &optional category year month)
+  "Low-level function for `ob-write-index'.
+
+Template is read from TEMPLATE file.
+
+If provided CATEGORY YEAR and MONTH are used to select articles."
+  (let* ((fp (format "%s/%s/index.html"
+		     (ob:get 'publish-dir BLOG)
+		     (cond
+		      ((and category year month)
+		       (format "%s/%.4d/%.2d"
+			       (ob:get 'safe category)
+			       year month))
+		      ((and category year)
+		       (format "%s/%.4d"
+			       (ob:get 'safe category)
+			       year))
+		      (t (ob:get 'safe category)))))
+
+	 (POSTS (ob:get-posts
+		 (lambda (x)
+		   (and
+		    (if category (equal
+				  (ob:get 'name category)
+				  (ob:get 'name (ob:get 'category x)))
+		      t)
+		    (if year (= year (ob:get 'year x)) t)
+		    (if month (= month (ob:get 'month x)) t))))))
+    (ob:eval-template-to-file template fp)))
+
+
+
+
 
 ;; Useful functions / macros
 
