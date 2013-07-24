@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2013-03-30 20:34:13
+;; Last changed: 2013-06-05 00:37:24
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -31,6 +31,16 @@
     ;; Assume all mode end with "-mode"
     (intern (substring
 	     (symbol-name major-mode) 0 -5))))
+
+(defun o-blog-publish-example ()
+  ""
+  (interactive)
+  (o-blog-publish
+   (expand-file-name
+    (concat (file-name-directory
+	     (find-library-name "o-blog"))
+	    "../example/sample.org"))))
+
 
 ;;;###autoload
 (defun o-blog-publish(&optional file backend)
