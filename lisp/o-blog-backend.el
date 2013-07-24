@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-03-30 20:23:04
+;; Last changed: 2013-07-24 16:11:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -40,6 +40,11 @@
 		:documentation "Path to publishing
 		directory (relative to o-blog configuration file
 		path).")
+   (style-dir :initarg :style-dir
+		:initform "../templates/style"
+		:type string
+		:documentation "Path to style
+		directory (relative to publish-dir).")
    (template-dir :initarg :publish-dir
 		 :initform (expand-file-name
 			    (concat (file-name-directory
