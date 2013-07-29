@@ -136,6 +136,11 @@ This is a good place for o-blog parser plugins."
  - post-htmlfile: a 3-argument function to be used to generate
    the post html filename in output directory. Defined by
    \"#+POSTS_HTMLFILE:\" or \"ob-set-default-htmlfile\".
+
+ - plugin-qrcode: \"t\" or \"nil\". Enables the plugin-qrcode
+   that uses chart.apis.google.com. Default is \"t\" for backward
+   compatibility.  Defined by the \"#PLUGIN_QRCODE\" header.
+
 "
   (file nil :read-only)
   (buffer nil :read-only)
@@ -157,7 +162,8 @@ This is a good place for o-blog parser plugins."
   filename-sanitizer
   posts-sorter
   posts-filepath
-  posts-htmlfile)
+  posts-htmlfile
+  plugin-qrcode)
 
 
 (defstruct (ob:post :named)
@@ -519,6 +525,7 @@ A copy function COPYF and its arguments ARGS could be specified."
     (setf (ob:blog-default-category blog) (or (ob:get-header "DEFAULT_CATEGORY") "Blog"))
     (setf (ob:blog-disqus blog) (ob:get-header "DISQUS"))
     (setf (ob:blog-analytics blog) (ob:get-header "ANALYTICS"))
+    (setf (ob:blog-plugin-qrcode blog) (string-equal (or (ob:get-header "PLUGIN_QRCODE") "t") "t"))
     (setf (ob:blog-filename-sanitizer blog)
 	  (let ((ofs (ob:get-header "FILENAME_SANITIZER")))
 	    (if (and ofs (functionp (intern ofs)))
