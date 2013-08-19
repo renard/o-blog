@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-07-24 18:49:23
+;; Last changed: 2013-08-19 11:32:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -420,6 +420,52 @@ in current-buffer."
 			(ob:string-template sub_end)
 			"\n#+END_HTML\n")
 		       (delete-region (point) (point-at-eol))))))))))
+
+
+(defun ob:org-components (&optional prefix suffix)
+  ""
+  (let ((prefix (or prefix "@@html:"))
+	(suffix (or suffix "@@"))
+	(items
+	 '((hero-unit nil "<div class=\"hero-unit\">" "</div>"))))
+
+    (save-match-data
+      (save-excursion
+	(save-restriction
+	  (widen)
+	  (goto-char (point-min))
+	  (while (re-search-forward "<\\([^/ \n\t>]+\\)\\([^>]*\\)?>" nil t)
+	    (let* ((xml (match-string 0))
+		   (xml-parsed
+		  (with-temp-buffer
+		    (insert xml)
+		    (unless (search-backward "/>" nil t 1)
+		      (delete-backward-char 1)
+		      (insert "/>"))
+		    (libxml-parse-xml-region (point-min) (point-max)))))
+	      (when xml-parsed
+		(let* ((tag (car xml-parsed))
+		       (replacement (assoc tag  items)))
+		  (when replacement
+		    (narrow-to-region (match-beginning 0) (match-end 0))
+		    (delete-region (point-min) (point-max))
+		    (insert prefix (ob:string-template (nth 2 replacement)) suffix)
+		    (widen)
+		    (when (nth 3 replacement)
+		      (save-match-data
+			(save-excursion
+			  (unless (search-forward (format "</%s>" tag) nil t)
+			    (error "Unclosed %s tag" tag))
+			  (narrow-to-region (match-beginning 0) (match-end 0))
+			  (delete-region (point-min) (point-max))
+			  (insert prefix (ob:string-template (nth 3 replacement)) suffi))))
+
+
+
+		    
+		    (message "found: %S" replacement)))))))))))
+
+
 
 
 
