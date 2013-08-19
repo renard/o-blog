@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-19 22:56:37
+;; Last changed: 2013-08-20 00:19:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -142,6 +142,11 @@ headers and body."
 	    (set-slot-value entry
 			    'category
 			    (ob:category:init (ob:category cat)))))
+
+	  (when (slot-exists-p entry 'template)
+	    (let ((template (org-entry-get (point) "template")))
+	      (when template
+		(set-slot-value entry 'template template))))
 
 	  (if (eq 'page type)
 	      (ob:entry:set-path entry
