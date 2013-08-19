@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-19 11:32:40
+;; Last changed: 2013-08-19 18:07:31
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -246,6 +246,7 @@ in current-buffer."
     (org-mode)
     (goto-char (point-min))
     (ob:org-fix-org)
+    (ob:org-components)
     ;; exporting block with ditaa is kinda messy since it requires a real
     ;; file (does not work with a temp-buffer which is not associated to any
     ;; file).
@@ -270,6 +271,7 @@ in current-buffer."
 		    (ignore-errors (org-export-as-html nil nil nil 'string t))
 		    (ignore-errors (org-export-as-html nil nil 'string t))
 		    (org-export-as 'html nil nil t nil)))))
+	;;(message "Txt: %S" (buffer-substring-no-properties (point-min) (point-max)))
 	(set-slot-value entry 'html
 			(ob:org-fix-html self html)))
       (when saved-file
@@ -427,7 +429,12 @@ in current-buffer."
   (let ((prefix (or prefix "@@html:"))
 	(suffix (or suffix "@@"))
 	(items
-	 '((hero-unit nil "<div class=\"hero-unit\">" "</div>"))))
+	 '((jumbotron nil "<div class=\"jumbotron\">" "</div>")
+	   (glyphicon nil ("<span class=\"glyphicon glyphicon-"
+			   icon "\"></span>")
+		      nil)
+	   (icon nil ("<span class=\"icon-" icon "\"></span>"))
+	   )))
 
     (save-match-data
       (save-excursion
@@ -435,35 +442,38 @@ in current-buffer."
 	  (widen)
 	  (goto-char (point-min))
 	  (while (re-search-forward "<\\([^/ \n\t>]+\\)\\([^>]*\\)?>" nil t)
-	    (let* ((xml (match-string 0))
+	    (let* ((xml (match-string-no-properties 0))
+		   (beg (match-beginning 0))
+		   (end (match-end 0))
 		   (xml-parsed
-		  (with-temp-buffer
-		    (insert xml)
-		    (unless (search-backward "/>" nil t 1)
-		      (delete-backward-char 1)
-		      (insert "/>"))
-		    (libxml-parse-xml-region (point-min) (point-max)))))
+		    (with-temp-buffer
+		      (insert xml)
+		      (unless (search-backward "/>" nil t 1)
+			(delete-backward-char 1)
+			(insert "/>"))
+		      (libxml-parse-xml-region (point-min) (point-max)))))
 	      (when xml-parsed
 		(let* ((tag (car xml-parsed))
+		       (attr (cadr xml-parsed))
 		       (replacement (assoc tag  items)))
 		  (when replacement
-		    (narrow-to-region (match-beginning 0) (match-end 0))
-		    (delete-region (point-min) (point-max))
-		    (insert prefix (ob:string-template (nth 2 replacement)) suffix)
-		    (widen)
-		    (when (nth 3 replacement)
-		      (save-match-data
-			(save-excursion
-			  (unless (search-forward (format "</%s>" tag) nil t)
-			    (error "Unclosed %s tag" tag))
-			  (narrow-to-region (match-beginning 0) (match-end 0))
-			  (delete-region (point-min) (point-max))
-			  (insert prefix (ob:string-template (nth 3 replacement)) suffi))))
-
-
-
-		    
-		    (message "found: %S" replacement)))))))))))
+		    (cl-progv
+			(mapcar #'car attr) (mapcar #'cdr attr)
+		      (narrow-to-region beg end)
+		      (delete-region (point-min) (point-max))
+		      (insert prefix (ob:string-template (nth 2 replacement)) suffix)
+		      (widen)
+		      (when (nth 3 replacement)
+			(save-match-data
+			  (save-excursion
+			    (unless (search-forward (format "</%s>" tag) nil t)
+			      (error "Unclosed %s tag" tag))
+			    (narrow-to-region (match-beginning 0) (match-end 0))
+			    (delete-region (point-min) (point-max))
+			    (insert prefix (ob:string-template (nth 3 replacement)) suffix)
+			    (widen)))))
+		    ;;(message "found: %S -> %S" replacement (point))
+		    ))))))))))
 
 
 
