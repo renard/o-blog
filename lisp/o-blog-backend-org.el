@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-20 00:19:56
+;; Last changed: 2013-08-20 01:25:51
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -440,8 +440,9 @@ in current-buffer."
 	   (page-header nil (format
 			     "<div class=\"page-header\"><h1>%s%s</h1></div>"
 			     title
-			     (when (boundp 'subtitle)
-			       (format " <small>%s</small>" subtitle))))
+			     (if (boundp 'subtitle)
+			       (format " <small>%s</small>" subtitle)
+			       "")))
 	   (glyphicon nil ("<span class=\"glyphicon glyphicon-"
 			   icon "\"></span>")
 		      nil)
@@ -452,12 +453,13 @@ in current-buffer."
 					 o-xs o-sm o-md o-lg)
 			   when (boundp i)
 			   collect (format
-				    "%s-%s-%s"
-				    (if (string-match "o-"
-						      (symbol-name i))
-					"offset" "col")
+				    "col-%s-%s%s"
 				    (car (last
 					  (split-string (symbol-name i) "-")))
+
+				    (if (string-match "o-"
+						      (symbol-name i))
+					"offset-" "")
 				    (eval i))
 			   into out
 			   finally return (mapconcat #'identity out " "))
@@ -492,6 +494,7 @@ in current-buffer."
 		       "<div class=\"well well-%s\">"
 		       (if (boundp 'mod) mod "lg"))
 		  "</div>")
+	   (thumbnail nil "<div class=\"thumbnail\">" "</div>")
 
 	   
 	   )))
