@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-20 01:25:51
+;; Last changed: 2013-08-21 13:29:53
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -252,7 +252,9 @@ in current-buffer."
     (org-mode)
     (goto-char (point-min))
     (ob:org-fix-org)
-    (ob:org-components)
+    (ob:framework-expand)
+    (ob:framework-expand "<\\([^:][^/ \n\t>]+\\)\\([^>]*\\)?>" "</%s>")
+
     ;; exporting block with ditaa is kinda messy since it requires a real
     ;; file (does not work with a temp-buffer which is not associated to any
     ;; file).
@@ -429,134 +431,6 @@ in current-buffer."
 			(ob:string-template sub_end)
 			"\n#+END_HTML\n")
 		       (delete-region (point) (point-at-eol))))))))))
-
-
-(defun ob:org-components (&optional prefix suffix)
-  ""
-  (let ((prefix (or prefix "@@html:"))
-	(suffix (or suffix "@@"))
-	(items
-	 '((jumbotron nil "<div class=\"jumbotron\">" "</div>")
-	   (page-header nil (format
-			     "<div class=\"page-header\"><h1>%s%s</h1></div>"
-			     title
-			     (if (boundp 'subtitle)
-			       (format " <small>%s</small>" subtitle)
-			       "")))
-	   (glyphicon nil ("<span class=\"glyphicon glyphicon-"
-			   icon "\"></span>")
-		      nil)
-	   (icon nil ("<span class=\"icon-" icon "\"></span>"))
-	   (row nil "<div class=\"row\">" "</div>")
-	   (col nil ("<div class=\""
-		     (loop for i in '(xs sm md lg
-					 o-xs o-sm o-md o-lg)
-			   when (boundp i)
-			   collect (format
-				    "col-%s-%s%s"
-				    (car (last
-					  (split-string (symbol-name i) "-")))
-
-				    (if (string-match "o-"
-						      (symbol-name i))
-					"offset-" "")
-				    (eval i))
-			   into out
-			   finally return (mapconcat #'identity out " "))
-		     "\">")
-		"</div>")
-	   (panel nil ("<div class=\"panel"
-		       (when (boundp 'alt) (format " panel-%s" alt))
-		       "\">") "</div>")
-
-	   (panel-heading nil ("<div class=\"panel-heading\">"
-			       (when (boundp 'title)
-				 (format 
-				 "<h3 class=\"panel-title\">%s</h3>"
-				 title)))
-			  "</div>")
-	   (panel-body nil ("<div class=\"panel-body\">") "</div>")
-	   (panel-footer nil ("<div class=\"panel-footer\">") "</div>")
-	   (label nil (format
-		       "<span class=\"label label-%s\">"
-		       (if (boundp 'mod) mod "default"))
-		  "</span>")
-
-	   (badge nil (format
-		       "<span class=\"badge badge-%s\">"
-		       (if (boundp 'mod) mod "default"))
-		  "</span>")
-	   (alert nil (format
-		       "<div class=\"alert alert-%s\">"
-		       (if (boundp 'mod) mod "warning"))
-		  "</div>")
-	   (well nil (format
-		       "<div class=\"well well-%s\">"
-		       (if (boundp 'mod) mod "lg"))
-		  "</div>")
-	   (thumbnail nil "<div class=\"thumbnail\">" "</div>")
-
-	   
-	   )))
-
-    (save-match-data
-      (save-excursion
-	(save-restriction
-	  (widen)
-	  (goto-char (point-min))
-	  ;; Lookup for a XML-like tag.
-	  ;; Make sure tag does not start with ":" since "<:nil" is a valid
-	  ;; org-mode option
-	  (while (re-search-forward "\\(<\\([^:][^/ \n\t>]+\\)\\([^>]*\\)?>\\)" nil t)
-	    (let* (;; Memorize XML string and match positions
-		   (xml (match-string-no-properties 0))
-		   (beg (+ (match-beginning 0)
-			   (if (string= "," (match-string 1)) 1 0)))
-		   (end (match-end 0))
-		   ;; Make sure XML fragment is valid. If so, xml-parsed
-		   ;; should be not nil and look like:
-		   ;;
-		   ;; (tag ((attr1 . "value1") (attrN . "valueN")))
-		   (xml-parsed
-		    (with-temp-buffer
-		      (insert xml)
-		      (unless (search-backward "/>" nil t 1)
-			(delete-backward-char 1)
-			(insert "/>"))
-		      (libxml-parse-xml-region (point-min) (point-max))))
-		   (tag (car xml-parsed))
-		   (attr (cadr xml-parsed))
-		   (replacement (assoc tag items))
-		   ;; , is used to comment out tagging
-		   (commented (save-match-data
-				(save-excursion
-				  (beginning-of-line)
-				  (when (re-search-forward "\\s-+," (point-at-eol) t)
-				      (delete-backward-char 1) t)))))
-
-	      (when (and replacement (not commented))
-		;; Convert the attribute list to variables
-		(cl-progv
-		    (mapcar #'car attr) (mapcar #'cdr attr)
-		  ;; Replace first tag
-		  (narrow-to-region beg end)
-		  (delete-region (point-min) (point-max))
-		  (insert prefix (ob:string-template (nth 2 replacement)) suffix)
-		  (widen)
-		  ;; If tag must be closed, look up for closing tag
-		  (when (nth 3 replacement)
-		    (save-match-data
-		      (save-excursion
-			(unless (search-forward (format "</%s>" tag) nil t)
-			  (error "Unclosed %s tag" tag))
-			(narrow-to-region (match-beginning 0) (match-end 0))
-			(delete-region (point-min) (point-max))
-			(insert prefix (ob:string-template (nth 3 replacement)) suffix)
-			(widen)))))))))))))
-
-
-
-
 
 
 (provide 'o-blog-backend-org)
