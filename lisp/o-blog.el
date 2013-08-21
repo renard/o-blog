@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2013-06-05 00:37:24
+;; Last changed: 2013-08-21 13:31:18
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -22,6 +22,7 @@
   (require 'o-blog-entry)
   (require 'o-blog-i18n)
   (require 'o-blog-backend)
+  (require 'o-blog-framework)
   (require 'o-blog-obsolete))
 
 (defun o-blog-guess-backend-from-file (file)
