@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-21 13:29:53
+;; Last changed: 2013-08-21 14:18:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -258,18 +258,24 @@ in current-buffer."
     ;; exporting block with ditaa is kinda messy since it requires a real
     ;; file (does not work with a temp-buffer which is not associated to any
     ;; file).
-    (let ((saved-file
-	   (when
-	       (re-search-forward "^#\\+BEGIN_SRC:?[ \t]+\\(ditaa\\)" nil t)
-	     (format "/%s/%s/%s.src.org"
-		     default-directory
-		     (ob:blog-publish-dir BLOG)
-		     ;; variable inherited from `ob-parse-entry'
-		     htmlfile)))
-	  (org-confirm-babel-evaluate nil)
-	  ret)
+    (let* ((saved-file
+	    (when
+		(re-search-forward "^#\\+BEGIN_SRC:?[ \t]+\\(ditaa\\)" nil t)
+	      (format "/%s/%s/%s.src.org"
+		      default-directory
+		      (ob:get 'publish-dir BLOG)
+		      ;; variable inherited from `ob-parse-entry'
+		      (ob:get 'htmlfile entry))))
+	   (default-directory
+	      (if saved-file
+		  (file-name-directory saved-file)
+		default-directory))
+	   (org-confirm-babel-evaluate nil)
+	   ret)
       (when saved-file
-	(ob-write-file saved-file))
+	(unless (featurep 'ob-ditaa)
+	  (require 'ob-ditaa))
+      	(ob:write-file saved-file))
       (let ((html (substring-no-properties
 		   ;; `org-export-as-html' arguments has changed on new
 		   ;; org-version, then again with the new exporter.
