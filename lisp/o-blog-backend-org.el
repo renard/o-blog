@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-21 14:18:45
+;; Last changed: 2013-08-26 16:05:27
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -252,6 +252,7 @@ in current-buffer."
     (org-mode)
     (goto-char (point-min))
     (ob:org-fix-org)
+    (ob:org:publish-linked-files self entry)
     (ob:framework-expand)
     (ob:framework-expand "<\\([^:][^/ \n\t>]+\\)\\([^>]*\\)?>" "</%s>")
 
@@ -437,6 +438,81 @@ in current-buffer."
 			(ob:string-template sub_end)
 			"\n#+END_HTML\n")
 		       (delete-region (point) (point-at-eol))))))))))
+
+
+(defmethod  ob:org:publish-linked-files((self ob:backend:org) entry)
+  "Copy files (defined by \"file:\" link prefix) to page related directory."
+  (save-match-data
+    (save-excursion
+      (goto-char (point-min))
+      (let ((htmlfile (ob:get 'htmlfile entry))
+	    (page (slot-exists-p entry 'page))
+	    (filepath (ob:get 'filepath entry))
+	    (title (ob:get 'title entry))
+	    ret)
+	(while (re-search-forward "\\(\\[file:\\)\\([^]]+\\)\\(\\]\\)" nil t)
+	  (let ((prefix (match-string-no-properties 1))
+		(file  (match-string-no-properties 2))
+		(suffix (match-string-no-properties 3)))
+
+	    (when (file-exists-p file)
+	      (replace-match
+	       (if page
+		   (format "%s%s/%s/%s%s"
+			   prefix
+			   (ob:get 'path-to-root entry)
+			   (or (file-name-directory htmlfile) ".")
+			   (file-name-nondirectory file) suffix)
+
+		 (format "%s%s/%s/%s/%s%s"
+			 prefix
+			 (ob:get 'path-to-root entry)
+			 (file-relative-name "." filepath)
+			 (file-name-sans-extension htmlfile)
+			 (file-name-nondirectory file) suffix ))
+
+	       (add-to-list 'ret file)))))
+	
+	(when ret
+	  (unless page
+	    ;; create a redirection page as index.html into files' directory
+	    (with-temp-buffer
+	      (insert
+	       (mapconcat 'identity
+			  `(,(format "* Redirect from (%s)" title)
+			    ":PROPERTIES:"
+			    ,(format ":PAGE: %s/index.html" (file-name-sans-extension htmlfile))
+			    ":TEMPLATE: page_redirect.html"
+			    ":END:")
+			  "\n"))
+	      (org-mode)
+	      (goto-char (point-min))
+	      (let ((redir (ob:parse-entry self (point-marker) 'page)))
+		(message "REDIR: %S" redir)
+		(set-slot-value redir 'path-to-root
+				(concat "../" (ob:get 'path-to-root entry)))
+		(set-slot-value self 'pages
+				(append (ob:get 'pages self)
+				      (list redir))))))
+
+	  ;; copy all files into their target directory.
+	  (message "Copy file: %S" ret)
+	    
+	  (loop for f in ret
+		do (let ((target
+			  (if page
+			      (format "%s/%s"
+ 				      (ob:blog-publish-dir BLOG)
+				      (file-name-nondirectory f))
+			    (format "%s/%s/%s"
+				    (ob:blog-publish-dir BLOG)
+				    ;; file path is nil when exporting static page?
+				    ;;(or filepath ".")
+				    (file-name-sans-extension htmlfile)
+				    (file-name-nondirectory f)))))
+		     (mkdir (file-name-directory target) t)
+		     (message "COPY %s -> %s" f target)
+		     (ob-do-copy f target))))))))
 
 
 (provide 'o-blog-backend-org)
