@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-07-04 15:26:25
+;; Last changed: 2013-08-25 21:13:14
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -67,7 +67,7 @@
    (day :initarg :day
 	 :type integer
 	 :documentation "")
-   (tags :initarg :tag
+   (tags :initarg :tags
 	 :type list
 	 :documentation "List of ob:tag")
    (category :initarg :category
