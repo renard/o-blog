@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-07-24 16:11:04
+;; Last changed: 2013-08-26 10:53:06
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -56,15 +56,19 @@
 		 path).")
    (articles :initarg :articles
 	     :type list
+	     :initform nil
 	     :documentation "List of ob:article")
    (pages :initarg :pages
 	  :type list
+	  :initform nil
 	  :documentation "List of ob:page")
    (snippets :initarg :snippets
 	     :type list
+	     :initform nil
 	     :documentation "List of ob:snippet")
    (tags :initarg :tags
 	 :type list
+	 :initarg nil
 	 :documentation "List of ob:tag")
    (title :initarg :title
 	  :type string
