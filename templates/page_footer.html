@@ -4,12 +4,16 @@
 	  <div class="row">
 	    <nav class="col-md-3">
 	      <h1><lisp>(ob:gettext :about)</lisp></h1>
+	      <!-- about -->
 	      <lisp>(ob:post-content-html (ob:get-snippet "About"))</lisp>
+	      <!-- /about -->
 	    </nav>
 	    <nav id="links" class="col-md-3">
 	      <h1><lisp>(ob:gettext :links)</lisp></h1>
 	      <ul>
+		<!-- Navigation Footer -->
 		<lisp>(ob:post-content-html (ob:get-snippet "Navigation Footer"))</lisp>
+		<!-- Navigation Footer -->
 	      </ul>
 	    </nav>
 	    <nav id="archives" class="col-md-3">
@@ -32,6 +36,7 @@
 	  </div>
 	</div>
 	<div class="copyright" style="text-align: center;">
+	  <!-- copyright -->
 	  <lisp>(ob:post-content-html (ob:get-snippet "Copyright"))</lisp>
 	  <p><lisp>(ob:gettext :powered-by)</lisp> <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
 	</div>

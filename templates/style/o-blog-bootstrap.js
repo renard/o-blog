@@ -1,23 +1,25 @@
 $(document).ready(
     function() {
+	// Build nav bar
+	var navbarUl = $('.navbar .navbar-collapse > ul');
+	navbarUl.addClass('nav').addClass('navbar-nav');
 
 	/* create the top menu bar */
-	var dropdown = $('.navbar-inner .nav-collapse > ul li ul').parent();
-	dropdown.parent().addClass("nav");
-
+	var dropdown = navbarUl.find('li ul')
+	dropdown.parent().addClass('dropdown')
 	/* find sub menu items */
-	dropdown.addClass("dropdown");
+	//dropdown.parent().findaddClass("dropdown-menu");
 
 	/* and add dropdown features */
-	dropdown.find('> a').addClass('dropdown-toggle')
+	dropdown.parent().find('> a').addClass('dropdown-toggle')
 	    .attr("data-toggle", "dropdown")
 	    .append(' <b class="caret"></b>');
 
-	dropdown.find('> ul').addClass("dropdown-menu");
+	dropdown.addClass("dropdown-menu");
 
 	/* Add divider class if menu item is empty */
 	dropdown.parent().find('.dropdown-menu li').each(function() {
-	    if ( $(this).text() == '\n') $(this).addClass('divider')
+	    if ( $(this).text() == '') $(this).addClass('divider')
 	});
 
 	/* Compute page min height */
@@ -26,4 +28,7 @@ $(document).ready(
 			  $('div.navbar-fixed-top.navbar').outerHeight() -
 			  parseInt($('div#page').css('padding-top')) -
 			  parseInt($('div#page').css('padding-bottom')));
-})
+
+
+    }
+);
