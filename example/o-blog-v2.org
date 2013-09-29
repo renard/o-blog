@@ -1,0 +1,707 @@
+#+TITLE: o-blog-v2
+#+DESCRIPTION: 
+#+DATE: 2013-08-28 14:45:16
+
+#+STARTUP: logdone
+
+
+* Quick start Guide
+  :PROPERTIES:
+  :PAGE:     index.html
+  :TEMPLATE: blog_static_no_title.html
+  :END:
+
+#+begin_jumbotron
+#+begin_row
+#+begin_col: md="7"
+
+#+page-header: title="o-blog" subtitle="A stand-alone blogging tool"
+
+o-blog v2 is still in development.
+#+end_col
+#+begin_col: md="3" o-md="2"
+[[file:{lisp}(ob:path-to-root){/lisp}/features.html][<icon icon="cog icon-spin"> Features]]
+
+[[https://github.com/renard/o-blog][<icon icon="github-sign"> Github]]
+
+[[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][<icon icon="comments-alt"> Testimonials]]
+
+[[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][<icon icon="pencil"> Changelog]]
+
+[[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][<icon icon="bug"> Bug report]]
+#+end_col
+#+end_row
+#+end_jumbotron
+
+
+#+begin_row
+
+
+#+begin_col: md="6"
+#+begin_thumbnail
+#+HTML: <h4>Requirements</h4>
+First you need to install [[http://www.gnu.org/s/emacs][Emacs]] (tested with version 24, might work with 23)
+and [[http://orgmode.org/][Org-mode]] (tested with version 7.8.09, other /might/ work as well).
+#+end_thumbnail
+#+end_col
+
+#+begin_col: md="6"
+#+begin_thumbnail
+#+HTML: <h4>Publish</h4>
+Open the =~example/sample.org= file and type =M-x org-publish-blog=. The
+result site would be published by default in =~example/out=.
+#+end_thumbnail
+#+end_col
+#+end_row
+
+#+begin_row
+#+begin_col: md="6"
+#+begin_thumbnail
+#+HTML: <h4>Using el-get</h4>
+
+If you are using [[https://github.com/dimitri/el-get][el-get]] it would be very easy to install. All you need to type:
+
+#+begin_src
+M-x el-get-install o-blog
+#+end_src
+
+#+begin_alert mod="warning"
+Unless you are use =el-get= 4 or greater, you need to do declare =o-blog= in
+=el-get-sources=.
+#+end_alert
+#+end_thumbnail
+#+end_col
+
+
+#+begin_col: md="6"
+#+begin_thumbnail
+#+HTML: <h4>Manual setup</h4>
+
+Start by cloning the /git/ repository from [[http://github.com][Github]].
+
+#+begin_src bash
+cd ~/.emacs.d
+git clone https://github.com/renard/o-blog.git
+#+end_src
+
+And add following to your =~/.emacs.d/init.el= file:
+
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/o-blog")
+  (require 'o-blog)
+#+end_src
+#+end_thumbnail
+#+end_col
+#+end_row
+
+
+* Blog details
+** Copyright
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+Copyright © 2008-2012 [[mailto:seb%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%CA%82%C9%9B%E2%9D%A9%2520chezwam%2520%E2%9D%A8%C6%A4%C9%B5%C9%A9%C9%B2%CA%88%E2%9D%A9%2520org][Sébastien Gross]]. Published under the therm of the
+[[http://creativecommons.org/licenses/by-nc-sa/2.0/fr/][Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License]].
+
+** About
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]] works.
+
+** Navigation
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/features.html][<icon icon="cog"> Features]]
+
+- [[file:#][<icon icon="book"> Documentation]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/templates.html][Templates]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/structures.html][Structures]]
+  - [[file:{lisp}(ob:path-to-root){/lisp}/functions.html][Functions]]
+  - 
+  - [[file:{lisp}(ob:path-to-root){/lisp}/faq.html][FAQ]]
+  - 
+  - [[file:{lisp}(ob:path-to-root){/lisp}/bug-report.html][Bug report]]
+
+- [[file:#][<icon icon="file"> Tips]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 0))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 0)){/lisp}]]
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 1))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 1)){/lisp}]]
+#+comment:  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 2))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 2)){/lisp}]]
+#+comment:  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 3))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 3)){/lisp}]]
+#+comment:  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips" 4))){/lisp}][{lisp}(ob:post-title (ob:get-last-post "Tips" 4)){/lisp}]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/tags.html][<icon icon="tags"> Tags]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][<icon icon="list"> Archives]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][<icon icon="comments"> Testimonials]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][<icon icon="rss"> RSS]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][<icon icon="pencil"> Changelog]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][<icon icon="tasks"> Roadmap]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/debug.html][(debug)]]
+
+** Navigation Footer
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.html][<icon icon="home"> {lisp}(ob:gettext :home){/lisp}]]
+
+  - [[file:{lisp}(format "%s/%s" (ob:path-to-root) (ob:post-htmlfile (ob:get-last-post "Tips"))){/lisp}][<icon icon="file"> Tips]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/tags.html][<icon icon="tags"> Tags]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][<icon icon="list"> Archives]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/testimonials.html][<icon icon="comments"> Testimonials]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][<icon icon="tasks"> Roadmap]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][<icon icon="rss"> RSS]]
+
+** Articles by tags
+  :PROPERTIES:
+  :PAGE:     tags.html
+  :TEMPLATE: blog_post-by-tags.html
+  :END:
+
+
+
+* Tips
+** DONE Changes since o-blog 1					     :o@blog:
+   CLOSED: [2013-08-21 Wed 14:19]
+
+O-blog 2 major change is the use ob /eieio/ classes. This allows multiple
+backends. Meanwhile only org-mode is yet supported.
+
+The new design also support o-blog v1 functions.
+
+A generic function =ob:get= should be used to retrieve any king of data.
+
+*** Blog items
+| =o-blog= 1                     | =o-blog= 2                          |
+|--------------------------------+-------------------------------------|
+| =(ob:blog-file blog)=          | =(ob:get 'file blog)=               |
+| =(ob:buffer blog)=             | =(ob:get 'buffer blog)=             |
+| =(ob:publish-dir blog)=        | =(ob:get 'publish-dir blog)=        |
+| =(ob:template-dir blog)=       | =(ob:get 'template-dir blog)=       |
+| =(ob:style-dir blog)=          | =(ob:get 'style-dir blog)=          |
+| =(ob:assets-dir blog)=         | =(ob:get 'assets-dir blog)=         |
+| =(ob:posts-filter blog)=       | =(ob:get 'posts-filter blog)=       |
+| =(ob:static-filter blog)=      | =(ob:get 'static-filter blog)=      |
+| =(ob:snippet-filter blog)=     | =(ob:get 'snippet-filter blog)=     |
+| =(ob:title blog)=              | =(ob:get 'title blog)=              |
+| =(ob:description blog)=        | =(ob:get 'description blog)=        |
+| =(ob:url blog)=                | =(ob:get 'url blog)=                |
+| =(ob:language blog)=           | =(ob:get 'language blog)=           |
+| =(ob:post-build-shell blog)=   | =(ob:get 'post-build-shell blog)=   |
+| =(ob:default-category blog)=   | =(ob:get 'default-category blog)=   |
+| =(ob:disqus blog)=             | =(ob:get 'disqus blog)=             |
+| =(ob:analytics blog)=          | =(ob:get 'analytics blog)=          |
+| =(ob:filename-sanitizer blog)= | =(ob:get 'filename-sanitizer blog)= |
+| =(ob:posts-sorter blog)=       | =(ob:get 'posts-sorter blog)=       |
+| =(ob:posts-filepath blog)=     | =(ob:get 'posts-filepath blog)=     |
+| =(ob:posts-htmlfile blog)=     | =(ob:get 'posts-htmlfile blog)=     |
+
+
+*** Post items
+| =o-blog= 1               | =o-blog= 2                    |
+|--------------------------+-------------------------------|
+| =(ob:id post)=           | =(ob:get 'id post)=           |
+| =(ob:title post)=        | =(ob:get 'title post)=        |
+| =(ob:timestamp post)=    | =(ob:get 'timestamp post)=    |
+| =(ob:year post)=         | =(ob:get 'year post)=         |
+| =(ob:month post)=        | =(ob:get 'month post)=        |
+| =(ob:day post)=          | =(ob:get 'day post)=          |
+| =(ob:category post)=     | =(ob:get 'category post)=     |
+| =(ob:tags post)=         | =(ob:get 'tags post)=         |
+| =(ob:template post)=     | =(ob:get 'template post)=     |
+| =(ob:filepath post)=     | =(ob:get 'filepath post)=     |
+| =(ob:filename post)=     | =(ob:get 'filename post)=     |
+| =(ob:htmlfile post)=     | =(ob:get 'htmlfile post)=     |
+| =(ob:path-to-root post)= | =(ob:get 'path-to-root post)= |
+| =(ob:content post)=      | =(ob:get 'content post)=      |
+| =(ob:content-html post)= | =(ob:get 'html post)=         |
+| =(ob:sitemap post)=      | =(ob:get 'sitemap post)=      |
+
+*** Tags items
+| =o-blog= 1        | =o-blog= 2              |
+|-------------------+-------------------------|
+| =(ob:name tags)=  | =(ob:get display tags)= |
+| =(ob:safe tags)=  | =(ob:get 'safe tags)=   |
+| =(ob:count tags)= | =(ob:get 'count tags)=  |
+| =(ob:size tags)=  | =(ob:get 'size tags)=   |
+
+*** Category items
+
+| =o-blog= 1           | =o-blog= 2                  |
+|----------------------+-----------------------------|
+| =(ob:name category)= | =(ob:get display category)= |
+| =(ob:safe category)= | =(ob:get 'safe category)=   |
+
+** DONE Example of some org syntax 				  :usage:org:
+   CLOSED: [2012-01-07 Sat 11:23]
+
+*** Titles
+
+This is a level 1
+
+**** Level 2
+
+This is a level 2
+
+
+***** Level 3
+
+This is a level 3
+
+****** Level 4
+
+This is a level 4
+
+******* Level 5
+
+This is a level 5
+
+******** Level 6
+
+This is a level 6
+
+
+Up to 6 levels of indentation can be used.
+
+*** Praragaphs
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit
+tempor tellus. Donec pretium posuere tellus. Proin quam nisl, tincidunt et,
+mattis eget, convallis nec, purus. Cum sociis natoque penatibus et magnis
+dis parturient montes, nascetur ridiculus mus. Nulla posuere. Donec vitae
+dolor. Nullam tristique diam non turpis. Cras placerat accumsan
+nulla. Nullam rutrum. Nam vestibulum accumsan nisl.
+
+#+html: <div class="two-cols">
+
+Nullam eu ante vel est convallis dignissim. Fusce suscipit, wisi nec
+facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis
+odio. Nunc porta vulputate tellus. Nunc rutrum turpis sed pede. Sed
+bibendum. Aliquam posuere. Nunc aliquet, augue nec adipiscing interdum,
+lacus tellus malesuada massa, quis varius mi purus non odio. Pellentesque
+condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non
+luctus diam neque sit amet urna. Curabitur vulputate vestibulum lorem. Fusce
+sagittis, libero non molestie mollis, magna orci ultrices dolor, at
+vulputate neque nulla lacinia eros. Sed id ligula quis est convallis
+tempor. Curabitur lacinia pulvinar nibh. Nam a sapien.
+
+Pellentesque dapibus suscipit ligula. Donec posuere augue in quam. Etiam vel
+tortor sodales tellus ultricies commodo. Suspendisse potenti. Aenean in sem
+ac leo mollis blandit. Donec neque quam, dignissim in, mollis nec, sagittis
+eu, wisi. Phasellus lacus. Etiam laoreet quam sed arcu. Phasellus at dui in
+ligula mollis ultricies. Integer placerat tristique nisl. Praesent
+augue. Fusce commodo. Vestibulum convallis, lorem a tempus semper, dui dui
+euismod elit, vitae placerat urna tortor vitae lacus. Nullam libero mauris,
+consequat quis, varius et, dictum id, arcu. Mauris mollis tincidunt
+felis. Aliquam feugiat tellus ut neque. Nulla facilisis, risus a rhoncus
+fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.
+
+#+html: </div>
+
+
+#+begin_verse
+Great clouds overhead
+Tiny black birds rise and fall
+Snow covers Emacs
+
+-- AlexSchroeder
+#+end_verse
+
+#+begin_quote
+Everything should be made as simple as possible,
+but not any simpler -- Albert Einstein
+#+end_quote
+
+#+BEGIN_CENTER
+Everything should be made as simple as possible, \\
+but not any simpler
+#+END_CENTER
+
+*** Lists
+
+As taken from the Org-mode manual:
+
+My favorite scenes are (in this order)
+        1. The attack of the Rohirrim
+        2. Eowyn's fight with the witch king
+           + this was already my favorite scene in the book
+           + I really like Miranda Otto.
+        3. Peter Jackson being shot by Legolas
+           - on DVD only
+           He makes a really funny face when it happens.
+But in the end, no individual scenes matter but the film as a whole.
+Important actors in this film are:
+        - Elijah Wood :: He plays Frodo
+        - Sean Austin :: He plays Sam, Frodo's friend.  I still remember
+          him very well from his role as Mikey Walsh in The Goonies.
+
+*** Footnotes
+
+The Org-mode homepage[fn:1] now looks a lot better than it used to.
+
+[fn:1] The link is: http://orgmode.org
+
+*** Emphasis and monospace
+
+You can make words *bold*, /italic/, _underlined_, =code= and ~verbatim~,
+and, if you must, =+strike-through+=. Text in the code and verbatim string
+is not processed for Org-mode specific syntax; it is exported verbatim.
+
+*** Horizontal rules
+
+A line consisting of only dashes, and at least 5 of them, will be exported
+as a horizontal line (=&lt;hr/>= in HTML and =\hrule= in LaTeX).
+
+------
+
+As shown previously.
+
+*** Comment lines
+
+Lines starting with =#= in column zero are treated as comments and will
+never be exported. If you want an indented line to be treated as a comment,
+start it with =#+ =. Also, entire subtrees starting with the word =COMMENT=
+will never be exported. Finally, regions surrounded by =#+BEGIN\_COMMENT=
+... =#+END\_COMMENT= will not be exported.
+
+#+begin_comment
+C-c ;
+Toggle the COMMENT keyword at the beginning of an entry.
+#+end_comment
+
+*** Images and Tables
+
+Table
+
+#+CAPTION: This is the caption for the next table (or link)
+#+LABEL:   tbl:basic-data
+|----------+----------+----------+----------+----------------------------------------------------------------------|
+| Header 1 | Header 2 | Header 3 | Header 4 | Header 5                                                             |
+|----------+----------+----------+----------+----------------------------------------------------------------------|
+|      1.1 |      1.2 |      1.3 | X        | This /cell/ has a *very* =long= ~line~ _with_  _{special} ^{layouts} |
+|      2.1 |      2.2 |      3.3 | Y        |                                                                      |
+|----------+----------+----------+----------+----------------------------------------------------------------------|
+|      3.1 |      3.1 |      C.1 | D.1      | E.1                                                                  |
+|----------+----------+----------+----------+----------------------------------------------------------------------|
+
+
+Image
+
+#+CAPTION: This is the caption for the next figure link (or table)
+#+LABEL:   fig:SED-HR4049
+[[file:200px-Org-mode-unicorn.svg.png][file:org-mode-unicorn.png]]
+
+*** Literal examples
+
+#+BEGIN_EXAMPLE
+Some example from a text file.
+#+END_EXAMPLE
+
+
+Here is an example
+        : Some example from a text file.
+
+#+BEGIN_SRC emacs-lisp
+  (defun org-xor (a b)
+    "Exclusive or."
+    (if a (not b) b))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp -n -r
+  (save-excursion                  (ref:sc)
+     (goto-char (point-min)))       (ref:jump)
+#+END_SRC
+
+In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]]
+jumps to point-min.
+
+*** Special symbols
+
+Angles are written as Greek letters \alpha, \beta and \gamma.
+
+*** Subscripts and superscripts
+
+The mass of the sun is M_sun = 1.989 x 10^30 kg.  The radius of
+the sun is R_{sun} = 6.96 x 10^8 m.
+
+*** links
+
+- outsite (page): [[https://github.com/renard/o-blog][/o-blog/ home]].
+- [[Creating a blog]]
+- insite (file): [[file:o-blog.el]]
+- in page (anchor): [[Literal examples]]
+
+** DONE Example of bootstrap syntax 			    :usage:bootstrap:
+   CLOSED: [2012-01-07 Sat 11:23]
+
+*** Panel
+
+#+begin_row
+#+begin_col: md="6"
+
+#+BEGIN_SRC 
+  ,#+begin_panel
+  ,<panel-heading  title="Panel title">Panel heading</panel-heading>
+  ,<panel-body>Panel body</panel-body>
+  ,<panel-footer>Panel footer</panel-footer>
+  ,#+end_panel
+#+END_SRC
+
+#+end_col
+
+#+begin_col: md="6"
+#+begin_panel
+<panel-heading title="Panel title"></panel-heading>
+<panel-body>Panel body</panel-body>
+<panel-footer>Panel footer</panel-footer>
+#+end_panel
+#+end_col
+
+#+end_row
+
+#+begin_row
+#+begin_col: md="7"
+
+#+BEGIN_SRC
+  ,#+panel: alt="info"
+  ,<panel-heading  title="Panel title">Panel heading</panel-heading>
+  ,<panel-body>Panel body</panel-body>
+  ,<panel-footer>Panel footer</panel-footer>
+  ,#+end_panel
+#+END_SRC
+
+#+end_col
+
+#+begin_col: md="5"
+#+panel: alt="info"
+<panel-heading title="Panel title"></panel-heading>
+<panel-body>Panel body</panel-body>
+<panel-footer>Panel footer</panel-footer>
+#+end_panel
+#+end_col
+
+#+end_row
+
+*** Labels
+
+#+begin_row
+#+begin_col: md="7"
+#+BEGIN_SRC xml
+  ,<label>Default</label>
+  ,<label mod="default">Default</label>
+  ,<label mod="primary">Primary</label>
+  ,<label mod="success">Success</label>
+  ,<label mod="info">Info</label>
+  ,<label mod="warning">Warning</label>
+  ,<label mod="danger">Danger</label>
+#+END_SRC
+#+end_col
+#+begin_col: md="5"
+<label>Default</label>
+
+<label mod="default">Default</label>
+
+<label mod="primary">Primary</label>
+
+<label mod="success">Success</label>
+
+<label mod="info">Info</label>
+
+<label mod="warning">Warning</label>
+
+<label mod="danger">Danger</label>
+#+end_col
+#+end_row
+*** Badges
+
+#+begin_row
+#+begin_col: md="7"
+#+BEGIN_SRC xml
+  ,<badge>42</badge>
+  ,<badge></badge>
+#+END_SRC
+#+end_col
+#+begin_col: md="5"
+<badge>42</badge>
+
+<badge></badge>
+#+end_col
+#+end_row
+*** Jumbotron
+
+#+begin_row
+#+begin_col: md="7"
+#+BEGIN_SRC org
+  ,#+begin_jumbotron
+  This is a simple hero unit, a simple jumbotron-style component for calling
+  extra attention to featured content or information.
+  ,#+end_jumbotron
+#+END_SRC
+#+end_col
+#+begin_col: md="5"
+#+begin_jumbotron
+This is a simple hero unit, a simple jumbotron-style component for calling
+extra attention to featured content or information.
+#+end_jumbotron
+#+end_col
+#+end_row
+*** Page header
+
+#+begin_row
+#+begin_col: md="7"
+#+BEGIN_SRC xml
+  ,<page-header title="Example page header" subtitle="Subtext for header"/>
+#+END_SRC
+#+end_col
+#+begin_col: md="5"
+<page-header title="Example page header" subtitle="Subtext for header">
+#+end_col
+#+end_row
+*** Alerts
+
+#+begin_row
+#+begin_col: md="7"
+#+BEGIN_SRC xml
+  ,<alert>Default</alert>
+  ,<alert mod="success">Success</alert>
+  ,<alert mod="info">Info</alert>
+  ,<alert mod="warning">Warning</alert>
+  ,<alert mod="danger">Danger</alert>
+#+END_SRC
+#+end_col
+#+begin_col: md="5"
+<alert mod="success">Success</alert>
+<alert mod="info">Info</alert>
+<alert mod="warning">Warning</alert>
+<alert mod="danger">Danger</alert>
+#+end_col
+#+end_row
+*** Well
+
+#+begin_row
+#+begin_col: md="7"
+#+BEGIN_SRC xml
+  ,<well>Look, I'm in a large well!</well>
+  ,<well mod="sm">Look, I'm in a small well!</well>
+#+END_SRC
+#+end_col
+#+begin_col: md="5"
+<well>Look, I'm in a large well!</well>
+<well mod="sm">Look, I'm in a small well!</well>
+#+end_col
+#+end_row
+
+
+** TODO Example of ditaa syntax 				:usage:ditaa:
+   CLOSED: [2012-01-07 Sat 11:23]
+
+#+begin_src 
+    +-----------+        +---------+  
+    |    PLC    |        |         |                
+    |  Network  +<------>+   PLC   +<---=---------+ 
+    |    cRED   |        |  c707   |              | 
+    +-----------+        +----+----+              | 
+                              ^                   | 
+                              |                   | 
+                              |  +----------------|-----------------+
+                              |  |                |                 |
+                              v  v                v                 v
+      +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
+      |          |       |          |      |           |      |           |      +----+      +----+
+      | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
+      |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
+      +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
+         ^    ^          +----------+             ^           +-------+---+
+         |    |                                   |                        
+         |    +--------=--------------------------+                    
+         v                                                             
++--------+--------+                                                         
+|                 |                                                         
+| Millwide System |            -------- Data ---------                      
+| cBLU            |            --=----- Signals ---=--                      
++-----------------+
+#+end_src
+
+
+#+begin_src ditaa :file some_filename.png :cmdline -r -s 0.8
+    +-----------+        +---------+  
+    |    PLC    |        |         |                
+    |  Network  +<------>+   PLC   +<---=---------+ 
+    |    cRED   |        |  c707   |              | 
+    +-----------+        +----+----+              | 
+                              ^                   | 
+                              |                   | 
+                              |  +----------------|-----------------+
+                              |  |                |                 |
+                              v  v                v                 v
+      +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
+      |          |       |          |      |           |      |           |      +----+      +----+
+      | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
+      |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
+      +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
+         ^    ^          +----------+             ^           +-------+---+
+         |    |                                   |                        
+         |    +--------=--------------------------+                    
+         v                                                             
++--------+--------+                                                         
+|                 |                                                         
+| Millwide System |            -------- Data ---------                      
+| cBLU            |            --=----- Signals ---=--                      
++-----------------+
+#+end_src
+
+* Static Pages
+** Debug
+   :PROPERTIES:
+   :PAGE:     debug.html
+   :TEMPLATE: debug.html
+   :SITEMAP:  f
+   :END:
+
+** Testimonials
+   :PROPERTIES:
+   :PAGE:     testimonials.html
+   :END:
+
+#+begin_row
+#+begin_col: md="6"
+
+<jumbotron>
+
+#+HTML: <h1>They use it</h1>
+
+- [[http://renard.github.com/o-blog][O-blog Project]]
+- [[http://docs.chezwam.org][Mes doc à moi]]
+- [[http://from-the-cloud.com/][From the cloud]]
+- [[http://exaos.github.com/o-blog/][exaos]]
+- [[http://mikio.github.com/index.html][Mikio Kun]]
+- [[http://mimes.is/][Journal of the creative imagination]]
+- [[http://www.djcbsoftware.nl][DJCB Software]]
+- [[http://dimilar.com/de/index.html][Erlang Vision]]
+- [[http://pharos-alexandria.github.com][Pharos (Annette von Stockhausen)]]
+
+</jumbotron>
+
+
+<jumbotron>
+If you do use o-blog, please [[https://github.com/renard/o-blog/issues/new][drop me a line]].
+</jumbotron>
+
+
+#+end_col
+#+end_row
