@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2013-08-21 12:34:32
+;; Last changed: 2013-09-29 02:23:02
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -211,12 +211,6 @@
 overriden in subclasses."
   (message "Method `%s' is not defined in class `%s'."
 	   'ob:compute-framework (object-class self)))
-
-
-
-
-
-(defvar ob:framework-compents
   
 
 
