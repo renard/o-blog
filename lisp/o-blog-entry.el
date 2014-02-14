@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2013-08-25 21:13:14
+;; Last changed: 2014-02-14 18:18:21
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -136,12 +136,13 @@
 					   (oref self htmlfile))))
 	(ob:write-file (format "%s/%s"
 			       (oref BLOG publish-dir)
-			       (oref self htmlfile)))))
-    (with-temp-buffer
-      (insert (oref self html))
-      	(ob:write-file (format "%s/%s.txt"
-			       (oref BLOG publish-dir)
-			       (oref self htmlfile))))))
+			       (oref self htmlfile))))
+      ;; (with-temp-buffer
+      ;; 	(insert (oref self html))
+      ;; 	(ob:write-file (format "%s/%s.txt"
+      ;; 			       (oref BLOG publish-dir)
+      ;; 			       (oref self htmlfile))))
+      )))
 
 (defclass ob:page (ob:entry)
   ((template :initarg :template
