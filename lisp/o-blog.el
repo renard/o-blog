@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2013-08-21 13:31:18
+;; Last changed: 2014-02-14 00:55:18
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -24,6 +24,11 @@
   (require 'o-blog-backend)
   (require 'o-blog-framework)
   (require 'o-blog-obsolete))
+
+(defun o-blog-version()
+  "return current o-blog version."
+  "o-blog v2.0")
+
 
 (defun o-blog-guess-backend-from-file (file)
   "Try to guess o-blog back from FILE or current buffer."

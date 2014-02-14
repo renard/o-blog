@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-26 16:05:27
+;; Last changed: 2014-02-14 01:18:50
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -19,7 +19,9 @@
 (eval-when-compile
   (require 'eieio nil t)
   (require 'o-blog-backend nil t)
-  (require 'ox))
+  (require 'ox)
+  (require 'org-archive)
+  (require 'org-table))
 
 
 (defclass ob:backend:org (ob:backend)
@@ -236,9 +238,11 @@ in current-buffer."
     ;; Org export html wrapped within <div id="content">...</div>
     ;; remove that div.
     (save-excursion
-      (delete-region (point-at-bol) (point-at-eol))
-      (goto-char (point-max))
-      (delete-region (point-at-bol) (point-at-eol)))
+      (save-match-data
+	(when (search-forward "<div id=\"content\">" nil t)
+	  (delete-region (point-at-bol) (point-at-eol))
+	  (goto-char (point-max))
+	  (delete-region (point-at-bol) (point-at-eol)))))
     (ob:org-fix-html-level-numbering self)
     (ob:org-fix-icons self)
     (buffer-substring-no-properties (point-min) (point-max))))
