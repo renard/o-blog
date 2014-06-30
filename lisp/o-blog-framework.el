@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2013-09-29 02:23:02
+;; Last changed: 2014-06-30 23:25:02
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -141,7 +141,7 @@
 		   (xml
 		    (format "<%s%s>"
 			    (match-string-no-properties 1)
-			    (match-string-no-properties 2)))
+			    (or (match-string-no-properties 2) "")))
 		   (beg (+ (match-beginning 0)
 			   (if (string= "," (match-string 1)) 1 0)))
 		   (end (match-end 0))
