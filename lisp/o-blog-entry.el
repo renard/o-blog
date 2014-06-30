@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-02-14 18:18:21
+;; Last changed: 2014-06-26 01:06:30
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -40,6 +40,9 @@
    (file :initarg :file
 	   :type string
 	   :documentation "")
+   (files-to-copy :initarg :files-to-copy
+		  :type list
+		  :documentation "List of files to copy when publishing")
    (htmlfile :initarg :htmlfile
 	   :type string
 	   :documentation "")
@@ -137,6 +140,13 @@
 	(ob:write-file (format "%s/%s"
 			       (oref BLOG publish-dir)
 			       (oref self htmlfile))))
+
+      (loop for file in (ob:get 'files-to-copy self)
+	    do (ob-do-copy file
+			   (format (format "%s/%s"
+					   (oref BLOG publish-dir)
+					   (oref self path)))))
+
       ;; (with-temp-buffer
       ;; 	(insert (oref self html))
       ;; 	(ob:write-file (format "%s/%s.txt"
