@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-02-14 01:18:50
+;; Last changed: 2014-06-23 22:46:14
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -313,8 +313,8 @@ in current-buffer."
 		    (let ((x (if x (string-to-int x) 0)))
 		      (cond
 		       ((= 0 x) "")
-		       ((< 0 x) (format "span%d" x))
-		       ((> 0 x) (format "offset%d" (- x))))))))
+		       ((< 0 x) (format "col-sm-%d" x))
+		       ((> 0 x) (format "col-sm-offset-%d" (- x))))))))
 	    (format "%s %s"
 		    (funcall i2c a1)
 		    (funcall i2c a2)))))
@@ -330,6 +330,11 @@ in current-buffer."
 		     (match-string 2) "</p>")
 	       "")))
 	   "^#\\+END_O_BLOG_ALERT" "</div>")
+	  ;; comment
+	  ("^#\\+BEGIN_COMMENT"
+	   "<!-- Org comment\n"
+	   "^#\\+END_COMMENT"
+	   "\nEnd of Org comment-->\n")
 	  ;; Hero unit
 	  ("^#\\+BEGIN_O_BLOG_HERO_UNIT"
 	   "<div class=\"hero-unit\">\n"
