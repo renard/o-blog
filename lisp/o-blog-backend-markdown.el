@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-06-30 23:09:45
+;; Last changed: 2014-06-30 23:11:46
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -149,45 +149,6 @@
 	   entry 'html
 	   (buffer-substring-no-properties (point-min)(point-max))))))))
 
-
-(defun ob:markdown:expand-bootstrap ()
-  "Expand bootstrap features in markdown source format."
-  (save-excursion
-    (save-match-data
-      (goto-char (point-min))
-      (while (search-forward-regexp "<\\([a-z][a-z0-9-]*\\)\\s-*\\([^>/]+\\)?\\(/\\)?>" nil t)
-	(let* ((all (match-string-no-properties 0))
-	       (tag (match-string-no-properties 1))
-	       (attributes (match-string-no-properties 2))
-	       (closed (match-string-no-properties 3))
-	       (data (assoc tag ob:markdown:bootstrap:widgets)))
-	  (when data
-	    (let ((xml (with-temp-buffer
-			 (insert (format "<%s %s/>" tag (or attributes "")))
-			 (goto-char (point-min))
-			 (xml-parse-region))))
-	      (message "%S" xml)
-	      (narrow-to-region (- (point) (length all)) (point))
-	      (delete-region (point-min) (point-max))
-	      (let ((attrs (cadar xml))
-		    (string (nth 1 data)))
-		(loop for (k . v) in attrs
-		      do (setf
-			  string
-			  (if (string-match (format "%%%s%%" k) string)
-			      (replace-regexp-in-string
-			       (format "%%%s%%" k) v string)
-			    (replace-regexp-in-string
-			     "\\(/?>\\)"
-			     (format " %s=%S\\1" k v) string))))
-		(insert string))
-	      (widen)
-	      (unless closed
-		(search-forward (format "</%s>" tag))
-		(narrow-to-region (- (point) (length tag) 3) (point))
-		(delete-region (point-min) (point-max))
-		(insert (nth 2 data))
-		(widen)))))))))
 
 (defun ob:markdown:get-images (object)
   ""
