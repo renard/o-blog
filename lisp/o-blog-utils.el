@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2013-08-21 12:33:08
+;; Last changed: 2014-07-01 21:51:50
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -75,6 +75,14 @@ when publishing a page."
 	      (backward-char (length (match-string 0)))
 	      (backward-sexp)
 	      (setq sexp (substring-no-properties (thing-at-point 'sexp)))
+	      ;; In some exporters (pandoc) " are replaced with &quot; which
+	      ;; breaks lisp interpolation.
+	      (with-temp-buffer
+		(insert sexp)
+		(goto-char (point-min))
+		(while (search-forward "&quot;" nil t)
+		  (replace-match "\"" nil t))
+		(setq sexp (buffer-string)))
 	      (narrow-to-region beg end)
 	      (delete-region (point-min) (point-max))
 	      (insert
