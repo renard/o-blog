@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-01 19:51:55
+;; Last changed: 2014-07-01 19:55:38
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -28,19 +28,8 @@
   "Object type handeling o-blog files in markdown.")
 
 (defmethod ob:find-files ((self ob:backend:markdown))
-
-  (loop for dir = (file-name-directory (ob:get-name self))
-	then (file-name-directory (directory-file-name dir))
-	do (message "DIR: %S" dir)
-	until (or (string= "/" dir)
-		  (file-exists-p (format "%s/o-blog.conf" dir)))
-	finally (set-slot-value self 'index-file dir))
-  
   (set-slot-value self 'source-files
-		  (ob:find-files-1 self "txt"))
-
-  (message "%S D: %s\nF: %S" self default-directory (ob:get 'source-files self))
-  )
+		  (ob:find-files-1 self "txt")))
 
 
 (defmethod ob:parse-config ((self ob:backend:markdown) &optional file)
