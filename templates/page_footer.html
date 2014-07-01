@@ -10,11 +10,9 @@
 	    </nav>
 	    <nav id="links" class="col-md-3">
 	      <h1><lisp>(ob:gettext :links)</lisp></h1>
-	      <ul>
-		<!-- Navigation Footer -->
-		<lisp>(ob:post-content-html (ob:get-snippet "Navigation Footer"))</lisp>
-		<!-- Navigation Footer -->
-	      </ul>
+	      <!-- Navigation Footer -->
+	      <lisp>(ob:post-content-html (ob:get-snippet "Navigation Footer"))</lisp>
+	      <!-- Navigation Footer -->
 	    </nav>
 	    <nav id="archives" class="col-md-3">
 	      <h1><a href="<lisp>(ob:path-to-root)</lisp>/archives.html"><lisp>(ob:gettext :archives)</lisp></a></h1>
