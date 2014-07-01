@@ -60,17 +60,27 @@ current buffer."
 	   file
 	   (buffer-file-name)
 	   (read-file-name "O-blog file to publish: " nil nil t)))
-	 (default-directory (file-name-directory file))
 	 (backend (or
 		   backend
 		   (o-blog-guess-backend-from-file file)))
+	 (default-directory
+	   (let ((dir (file-name-directory file)))
+	     (if (member backend '(org))
+		 dir
+		 (loop until (or (string= "/" dir)
+				 (file-exists-p (format "%s/o-blog.conf" dir)))
+		       do (setf dir (file-name-directory (directory-file-name dir)))))
+	     dir))
 	 (classfct (intern (format "ob:backend:%s" backend))))
 
+    (when (member backend '(markdown))
+      (setf file (format "%s/o-blog.conf" default-directory)))
+    
     (let ((lib (intern (format "o-blog-backend-%s" backend))))
       (unless (featurep lib)
 	(require lib)))
 
-    (ob:publish (funcall classfct file))))    
+    (ob:publish (funcall classfct file))))
     ;; (let* ((blog (funcall classfct file))
     ;; 	   ;; Just an alias for backward compatibility
     ;; 	   ;; TODO: Remove me
