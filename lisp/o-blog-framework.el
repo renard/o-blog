@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-06-30 23:25:02
+;; Last changed: 2014-07-01 09:31:47
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -35,8 +35,51 @@
   "Component used by ob:compute-framework")
 
 
-(defvar ob:framework-components
+(setq ob:framework-components
   (list
+   (ob:framework-component
+    'lead :backends '(org)
+    :start "<p class=\"lead\">"
+    :end "</p>")
+
+   (ob:framework-component
+    'mark :backends '(org)
+    :start "<mark>"
+    :end "</mark>")
+
+   (ob:framework-component
+    'del :backends '(org)
+    :start "<del>"
+    :end "</del>")
+
+   (ob:framework-component
+    'right :backends '(org)
+    :start "<p class=\"text-right\">"
+    :end "</p>")
+
+   (ob:framework-component
+    'left :backends '(org)
+    :start "<p class=\"text-left\">"
+    :end "</p>")
+
+   (ob:framework-component
+    'justify :backends '(org)
+    :start "<p class=\"text-justify\">"
+    :end "</p>")
+
+   (ob:framework-component
+    'center :backends '(org)
+    :start "<p class=\"text-center\">"
+    :end "</p>")
+
+   (ob:framework-component
+    'nowrap :backends '(org)
+    :start "<p class=\"text-nowrap\">"
+    :end "</p>")
+
+   
+   
+   
    (ob:framework-component
     'jumbotron :backends '(org)
     :start "<div class=\"jumbotron\">"
@@ -116,10 +159,42 @@
    (ob:framework-component
     'thumbnail :backends '(org)
     :start "<div class=\"thumbnail\">"
-    :end "</div>")))
+    :end "</div>")
+
+   (ob:framework-component
+    'table :backends '(org)
+    :start '(format "<table class=\"table %s\">"
+		    (loop for v in '(striped bordered hover condensed)
+			  with out = '()
+			  when (boundp v)
+			  collect (format "table-%s" v) into out
+			  finally return (mapconcat 'identity out " ")))
+			  
+    :end "</table>")
+
+   (ob:framework-component
+    'tr :backends '(org)
+    :start '(format "<tr%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
+    :end "</tr>")
+
+   (ob:framework-component
+    'td :backends '(org)
+    :start '(format "<td%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
+    :end "</td>")
+
+   
+   ))
 
 (defun ob:framework-expand (&optional re-start re-end prefix suffix comment)
-  ""
+  "Expand framework widgets using RE-START and RE-END to delimit notations,
+convert widget to their HTML notation. COMMENT is an escape
+string to prevent widget expansion.
+
+RE-START is a 2-group regexp. First group is the widget name,
+second one is a list of parameters.
+
+RE-END is passed to `format' with widget name as parameter.
+"
   (let ((prefix (or prefix "@@html:"))
 	(suffix (or suffix "@@"))
 	(re-start (or re-start "^#\\+\\(?:begin_\\)?\\([^ \n\t:]+\\):?\\([^\n>]+\\)?$"))
