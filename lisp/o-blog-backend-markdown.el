@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-06-30 23:11:46
+;; Last changed: 2014-07-01 09:39:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -139,7 +139,7 @@
   ""
   (with-temp-buffer
     (insert (ob:get 'source entry))
-    (ob:framework-expand "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"  "</%s>" "" "")
+    (ob:framework-expand "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"  "</%s>" "" "" "#")
     (let ((buff-src (current-buffer)))
       (with-temp-buffer
 	(let ((buff-out (current-buffer)))
