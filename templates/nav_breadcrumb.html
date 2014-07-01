@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-  <li><a href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:gettext :home)</lisp></a> <span class="divider">/</span></li>
+  <li><a href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:gettext :home)</lisp></a> <span class="divider"></span></li>
   <lisp>
 (cond
  ;; Static page or post
@@ -13,7 +13,7 @@
 	       (setf prev (format "%s/%s" prev (if (ob:category-p p) (ob:category-safe p) p)))
 	       (insert
 		(format
-		 "<li><a href=\"%s/index.html\">%s</a> <span class=\"divider\">/</span></li>"
+		 "<li><a href=\"%s/index.html\">%s</a> <span class=\"divider\"></span></li>"
 		 prev (if (ob:category-p p) (ob:category-name p) p))))))
   (unless (and
 	   (string= "index.html" (ob:post-htmlfile POST))
@@ -24,18 +24,18 @@
 
  ;; archives
  ((and (boundp 'MONTH) (boundp 'YEAR) (boundp 'CATEGORY))
-  (insert "<li><a href=\"../../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
-  (insert (format "<li><a href=\"../../index.html\">%s</a> <span class=\"divider\">/</span></li>"  (ob:category-name CATEGORY)))
-  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  YEAR))
+  (insert "<li><a href=\"../../../archives.html\">Archives</a> <span class=\"divider\"></span></li>")
+  (insert (format "<li><a href=\"../../index.html\">%s</a> <span class=\"divider\"></span></li>"  (ob:category-name CATEGORY)))
+  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\"></span></li>"  YEAR))
   (insert (format "<li>%.2d</li>" MONTH)))
 
  ((and (boundp 'YEAR) (boundp 'CATEGORY))
-  (insert "<li><a href=\"../../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
-  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\">/</span></li>"  (ob:category-name CATEGORY)))
+  (insert "<li><a href=\"../../archives.html\">Archives</a> <span class=\"divider\"></span></li>")
+  (insert (format "<li><a href=\"../index.html\">%s</a> <span class=\"divider\"></span></li>"  (ob:category-name CATEGORY)))
   (insert (format "<li>%s</li>" YEAR)))
 
  ((boundp 'CATEGORY)
-  (insert "<li><a href=\"../archives.html\">Archives</a> <span class=\"divider\">/</span></li>")
+  (insert "<li><a href=\"../archives.html\">Archives</a> <span class=\"divider\"></span></li>")
   (insert (format "<li>%s</li>" (ob:category-name CATEGORY))))
 
  ((and
@@ -46,7 +46,7 @@
 
  ;; Tags
  ((boundp 'TAG)
-  (insert "<li><a href=\"index.html\">Tags</a> <span class=\"divider\">/</span></li>")
+  (insert "<li><a href=\"index.html\">Tags</a> <span class=\"divider\"></span></li>")
   (insert (format "<li>%s</li>" (ob:tags-name TAG))))
 
   ((and
