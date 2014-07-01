@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-01 09:31:47
+;; Last changed: 2014-07-01 18:42:11
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -53,6 +53,12 @@
     :end "</del>")
 
    (ob:framework-component
+    'kbd :backends '(org)
+    :start "<kbd>"
+    :end "</kbd>")
+
+   
+   (ob:framework-component
     'right :backends '(org)
     :start "<p class=\"text-right\">"
     :end "</p>")
@@ -93,6 +99,19 @@
 		 (format " <small>%s</small>" subtitle)
 	       "")))
    (ob:framework-component
+    'caption :backends '(org)
+    :start '(format
+	     "<div class=\"caption\">%s"
+	     (if (boundp 'title)
+		 (format "<h3>%s</h3>" title)
+	       ""))
+    :end "</div>")
+   (ob:framework-component
+    'thumbnail :backends '(org)
+    :start "<div class=\"thumbnail\">"
+    :end "</div>")
+
+   (ob:framework-component
     'glyphicon :backends '(org)
     :start '("<span class=\"glyphicon glyphicon-" icon "\"></span>"))
    (ob:framework-component
@@ -100,7 +119,8 @@
     :start '("<span class=\"icon-" icon "\"></span>"))
    (ob:framework-component
     'row :backends '(org)
-    :start "<div class=\"row\">"
+    :start (format "<div class=\"row%s\">"
+		   (if (boundp 'equal) " equal" ""))
     :end "</div>")
    (ob:framework-component
     'col :backends '(org)
@@ -182,6 +202,41 @@
     :start '(format "<td%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
     :end "</td>")
 
+   (ob:framework-component
+    'source :backends '(org)
+    :start '(let* ((cur-point (point))
+		   (end-point (unless (boundp 'src-file)
+				(save-match-data
+				  (search-forward "</source>"))))
+		   (content (when end-point
+			      (buffer-substring-no-properties (1+ cur-point)
+			       (- end-point (length "</source>")))))
+		   (func (when (and (boundp 'mode) mode)
+			   (setq func (intern (format "%s-mode" mode)))))
+		   html)
+
+	      (with-temp-buffer
+		(if (boundp 'src-file)
+		    (progn
+		      (insert-file-contents src-file)
+		      (unless func
+			(setq func (assoc-default src-file auto-mode-alist
+						  'string-match))))
+		  (insert content))
+		(if (functionp func)
+		    (funcall func)
+		  (warn (concat "Mode %s not found for %s. "
+				"Consider installing it. "
+				"No syntax highlight would be bone this time.")
+			mode (if (boundp 'src-file) src-file "inline")))
+		;; Unfortunately rainbow-delimiter-mode does not work fine.
+		;; See https://github.com/jlr/rainbow-delimiters/issues/5
+		(font-lock-fontify-buffer)
+		(setf html (htmlize-region-for-paste (point-min) (point-max))))
+
+	      (when end-point
+		(delete-region cur-point (- end-point (length "</source>"))))
+	      (format "<div class=\"src %s\">%s</div>" (or mode "") html)))
    
    ))
 
@@ -249,11 +304,12 @@ RE-END is passed to `format' with widget name as parameter.
 		  ;; Replace first tag
 		  (narrow-to-region beg end)
 		  (delete-region (point-min) (point-max))
+		  (widen)
 		  (insert
 		   prefix
 		   (ob:string-template (ob:get 'start replacement))
 		   suffix)
-		  (widen)
+
 		  ;; If tag must be closed, look up for closing tag
 		  (when (ob:get 'end replacement)
 		    (save-match-data
