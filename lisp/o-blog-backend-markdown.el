@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-01 09:39:17
+;; Last changed: 2014-07-01 19:51:55
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -22,26 +22,25 @@
   (require 'markdown-mode nil t))
 
 
-(setq ob:markdown:bootstrap:widgets
-  '(("jumbotron" "<div class=\"jumbotron\">" "</div>")
-    ("page-header" "<div class=\"page-header\">" "</div>")
-    ("alert" "<div class=\"alert alert-%type%\" role=\"alert\">" "</div>")
-    ("panel"  "<div class=\"panel panel-%type%\">" "</div>")
-
-
-    ))
-
-
-
-
 
 (defclass ob:backend:markdown (ob:backend)
   ()
   "Object type handeling o-blog files in markdown.")
 
 (defmethod ob:find-files ((self ob:backend:markdown))
+
+  (loop for dir = (file-name-directory (ob:get-name self))
+	then (file-name-directory (directory-file-name dir))
+	do (message "DIR: %S" dir)
+	until (or (string= "/" dir)
+		  (file-exists-p (format "%s/o-blog.conf" dir)))
+	finally (set-slot-value self 'index-file dir))
+  
   (set-slot-value self 'source-files
-		  (ob:find-files-1 self "txt")))
+		  (ob:find-files-1 self "txt"))
+
+  (message "%S D: %s\nF: %S" self default-directory (ob:get 'source-files self))
+  )
 
 
 (defmethod ob:parse-config ((self ob:backend:markdown) &optional file)
@@ -125,11 +124,8 @@
 
 	       (set-slot-value obj 'files-to-copy
 			       (ob:markdown:get-images obj))
-
-
-	       (message "*** %S" obj)
-	       (message "FILES TO COPY: %S" (ob:get 'files-to-copy obj))
-
+	       ;; (message "*** %S" obj)
+	       ;; (message "FILES TO COPY: %S" (ob:get 'files-to-copy obj))
 	       ))))
 
 
@@ -139,15 +135,19 @@
   ""
   (with-temp-buffer
     (insert (ob:get 'source entry))
-    (ob:framework-expand "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"  "</%s>" "" "" "#")
-    (let ((buff-src (current-buffer)))
+	(ob:framework-expand "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"  "</%s>" "" "" "#")
+    (let ((buff-src (current-buffer))
+	  html)
       (with-temp-buffer
 	(let ((buff-out (current-buffer)))
 	  (with-current-buffer buff-src
 	    (call-process-region (point-min) (point-max) "pandoc" nil buff-out))
-	  (set-slot-value
-	   entry 'html
-	   (buffer-substring-no-properties (point-min)(point-max))))))))
+	  (setf html (buffer-substring-no-properties (point-min)(point-max)))))
+      (with-temp-buffer
+	(insert html)
+
+	(set-slot-value
+	 entry 'html (buffer-substring-no-properties (point-min)(point-max)))))))
 
 
 (defun ob:markdown:get-images (object)
