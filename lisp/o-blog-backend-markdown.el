@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-01 19:55:38
+;; Last changed: 2014-07-01 23:35:41
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -147,13 +147,14 @@
     (let (files)
       ;; images
       (save-match-data
-	(while (search-forward-regexp markdown-regex-link-inline nil t)
-	  (let ((link (match-string-no-properties 3)))
+	(while (search-forward-regexp "\\]\\(([^)]+)\\)" nil t)
+	  (let ((link (match-string-no-properties 1)))
 	    (with-temp-buffer
 	      (insert link)
 	      (goto-char (point-min))
 	      (save-match-data
-		(while (search-forward-regexp "(\\(.*\\)\\(?: \"[^\"]*\"\\))" nil t)
+		(while (search-forward-regexp "(\\(.+?\\)\\(?: \"[^\"]*\"\\)?)"
+					      nil t)
 		  (push (match-string-no-properties 1) files)))))))
       files)))
 
