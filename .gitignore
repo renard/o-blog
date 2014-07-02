@@ -4,3 +4,5 @@ css
 example/out*
 node_modules
 templates-*
+example-*
+site/out
