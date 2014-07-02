@@ -1,0 +1,221 @@
+% -*- markdown -*-
+<!--/
+title: Quickstart
+type: page
+template: blog_static.html
+/-->
+
+
+<lead>
+Starting a new blog from scratch is pretty easy. This article show you how
+to create a brand new site using o-blog and *pandoc*. Follow the
+step-by-step guide. If you want you can still use *org-mode* as in version 1.
+</lead>
+
+# Required software
+
+You need:
+
+* [Emacs](http://www.gnu.org/software/emacs/) (version 24 is highly recommended)
+* [o-blog](https://github.com/renard/o-blog) Version 2
+* [pandoc](http://johnmacfarlane.net/pandoc/) (at least version 1.12.4.2)
+
+The `o-blog` installation is pretty straightforward if you are using
+[el-get](https://github.com/dimitri/el-get). Meanwhile be sure you are using
+version 2. You can go to the `o-blog` directory (<kbd>M-x el-get-cd o-blog
+RET</kbd>) and switch to branch `o-blog-v2` (<kbd>M-! git checkout o-blog-v2
+RET</kbd>).
+
+You you install `o-blog` manualy from *git* you need run and put in your
+this snippet to your `~/.emacs.d/init.el` file:
+
+<row>
+<col md="6">
+<thumbnail>
+<source mode="sh">
+cd ~/.emacs.d
+git clone https://github.com/renard/o-blog.git
+git checkout o-blog-v2
+</source>
+</thumbnail>
+</col>
+<col md="6">
+<thumbnail>
+<source mode="emacs-lisp">
+(add-to-list 'load-path "~/.emacs.d/o-blog/lisp")
+(require 'o-blog)
+
+</source>
+</thumbnail>
+</col>
+</row>
+
+# Starting a blog
+
+Now you need to choose a directory where you site source will reside. This
+an be anywhere on your computer. Let's use `~/Documents/sites/example.com`
+as a root directory. In that file you first need to create a configuration
+file named `o-blog.conf` which contains:
+
+<source mode="conf">
+publish-dir = out
+template-dir = ~/.emacs.d/o-blog/templates/
+style-dir = ~/.emacs.d/o-blog/templates/style/
+</source>
+
+Where:
+
+* `publish-dir` is the path where the site would be published to.
+* `template-dir` is the path where the template are located. We will use
+  `o-blog` defaults.
+* `style-dir` is the path where the styles (*CSS* and *JS*) are located. We
+  will use `o-blog` defaults as well.
+
+
+## Adding snippets
+
+The default templates require some snippets to be defined. Those snippets are:
+
+* `About`: as defined in the `page_footer.html` file.
+* `Copyright`: as defined in the `page_footer.html` file.
+* `Navigation Footer`: as defined in the `page_footer.html` file.
+* `Navigation`: as defined in the `page_header.html` file.
+
+Snippets are a bunch of text that may change from one site to an other. This
+allow you to use the same templates for many sites by just changing some files.
+
+You can put a snippet anywhere in the site source tree as long as you define
+them using `type: snippet` in their file header. A good practice is to put
+them all in a single directory such as `_elements` at the site root.
+
+For exampe the `About` you need to create the file
+`_elements/About.snippet.txt` which contains following lines:
+
+<source mode="markdown">
+% -*- markdown -*-
+<!--/
+title: About
+type: snippet
+/-->
+This is a sample blog to explain how [o-blog](https://github.com/renard/o-blog) works.
+</source>
+
+The most important lines are:
+
+* `title: About`: which defines the snippet name.
+* `type: snippet`: which defines the current file as a snippet.
+
+<alert mod="warning">
+Please note that file headers are enclosed within `<!--/` and `/-->`
+comments. Note the slash `/` at the end of the comment delimeter.
+</alert>
+
+<panel alt="default">
+<panel-heading>
+`Copyright` snippet
+</panel-heading>
+<panel-body>
+<source mode="markdown">
+% -*- markdown -*-
+<!--/
+title: Copyright
+type: snippet
+/-->
+Copyright Sébastien Gross
+</source>
+</panel-body>
+<panel-footer>
+`_elements/Copyright.snippet.txt`
+</panel-footer>
+</panel>
+
+<panel alt="default">
+<panel-heading>
+`Navigation Footer` snippet
+</panel-heading>
+<panel-body>
+<source mode="markdown">
+% -*- markdown -*-
+<!--/
+title: Navigation Footer
+type: snippet
+/-->
+- [<icon icon="home"> {lisp }(ob:gettext :home){/lisp}]({lisp }(ob:path-to-root){/lisp}/index.html)
+</source>
+</panel-body>
+<panel-footer>
+`_elements/Navigation-footer.snippet.txt`
+</panel-footer>
+</panel>
+
+<panel alt="default">
+<panel-heading>
+`Navigation` snippet
+</panel-heading>
+<panel-body>
+<source mode="markdown">
+- [<icon icon="home"> Home]({lisp }(ob:path-to-root){/lisp}/index.html)
+- [<icon icon="book"> Documentation](#)
+    - [Quickstart]({lisp }(ob:path-to-root){/lisp}/quickstart.html)
+	- [Bootstrap]({lisp }(ob:path-to-root){/lisp}/bootstrap-items.html)
+</source>
+</panel-body>
+<panel-footer>
+`_elements/Navigation.snippet.txt`
+</panel-footer>
+</panel>
+
+## Creating one page
+
+Now you can edit the `index.txt` which contains:
+
+<panel alt="default">
+<panel-body>
+<source mode="markdown">
+% -*- markdown -*-
+<!--/
+title: index
+type: page
+template: blog_static.html
+/-->
+
+<jumbotron>
+<h1>Hello, world!</h1>
+</jumbotron>
+
+<justify>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</justify>
+
+</source>
+</panel-body>
+<panel-footer>
+`index.txt`
+</panel-footer>
+</panel>
+
+You can publish using <kbd>M-x o-blog-publish RET</kbd>. You will get
+something similar to:
+
+<panel alt="default">
+<panel-body>
+
+<jumbotron>
+<h1>Hello, world!</h1>
+</jumbotron>
+
+<justify>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</justify>
+</panel-body>
+</panel>

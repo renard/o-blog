@@ -1,0 +1,37 @@
+% -*- markdown -*-
+<!--/
+title: Publication 
+type: page
+template: blog_static.html
+/-->
+
+
+<lead>
+This article deals about `o-blog` publication order. This will explain how
+things works under the hood.
+</lead>
+
+# Functions
+
+<panel alt="info">
+<panel-body>
+[![publication](functions-tn.png "Class")](functions.png)
+</panel-body>
+<panel-footer>
+Functions callout herarchy during publication.
+</panel-footer>
+</panel>
+
+
+# Templates
+
+<panel alt="info">
+<panel-body>
+[![publication](templates-tn.png "Class")](templates.png)
+</panel-body>
+<panel-footer>
+Templates callout herarchy during publication.
+</panel-footer>
+</panel>
+
+The templates are fully compatibles with `o-blog 1` templates.

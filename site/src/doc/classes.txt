@@ -1,0 +1,71 @@
+% -*- markdown -*-
+<!--/
+title: Page classes
+type: page
+template: blog_static.html
+/-->
+
+<lead>
+With `o-blog` you can create three kind of page classes regarding your
+needs. This article will describe the page classes and how to use them.
+</lead>
+
+# Snippets
+
+A *snippet* is not a page on its own. Snippets are used to fill some parts of
+the templates or any other page using the `ob:get-snippet` *lisp*
+function. A snippet takes only 2 parameters in the file headers:
+
+* `title: Snippet Name`: The insternal name of the snippet.
+* `type: snippet`: this line defines the file as a snippet.
+
+After the headers, you can put anything you want. The snippet content is
+processed during the publication and inserted into the pages that require
+that snippet.
+
+To include a snippet into a page:
+
+<row>
+<col md="6">
+<thumbnail>
+<source mode="markdown">
+<lisp>(ob:get-snippet "About")</lisp>
+</source>
+</thumbnail>
+</col>
+<col md="6">
+<thumbnail>
+<lisp>(ob:get-snippet "About" 'html)</lisp>
+</thumbnail>
+</col>
+</row>
+
+# Pages
+
+A *page* is for a static HTML page output. This class is useful for single
+pages such as a site homepage. A *page* takes 3 parameters in file
+headers:
+
+* `title: Page classes`: The page title
+* `type: page`: this line defines the files as a single page.
+* `template: blog_static_no_title.html`: This line defines which template to
+  use for the publication.
+
+After the header, you can write your page just like you want.
+
+# Articles
+
+An *article* is the main page class you need for a blog. An article (or blog
+post) takes several parameters in file headers:
+
+* `title: Page classes`: The page title
+* `type: article`: this line defines the files as a blog post.
+* `category: blog`: this defines in which category this post should go.
+* `tags: comma separated, tags, list`: a list of tags related to the post.
+
+The *article* page will be stored using the scheme:
+`category/year/month/day-title.html`. Within each directory an `index.html`
+is also created for easy navigation.
+
+When publishing articles, both *tags* and *archives* pages are also generated.
+

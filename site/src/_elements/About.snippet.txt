@@ -1,0 +1,7 @@
+% -*- markdown -*-
+<!--/
+title: About
+type: snippet
+/-->
+This is a sample blog to explain how [o-blog](https://github.com/renard/o-blog) works.
+

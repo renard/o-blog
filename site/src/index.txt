@@ -1,0 +1,63 @@
+% -*- markdown -*-
+<!--/
+title: O-Blog easy web site and bloging system
+template: blog_static_no_title.html
+type: page
+page: index
+/-->
+
+<a href="https://github.com/renard/o-blog">
+<img
+  style="position: fixed; top: 0; right: 0; border: 0; z-index: 999999;"
+  src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"
+  data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
+</a>
+
+<jumbotron>
+  <page-header title="o-blog" subtitle="publication tool for emacs">
+</jumbotron>
+
+<row>
+
+<col sm="6" md="4">
+<thumbnail>
+<caption title="Requirements">
+  * Emacs 
+  * pandoc or org-mode
+  * el-get or git
+</caption>
+</thumbnail>
+</col>
+
+<col sm="6" md="4">
+<thumbnail>
+<caption title="Setup">
+If you are using el-get it would be very easy to install. All you need to do is to add o-blog to el-get-sources and type:
+
+`M-x el-get-install o-blog`
+</caption>
+</thumbnail>
+</col>
+
+<col sm="6" md="4">
+<thumbnail>
+<caption title="Publish">
+Only one single command:
+
+`M-x o-blog-publish`
+</caption>
+</thumbnail>
+</col>
+
+</row>
+
+
+
+<alert mod="info">
+
+Please note that this site is for `o-blog 2`. Old `o-blog` versions is still
+available under the `o-blog-v1` branch. `o-blog 2` has been designed to be
+fully compatible with `o-blog 1` but if you have compatibility problems
+please [open an issue on Github](https://github.com/renard/o-blog/issues).
+
+</alert>
