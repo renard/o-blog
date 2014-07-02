@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2013-08-26 10:53:06
+;; Last changed: 2014-07-01 21:05:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -107,7 +107,7 @@ Some global variables are set:
 	 (TAGS  (ob:get 'tags BLOG)))
 
     ;; Convert each entry to HTML format
-    (loop for type in '(articles pages snippets)
+    (loop for type in '(snippets articles pages)
 	  do (loop for entry in (slot-value BLOG type)
 		   do (ob:convert-entry BLOG entry)))
 
