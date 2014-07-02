@@ -7,6 +7,13 @@ compatible with version 1. Meanwhile you might experience some issues. You
 can still use `o-blog 1` by using the `o-blog-v1` branch instead of
 `master`.
 
+# Major change
+
+Now `o-blog` supports several source files:
+
+* org-mode
+* markdown
+
 # Demo
 
 Please have a look at http://renard.github.com/o-blog for a demo site and
