@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-03 18:54:21
+;; Last changed: 2014-07-03 20:22:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -134,7 +134,8 @@
 	(insert html)
 
 	(set-slot-value
-	 entry 'html (buffer-substring-no-properties (point-min)(point-max)))))))
+	 entry 'html (buffer-substring-no-properties (point-min)(point-max))))
+      (ob:get-post-excerpt entry))))
 
 
 (defun ob:markdown:get-images (object)

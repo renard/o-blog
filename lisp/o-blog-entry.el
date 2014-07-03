@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-03 19:08:08
+;; Last changed: 2014-07-03 21:04:58
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -46,6 +46,10 @@
    (tags :initarg :tags
 	 :type list
 	 :documentation "List of ob:tag")
+
+   (excerpt :initarg :excerpt
+	 :type string
+	 :documentation "small entry extract")
 
    (htmlfile :initarg :htmlfile
 	   :type string
@@ -125,6 +129,42 @@
    self 'path-to-root (file-relative-name
 		       "."
 		       (oref self path))))
+
+(defmethod ob:get-post-excerpt ((self ob:entry) &optional words ellipsis)
+  "Return the first WORDS from POST html content.
+
+The return string would be unformatted plain text postfixed by
+ELLIPSIS if defined.."
+  (when (slot-exists-p self 'excerpt)
+    (with-temp-buffer
+      (insert (ob:get 'html self))
+      (let ((words (or words 20))
+	    (ellipsis (or ellipsis "…"))
+	    (html2text-remove-tag-list
+	     (loop for tag in html-tag-alist
+		   collect (car tag))))
+	(html2text)
+	(goto-char (point-min))
+	;; remove all comments
+	(save-excursion
+	  (save-match-data
+	    (while (search-forward-regexp "<!--" nil t)
+	      (let ((start (- (point) 4)))
+		(save-match-data
+		  (search-forward-regexp "-->"))
+		(delete-region start (point))))))
+	(save-excursion
+	  (save-match-data
+	    (while (search-forward-regexp "\\(\\s-*\n\\s-*\\)" nil t)
+	      (delete-region (- (point) (length (match-string 0))) (point))
+	      (insert " "))))
+	(loop for x from 0 below words do (forward-word))
+	(set-slot-value self 'excerpt
+			(concat
+			 (buffer-substring-no-properties
+			  (point-min) (point))
+			 ellipsis))))))
+
 
 (defmethod ob:entry:publish ((self ob:entry) &optional blog-obj)
   ""
