@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-03 18:39:15
+;; Last changed: 2014-07-03 21:42:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -110,7 +110,12 @@ Some global variables are set:
     ;; Convert each entry to HTML format
     (loop for type in '(snippets articles pages)
 	  do (loop for entry in (slot-value BLOG type)
-		   do (ob:convert-entry BLOG entry)))
+		   with id = 0
+		   do (progn
+			(when (eq type 'articles)
+			  (set-slot-value entry 'id id)
+			  (setf id (1+ id)))
+			(ob:convert-entry BLOG entry))))
 
     ;; Publish both articles static pages
     (loop for type in '(articles pages)
