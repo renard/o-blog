@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-01 18:42:11
+;; Last changed: 2014-07-03 01:21:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -116,7 +116,7 @@
     :start '("<span class=\"glyphicon glyphicon-" icon "\"></span>"))
    (ob:framework-component
     'icon :backends '(org)
-    :start '("<span class=\"icon-" icon "\"></span>"))
+    :start '("<i class=\"fa fa-" icon "\"></i>"))
    (ob:framework-component
     'row :backends '(org)
     :start (format "<div class=\"row%s\">"
