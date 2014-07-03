@@ -152,6 +152,37 @@ Some global variables are set:
 	(delete-char -1))
       (insert "]}"))
 
+    ;; Write articles JSON
+    (with-temp-file
+	(format "%s/%s" (ob:get 'publish-dir BLOG) "articles.js")
+      (insert "{\"articles\":{ ")
+      (message "LEN: %s / %s: %s"
+	       (length (ob:get-posts nil nil nil 'category))
+	       (length (ob:get-posts))
+	       (ob:get-posts nil nil nil 'category))
+      
+      (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	    do (progn
+		 (insert (format "\"%s\":[ " (ob:get 'safe CATEGORY)))
+		 (loop for article in
+		       (ob:get-posts (lambda (x)
+		  		       (equal CATEGORY
+					      (ob:get 'category x))))
+		       do (insert
+		  	   (format
+		  	    "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
+			    (ob:get 'title article)
+		  	    (ob:get 'htmlfile article)
+			    (ob:get 'excerpt article)
+			    )))
+		 ;; remove last comma
+		 (delete-char -1)
+		 (insert "]},")))
+      ;; remove last comma
+      (delete-char -1)
+      (insert "}"))
+
+    
     (let ((BREADCRUMB "Archives"))
       (let ((FILE "archives.html"))
 	(ob:eval-template-to-file "blog_archives.html"
