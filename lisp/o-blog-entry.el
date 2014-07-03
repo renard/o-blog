@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-03 10:55:32
+;; Last changed: 2014-07-03 18:57:30
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -43,6 +43,10 @@
    (files-to-copy :initarg :files-to-copy
 		  :type list
 		  :documentation "List of files to copy when publishing")
+   (tags :initarg :tags
+	 :type list
+	 :documentation "List of ob:tag")
+
    (htmlfile :initarg :htmlfile
 	   :type string
 	   :documentation "")
@@ -70,9 +74,6 @@
    (day :initarg :day
 	 :type integer
 	 :documentation "")
-   (tags :initarg :tags
-	 :type list
-	 :documentation "List of ob:tag")
    (category :initarg :category
 	     ;;	   :type ob:category
 	   :documentation "")

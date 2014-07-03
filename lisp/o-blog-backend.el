@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-03 10:52:52
+;; Last changed: 2014-07-03 18:39:15
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -102,6 +102,7 @@ Some global variables are set:
   (ob:compute-tags self)
   
   (let* ((BLOG self)
+	 (PAGES (ob:get 'pages BLOG))
 	 (POSTS (ob:get 'articles BLOG))
 	 (ALL-POSTS POSTS)
 	 (TAGS  (ob:get 'tags BLOG)))
@@ -306,11 +307,14 @@ Compute tag occurrence and their HTML percentage value.
 MIN_R and MAX_R are the minimum and maximum percentage value. If
 not provided 80 and 220 are used. This means ob:size is always
 within MIN_R and MAX_R inclusive."
-  (let* ((tags (sort
-		(loop for article in (slot-value self 'articles)
-		      append (slot-value article 'tags))
-		#'(lambda (a b) (string< (ob:get-name  a)
-					 (ob:get-name  b)))))
+  (let* ((tags-art (loop for article in (append (slot-value self 'articles))
+			 append (slot-value article 'tags)))
+	 (tags-page (loop for page in (append (slot-value self 'pages))
+			 append (slot-value page 'tags)))
+	 
+	 (tags (sort (append tags-art tags-page)
+		     #'(lambda (a b) (string< (ob:get-name  a)
+					      (ob:get-name  b)))))
 	 (min_r (or min_r 80))
 	 (max_r (or max_r 220))
 	 (min_f (length tags))
