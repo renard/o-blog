@@ -34,9 +34,48 @@ function loadTags(element, url, root) {
 
 }
 
+function loadArticles(url, root) {
+    /*
+     * Lookup for file at ROOT/URL and parse JSON to put into ELEMENT as a
+     * list items.
+     *
+     * Json structure is like:
+     *    { "tags" : [
+     *       { "size" : "220.00", "path" : "tags/admin.html", "tag" : "Admin" },
+     *     ] }
+     */
+    $.getJSON(root + '/' + url, function(data) {
+	$.each(data.articles, function(key, value) {
+	    $('.' + key).html('');
+	    $('.' + key + '-full').html('');
+	    var items = [];
+	    var items_full = [];
+	    $.each(value, function(i, art_data) {
+		if(i>3) return false;
+		var div_data =
+		    '<li><a href="' + root + '/' + art_data.path + '">' + art_data.title + '</a></li>';
+		var div_data_full =
+		    '<div><h3><a href="' + root + '/' + art_data.path + '">' + art_data.title + '</a></h3><p>' + art_data.excerpt + '</p></div>';
+		
+		items.push(div_data);
+		items_full.push(div_data_full);
+	    });
+	    $('.' + key).append(items.join(' '));
+	    $('.' + key +  '-full').html(items_full.join(' '));
+	});
+
+    })
+}
+
+
+
 $(document).ready(
     function() {
 
+	//Load articles
+	loadArticles('articles.js', path_to_root);
+	
+	
 	// Build nav bar
 	var navbarUl = $('.navbar .navbar-collapse > ul');
 	navbarUl.addClass('nav').addClass('navbar-nav');
