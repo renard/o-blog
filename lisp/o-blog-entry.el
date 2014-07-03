@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-03 18:57:30
+;; Last changed: 2014-07-03 19:08:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -116,9 +116,11 @@
 		      (oref self day)
 		      (ob:sanitize-string (oref self title))))
   (set-slot-value
-   self 'htmlfile (format "%s/%s"
-		      (oref self path)
-		      (oref self file)))
+   self 'htmlfile (if (string= "." (oref self path))
+		      (oref self file)
+		    (format "%s/%s"
+			    (oref self path)
+			    (oref self file))))
   (set-slot-value
    self 'path-to-root (file-relative-name
 		       "."
@@ -170,9 +172,11 @@
   (set-slot-value self 'path ".")
   (set-slot-value self 'file page)
   (set-slot-value
-   self 'htmlfile (format "%s/%s"
-			  (oref self path)
-			  (oref self file)))
+   self 'htmlfile (if (string= "." (oref self path))
+		      (oref self file)
+		    (format "%s/%s"
+			    (oref self path)
+			    (oref self file))))
   (set-slot-value
    self 'path-to-root (file-relative-name
 		       "."
