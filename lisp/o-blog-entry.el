@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-01 23:42:17
+;; Last changed: 2014-07-03 10:55:32
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -127,7 +127,8 @@
   ""
   (let ((blog-obj (or blog-obj
 		      (when (boundp 'BLOG) BLOG)
-		      (when (boundp 'blog) blog))))
+		      (when (boundp 'blog) blog)))
+	(FILE (oref self htmlfile)))
     (unless (ob:backend-child-p blog-obj)
       (error "`ob:entry:publish': blog-obj is not an `ob:backend' child class."))
     (when (slot-exists-p self 'template)
@@ -136,10 +137,10 @@
 	(message "Write to: %s"
 		 (expand-file-name (format "%s/%s"
 					   (oref BLOG publish-dir)
-					   (oref self htmlfile))))
+					   FILE)))
 	(ob:write-file (format "%s/%s"
 			       (oref BLOG publish-dir)
-			       (oref self htmlfile))))
+			       FILE)))
 
       (loop for file in (ob:get 'files-to-copy self)
 	    do (ob-do-copy (format "%s/%s"

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-01 21:05:40
+;; Last changed: 2014-07-03 10:52:52
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -119,20 +119,26 @@ Some global variables are set:
 
     ;; publish tags
     (let ((PATH-TO-ROOT ".."))
-      (ob:eval-template-to-file "blog_tags.html"
-				(format "%s/tags/index.html"
-					(ob:get 'publish-dir BLOG)))
+      (let ((FILE "tags/index.html"))
+	(ob:eval-template-to-file "blog_tags.html"
+				  (format "%s/%s"
+					  (ob:get 'publish-dir BLOG)
+					  FILE)))
       (loop for TAG in TAGS
 	    do
-	    (ob:eval-template-to-file "blog_tags-details.html"
-				      (format "%s/tags/%s.html"
-					      (ob:get 'publish-dir BLOG)
-					      (ob:get 'safe TAG)))))
+	    (let ((FILE (format "tags/%s.html" (ob:get 'safe TAG)))) 
+	      (ob:eval-template-to-file "blog_tags-details.html"
+					(format "%s/tags/%s.html"
+						(ob:get 'publish-dir BLOG)
+						FILE
+						)))))
 
     (let ((BREADCRUMB "Archives"))
-      (ob:eval-template-to-file "blog_archives.html"
-				(format "%s/archives.html"
-					(ob:get 'publish-dir BLOG))))
+      (let ((FILE "archives.html"))
+	(ob:eval-template-to-file "blog_archives.html"
+				  (format "%s/%s"
+					  (ob:get 'publish-dir BLOG)
+					  FILE))))
     
     (ob:eval-template-to-file "blog_rss.html"
 			      (format "%s/index.xml"
@@ -172,18 +178,18 @@ Some global variables are set:
 Template is read from TEMPLATE file.
 
 If provided CATEGORY YEAR and MONTH are used to select articles."
-  (let* ((fp (format "%s/%s/index.html"
-		     (ob:get 'publish-dir BLOG)
-		     (cond
-		      ((and category year month)
-		       (format "%s/%.4d/%.2d"
-			       (ob:get 'safe category)
-			       year month))
-		      ((and category year)
-		       (format "%s/%.4d"
-			       (ob:get 'safe category)
-			       year))
-		      (t (ob:get 'safe category)))))
+  (let* ((FILE (format "%s/index.html"
+		       (cond
+			((and category year month)
+			 (format "%s/%.4d/%.2d"
+				 (ob:get 'safe category)
+				 year month))
+			((and category year)
+			 (format "%s/%.4d"
+				 (ob:get 'safe category)
+				 year))
+			(t (ob:get 'safe category)))))
+	 (fp (format "%s/%s" (ob:get 'publish-dir BLOG) FILE))
 
 	 (POSTS (ob:get-posts
 		 (lambda (x)
