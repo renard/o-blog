@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-01 23:36:54
+;; Last changed: 2014-07-03 18:54:21
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -93,13 +93,14 @@
 				  (ob:category
 				   (plist-get headers 'category)))))
 
+	       ;; Add rest of header parameters to object
 	       (loop for header in headers by #'cddr
 		     when (and
 			   (slot-exists-p obj header)
 			   (not (member header '(tags category))))
 		     do (set-slot-value
 			 obj header (plist-get headers header)))
-	       ;;(message "%S" (ob:get 'title obj))
+
 	       (if (eq 'page type)
 		   (ob:entry:set-path obj
 				      (concat
