@@ -4,7 +4,7 @@ title: Navigation Footer
 type: snippet
 /-->
 - [<icon icon="home"> Home]({lisp}(ob:path-to-root){/lisp}/index.html)
-- [Quickstart]({lisp}(ob:path-to-root){/lisp}/quickstart.html)
-- [Bootstrap]({lisp}(ob:path-to-root){/lisp}/bootstrap-items.html)
-- [Page classes]({lisp}(ob:path-to-root){/lisp}/page-classes.html)
-- [Publication]({lisp}(ob:path-to-root){/lisp}/publication.html)
+- [<icon icon="book"> Quickstart]({lisp}(ob:path-to-root){/lisp}/quickstart.html)
+- [<icon icon="book"> Bootstrap]({lisp}(ob:path-to-root){/lisp}/bootstrap-items.html)
+- [<icon icon="book"> Page classes]({lisp}(ob:path-to-root){/lisp}/page-classes.html)
+- [<icon icon="book"> Publication]({lisp}(ob:path-to-root){/lisp}/publication.html)
