@@ -1,0 +1,345 @@
+% -*- markdown -*-
+<!--/
+title: Bootstrap items
+type: page
+template: blog_static.html
+category: doc
+tags: bootstrap
+/-->
+
+# Inline syntax
+
+
+## Highlight
+
+<row>
+<col sm="6" md="6">
+For highlighting a run of text due to its relevance in another context, use
+the `<mark>` tag.
+
+You can use the mark tag to <mark>highlight</mark> text.
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+You can use the mark tag to <mark>highlight</mark> text.
+</source>
+</col>
+</row>
+
+
+## Deleted
+
+<row>
+<col sm="6" md="6">
+For indicating blocks of text that have been deleted use the `<del>` tag.
+
+<del>This line of text is meant to be treated as deleted text.</del>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<del>This line of text is meant to be treated as deleted text.</del>
+</source>
+</col>
+</row>
+
+
+## Glyphicon
+<row>
+<col sm="6" md="6">
+See [Bootstrap official documentation](http://getbootstrap.com/components/#glyphicons)
+for further information about icons
+
+This is a cloud: <glyphicon icon="cloud">
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+This is a cloud: <glyphicon icon="cloud">
+</source>
+</col>
+</row>
+
+
+
+
+## Icon
+
+<row>
+<col sm="6" md="6">
+See [Bootstrap official documentation](http://getbootstrap.com/components/#glyphicons)
+for further information about icons
+
+This is a cloud in icon: <icon icon="cloud">
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+This is a cloud in icon: <icon icon="cloud">
+</source>
+</col>
+</row>
+
+
+## Label
+<row>
+<col sm="6" md="6">
+<label mod="default">Default</label>
+
+<label mod="primary">Primary</label>
+
+<label mod="success">Success</label>
+
+<label mod="info">Info</label>
+
+<label mod="warning">Warning</label>
+
+<label mod="danger">Danger</label>
+
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<label mod="default">Default</label>
+<label mod="primary">Primary</label>
+<label mod="success">Success</label>
+<label mod="info">Info</label>
+<label mod="warning">Warning</label>
+<label mod="danger">Danger</label>
+</source>
+</col>
+</row>
+
+
+
+
+## Badge
+<row>
+<col sm="6" md="6">
+<badge>42</badge>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<badge>42</badge>
+</source>
+</col>
+</row>
+
+
+# Text formating
+
+## lead
+
+<row>
+<col sm="6" md="6">
+<lead>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</lead>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<lead>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</lead>
+</source>
+</col>
+</row>
+
+
+## Alignements
+
+<row>
+<col sm="6" md="6">
+<left>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</left>
+<right>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</right>
+<center>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</center>
+<justify>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</justify>
+<nowrap>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</nowrap>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<left>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</left>
+<right>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</right>
+<center>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</center>
+<justify>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</justify>
+<nowrap>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</nowrap>
+</source>
+</col>
+</row>
+
+
+
+
+## Jumbotron
+
+<row>
+<col sm="6" md="6">
+<jumbotron>
+  <h1>Hello, world!</h1>
+</jumbotron>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<jumbotron>
+  <h1>Hello, world!</h1>
+</jumbotron>
+</source>
+</col>
+</row>
+
+
+## Page header
+
+<row>
+<col sm="6" md="6">
+<page-header title="Example page header" subtitle="Subtext for header">
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<page-header title="Example page header" subtitle="Subtext for header">
+</source>
+</col>
+</row>
+
+## Caption
+
+<row>
+<col sm="6" md="6">
+<caption>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</caption>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<caption>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</caption>
+</source>
+</col>
+</row>
+
+
+
+## Grid
+
+## Panel
+
+
+<row>
+<col sm="6" md="6">
+<panel alt="success">
+<panel-heading title="Panel title">
+This text is inside the pannel heading
+</panel-heading>
+<panel-body >
+This text here is inside the panel component
+</panel-body>
+<panel-footer >
+This text is inside the pannel <label>footer</label>
+</panel-footer>
+</panel>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<panel alt="success">
+<panel-heading title="Panel title">
+This text is inside the pannel heading
+</panel-heading>
+<panel-body >
+This text here is inside the panel component
+</panel-body>
+<panel-footer >
+This text is inside the pannel <label>footer</label>
+</panel-footer>
+</panel>
+</source>
+</col>
+</row>
+
+
+## Alert
+
+<row>
+<col sm="6" md="6">
+<alert mod="success">Success</alert>
+<alert mod="info">Info</alert>
+<alert mod="warning">Warning</alert>
+<alert mod="danger">Danger</alert>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<alert mod="success">Success</alert>
+<alert mod="info">Info</alert>
+<alert mod="warning">Warning</alert>
+<alert mod="danger">Danger</alert>
+</source>
+</col>
+</row>
+
+
+## Well
+<row>
+<col sm="6" md="6">
+<well>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</well>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<well>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</well>
+</source>
+</col>
+</row>
+
+# thumbnail
+<row>
+<col sm="6" md="6">
+<thumbnail>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</thumbnail>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<thumbnail>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</thumbnail>
+</source>
+</col>
+</row>
+
+
+## Table
+
+<row>
+<col sm="6" md="6">
+<table striped="1" condensed="y" hover="y" bordered="y">
+  <tr><td mod="success">col 1</td><td mod="warning">col 2</td></tr>
+  <tr mod="danger"><td>col 1</td><td>col 2</td></tr>
+  <tr><td>col 1</td><td>col 2</td></tr>
+  <tr><td>col 1</td><td>col 2</td></tr>
+</table>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<table striped="1" condensed="y" hover="y" bordered="y">
+  <tr><td mod="success">col 1</td><td mod="warning">col 2</td></tr>
+  <tr mod="danger"><td>col 1</td><td>col 2</td></tr>
+  <tr><td>col 1</td><td>col 2</td></tr>
+  <tr><td>col 1</td><td>col 2</td></tr>
+</table>
+</source>
+</col>
+</row>
+
+
+## Source
+
+<row>
+<col sm="6" md="6">
+<source mode="emacs-lisp">
+(defmacro ob:with-source-buffer (self &rest body)
+  "Like `with-current-buffer'"
+  `(let ((file (ob:get-name ,self)))
+     ;; Make sure we are in the o-blog org file
+     (with-current-buffer (or (get-file-buffer file)
+			     (find-file-noselect file))
+       ,@body)))
+</source>
+</col>
+<col sm="6" md="6">
+<source mode="markdown">
+<source mode="emacs-lisp">
+(defmacro ob:with-source-buffer (self &rest body)
+  "Like `with-current-buffer'"
+  `(let ((file (ob:get-name ,self)))
+     ;; Make sure we are in the o-blog org file
+     (with-current-buffer (or (get-file-buffer file)
+			     (find-file-noselect file))
+       ,@body)))
+</source >
+</source>
+</col>
+</row>
+
