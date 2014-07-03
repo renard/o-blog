@@ -128,10 +128,23 @@ Some global variables are set:
 	    do
 	    (let ((FILE (format "tags/%s.html" (ob:get 'safe TAG)))) 
 	      (ob:eval-template-to-file "blog_tags-details.html"
-					(format "%s/tags/%s.html"
+					(format "%s/%s"
 						(ob:get 'publish-dir BLOG)
-						FILE
-						)))))
+						FILE)))))
+    ;; Write tags JSON
+    (with-temp-file
+	(format "%s/%s" (ob:get 'publish-dir BLOG) "tags.js")
+      (insert "{\"tags\":[")
+      (if (not TAGS)
+	  (insert " ")
+	(loop for TAG in TAGS
+	      do (insert
+		  (format
+		   "{\"size\":\"%.2f\",\"path\":\"tags/%s.html\",\"tag\":\"%s\"},"
+		   (ob:get 'size TAG) (ob:get 'safe TAG) (ob:get 'display TAG))))
+	;; remove last comma
+	(delete-char -1))
+      (insert "]}"))
 
     (let ((BREADCRUMB "Archives"))
       (let ((FILE "archives.html"))

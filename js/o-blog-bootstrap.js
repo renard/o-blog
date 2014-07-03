@@ -61,8 +61,9 @@ $(document).ready(
 
 
 	/* find active tab */
+	var this_page_path = path_to_root + '/' + ob_this_page;
 	$('.navbar .navbar-collapse > ul li a').each(function(){
-	    if($(this).attr('href') == ob_this_page) {
+	    if($(this).attr('href') == this_page_path) {
 		$(this).parent().addClass('active');
 		$(this).parent().parent().parent().addClass('active');
 
