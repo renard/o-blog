@@ -3,6 +3,7 @@
 title: Quickstart
 type: page
 template: blog_static.html
+tags: help
 /-->
 
 

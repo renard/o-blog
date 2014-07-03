@@ -3,6 +3,7 @@
 title: Publication 
 type: page
 template: blog_static.html
+tags: help, o-blog internals
 /-->
 
 

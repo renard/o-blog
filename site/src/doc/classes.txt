@@ -3,6 +3,7 @@
 title: Page classes
 type: page
 template: blog_static.html
+tags: help, o-blog internals
 /-->
 
 <lead>

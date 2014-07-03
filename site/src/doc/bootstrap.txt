@@ -4,7 +4,7 @@ title: Bootstrap items
 type: page
 template: blog_static.html
 category: doc
-tags: bootstrap
+tags: bootstrap, help
 /-->
 
 # Inline syntax
