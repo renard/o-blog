@@ -114,8 +114,11 @@ $(document).ready(
 
 
 	/* Make sure each .thumbnail is the same height for each row */
-	$(".row").each(function() {equalHeight($(this).find(".thumbnail"))}); 
-	$(".row").each(function() {equalHeight($(this).find(".src"))}); 
+	setTimeout(function() {
+	    $(".row").each(function() {equalHeight($(this).find(".thumbnail"))}); 
+	    $(".row").each(function() {equalHeight($(this).find(".src"))});
+	}, 300);
+	    
 
 	loadTags('nav.tags', 'tags.js', path_to_root);
 
