@@ -1,0 +1,191 @@
+% -*- markdown -*-
+<!--/
+title: Testimonials
+type: page
+template: blog_static_no_title.html
+/-->
+
+
+
+
+<row>
+<col md="4">
+<thumbnail>
+[![thumbnail](7696122.png "")](http://7696122.github.io)
+<caption>
+<center>
+http://7696122.github.io
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](bjonnh.png "")](http://bjonnh.net/blog/)
+<caption>
+<center>
+http://bjonnh.net/blog/
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](common-lisp.png "")](http://common-lisp.net)
+<caption>
+<center>
+http://common-lisp.net
+</center>
+</caption>
+</thumbnail>
+</col>
+
+</row>
+
+<row>
+<col md="4">
+<thumbnail>
+[![thumbnail](djcbsoftware.png "")](http://www.djcbsoftware.nl)
+<caption>
+<center>
+http://www.djcbsoftware.nl
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](ergoemacs.png "")](http://ergoemacs.github.io)
+<caption>
+<center>
+http://ergoemacs.github.io
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](from-the-cloud.png "")](http://from-the-cloud.com)
+<caption>
+<center>
+http://from-the-cloud.com
+</center>
+</caption>
+</thumbnail>
+</col>
+</row>
+
+<row>
+<col md="4">
+<thumbnail>
+[![thumbnail](hdurer.png "")](http://blog.hdurer.net)
+<caption>
+<center>
+http://blog.hdurer.net
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](hillenius.png "")](http://www.hillenius.com/)
+<caption>
+<center>
+http://www.hillenius.com/
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](kankanan.png "")](http://blog.kankanan.com)
+<caption>
+<center>
+http://blog.kankanan.com
+</center>
+</caption>
+</thumbnail>
+</col>
+
+</row>
+
+<row>
+<col md="4">
+<thumbnail>
+[![thumbnail](popineau.png "")](http://semantic.supelec.fr/popineau/)
+<caption>
+<center>
+http://semantic.supelec.fr/popineau/
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](underspecified.png "")](http://underspecified.com)
+<caption>
+<center>
+http://underspecified.com
+</center>
+</caption>
+</thumbnail>
+</col>
+<col md="4">
+<thumbnail>
+[![thumbnail](williamdenman.png "")](http://www.williamdenman.ca/index.html)
+<caption>
+<center>
+http://www.williamdenman.ca/
+</center>
+</caption>
+</thumbnail>
+</col>
+
+</row>
+
+
+
+<columns count="3">
+
+* [http://ionio.gr/~aribezas/index.html](http://ionio.gr/~aribezas/index.html)
+* [http://www.gibiris.org/eo-blog/index.html](http://www.gibiris.org/eo-blog/index.html)
+* [http://www.morediff.info/index.html](http://www.morediff.info/index.html)
+* [http://www.trick.email/index.html](http://www.trick.email/index.html)
+* [http://limist.com/](http://limist.com/)
+* [http://www.verona.se](http://www.verona.se)
+* [http://yagnesh.org](http://yagnesh.org)
+* [http://notes.secretsauce.net](http://notes.secretsauce.net)
+* [http://zwz.github.io/index.html](http://zwz.github.io/index.html)
+* [http://mauthesis.com](http://mauthesis.com)
+
+</columns>
+
+
+
+<columns count="2">
+
+> “o-blog, a cool static blog generator from org-mode markup
+> with some nice Bootstrap integration.”
+>
+> -- [Fabián Ezequiel Gallina](http://from-the-cloud.com/en/Random/2012/06/17_sites-back.html)
+
+
+
+> “Thank you so much for the truly excellent elisp app. I am learning many
+> things from it.”/
+> 
+> -- [priyadarshan](https://github.com/priyadarshan)
+
+
+> “o-blog looks awesome!”
+>
+> -- [Dirk-Jan C. Binnema](https://github.com/djcb) (Author of [mu4e](http://www.djcbsoftware.nl/code/mu4e) and [emacs-fu](http://emacs-fu.blogspot.com))
+
+
+> “o-blog is amazing. After using Wordpress seemingly since the dawn of
+> time, then Jekyll for a couple of years, this is like a spring breeze
+> after a long, cold winter.”
+>
+> -- [Farasha Euker](https://github.com/fravashi)
+
+</columns>
