@@ -1,10 +1,11 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2013-07-24 18:55:44
+#+DATE: 2014-07-05 01:14:58
 
 #+STARTUP: logdone
 
-#-TEMPLATE_DIR: templates
+#+TEMPLATE_DIR: ../templates
+#+STYLE_DIR: ../templates/style
 #+URL: http://renard.github.com/o-blog
 
 #+DEFAULT_CATEGORY: Tips
