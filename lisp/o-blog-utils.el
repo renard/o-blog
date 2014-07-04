@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-01 21:51:50
+;; Last changed: 2014-07-04 22:20:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -252,9 +252,9 @@ A copy function COPYF and its arguments ARGS could be specified."
 		 (t 'copy-file)))
 	 (args (or args
 		   (when (eq 'copy-file copyf) '(t t t)))))
-    (message "Copying %s -> %s using %s" src dst copyf)
     (when (file-exists-p src)
-	(apply copyf src dst args))))
+      (message "Copying %s -> %s using %s" src dst copyf)
+      (apply copyf src dst args))))
 
 (defun ob:publish-style (object)
   "Publish OBJECT styles such as CSS, JavaScript and Fonts."
