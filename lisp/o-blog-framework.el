@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-03 01:21:49
+;; Last changed: 2014-07-04 16:37:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -237,6 +237,15 @@
 	      (when end-point
 		(delete-region cur-point (- end-point (length "</source>"))))
 	      (format "<div class=\"src %s\">%s</div>" (or mode "") html)))
+
+   (ob:framework-component
+    'columns :backends '(org)
+    :start '(format "<div style=\"%s%s\">"
+		    (if (boundp 'width)
+			(format "column-width:%s;-webkit-column-width:%s;-moz-column-width:%s" width width width) "")
+		    (if (boundp 'count) (format " column-count:%s;-webkit-column-count:%s;-moz-column-count:%s;" count count count) ""))
+    :end "</div>")
+
    
    ))
 
