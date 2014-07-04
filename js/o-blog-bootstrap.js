@@ -74,12 +74,19 @@ $(document).ready(
 
 	//Load articles
 	loadArticles('articles.js', path_to_root);
-	
+
+	/* find active tab */
+	setTimeout(function() {
+	    $('.navbar .navbar-collapse > ul li a[href="' +
+	      path_to_root + '/' + ob_this_page + '"]')
+		.parent().addClass('active')
+		.parent().parent().addClass('active');},
+		   1);
 	
 	// Build nav bar
 	var navbarUl = $('.navbar .navbar-collapse > ul');
 	navbarUl.addClass('nav').addClass('navbar-nav');
-
+	
 	/* create the top menu bar */
 	var dropdown = navbarUl.find('li ul')
 	dropdown.parent().addClass('dropdown')
@@ -97,17 +104,6 @@ $(document).ready(
 	dropdown.parent().find('.dropdown-menu li').each(function() {
 	    if ( $(this).text() == '') $(this).addClass('divider')
 	});
-
-
-	/* find active tab */
-	var this_page_path = path_to_root + '/' + ob_this_page;
-	$('.navbar .navbar-collapse > ul li a').each(function(){
-	    if($(this).attr('href') == this_page_path) {
-		$(this).parent().addClass('active');
-		$(this).parent().parent().parent().addClass('active');
-
-	    }
-	});
 	
 	/* Compute page min height */
 	$('div#page').css('min-height', $(window).innerHeight() -
@@ -122,6 +118,8 @@ $(document).ready(
 	$(".row").each(function() {equalHeight($(this).find(".src"))}); 
 
 	loadTags('nav.tags', 'tags.js', path_to_root);
+
+	
 	
     });
 
