@@ -4,20 +4,20 @@
 (cond
  ;; Static page or post
  ((boundp 'POST)
-  (let ((path (when (ob:post-filepath POST)
-		(cdr (split-string (ob:post-filepath POST) "/")))))
+  (let ((path (when (ob:get 'path POST)
+		(cdr (split-string (ob:get 'path POST) "/")))))
 
-    (loop for p in (if (ob:greater (length path) 1) (cons (ob:post-category POST) path) path)
+    (loop for p in (if (ob:greater (length path) 1) (cons (ob:get 'category POST) path) path)
 	  with prev = (ob:path-to-root)
 	  do (progn
-	       (setf prev (format "%s/%s" prev (if (ob:category-p p) (ob:category-safe p) p)))
+	       (setf prev (format "%s/%s" prev (if (ob:category-p p) (ob:get 'safe p) p)))
 	       (insert
 		(format
 		 "<li><a href=\"%s/index.html\">%s</a> <span class=\"divider\"></span></li>"
 		 prev (if (ob:category-p p) (ob:category-name p) p))))))
   (unless (and
-	   (string= "index.html" (ob:post-htmlfile POST))
-	   (string= "." (ob:post-path-to-root POST)))
+	   (string= "index.html" (ob:get 'htmlfile POST))
+	   (string= "." (ob:get 'path-to-root POST)))
     (insert
      (format "<li>%s</li>"
 	     (ob:post-title POST)))))
