@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-03 20:22:45
+;; Last changed: 2014-07-04 22:26:13
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -154,7 +154,9 @@
 	      (save-match-data
 		(while (search-forward-regexp "(\\(.+?\\)\\(?: \"[^\"]*\"\\)?)"
 					      nil t)
-		  (push (match-string-no-properties 1) files)))))))
+		  (let ((file  (match-string-no-properties 1)))
+		    (when (file-exists-p file)
+		      (push file files)))))))))
       files)))
 
 
