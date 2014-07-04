@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-03 21:04:58
+;; Last changed: 2014-07-05 01:32:15
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -187,7 +187,8 @@ ELLIPSIS if defined.."
 
       (loop for file in (ob:get 'files-to-copy self)
 	    do (ob-do-copy (format "%s/%s"
-				   (file-name-directory (ob:get-name self))
+				   (or
+				    (file-name-directory (ob:get-name self)) ".")
 				   file)
 			   (format (format "%s/%s"
 					   (oref BLOG publish-dir)
