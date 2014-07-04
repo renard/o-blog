@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-03 21:42:39
+;; Last changed: 2014-07-04 14:19:05
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -76,6 +76,10 @@
    (description :initarg :description
 		:type string
 		:documentation "Site description")
+   (url :initarg :url
+		:type string
+		:documentation "Site url")
+
    (posts-sorter :initarg :posts-sorter
 		 :initform ob:entry:sort-by-date
 		 :type symbol
