@@ -9,30 +9,40 @@ function equalHeight(group) {
     group.each(function() { $(this).height(tallest); });
 } 
 
-function loadTags(element, url, root) {
+function ob_load_tags() {
     /*
-     * Lookup for file at ROOT/URL and parse JSON to put into ELEMENT as a
-     * list items.
+     * Load all tag information into each '.ob-tagcloud' classes.
+     *
+     * Define a tagcloud as:
+     *  <span class="ob-tag-cloud" data-source="tags.js" data-path-to-root="."/>
+     *
+     * Where:
+     *  - `source` is the path to the JSON structure
+     *  - `path-to-root` is the path to the site root directory.
      *
      * Json structure is like:
      *    { "tags" : [
      *       { "size" : "220.00", "path" : "tags/admin.html", "tag" : "Admin" },
+     *       { ... }
      *     ] }
      */
-    $(element).append('<ul></ul>');
-    var ul = element + ' ul';
-    var items = [];
-    $.getJSON(root + '/' + url, function(data) {
-	$.each(data.tags, function(i, data) {
-	    var div_data =
-		'<li style="font-size: ' + data.size + '%;"><a href="' +
-		root + '/' + data.path + '">' + data.tag + '</a></li>';
-	    items.push(div_data);
+    $.each($('.ob-tagcloud'), function(i, element) {
+	    var source = $(element).data('source');
+	    var path_to_root = $(element).data('path-to-root');
+	    $.getJSON(source, function(json) {
+		var tags_list = [];
+		$.each(json.tags, function(i, tag) {
+		    tags_list.push('<li style="font-size: ' + tag.size
+				   + '%;"><a href="' + path_to_root
+				   + '/' + tag.path + '">'
+				   + tag.tag + '</a></li>');
+		});
+		$(element).replaceWith('<ul>' + tags_list.join(' ') + '</ul>');
+	    });
 	});
-	$(ul).append(items.join(' '));
-    });
-
 }
+
+
 
 function loadArticles(url, root) {
     /*
@@ -120,8 +130,7 @@ $(document).ready(
 	}, 300);
 	    
 
-	loadTags('nav.tags', 'tags.js', path_to_root);
-
+	ob_load_tags();
 	
 	
     });
