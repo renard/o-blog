@@ -16,5 +16,7 @@ Now `o-blog` supports several source files:
 
 # Demo
 
-Please have a look at http://renard.github.com/o-blog for a demo site and
-documentation.
+Please have a look for a demo site and documentation:
+
+* `o-blog-v2` http://renard.github.com/o-blog-v2
+* Old `o-blog-v1` http://renard.github.com/o-blog
