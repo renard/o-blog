@@ -162,24 +162,46 @@ http://www.williamdenman.ca/
 
 
 
-<columns count="2">
 
-> “o-blog, a cool static blog generator from org-mode markup
-> with some nice Bootstrap integration.”
+
+> “o-blog, great static site generator from emacs Org-mode.”
 >
-> -- [Fabián Ezequiel Gallina](http://from-the-cloud.com/en/Random/2012/06/17_sites-back.html)
+> -- Pierre-Yves Ritschard [\@pyr](https://twitter.com/pyr) ([OpenBSD](http://openbds.org) relayd original author)
+>
+> -- Sergey Konoplev [\@gray_hemp](http://twitter.com/gray_hemp) ([PostgreSQL Consultant](http://PostgreSQL-Consulting.com))
+>
+> -- Olivier Berger [\@olberger](http://twitter.com/olberger) ([APRIL administrator](http://www.april.org))
+>
+> -- Dimitri Fontaine [\@tapoueh](http://twitter.com/tapoueh) ([el-get and other](http://tapoueh.org/projects.html) author)
+>
+> -- Julien Danjou [\@juldanjou](http://twitter.com/juldanjou) ([Awesome window manager](http://awesome.naquadah.org/) and [other](http://julien.danjou.info/software/) author)
+>
+> -- Daniel Farina [\@danfarina](http://twitter.com/danfarina) (member of the [Heroku](http://www.heroku.com/) Department of Data)
+>
+> [https://twitter.com/pyr/status/160466727195521024](https://twitter.com/pyr/status/160466727195521024)
+
+<columns count="2">
 
 
 
 > “Thank you so much for the truly excellent elisp app. I am learning many
-> things from it.”/
+> things from it.”
 > 
 > -- [priyadarshan](https://github.com/priyadarshan)
+>
+> [https://github.com/renard/o-blog/issues/24](https://github.com/renard/o-blog/issues/24)
 
 
 > “o-blog looks awesome!”
 >
 > -- [Dirk-Jan C. Binnema](https://github.com/djcb) (Author of [mu4e](http://www.djcbsoftware.nl/code/mu4e) and [emacs-fu](http://emacs-fu.blogspot.com))
+>
+>[https://github.com/renard/o-blog/issues/27](https://github.com/renard/o-blog/issues/27)
+
+> “o-blog, a cool static blog generator from org-mode markup
+> with some nice Bootstrap integration.”
+>
+> -- [Fabián Ezequiel Gallina](http://from-the-cloud.com/en/random/2012/06/17_sites-back.html)
 
 
 > “o-blog is amazing. After using Wordpress seemingly since the dawn of
@@ -187,5 +209,7 @@ http://www.williamdenman.ca/
 > after a long, cold winter.”
 >
 > -- [Farasha Euker](https://github.com/fravashi)
+>
+> [https://github.com/renard/o-blog/issues/33](https://github.com/renard/o-blog/issues/33)
 
 </columns>
