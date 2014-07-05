@@ -55,9 +55,13 @@ Only one single command:
 
 <alert mod="info">
 
-Please note that this site is for `o-blog 2`. Old `o-blog` versions is still
-available under the `o-blog-v1` branch. `o-blog 2` has been designed to be
-fully compatible with `o-blog 1` but if you have compatibility problems
-please [open an issue on Github](https://github.com/renard/o-blog/issues).
+Please note that this site is for
+[o-blog 2](https://github.com/renard/o-blog). Old
+[o-blog](../o-blog/index.html) versions is still available under the
+[o-blog-v1](https://github.com/renard/o-blog/tree/o-blog-v1)
+branch. [o-blog 2](https://github.com/renard/o-blog/tree/o-blog-v1) has been
+designed to be fully compatible with [o-blog](../o-blog/index.html) but if
+you have compatibility problems please
+[open an issue on Github](https://github.com/renard/o-blog/issues).
 
 </alert>
