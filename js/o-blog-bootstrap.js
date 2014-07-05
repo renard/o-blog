@@ -27,8 +27,8 @@ function ob_load_tags() {
      *     ] }
      */
     $.each($('.ob-tagcloud'), function(i, element) {
-	    var source = $(element).data('source');
-	    var path_to_root = $(element).data('path-to-root');
+	    var source = $(element).data('source') || "tags.js";
+	    var path_to_root = $(element).data('path-to-root') || ".";
 	    $.getJSON(source, function(json) {
 		var tags_list = [];
 		$.each(json.tags, function(i, tag) {
@@ -43,38 +43,106 @@ function ob_load_tags() {
 }
 
 
-
-function loadArticles(url, root) {
+function ob_load_articles(callback) {
     /*
-     * Lookup for file at ROOT/URL and parse JSON to put into ELEMENT as a
-     * list items.
+     * Load all articles information into each '.ob-articles' classes.
+     *
+     * Define a article as:
+     *  <span class="ob-articles" data-source="articlestags.js"
+     *        data-path-to-root="." data-category="category"
+     *        data-excerpt="true" data=limit="5"/>
+     *
+     * Where:
+     *  - `source` is the path to the JSON structure
+     *  - `path-to-root` is the path to the site root directory.
+     *  - `category` is the article category to handle
+     *  - `excerpt` if true add article excerpt, insert only titles otherwise
+     *  - `limit` is the article limit count
      *
      * Json structure is like:
-     *    { "tags" : [
-     *       { "size" : "220.00", "path" : "tags/admin.html", "tag" : "Admin" },
-     *     ] }
+     *   {
+     *     "articles": {
+     *       "cat1": [
+     *         {
+     *           "excerpt": "article excerpt",
+     *           "path": "cat1/2014/07/03_article1.html",
+     *           "title": "Article 1 in category 1 title"
+     *         }, ...
+     *       ],
+     *       "cat2": [
+     *         {
+     *           "excerpt": "article excerpt",
+     *           "path": "cat2/2014/07/03_article1.html",
+     *           "title": "Article 1 in category 2 title"
+     *         }, ...
+     *       ], ...
+     *     }
+     *   }
      */
-    $.getJSON(root + '/' + url, function(data) {
-	$.each(data.articles, function(key, value) {
-	    $('.' + key).html('');
-	    $('.' + key + '-full').html('');
-	    var items = [];
-	    var items_full = [];
-	    $.each(value, function(i, art_data) {
-		if(i>3) return false;
-		var div_data =
-		    '<li><a href="' + root + '/' + art_data.path + '">' + art_data.title + '</a></li>';
-		var div_data_full =
-		    '<div><h3><a href="' + root + '/' + art_data.path + '">' + art_data.title + '</a></h3><p>' + art_data.excerpt + '</p></div>';
-		
-		items.push(div_data);
-		items_full.push(div_data_full);
+    $.each($('.ob-articles'), function(i, element) {
+	var source = $(element).data('source') || "articles.js";
+	var path_to_root = $(element).data('path-to-root') || ".";
+	var limit  = $(element).data('limit') || 10;
+	var excerpt  = $(element).data('excerpt') || false;
+	var category  = $(element).data('category');
+	
+	$.getJSON(source, function(json) {
+	    var articles_list = [];
+	    $.each(json.articles[category], function(i, art_data) {
+		if (i >= limit) return false;
+		if (excerpt) {
+		    articles_list.push('<div><h3><a href="' + path_to_root
+				       + '/' + art_data.path + '">'
+				       + art_data.title + '</a></h3><p>'
+				       + art_data.excerpt + '</p></div>');
+		} else {
+		    articles_list.push('<li><a href="' + path_to_root
+				       + '/' + art_data.path + '">' +
+				       art_data.title + '</a></li>');
+		}
 	    });
-	    $('.' + key).append(items.join(' '));
-	    $('.' + key +  '-full').html(items_full.join(' '));
+	    if (excerpt) {
+		$(element).replaceWith('<div class="ob-excerpts">' + articles_list.join(' ') + '</div>');
+	    } else {
+		$(element).replaceWith('<ul>' + articles_list.join(' ') + '</ul>');
+	    }
 	});
+    });
+    setTimeout(callback, 100);
+}
 
-    })
+
+function init_menu_dropdown() {
+
+    /* find active tab */
+    setTimeout(function() {
+	$('.navbar .navbar-collapse > ul li a[href="' +
+	  path_to_root + '/' + ob_this_page + '"]')
+	    .parent().addClass('active')
+	    .parent().parent().addClass('active');},
+	       1);
+    
+    // Build nav bar
+    var navbarUl = $('.navbar .navbar-collapse > ul');
+    navbarUl.addClass('nav').addClass('navbar-nav');
+    
+    /* create the top menu bar */
+    var dropdown = navbarUl.find('li ul')
+    dropdown.parent().addClass('dropdown')
+    /* find sub menu items */
+    //dropdown.parent().findaddClass("dropdown-menu");
+
+    /* and add dropdown features */
+    dropdown.parent().find('> a').addClass('dropdown-toggle')
+	.attr("data-toggle", "dropdown")
+	.append(' <b class="caret"></b>');
+    
+    dropdown.addClass("dropdown-menu");
+    
+    /* Add divider class if menu item is empty */
+    dropdown.parent().find('.dropdown-menu li').each(function() {
+	if ( $(this).text() == '') $(this).addClass('divider')
+    });
 }
 
 
@@ -83,37 +151,7 @@ $(document).ready(
     function() {
 
 	//Load articles
-	loadArticles('articles.js', path_to_root);
-
-	/* find active tab */
-	setTimeout(function() {
-	    $('.navbar .navbar-collapse > ul li a[href="' +
-	      path_to_root + '/' + ob_this_page + '"]')
-		.parent().addClass('active')
-		.parent().parent().addClass('active');},
-		   1);
-	
-	// Build nav bar
-	var navbarUl = $('.navbar .navbar-collapse > ul');
-	navbarUl.addClass('nav').addClass('navbar-nav');
-	
-	/* create the top menu bar */
-	var dropdown = navbarUl.find('li ul')
-	dropdown.parent().addClass('dropdown')
-	/* find sub menu items */
-	//dropdown.parent().findaddClass("dropdown-menu");
-
-	/* and add dropdown features */
-	dropdown.parent().find('> a').addClass('dropdown-toggle')
-	    .attr("data-toggle", "dropdown")
-	    .append(' <b class="caret"></b>');
-
-	dropdown.addClass("dropdown-menu");
-
-	/* Add divider class if menu item is empty */
-	dropdown.parent().find('.dropdown-menu li').each(function() {
-	    if ( $(this).text() == '') $(this).addClass('divider')
-	});
+	ob_load_articles(init_menu_dropdown);
 	
 	/* Compute page min height */
 	$('div#page').css('min-height', $(window).innerHeight() -
@@ -131,7 +169,5 @@ $(document).ready(
 	    
 
 	ob_load_tags();
-	
-	
     });
 
