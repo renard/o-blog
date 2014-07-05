@@ -9,3 +9,13 @@ type: snippet
 	- [Bootstrap]({lisp}(ob:path-to-root){/lisp}/bootstrap-items.html)
 	- [Page classes]({lisp}(ob:path-to-root){/lisp}/page-classes.html)
 	- [Publication]({lisp}(ob:path-to-root){/lisp}/publication.html)
+- [<icon icon="book"> Blog](#) <ul class="blog"><li/></ul>
+- [<icon icon="file-text"> Lorem](#) <ul class="lorem"><li/></ul>
+- [<icon icon="tags"> Tags]({lisp}(ob:path-to-root){/lisp}/tags/index.html)
+- [<icon icon="child"> Testimonial]({lisp}(ob:path-to-root){/lisp}/testimonials.html)
+
+
+<!--
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="renard_0" data-hashtags="oblog,emacs" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+-->
