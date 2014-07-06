@@ -102,11 +102,14 @@ function ob_load_articles(callback) {
 		}
 	    });
 	    if (excerpt) {
-		$(element).replaceWith('<div class="ob-excerpts">' + articles_list.join(' ') + '</div>');
+		$(element).replaceWith('<div class="ob-excerpts">'
+				       + articles_list.join(' ') + '</div>');
 	    } else {
 		$(element).replaceWith('<ul>' + articles_list.join(' ') + '</ul>');
 	    }
-	    callback.call();
+	    if ($.isFunction(callback)) {
+		callback.call();
+	    }
 	});
     });
 }
@@ -164,8 +167,10 @@ $(document).ready(
 
 	/* Make sure each .thumbnail is the same height for each row */
 	setTimeout(function() {
-	    $(".row").each(function() {equalHeight($(this).find(".thumbnail"))}); 
-	    $(".row").each(function() {equalHeight($(this).find(".src"))});
+	    $(".row").each(function() {
+		equalHeight($(this).find(".thumbnail"));
+		equalHeight($(this).find(".src"));
+	    });
 	}, 300);
 	    
 
