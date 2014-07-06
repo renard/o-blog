@@ -1,0 +1,95 @@
+% -*- markdown -*-
+<!--/
+title: Javascript
+type: page
+template: blog_static.html
+tags: help, o-blog internals
+/-->
+
+<lead>
+`o-blog` uses some javascript to handle some parts of the page, such as the
+menu builder or the tag-cloud generator. This article explains you how to
+use them.
+</lead>
+
+# Tag cloud
+
+A tag cloud is generated for all articles and pages tags. The tag size
+depends on its frequency. During the export process, a *JSON* file `tags.js`
+is generated in the publishing directory. You can display it in any part of
+an HTML page using an HTML tag of class `ob-tagcloud`.
+
+
+<row>
+<col sm="6" md="6">
+<nav class="tags" style="font-size: 40%;">
+<span class="ob-tagcloud" data-source="{lisp}(ob:path-to-root){/lisp}/tags.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}"/>
+</nav>
+</col>
+
+<col sm="6" md="6">
+<source mode="markdown">
+<span
+  class="ob-tagcloud"
+  data-source="<lisp>(ob:path-to-root)</lisp>/tags.js"
+  data-path-to-root="<lisp>(ob:path-to-root)</lisp>"/>
+</source>
+</col>
+</row>
+
+The JavaScript widget takes 2 arguments in `data-*` attributes:
+
+* `source` is the path to the JSON structure.
+* `path-to-root` is the path to the site root directory.
+
+# Articles
+
+Same as the tag cloud, an article *JSON* file is generated during the export
+process in `articles.js` into the publishing directory. You can display
+articles list anywhere in the HTML page using an HTML tag of class
+`ob-articles`.
+
+<row>
+<col sm="6" md="6">
+<span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="lorem"/>
+</col>
+
+<col sm="6" md="6">
+<source mode="markdown">
+<span
+  class="ob-articles"
+  data-source="{lisp}(ob:path-to-root){/lisp}/articles.js"
+  data-path-to-root="{lisp}(ob:path-to-root){/lisp}"
+  data-category="lorem"/>
+</source>
+</col>
+</row>
+
+
+<row>
+<col sm="6" md="6">
+<div style="font-size: 50%;">
+<span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="lorem" data-excerpt="true" data-limit="2"/>
+</div>
+</col>
+
+<col sm="6" md="6">
+<source mode="markdown">
+<span
+  class="ob-articles"
+  data-source="{lisp}(ob:path-to-root){/lisp}/articles.js"
+  data-path-to-root="{lisp}(ob:path-to-root){/lisp}"
+  data-category="lorem"
+  data-excerpt="true"
+  data-limit="2"/>
+</source>
+</col>
+</row>
+
+The JavaScript widget takes 2 arguments in `data-*` attributes:
+
+* `source` is the path to the JSON structure.
+* `path-to-root` is the path to the site root directory.
+* `category` is the article category to handle.
+* `excerpt` (optional) if true add article excerpt, insert only titles otherwise.
+* `limit` (optional) is the article limit count.
