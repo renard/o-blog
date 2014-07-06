@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-04 17:14:32
+;; Last changed: 2014-07-07 01:41:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -248,10 +248,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 	 (POSTS (ob:get-posts
 		 (lambda (x)
 		   (and
-		    (if category (equal
-				  (ob:get 'name category)
-				  (ob:get 'name (ob:get 'category x)))
-		      t)
+		    (if category (equal category (ob:get 'category x)) t)
 		    (if year (= year (ob:get 'year x)) t)
 		    (if month (= month (ob:get 'month x)) t))))))
     (ob:eval-template-to-file template fp)))
