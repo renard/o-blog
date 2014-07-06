@@ -5,10 +5,10 @@ type: snippet
 /-->
 
 <div>
-<h6>Blog</h6>
+<h6><a href="{lisp}(ob:path-to-root){/lisp}/blog/index.html">Blog</a></h6>
 <span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="blog"/>
 </div>
 <div>
-<h6>Lorem</h6>
+<h6><a href="{lisp}(ob:path-to-root){/lisp}/lorem/index.html">Lorem</a></h6>
 <span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="lorem"/>
 </div>
