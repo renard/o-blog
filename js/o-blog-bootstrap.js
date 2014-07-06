@@ -86,7 +86,7 @@ function ob_load_articles(callback) {
 	var excerpt  = $(element).data('excerpt') || false;
 	var category  = $(element).data('category');
 	
-	$.getJSON(source, function(json) {
+	$.getJSON(source).done(function(json) {
 	    var articles_list = [];
 	    $.each(json.articles[category], function(i, art_data) {
 		if (i >= limit) return false;
@@ -106,9 +106,9 @@ function ob_load_articles(callback) {
 	    } else {
 		$(element).replaceWith('<ul>' + articles_list.join(' ') + '</ul>');
 	    }
+	    callback.call();
 	});
     });
-    setTimeout(callback, 100);
 }
 
 
@@ -127,15 +127,16 @@ function init_menu_dropdown() {
     navbarUl.addClass('nav').addClass('navbar-nav');
     
     /* create the top menu bar */
-    var dropdown = navbarUl.find('li ul')
-    dropdown.parent().addClass('dropdown')
+    var dropdown = navbarUl.find('li ul');
+    dropdown.parent().addClass('dropdown');
     /* find sub menu items */
     //dropdown.parent().findaddClass("dropdown-menu");
 
-    /* and add dropdown features */
-    dropdown.parent().find('> a').addClass('dropdown-toggle')
+    var dropdown_link = dropdown.parent().find('> a');
+    dropdown_link.addClass('dropdown-toggle')
 	.attr("data-toggle", "dropdown")
-	.append(' <b class="caret"></b>');
+	.find('b.caret').remove();
+    dropdown_link.append(' <b class="caret"></b>');
     
     dropdown.addClass("dropdown-menu");
     
