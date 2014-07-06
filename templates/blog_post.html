@@ -29,14 +29,14 @@
 	<ul class="pager">
 	  <lisp>
 	    (progn
-	    (let ((ppost (ob:get-post-by-id (1+ (ob:post-id POST)))))
+	    (let ((ppost (ob:get-prev-post 1)))
 	    (if ppost
 	    (insert (format "<li class=\"previous\"><a href=\"%s/%s\"><i class=\"icon-chevron-left\"></i>&nbsp;%s</a></li>"
 	    (ob:path-to-root)
 	    (ob:post-htmlfile ppost)
 	    (ob:post-title ppost)))
 	    (insert "<li class=\"previous\">&nbsp;</li>")))
-	    (let ((npost (ob:get-post-by-id (1- (ob:post-id POST)))))
+	    (let ((npost (ob:get-next-post -1)))
 	    (if npost
 	    (insert (format "<li class=\"next\" style=\"text-align: right;\"><a href=\"%s/%s\">%s&nbsp;<i class=\"icon-chevron-right\"></i></a></li>"
 	    (ob:path-to-root)

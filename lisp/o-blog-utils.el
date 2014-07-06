@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-04 22:20:25
+;; Last changed: 2014-07-07 01:24:06
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -189,7 +189,26 @@ string."
     	(ob:insert-template template)
 	(ob:write-file file)))
 
+(defun ob:get-next-post (&optional count)
+  "Retrieve next post"
+  (when (and (boundp 'POST)
+	     (boundp 'POSTS))
+    (let* ((count (or count 1))
+	   (current POST)
+	   (category (ob:get 'category POST))
+	   (cat-posts (ob:get-posts
+		       (lambda (x)
+			 (equal category (ob:get 'category x)))))
+	   (current-idx (loop for i below (length cat-posts)
+			      until (equal (nth i cat-posts) current)
+			      finally return i))
+	   (wanted-id (+ current-idx count)))
+      (when (and (>= wanted-id 0)
+		 (< wanted-id (length cat-posts)))
+	  (nth wanted-id cat-posts)))))
 
+(defun ob:get-prev-post (&optional count)
+  (ob:get-next-post (or count -1)))
 
 
 
