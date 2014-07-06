@@ -28,7 +28,7 @@ an HTML page using an HTML tag of class `ob-tagcloud`.
 </col>
 
 <col sm="6" md="6">
-<source mode="markdown">
+<source mode="html">
 <span
   class="ob-tagcloud"
   data-source="<lisp>(ob:path-to-root)</lisp>/tags.js"
@@ -55,11 +55,11 @@ articles list anywhere in the HTML page using an HTML tag of class
 </col>
 
 <col sm="6" md="6">
-<source mode="markdown">
+<source mode="html">
 <span
   class="ob-articles"
-  data-source="{lisp}(ob:path-to-root){/lisp}/articles.js"
-  data-path-to-root="{lisp}(ob:path-to-root){/lisp}"
+  data-source="<lisp>(ob:path-to-root)</lisp>/articles.js"
+  data-path-to-root="<lisp>(ob:path-to-root)</lisp>"
   data-category="lorem"/>
 </source>
 </col>
@@ -74,11 +74,11 @@ articles list anywhere in the HTML page using an HTML tag of class
 </col>
 
 <col sm="6" md="6">
-<source mode="markdown">
+<source mode="html">
 <span
   class="ob-articles"
-  data-source="{lisp}(ob:path-to-root){/lisp}/articles.js"
-  data-path-to-root="{lisp}(ob:path-to-root){/lisp}"
+  data-source="<lisp>(ob:path-to-root)</lisp>/articles.js"
+  data-path-to-root="<lisp>(ob:path-to-root)</lisp>"
   data-category="lorem"
   data-excerpt="true"
   data-limit="2"/>

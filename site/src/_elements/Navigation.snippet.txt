@@ -7,8 +7,11 @@ type: snippet
 - [<icon icon="book"> Documentation](#)
     - [Quickstart]({lisp}(ob:path-to-root){/lisp}/quickstart.html)
 	- [Bootstrap]({lisp}(ob:path-to-root){/lisp}/bootstrap-items.html)
+	- 
 	- [Page classes]({lisp}(ob:path-to-root){/lisp}/page-classes.html)
 	- [Publication]({lisp}(ob:path-to-root){/lisp}/publication.html)
+	- 
+	- [Javascript]({lisp}(ob:path-to-root){/lisp}/javascript.html)
 - [<icon icon="book"> Blog](#) <span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="blog"/>
 - [<icon icon="file-text"> Lorem](#) <span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="lorem"/>
 - [<icon icon="tags"> Tags]({lisp}(ob:path-to-root){/lisp}/tags/index.html)
