@@ -16,7 +16,8 @@
 	    </nav>
 	    <nav id="archives" class="col-md-3">
 	      <h1><a href="<lisp>(ob:path-to-root)</lisp>/archives.html"><lisp>(ob:gettext :archives)</lisp></a></h1>
-	      <lisp>(ob:post-content-html (ob:get-snippet "Footer Archives"))</lisp>
+	      <lisp>(let ((snippet (ob:get-snippet "Footer Archives")))
+		(when snippet (ob:get 'html snippet)))</lisp>
 	    </nav>
 	    <nav class="tags col-md-3">
 	      <h1><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html"><lisp>(ob:gettext :tags)</lisp></a></h1>
