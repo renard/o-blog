@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-07 01:41:39
+;; Last changed: 2014-07-07 21:31:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -221,6 +221,10 @@ Some global variables are set:
 		      do (ob-process-index "blog_index_month.html" CATEGORY YEAR MONTH))
 		and do (ob-process-index "blog_index_year.html" CATEGORY YEAR))
 	  and do (unless (equal "." CATEGORY)
+		   (ob:eval-template-to-file "blog_rss.html"
+					     (format "%s/%s/index.xml"
+						     (ob:get 'publish-dir BLOG)
+						     (ob:get 'safe CATEGORY)))
 		   (ob-process-index "blog_index_category.html" CATEGORY)))
     )
   (ob:publish-style self)
