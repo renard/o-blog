@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-04 16:37:33
+;; Last changed: 2014-07-07 03:47:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -31,7 +31,11 @@
    (end :initarg :end
 	:type (or null string list)
 	:documentation "Closing replacement from suitable for
-	`ob:string-template'. If nil, no closing tag is required"))
+	`ob:string-template'. If nil, no closing tag is required")
+   (alias :initarg :alias
+	:type (or null symbol)
+	:documentation "ob:framework-component name alias"))
+
   "Component used by ob:compute-framework")
 
 
@@ -207,10 +211,10 @@
     :start '(let* ((cur-point (point))
 		   (end-point (unless (boundp 'src-file)
 				(save-match-data
-				  (search-forward "</source>"))))
+				  (search-forward (format "</%s>" tag)))))
 		   (content (when end-point
 			      (buffer-substring-no-properties (1+ cur-point)
-			       (- end-point (length "</source>")))))
+			       (- end-point (length (format "</%s>" tag))))))
 		   (func (when (and (boundp 'mode) mode)
 			   (setq func (intern (format "%s-mode" mode)))))
 		   html)
@@ -235,8 +239,9 @@
 		(setf html (htmlize-region-for-paste (point-min) (point-max))))
 
 	      (when end-point
-		(delete-region cur-point (- end-point (length "</source>"))))
+		(delete-region cur-point (- end-point (length (format "</%s>" tag)))))
 	      (format "<div class=\"src %s\">%s</div>" (or mode "") html)))
+   (ob:framework-component 'src :backends '(org) :alias 'source)
 
    (ob:framework-component
     'columns :backends '(org)
@@ -306,7 +311,11 @@ RE-END is passed to `format' with widget name as parameter.
 			(when (re-search-forward comment (point-at-eol) t)
 			  (delete-backward-char 1) t)))))
 
-	      (when (and replacement (not commented))
+	      (when (ob:get 'alias replacement)
+		(setq replacement
+		      (cdr (assoc (ob:get 'alias replacement) items))))
+
+		(when (and replacement (not commented))
 		;; Convert the attribute list to variables
 		(cl-progv
 		    (mapcar #'car attr) (mapcar #'cdr attr)
