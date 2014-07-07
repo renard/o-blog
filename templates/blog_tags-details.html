@@ -1,6 +1,7 @@
 <lisp>(ob:insert-template "page_header.html")</lisp>
 <article>
   <div class="article-content">
+    <p>Articles matching <span class="label label-default"><lisp>(ob:get 'display TAG)</lisp></span> (<a href="<lisp>(ob:path-to-root)</lisp>/tags/<lisp>(ob:get 'safe TAG)</lisp>.xml">RSS feed</a>)</p>
     <nav class="tag-detail">
       <ul>
 	<lisp>

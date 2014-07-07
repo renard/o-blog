@@ -1,23 +1,24 @@
 <lisp>(ob:insert-template "page_header.html")</lisp>
 <div class="article">
-  <header class="article-header">
-    <div class="well">
-      <div class="row">
-	<div class="span1">
-	  <lisp>(ob:insert-template "plugin_qrcode.html")</lisp>
-	</div>
-	<h1 class="offset1" style="font-size: 250%;"><lisp>(ob:post-title POST)</lisp></h1>
-      </div>
-    </div>
-  </header>
-
   <div class="article-content">
+    <div>
+      <nav>
+	<p class="lead"><a href="<lisp>(ob:path-to-root)</lisp>/tags/index.html">Tag cloud</a></p>
+      </nav>
+    </div>
     <nav class="tag-detail">
       <div class="multicolumn3">
 	<lisp>
 (loop for TAG in TAGS
       do (progn
-	   (insert (format "<h3>%s</h3><ul>" (ob:tags-name TAG)))
+(insert (format "<h3><a href=\"%s/tags/%s.xml\"><i class=\"fa fa-rss\"></i></a> <a href=\"%s/tags/%s.html\">%s</a></h3><ul>"
+	    (ob:path-to-root)
+	    (ob:get 'safe TAG)
+	    (ob:path-to-root)
+	    (ob:get 'safe TAG)
+	    (ob:get 'display TAG)))
+
+	    
 	   (loop for post in POSTS
 		 do (when (member (ob:tags-safe TAG) (mapcar 'ob:tags-safe (ob:post-tags post)))
 		      (insert (format "<li><a href=\"%s/%s\">%s</a></li>"

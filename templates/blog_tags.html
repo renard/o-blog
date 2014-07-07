@@ -1,6 +1,11 @@
 <lisp>(ob:insert-template "page_header.html")</lisp>
 <article>
   <div class="article-content">
+    <div>
+      <nav>
+	<p class="lead"><a href="<lisp>(ob:path-to-root)</lisp>/tags.html">Tag details</a></p>
+      </nav>
+    </div>
     <nav class="tags">
       <span class="ob-tagcloud" data-source="<lisp>(ob:path-to-root)</lisp>/tags.js" data-path-to-root="<lisp>(ob:path-to-root)</lisp>"/>
     </nav>
