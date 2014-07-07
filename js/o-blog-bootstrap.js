@@ -153,9 +153,9 @@ function init_menu_dropdown() {
 
 $(document).ready(
     function() {
-
+	setTimeout(init_menu_dropdown, 1);
 	//Load articles
-	ob_load_articles(init_menu_dropdown);
+	ob_load_articles();
 	
 	/* Compute page min height */
 	$('div#page').css('min-height', $(window).innerHeight() -
