@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-05 01:19:06
+;; Last changed: 2014-07-07 19:31:20
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -298,6 +298,7 @@ in current-buffer."
 			(ob:org-fix-html self html)))
       (when saved-file
 	(delete-file saved-file))
+      (ob:get-post-excerpt entry)
       entry)))
 
 
