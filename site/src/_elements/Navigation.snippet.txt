@@ -14,7 +14,9 @@ type: snippet
 	- [Javascript]({lisp}(ob:path-to-root){/lisp}/javascript.html)
 - [<icon icon="book"> Blog](#) <span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="blog"/>
 - [<icon icon="file-text"> Lorem](#) <span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="lorem"/>
-- [<icon icon="tags"> Tags]({lisp}(ob:path-to-root){/lisp}/tags/index.html)
+- [<icon icon="tags"> Tags](#)
+	- [Cloud]({lisp}(ob:path-to-root){/lisp}/tags/index.html)
+	- [Details]({lisp}(ob:path-to-root){/lisp}/tags.html)
 - [<icon icon="child"> Testimonial]({lisp}(ob:path-to-root){/lisp}/testimonials.html)
 
 
