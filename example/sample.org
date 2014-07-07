@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2014-07-05 01:14:58
+#+DATE: 2014-07-07 20:30:23
 
 #+STARTUP: logdone
 
@@ -176,6 +176,18 @@ This is a sample blog to explain how [[https://github.com/renard/o-blog][o-blog]
   - [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][/icon-tasks icon-white/ Roadmap]]
 
   - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][/icon-rss icon-white/ RSS]]
+
+** Footer Archives
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+#+BEGIN_HTML
+<div>
+<h6><a href="{lisp}(ob:path-to-root){/lisp}/tips/index.html">Tips</a></h6>
+<span class="ob-articles" data-source="{lisp}(ob:path-to-root){/lisp}/articles.js" data-path-to-root="{lisp}(ob:path-to-root){/lisp}" data-category="tips"/>
+</div>
+#+END_HTML
 
 ** Articles by tags
   :PROPERTIES:
