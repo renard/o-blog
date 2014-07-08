@@ -8,7 +8,7 @@ page: index
 
 <a href="https://github.com/renard/o-blog">
 <img
-  style="position: fixed; top: 0; right: 0; border: 0; z-index: 999999;"
+  style="position: fixed; top: 76px; right: 0; border: 0; z-index: 999999;"
   src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"
   data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
 </a>
