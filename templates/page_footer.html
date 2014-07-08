@@ -38,5 +38,14 @@
       <script src="<lisp>(ob:path-to-root)</lisp>/style/jquery-2.1.1.min.js"></script>
       <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap.min.js"></script>
       <script src="<lisp>(ob:path-to-root)</lisp>/style/o-blog-bootstrap.min.js"></script>
+      <script type="text/javascript">
+	$(document).ready(function() {
+        $("head").append([
+	'<link href="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/css/bootstrap.css" rel="stylesheet">',
+	'<link href="<lisp>(ob:path-to-root)</lisp>/style/Font-Awesome/css/font-awesome.min.css" rel="stylesheet">',
+	'<link href="<lisp>(ob:path-to-root)</lisp>/style/tipue/css/tipuesearch.css" rel="stylesheet">',
+        '<link href="<lisp>(ob:path-to-root)</lisp>/style/tipue/css/tipuedrop.css" rel="stylesheet">'].join());
+	});
+     </script>
 </body>
 </html>
