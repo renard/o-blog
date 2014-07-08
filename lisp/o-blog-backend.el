@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-07 23:26:14
+;; Last changed: 2014-07-09 01:17:28
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -142,8 +142,8 @@ Some global variables are set:
 						(ob:get 'publish-dir BLOG)
 						FILE))
 	      (let ((POSTS (ob:get-posts  (lambda (x)
-					    (member (ob:tags-safe TAG)
-						    (mapcar 'ob:tags-safe
+					    (member (ob:get 'safe TAG)
+						    (mapcar 'ob:tag-safe
 							    (ob:post-tags x)))))))
 		  (ob:eval-template-to-file "blog_rss.html"
 					    (format "%s/tags/%s.xml"
@@ -362,8 +362,8 @@ within MIN_R and MAX_R inclusive."
 			 append (slot-value page 'tags)))
 	 
 	 (tags (sort (append tags-art tags-page)
-		     #'(lambda (a b) (string< (ob:get-name  a)
-					      (ob:get-name  b)))))
+		     #'(lambda (a b) (string< (ob:get 'display  a)
+					      (ob:get 'display  b)))))
 	 (min_r (or min_r 80))
 	 (max_r (or max_r 220))
 	 (min_f (length tags))
@@ -380,8 +380,8 @@ within MIN_R and MAX_R inclusive."
     		 with k = 1
     		 when (and
     		       j
-    		       (string= (ob:get-name i)
-    				(ob:get-name (car j))))
+    		       (string= (ob:get 'display i)
+    				(ob:get 'display (car j))))
     		 do (incf k)
     		 else
     		 collect (progn
@@ -390,16 +390,16 @@ within MIN_R and MAX_R inclusive."
     			   (list k i))
 		 and do (setf k 1))
     	   do (progn
-    		(set-slot-value tag 'count count)
+    		(%ob:set tag 'count count)
     		;; This is the tricky part
     		;; Formula is:
     		;; % = min_r + (count - min_f) * (max_r - min_r) / (max_f - min_f)
     		;; the `max' is on purpose in case of max_f = min_f
-    		(set-slot-value tag 'size
-    				(+ min_r
-    				   (/
-    				    (* (- count min_f) (- max_r min_r))
-    				    (max 1.0 (float (- max_f min_f)))))))
+    		(%ob:set tag 'size
+			 (+ min_r
+			    (/
+			     (* (- count min_f) (- max_r min_r))
+			     (max 1.0 (float (- max_f min_f)))))))
     	   collect tag))))
 
 
@@ -491,7 +491,7 @@ Examples:
 	(nth (or nth 0)))
     (nth nth (ob:get-posts (lambda (x)
 			     (equal (or category "blog")
-				    (ob:get-name (ob:get 'category x))))))))
+				    (ob:get 'display (ob:get 'category x))))))))
 
 
 (defun ob:get-snippet (name &optional slot blog)

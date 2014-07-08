@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-04 22:26:13
+;; Last changed: 2014-07-08 23:08:40
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -60,8 +60,7 @@
 		  tags (split-string tags "\\s-?,\\s-"))))
     (loop for tag in tags
 	  for td = (ob:replace-in-string tag '(("_" " ") ("@" "-")))
-	  for ts = (ob:sanitize-string td)
-	  collect (ob:tag tag :display td :safe ts))))
+	  collect (make-ob:tag td))))
 
 
 (defmethod ob:parse-entries ((self ob:backend:markdown))
@@ -89,9 +88,8 @@
 
 	       (when (slot-exists-p obj 'category)
 		 (set-slot-value obj 'category
-				 (ob:category:init
-				  (ob:category
-				   (plist-get headers 'category)))))
+				  (make-ob:category
+				   (plist-get headers 'category))))
 
 	       ;; Add rest of header parameters to object
 	       (loop for header in headers by #'cddr

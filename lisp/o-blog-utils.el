@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-07 01:24:06
+;; Last changed: 2014-07-09 01:14:41
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -136,7 +136,27 @@ path-to-root slot."
    ((boundp 'POST) (ob:entry:get 'path-to-root POST))
    (t ".")))
 
-(defun ob:get (slot &optional object)
+
+
+(defun %ob:set (object slot value)
+  (when (arrayp object)
+    (let* ((type (intern (replace-regexp-in-string
+			  "^cl-struct-" "" (symbol-name (aref object 0))))))
+      (when (assoc slot (cl-struct-slot-info type))
+	(aset object (cl-struct-slot-offset type slot) value)))))
+
+
+(defun %ob:get (slot object)
+  (when (arrayp object)
+    (let* ((type (replace-regexp-in-string
+		  "^cl-struct-" "" (symbol-name (aref object 0))))
+	   (func (intern (concat type "-" (symbol-name slot)))))
+      (when (functionp func)
+	(funcall func object)))))
+
+
+
+(defun ob:get-obj (slot &optional object)
   "Try to get SLOT from OBJECT.
 
 If object is `nil' try to get SLOT from:
@@ -150,11 +170,20 @@ If object is `nil' try to get SLOT from:
 	     (slot-exists-p object slot)
 	     (slot-boundp object slot))
 	(slot-value object slot))
-    (loop for o in '(TAG CATEGORY POST BLOG)
+    (loop for o in '(;;TAG CATEGORY
+			 POST BLOG)
 	  when (and (boundp o)
 		    (slot-exists-p (eval o) slot)
 		    (slot-boundp (eval o) slot))
 	  return (slot-value (eval o) slot))))
+
+(defun ob:get (slot &optional object)
+  (cond
+   ((or (not object)
+	(eieio-object-p object))
+    (ob:get-obj slot object))
+   (t (%ob:get slot object))))
+
 
 (defun ob:get-post-by-id (id)
   "Return post which id is ID"

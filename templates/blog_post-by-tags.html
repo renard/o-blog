@@ -20,7 +20,7 @@
 
 	    
 	   (loop for post in POSTS
-		 do (when (member (ob:tags-safe TAG) (mapcar 'ob:tags-safe (ob:post-tags post)))
+		 do (when (member (ob:get 'safe TAG) (mapcar 'ob:tag-safe (ob:post-tags post)))
 		      (insert (format "<li><a href=\"%s/%s\">%s</a></li>"
 				      (ob:path-to-root) (ob:post-htmlfile post) (ob:post-title post)
 				      ))))

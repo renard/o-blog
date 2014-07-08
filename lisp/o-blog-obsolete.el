@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-03-30
-;; Last changed: 2013-06-05 00:43:51
+;; Last changed: 2014-07-08 23:40:28
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -52,11 +52,11 @@
   (content-html html) sitemap)
         do (ob:make-obsolete 'post s))
 
-(loop for s in '((name display) safe count size)
-        do (ob:make-obsolete 'tags s))
+;; (loop for s in '((name display) safe count size)
+;;         do (ob:make-obsolete 'tags s))
 
-(loop for s in '((name display) safe)
-        do (ob:make-obsolete 'category s))
+;; (loop for s in '((name display) safe)
+;;         do (ob:make-obsolete 'category s))
 
 
 (provide 'o-blog-obsolete)

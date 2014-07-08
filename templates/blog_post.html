@@ -12,7 +12,7 @@
 	    <span class="month"><lisp>
 		(format "<a href=\"%s/%s/%s/%s/index.html\">%s</a>"
 		(ob:path-to-root)
-		(ob:category-safe (ob:post-category POST))
+		(ob:get 'safe (ob:post-category POST))
 		(ob:format-date (ob:post-timestamp POST) "%Y")
 		(ob:format-date (ob:post-timestamp POST) "%m")
 		(ob:format-date (ob:post-timestamp POST) "%b"))</lisp>
@@ -20,7 +20,7 @@
 	    <span class="year"><lisp>
     		(format "<a href=\"%s/%s/%s/index.html\">%s</a>"
     		(ob:path-to-root)
-    		(ob:category-safe (ob:post-category POST))
+    		(ob:get 'safe (ob:post-category POST))
     		(ob:format-date (ob:post-timestamp POST) "%Y")
     		(ob:format-date (ob:post-timestamp POST) "%Y"))
 	    </lisp></span>
@@ -64,7 +64,7 @@
 	<lisp>
 	  (loop for tag in (ob:post-tags POST)
 	  do (insert (format "<li class=\"label label-default small\"><a href=\"%s/tags/%s.html\">%s</a></li>"
-	  (ob:path-to-root) (ob:tags-safe tag) (ob:tags-name tag))))
+	  (ob:path-to-root) (ob:get 'safe tag) (ob:get 'display tag))))
 	</lisp>
       </ul>
     </nav>

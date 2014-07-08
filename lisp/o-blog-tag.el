@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-02-09
-;; Last changed: 2013-03-29 20:16:56
+;; Last changed: 2014-07-09 01:07:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -13,43 +13,24 @@
 ;;; Commentary:
 ;; 
 
-
 ;;; Code:
 
 
-(defclass ob:category ()
-  ((display :initarg :display
-	    :type string
-	    :documentation "Displayed tag name string")
-   (safe :initarg :safe
-	 :type string
-	 :documentation "HTML safe tag form"))
-  "")
+(cl-defstruct
+    (ob:category
+     (:constructor
+      make-ob:category (display &aux (safe (ob:sanitize-string display)))))
+  display
+  safe)
 
-(defmethod ob:category:init ((self ob:category))
-  ""
-  (let ((name (ob:get-name self)))
-    (set-slot-value self 'display name)
-    (set-slot-value self 'safe (ob:sanitize-string name)))
-  self)
-
-
-
-(defclass ob:tag (ob:category)
-  ((count :initarg :count
-	  :type integer
-	  :documentation "Tag occurance in all articles")
-   (size :initarg :size
-	 :type float
-	 :documentation "Tag html size"))
-  "")
-
-(defun ob:category:get (value &optional entry)
-  ""
-  (let ((entry (or entry
-		   (when (boundp 'POST)
-		     (ob:entry:get 'category)))))
-    (slot-value entry value)))
+(cl-defstruct
+    (ob:tag
+     (:include ob:category)
+     (:constructor
+      make-ob:tag (display &key (count 0) (size 0)
+			   &aux (safe (ob:sanitize-string display)))))
+  count
+  size)
 
 (provide 'o-blog-tag)
 
