@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-09 01:14:41
+;; Last changed: 2014-07-09 11:06:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -310,6 +310,26 @@ A copy function COPYF and its arguments ARGS could be specified."
    (ob:get 'style-dir object)
    (ob:get 'publish-dir object)))
 
+
+(defun ob:get-html-links (html &optional wanted-tag wanted-attribute)
+  "Return a list of all WANTED-ATTRIBUTE of WANTED-TAG from HTML.
+If not specified return all link references from HTML
+fragment (tag: 'a attribute 'href)"
+  (when (listp html)
+    (let ((tag (pop html))
+	  (attributes (pop html))
+	  (children html)
+	  (wanted-tag (or wanted-tag 'a))
+	  (wanted-attribute (or wanted-attribute 'href)))
+      (cond
+       ((eq tag wanted-tag)
+	(cons (cdr (assoc wanted-attribute attributes))
+	      (loop for child in children
+		    nconc (ob:get-html-links child wanted-tag wanted-attribute))))
+       ((listp children)
+	(loop for child in children
+	      nconc (ob:get-html-links child wanted-tag wanted-attribute)))
+       (t nil)))))
 
 
 
