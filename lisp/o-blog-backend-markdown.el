@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-08 23:08:40
+;; Last changed: 2014-07-09 02:14:01
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -99,14 +99,7 @@
 		     do (set-slot-value
 			 obj header (plist-get headers header)))
 
-	       (if (eq 'page type)
-		   (ob:entry:set-path obj
-				      (concat
-				       (ob:sanitize-string
-					(or (plist-get headers 'page)
-					    (ob:get 'title obj)))
-				       ".html"))
-		 (ob:entry:set-path obj))
+	       (ob:entry:set-path obj)
 	       
 	       (set-slot-value self types (append obj-list (list obj)))
 

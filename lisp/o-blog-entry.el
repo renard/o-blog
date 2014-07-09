@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-08 23:32:31
+;; Last changed: 2014-07-09 02:12:05
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -18,6 +18,8 @@
 
 
 (eval-when-compile
+  (require 'htmlize nil t)
+  (require 'sgml-mode nil t)
   (require 'eieio nil t))
 
 
@@ -88,7 +90,7 @@
    )
   "O-blog page article")
 
-(defmethod ob:entry:set-path ((self ob:entry))
+(defun ob:entry:set-path-entry (self)
   ""
   (set-slot-value
    self 'path (format "%s"
@@ -108,7 +110,7 @@
 		(string-to-number
 		 (format-time-string f timestamp)))))))
 
-(defmethod ob:entry:set-path ((self ob:article))
+(defun ob:entry:set-path-article (self)
   ""
   (set-slot-value
    self 'path (format "%s/%.4d/%.2d"
@@ -208,10 +210,14 @@ ELLIPSIS if defined.."
 	     :documentation "Template file to use for publication"))
   "O-blog page class")
 
-(defmethod ob:entry:set-path ((self ob:page) page)
+(defun ob:entry:set-path-page (self)
   ""
   (set-slot-value self 'path ".")
-  (set-slot-value self 'file page)
+  (set-slot-value self 'file (concat
+			      (ob:sanitize-string
+			       (or (ob:get 'page self)
+				   (ob:get 'title self)))
+			      ".html"))
   (set-slot-value
    self 'htmlfile (if (string= "." (oref self path))
 		      (oref self file)
@@ -222,6 +228,15 @@ ELLIPSIS if defined.."
    self 'path-to-root (file-relative-name
 		       "."
 		       (oref self path))))
+
+
+(defun ob:entry:set-path (self)
+  (let ((class (eieio-object-class self)))
+    (cond
+     ((eq 'ob:entry class) (ob:entry:set-path-entry self))
+     ((eq 'ob:page class) (ob:entry:set-path-page self))
+     ((eq 'ob:article class) (ob:entry:set-path-article self)))))
+
 
 (defclass ob:snippet (ob:entry)
   nil
