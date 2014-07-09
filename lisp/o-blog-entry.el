@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-09 02:12:05
+;; Last changed: 2014-07-09 02:21:30
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -100,7 +100,7 @@
 		      (oref self path)
 		      (oref self path))))
 
-(defmethod ob:entry:compute-dates ((self ob:article))
+(defun ob:entry:compute-dates (self)
   ""
   (let ((timestamp (oref self timestamp)))
     (when timestamp
@@ -132,7 +132,7 @@
 		       "."
 		       (oref self path))))
 
-(defmethod ob:get-post-excerpt ((self ob:entry) &optional words ellipsis)
+(defun ob:get-post-excerpt (self &optional words ellipsis)
   "Return the first WORDS from POST html content.
 
 The return string would be unformatted plain text postfixed by
@@ -168,7 +168,7 @@ ELLIPSIS if defined.."
 			 ellipsis))))))
 
 
-(defmethod ob:entry:publish ((self ob:entry) &optional blog-obj)
+(defun ob:entry:publish (self &optional blog-obj)
   ""
   (let ((blog-obj (or blog-obj
 		      (when (boundp 'BLOG) BLOG)
@@ -207,7 +207,8 @@ ELLIPSIS if defined.."
   ((template :initarg :template
 	     :initform "blog_static.html"
 	     :type string
-	     :documentation "Template file to use for publication"))
+	     :documentation "Template file to use for publication")
+   (page :initarg :page :tpe :string))
   "O-blog page class")
 
 (defun ob:entry:set-path-page (self)
