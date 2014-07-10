@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-10 17:13:59
+;; Last changed: 2014-07-10 19:13:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -23,13 +23,11 @@
 
 
 
-(defclass ob:backend:markdown (ob:backend)
-  ()
-  "Object type handeling o-blog files in markdown.")
+(cl-defstruct (ob:backend:markdown
+	       (:include ob:backend)))
 
 (defun ob:markdown:find-files (self)
-  (set-slot-value self 'source-files
-		  (ob:find-files self "txt")))
+  (%ob:set self 'source-files (ob:find-files self "txt")))
 
 
 (defun ob:markdown:parse-config (self &optional file)
@@ -49,8 +47,8 @@
 	      when (string-match "^\\s-*\\([^#]+?\\)\\s-*=\\s-*\\(.+?\\)\\s-*$" line)
 	      do (let ((k (intern (match-string 1 line)))
 		       (v (match-string 2 line)))
-		   (when (slot-exists-p self k)
-		     (set-slot-value self k v))))))))
+		   (when (ob:slot-exists-p self k)
+		     (%ob:set self k v))))))))
 
 
 
@@ -100,7 +98,7 @@
 
 	       (ob:entry:set-path obj)
 	       
-	       (set-slot-value self types (append obj-list (list obj)))
+	       (%ob:set self types (append obj-list (list obj)))
 
 	       (%ob:set obj 'files-to-copy
 			(ob:markdown:get-images obj))))))

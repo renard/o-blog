@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-10 11:16:04
+;; Last changed: 2014-07-10 19:17:13
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -180,8 +180,6 @@ ELLIPSIS if defined.."
 		      (when (boundp 'BLOG) BLOG)
 		      (when (boundp 'blog) blog)))
 	(FILE (ob:get 'htmlfile self)))
-    (unless (ob:backend-child-p blog-obj)
-      (error "`ob:entry:publish': blog-obj is not an `ob:backend' child class."))
     (when (ob:slot-exists-p self 'template)
       (with-temp-buffer
 	(ob:insert-template (ob:get 'template self) blog-obj)

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2014-02-14 00:55:18
+;; Last changed: 2014-07-10 18:46:46
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -71,7 +71,7 @@ current buffer."
 				 (file-exists-p (format "%s/o-blog.conf" dir)))
 		       do (setf dir (file-name-directory (directory-file-name dir)))))
 	     dir))
-	 (classfct (intern (format "ob:backend:%s" backend))))
+	 (classfct (intern (format "make-ob:backend:%s" backend))))
 
     (when (member backend '(markdown))
       (setf file (format "%s/o-blog.conf" default-directory)))
@@ -80,7 +80,7 @@ current buffer."
       (unless (featurep lib)
 	(require lib)))
 
-    (ob:publish (funcall classfct file))))
+    (ob:publish (funcall classfct :config-file file))))
     ;; (let* ((blog (funcall classfct file))
     ;; 	   ;; Just an alias for backward compatibility
     ;; 	   ;; TODO: Remove me

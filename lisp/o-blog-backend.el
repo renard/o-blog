@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-10 11:28:35
+;; Last changed: 2014-07-10 19:16:47
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -22,76 +22,31 @@
   (require 'eieio nil t))
 
 
-(defclass ob:backend nil
-  ((index-file :initarg :index-file
-	       :type string
-	       :documentation "Path to o-blog index file.")
-   (source-dir :initarg :source-dir
-		:type string
-		:documentation "Path to publishing
-		directory (relative to o-blog configuration file
-		path).")
-   (source-files :initarg :file-name
-		 :type list
-		 :documentation "List of o-blog source files")
-   (publish-dir :initarg :publish-dir
-		:initform "out"
-		:type string
-		:documentation "Path to publishing
-		directory (relative to o-blog configuration file
-		path).")
-   (style-dir :initarg :style-dir
-		:initform "../templates/style"
-		:type string
-		:documentation "Path to style
-		directory (relative to publish-dir).")
-   (template-dir :initarg :publish-dir
-		 :initform (expand-file-name
-			    (concat (file-name-directory
-				     (find-library-name "o-blog"))
-				    "../templates"))
-		 :type string
-		 :documentation "Path to publishing
-		 directory (relative to o-blog configuration file
-		 path).")
-   (articles :initarg :articles
-	     :type list
-	     :initform nil
-	     :documentation "List of ob:article")
-   (pages :initarg :pages
-	  :type list
-	  :initform nil
-	  :documentation "List of ob:page")
-   (snippets :initarg :snippets
-	     :type list
-	     :initform nil
-	     :documentation "List of ob:snippet")
-   (tags :initarg :tags
-	 :type list
-	 :initarg nil
-	 :documentation "List of ob:tag")
-   (title :initarg :title
-	  :type string
-	  :documentation "Site title")
-   (description :initarg :description
-		:type string
-		:documentation "Site description")
-   (url :initarg :url
-		:type string
-		:documentation "Site url")
+(cl-defstruct
+    (ob:backend)
+  config-file
+  index-file
+  source-dir
+  source-files
+  (publish-dir "out")
+  (style-dir (expand-file-name
+	      (concat (file-name-directory
+		       (find-library-name "o-blog"))
+		      "../templates/style")))
+  (template-dir  (expand-file-name
+		  (concat (file-name-directory
+			   (find-library-name "o-blog"))
+			  "../templates")))
+  articles
+  pages
+  snippets
+  tags
+  title
+  description
+  url
+  (posts-sorter 'ob:entry:sort-by-date))
 
-   (posts-sorter :initarg :posts-sorter
-		 :initform ob:entry:sort-by-date
-		 :type symbol
-		 :documentation)
-
-   )
-  
-  "Object type handeling o-blog backend. All file or directory
-paths are relative to the o-blog configuration file."
-  :abstract t)
-
-(defmethod ob:publish ((self ob:backend))
+(defun ob:publish (self)
   "Publish a new blog.
 
 Some global variables are set:
@@ -100,9 +55,15 @@ Some global variables are set:
 - `TAGS': a list of all tags as `ob:tags' class.
 
 "
-  (ob:find-files self)
-  (ob:parse-config self)
-  (ob:parse-entries self)
+  (let ((type (%ob:get-type self)))
+    (message "TYPE: %S" type)
+    (cond
+     ((eq 'ob:backend:markdown type)
+      (ob:markdown:find-files self)
+      (ob:markdown:parse-config self)
+      (message "parse-config")
+      (ob:markdown:parse-entries self)
+      (message "parse-enties"))))
   (ob:compute-tags self)
   
   (let* ((BLOG self)
@@ -119,7 +80,7 @@ Some global variables are set:
 			(when (eq type 'articles)
 			  (%ob:set entry 'id id)
 			  (setf id (1+ id)))
-			(ob:convert-entry BLOG entry))))
+			(ob:markdown:convert-entry BLOG entry))))
 
     ;; Publish both articles static pages
     (loop for type in '(articles pages)
@@ -279,13 +240,8 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
        ,@body)))
       
 
-(defmethod ob:must-override-1 ((self ob:backend) method)
-  "Generate a warning when METHOD is not overridden in subclass."
-  (message "Method `%s' is not defined in class `%s'."
-	   method (object-class self)))
-
-(defmethod ob:find-files-1 ((self ob:backend) extension
-			    &optional dir ignore-dir original-dir)
+(defun ob:find-files (self extension
+			   &optional dir ignore-dir original-dir)
   "List all files under and `ob:backend' `source-dir' or DIR
 whose extensions are defined in EXTENSION list.
 
@@ -304,31 +260,17 @@ called recursively."
 	  when (and
 		(file-directory-p file-path)
 		(not (member file ignore-dir)))
-	  nconc (ob:find-files-1 self extension file-path ignore-dir original-dir)
+	  nconc (ob:find-files self extension file-path ignore-dir original-dir)
 	  when (member (file-name-extension file) extension)
 	  collect (file-relative-name file-path original-dir))))
 
 
-;;
-;; Methods that must be overridden
-;;
-(defmethod ob:find-files ((self ob:backend))
-  "Generic method for finding files. This method MUST be
-overriden in subclasses."
-  (ob:must-override-1 self 'ob:find-files))
-
-(defmethod ob:parse-config ((self ob:backend))
-  "Parse blog configuration. This method MUST be
-overriden in subclasses."
-  (ob:must-override-1 self 'ob:parse-config))
-
-
 ;; Basic primitives
-(defmethod ob:get-configuration-file ((self ob:backend))
+(defun ob:get-configuration-file (self)
   "Return o-blog configuration file, which is SELF instance name."
-  (ob:get-name self))
+  (ob:get 'config-file self))
 
-(defmethod ob:get-source-directory ((self ob:backend))
+(defun ob:get-source-directory (self)
   "Return o-blog source directory from ob:backend SELF object."
   (file-name-as-directory
    (format "%s%s"
@@ -337,13 +279,8 @@ overriden in subclasses."
 	   (or (ob:get 'source-dir self) ""))))
 
 
-(defmethod ob:get-all-posts ((self ob:backend))
-  "Generic method for finding files. This method MUST be
-overriden in subclasses."
-  (ob:must-override-1 self 'ob:get-all-posts))
 
-
-(defmethod ob:compute-tags ((self ob:backend) &optional min_r max_r)
+(defun ob:compute-tags (self &optional min_r max_r)
   "Return a sorted list of all ob:tags by name.
 
 Compute tag occurrence and their HTML percentage value.
@@ -363,7 +300,7 @@ within MIN_R and MAX_R inclusive."
 	 (max_r (or max_r 220))
 	 (min_f (length tags))
 	 (max_f 0))
-    (set-slot-value
+    (%ob:set
      self 'tags
      (loop for (count tag) in
     	   ;; Here extract uniq tags and count occurrences

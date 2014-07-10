@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-10 11:05:46
+;; Last changed: 2014-07-10 19:17:34
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -190,16 +190,9 @@ If object is `nil' try to get SLOT from:
 	     (slot-boundp object slot))
 	(slot-value object slot))
     (or
-     (loop for o in '(TAG CATEGORY)
+     (loop for o in '(TAG CATEGORY POST BLOG)
 	   when (boundp o)
-	   return (%ob:get slot (eval o) ))
-     
-     (loop for o in '(;;TAG CATEGORY
-		      POST BLOG)
-	   when (and (boundp o)
-		     (slot-exists-p (eval o) slot)
-		     (slot-boundp (eval o) slot))
-	   return (slot-value (eval o) slot)))))
+	   return (%ob:get slot (eval o) )))))
 
 (defun ob:get (slot &optional object)
   (cond
