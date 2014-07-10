@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-10 19:17:34
+;; Last changed: 2014-07-10 21:34:26
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,10 +21,11 @@
   backends. Fill with `ob:register-backend'")
 
 
-(defun* ob:register-backend (backend &key find-files parse-config parse-entries)
+(defun* ob:register-backend (backend &key find-files parse-config
+				     parse-entries convert-entry)
   "Register BACKEND as a o-blog backend"
   (let ((backend-def (plist-get *ob:backends* backend)))
-    (loop for var in '(find-files parse-config parse-entries)
+    (loop for var in '(find-files parse-config parse-entries convert-entry)
 	  do (let ((val (symbol-value var)))
 	       (when val
 		 (setq backend-def
