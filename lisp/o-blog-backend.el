@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-10 19:16:47
+;; Last changed: 2014-07-10 21:36:46
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -56,23 +56,21 @@ Some global variables are set:
 
 "
   (let ((type (%ob:get-type self)))
-    (message "TYPE: %S" type)
-    (cond
-     ((eq 'ob:backend:markdown type)
-      (ob:markdown:find-files self)
-      (ob:markdown:parse-config self)
-      (message "parse-config")
-      (ob:markdown:parse-entries self)
-      (message "parse-enties"))))
+    (funcall (ob:get-backend-function type :find-files) self)
+    (funcall (ob:get-backend-function type :parse-config) self)
+    (funcall (ob:get-backend-function type :parse-entries) self))
+  
   (ob:compute-tags self)
   
   (let* ((BLOG self)
 	 (PAGES (ob:get 'pages BLOG))
 	 (POSTS (ob:get 'articles BLOG))
 	 (ALL-POSTS POSTS)
-	 (TAGS  (ob:get 'tags BLOG)))
+	 (TAGS  (ob:get 'tags BLOG))
+	 (convert-entry (ob:get-backend-function
+			 (%ob:get-type self) :convert-entry)))
 
-    ;; Convert each entry to HTML format
+        ;; Convert each entry to HTML format
     (loop for type in '(snippets articles pages)
 	  do (loop for entry in (ob:get type BLOG)
 		   with id = 0
@@ -80,7 +78,7 @@ Some global variables are set:
 			(when (eq type 'articles)
 			  (%ob:set entry 'id id)
 			  (setf id (1+ id)))
-			(ob:markdown:convert-entry BLOG entry))))
+			(funcall convert-entry BLOG entry))))
 
     ;; Publish both articles static pages
     (loop for type in '(articles pages)
