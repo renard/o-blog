@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-07 19:31:20
+;; Last changed: 2014-07-11 00:41:01
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -24,28 +24,19 @@
   (require 'org-table))
 
 
-(defclass ob:backend:org (ob:backend)
-  ((articles-filter :initarg :articles-filter
-		    :type string
-		    :initform "+TODO=\"DONE\""
-		    :documentation "")
-   (pages-filter :initarg :pages-filter
-		 :type string
-		 :initform "+PAGE={.+\.html}"
-		 :documentation "")
-   (snippets-filter :initarg :snippets-filter
-		    :type string
-		    :initform "+SNIPPET={.+}"
-		    :documentation ""))
-  "Object type handeling o-blog files in org-mode.")
 
 
+(cl-defstruct (ob:backend:org
+	       (:include ob:backend))
+  (articles-filter  "+TODO=\"DONE\"")
+  (pages-filter "+PAGE={.+\.html}")
+  (snippets-filter "+SNIPPET={.+}"))
 
-(defmethod ob:find-files ((self ob:backend:org) &optional file)
+(defun ob:org:find-files (self)
   ""
-  (ob:find-files-1 self '("org")))
+  (%ob:set self 'source-files (ob:find-files self "org")))
 
-(defmethod ob:org-get-header ((self ob:backend:org) header &optional all)
+(defun ob:org-get-header (self header &optional all)
   "Return value of HEADER option as a string from current org-buffer. If ALL is
 T, returns all occurrences of HEADER in a list."
   (ob:with-source-buffer
@@ -65,7 +56,7 @@ T, returns all occurrences of HEADER in a list."
 	       values
 	     (car values))))))))
 
-(defmethod ob:org-get-entry-text ((self ob:backend:org))
+(defun ob:org-get-entry-text (self)
   "Return entry text from point with not properties.
 
 Please note that a blank line _MUST_ be present between entry
@@ -89,28 +80,27 @@ headers and body."
 	    (buffer-substring-no-properties (point) (point-max))))))))
 
 
-(defmethod ob:parse-config ((self ob:backend:org))
+(defun ob:org:parse-config (self)
   "Par o-blog configuration directely from org header."
-      (loop for slot in (object-slots self)
+      (loop for slot in (ob:get-slots self)
 	    for value = (ob:org-get-header self slot)
 	    when value
-	    do (set-slot-value self slot value))
+	    do (%ob:set self slot value))
       ;; Set some imutalbe values.
-      (let ((file (ob:get-name self)))
-	(set-slot-value self 'index-file file)
-	(set-slot-value self 'source-files (list file))
-	(set-slot-value self 'source-dir (file-name-directory file)))
+      (let ((file (ob:get 'config-file self)))
+	(%ob:set self 'index-file file)
+	(%ob:set self 'source-files (list file))
+	(%ob:set self 'source-dir (file-name-directory file)))
       self)
 
 
-(defmethod ob:get-tags-list ((self ob:backend:org))
+(defun ob:get-tags-list (self)
   ""
   (loop for tn in (org-get-local-tags)
 	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
-	for ts = (ob:sanitize-string td)
-	collect (ob:tag tn :display td :safe ts)))
+	collect (make-ob:tag td)))
 
-(defmethod ob:parse-entry ((self ob:backend:org) marker type)
+(defun ob:org:parse-entry (self marker type)
   "Parse an org-mode entry at position defined by MARKER."
   (save-excursion
     (with-current-buffer (marker-buffer marker)
@@ -119,15 +109,16 @@ headers and body."
 				   (point-at-eol)
 				   t)
 	(let* ((type (or type 'article))
-	       (class (intern (format "ob:%s" type)))
-	       (entry (funcall class marker)))
+	       (class (intern (format "make-ob:%s" type)))
+	       (entry (funcall class
+			       :file (ob:get 'config-file self))))
 
-	  (set-slot-value
+	  (%ob:set
 	   entry 'title
 	   (match-string-no-properties 4))
 
-	  (when (slot-exists-p entry 'timestamp)
-	    (set-slot-value
+	  (when (ob:slot-exists-p entry 'timestamp)
+	    (%ob:set
 	     entry 'timestamp
 	     (apply 'encode-time
 		    (org-parse-time-string
@@ -136,59 +127,56 @@ headers and body."
 			  "%:y-%02m-%02d %02H:%02M:%02S %u")))))
 	    (ob:entry:compute-dates entry))
 
-	  (when (slot-exists-p entry 'tags)
-	    (set-slot-value entry 'tags
+	  (when (ob:slot-exists-p entry 'tags)
+	    (%ob:set entry 'tags
 			    (ob:get-tags-list self)))
 
-	  (when (slot-exists-p entry 'category)
+	  (when (ob:slot-exists-p entry 'category)
 	    (let ((cat (or (org-entry-get (point) "category")
 			   (car (last (org-get-outline-path))))))
-	    (set-slot-value entry
-			    'category
-			    (ob:category:init (ob:category cat)))))
+	    (%ob:set entry
+		     'category
+		     (make-ob:category  cat))))
 
-	  (when (slot-exists-p entry 'template)
+	  (when (ob:slot-exists-p entry 'template)
 	    (let ((template (org-entry-get (point) "template")))
 	      (when template
-		(set-slot-value entry 'template template))))
+		(%ob:set entry 'template template))))
 
-	  (if (eq 'page type)
-	      (ob:entry:set-path entry
-				 (org-entry-get (point) "PAGE"))
-	    (ob:entry:set-path entry))
+	  (ob:entry:set-path entry)
 
-	  (set-slot-value
+	  (%ob:set
 	   entry 'source
 	   (ob:org-get-entry-text self))
 
 	  entry)))))
 
 
-(defmethod ob:parse-entries-1 ((self ob:backend:org) type)
+(defun ob:parse-entries-1 (self type)
   "Collect all entries defined by TYPE from current org tree
-using `ob:parse-entry'."
+using `ob:org:parse-entry'."
   (let ((markers (org-map-entries
 		  'point-marker
-		  (slot-value self (intern (format "%ss-filter" type)))
+		  (ob:get (intern (format "%ss-filter" type)) self)
 		  'file-with-archives)))
     (loop for marker in markers
-	  collect (ob:parse-entry self marker type) into items
+	  collect (ob:org:parse-entry self marker type) into items
 	  finally return (loop for item in (sort items (ob:get 'posts-sorter self))
 			      for id = 0 then (incf id)
-			      do (set-slot-value item 'id id)
+			      do (%ob:set item 'id id)
 			      and collect item))))
 
-(defmethod ob:parse-entries ((self ob:backend:org))
+(defun ob:org:parse-entries (ob:backend:org)
   "Parse all entries (articles, pages and snippets from current org tree."
   (ob:with-source-buffer
    self
    (loop for type in '(article page snippet)
 	 for class-type = (intern (format "%ss" type))
-	 do (set-slot-value self class-type (ob:parse-entries-1 self type)))
+	 do (%ob:set self class-type (ob:parse-entries-1 self type)))
    self))
 
 
-(defmethod ob:org-fix-html-level-numbering ((self ob:backend:org))
+(defun ob:org-fix-html-level-numbering (self)
   "Promote every org-generated heading level by one in current buffer."
   (save-excursion
     (goto-char (point-min))
@@ -218,7 +206,7 @@ using `ob:parse-entry'."
 		     level text-id))))))))
 
 
-(defmethod ob:org-fix-icons ((self ob:backend:org))
+(defun ob:org-fix-icons (self)
   "Convert all \"<i>icon-...</i>\" to \"<i class=\"icon-...\"/>\"
 in current-buffer."
   (save-excursion
@@ -232,7 +220,7 @@ in current-buffer."
 	  (insert (format
 		   "<i class=\"%s\"></i>" icon)))))))
 
-(defmethod ob:org-fix-html ((self ob:backend:org) html)
+(defun ob:org-fix-html (self html)
   "Perform some html fixes on org html export."
   (with-temp-buffer
     (insert html)
@@ -250,11 +238,11 @@ in current-buffer."
     (buffer-substring-no-properties (point-min) (point-max))))
 
 
-(defmethod ob:convert-entry ((self ob:backend:org) entry)
+(defun ob:org:convert-entry (self entry)
   "Convert ENTRY to html using `org-mode' syntax."
   (with-temp-buffer
     ;; insert dummy comment in order to make inline html work.
-    (insert (oref entry source))
+    (insert (ob:get 'source entry))
     (org-mode)
     (goto-char (point-min))
     (ob:org-fix-org)
@@ -294,7 +282,7 @@ in current-buffer."
 		    (org-export-as 'html nil nil t nil)))))
 	;;(message "Txt: %S" (buffer-substring-no-properties (point-min) (point-max)))
 	;;(message ": %S" (buffer-substring-no-properties (point-min) (point-max)))
-	(set-slot-value entry 'html
+	(%ob:set entry 'html
 			(ob:org-fix-html self html)))
       (when saved-file
 	(delete-file saved-file))
@@ -452,13 +440,13 @@ in current-buffer."
 		       (delete-region (point) (point-at-eol))))))))))
 
 
-(defmethod  ob:org:publish-linked-files((self ob:backend:org) entry)
+(defun  ob:org:publish-linked-files(self entry)
   "Copy files (defined by \"file:\" link prefix) to page related directory."
   (save-match-data
     (save-excursion
       (goto-char (point-min))
       (let ((htmlfile (ob:get 'htmlfile entry))
-	    (page (slot-exists-p entry 'page))
+	    (page (ob:slot-exists-p entry 'page))
 	    (filepath (ob:get 'filepath entry))
 	    (title (ob:get 'title entry))
 	    ret)
@@ -499,11 +487,11 @@ in current-buffer."
 			  "\n"))
 	      (org-mode)
 	      (goto-char (point-min))
-	      (let ((redir (ob:parse-entry self (point-marker) 'page)))
+	      (let ((redir (ob:org:parse-entry self (point-marker) 'page)))
 		(message "REDIR: %S" redir)
-		(set-slot-value redir 'path-to-root
+		(%ob:set redir 'path-to-root
 				(concat "../" (ob:get 'path-to-root entry)))
-		(set-slot-value self 'pages
+		(%ob:set self 'pages
 				(append (ob:get 'pages self)
 				      (list redir))))))
 
@@ -525,6 +513,13 @@ in current-buffer."
 		     (mkdir (file-name-directory target) t)
 		     (message "COPY %s -> %s" f target)
 		     (ob-do-copy f target))))))))
+
+(ob:register-backend
+ (%ob:get-type (make-ob:backend:org))
+ :find-files 'ob:org:find-files
+ :parse-config 'ob:org:parse-config
+ :parse-entries 'ob:org:parse-entries
+ :convert-entry 'ob:org:convert-entry)
 
 
 (provide 'o-blog-backend-org)

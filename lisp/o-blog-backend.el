@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-10 21:36:46
+;; Last changed: 2014-07-11 00:22:56
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -231,7 +231,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 (defmacro ob:with-source-buffer (self &rest body)
   "Like `with-current-buffer'"
-  `(let ((file (ob:get-name ,self)))
+  `(let ((file (ob:get 'config-file ,self)))
      ;; Make sure we are in the o-blog org file
      (with-current-buffer (or (get-file-buffer file)
 			     (find-file-noselect file))
