@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-10 21:34:26
+;; Last changed: 2014-07-10 22:45:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -178,7 +178,6 @@ path-to-root slot."
     (assoc slot (cl-struct-slot-info type))))
       
   
-
 (defun %ob:set (object slot value)
   (when (arrayp object)
     (let* ((type (intern (replace-regexp-in-string
@@ -186,43 +185,12 @@ path-to-root slot."
       (when (assoc slot (cl-struct-slot-info type))
 	(aset object (cl-struct-slot-offset type slot) value)))))
 
-
-(defun %ob:get (slot object)
-  (when (arrayp object)
-    (let* ((type (replace-regexp-in-string
-		  "^cl-struct-" "" (symbol-name (aref object 0))))
-	   (func (intern (concat type "-" (symbol-name slot)))))
-      (when (functionp func)
-	(funcall func object)))))
-
-
-
-(defun ob:get-obj (slot &optional object)
-  "Try to get SLOT from OBJECT.
-
-If object is `nil' try to get SLOT from:
-
-- TAG
-- CATEGORY
-- POST
-- BLOG"
-  (if object
-      (when (and
-	     (slot-exists-p object slot)
-	     (slot-boundp object slot))
-	(slot-value object slot))
-    (or
-     (loop for o in '(TAG CATEGORY POST BLOG)
-	   when (boundp o)
-	   return (%ob:get slot (eval o) )))))
-
-(defun ob:get (slot &optional object)
-  (cond
-   ((or (not object)
-	(eieio-object-p object))
-    (ob:get-obj slot object))
-   (t (%ob:get slot object))))
-
+(defun ob:get (slot  object)
+  "Try to get SLOT from OBJECT."
+  (let* ((type (%ob:get-type object))
+	 (func (intern (format "%s-%s" type slot))))
+    (if (functionp func)
+	(funcall func object))))
 
 (defun ob:get-post-by-id (id)
   "Return post which id is ID"
