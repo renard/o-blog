@@ -335,24 +335,6 @@ RE-END is passed to `format' with widget name as parameter.
 
 
 
-(defclass ob:framework nil
-  ()
-  "")
-
-
-
-
-;;
-;; Methods that must be overridden
-;;
-(defmethod ob:compute-framework ((self ob:framework))
-  "Compute framework specific extentions. This method MUST be
-overriden in subclasses."
-  (message "Method `%s' is not defined in class `%s'."
-	   'ob:compute-framework (object-class self)))
-  
-
-
 (provide 'o-blog-framework)
 
 ;; o-blog-framework.el ends here
