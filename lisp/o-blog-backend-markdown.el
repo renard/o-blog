@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-10 11:32:59
+;; Last changed: 2014-07-10 17:13:59
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -27,12 +27,12 @@
   ()
   "Object type handeling o-blog files in markdown.")
 
-(defmethod ob:find-files ((self ob:backend:markdown))
+(defun ob:markdown:find-files (self)
   (set-slot-value self 'source-files
-		  (ob:find-files-1 self "txt")))
+		  (ob:find-files self "txt")))
 
 
-(defmethod ob:parse-config ((self ob:backend:markdown) &optional file)
+(defun ob:markdown:parse-config (self &optional file)
   "Parse global configuration file."
   (let* ((file (or file
 		   (when (file-exists-p "o-blog.conf")
@@ -63,7 +63,7 @@
 	  collect (make-ob:tag td))))
 
 
-(defmethod ob:parse-entries ((self ob:backend:markdown))
+(defun ob:markdown:parse-entries (self)
   (loop for f in (ob:get 'source-files self)
 	do (with-temp-buffer
 	     (insert-file-contents f)
@@ -108,7 +108,7 @@
 
 
 
-(defmethod ob:convert-entry ((self ob:backend:markdown) entry)
+(defun ob:markdown:convert-entry (self entry)
   ""
   (with-temp-buffer
     (insert (ob:get 'source entry))
