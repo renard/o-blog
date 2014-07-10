@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-10 22:45:17
+;; Last changed: 2014-07-11 00:15:55
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -172,6 +172,9 @@ path-to-root slot."
 	       (string= (substring type-str 0 prefix-length) prefix))
 	  (intern (substring type-str prefix-length)))))))
 
+(defun ob:get-slots (object)
+  (loop for s in (cdr (cl-struct-slot-info (%ob:get-type object)))
+	collect (car s)))
 
 (defun ob:slot-exists-p (object slot)
   (let* ((type (%ob:get-type object)))
