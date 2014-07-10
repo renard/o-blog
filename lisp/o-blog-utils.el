@@ -16,6 +16,27 @@
 
 ;;; Code:
 
+(defvar *ob:backends* nil
+  "Plist of functions to process article with o-blog
+  backends. Fill with `ob:register-backend'")
+
+
+(defun* ob:register-backend (backend &key find-files parse-config parse-entries)
+  "Register BACKEND as a o-blog backend"
+  (let ((backend-def (plist-get *ob:backends* backend)))
+    (loop for var in '(find-files parse-config parse-entries)
+	  do (let ((val (symbol-value var)))
+	       (when val
+		 (setq backend-def
+		       (plist-put backend-def
+				  (intern (format ":%s" var))
+				  val)))))
+    (setf *ob:backends* (plist-put *ob:backends* backend backend-def))))
+
+(defun ob:get-backend-function (backend function)
+  ""
+  (plist-get (plist-get *ob:backends* backend) function))
+
 (defun ob:replace-in-string (string replacement-list)
   "Perform a mass `replace-regexp-in-string' against STRING for
 all \(regexp rep\) items from REPLACEMENT-LIST and return the
