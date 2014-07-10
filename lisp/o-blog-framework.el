@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-09 01:11:20
+;; Last changed: 2014-07-10 22:09:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,114 +21,103 @@
   (require 'htmlize nil t))
 
 
-(defclass ob:framework-component nil
-  ((backends :initarg :backends
-	     :type (or symbol list)
-	     :documentation "List of supported backends")
-   (start :initarg :start
-	  :type (or string list)
-	  :documentation "Opening replacement from suitable for
-	  `ob:string-template'")
-   (end :initarg :end
-	:type (or null string list)
-	:documentation "Closing replacement from suitable for
-	`ob:string-template'. If nil, no closing tag is required")
-   (alias :initarg :alias
-	:type (or null symbol)
-	:documentation "ob:framework-component name alias"))
-
-  "Component used by ob:compute-framework")
+(cl-defstruct (ob:framework-component)
+  name
+  backends
+  start
+  end
+  alias)
 
 
 (setq ob:framework-components
   (list
-   (ob:framework-component
-    'lead :backends '(org)
+   (make-ob:framework-component
+    :name 'lead :backends '(org)
     :start "<p class=\"lead\">"
     :end "</p>")
 
-   (ob:framework-component
-    'mark :backends '(org)
+   (make-ob:framework-component
+    :name 'mark :backends '(org)
     :start "<mark>"
     :end "</mark>")
 
-   (ob:framework-component
-    'del :backends '(org)
+   (make-ob:framework-component
+    :name 'del :backends '(org)
     :start "<del>"
     :end "</del>")
 
-   (ob:framework-component
-    'kbd :backends '(org)
+   (make-ob:framework-component
+    :name 'kbd :backends '(org)
     :start "<kbd>"
     :end "</kbd>")
 
    
-   (ob:framework-component
-    'right :backends '(org)
+   (make-ob:framework-component
+    :name 'right :backends '(org)
     :start "<p class=\"text-right\">"
     :end "</p>")
 
-   (ob:framework-component
-    'left :backends '(org)
+   (make-ob:framework-component
+    :name 'left :backends '(org)
     :start "<p class=\"text-left\">"
     :end "</p>")
 
-   (ob:framework-component
-    'justify :backends '(org)
+   (make-ob:framework-component
+    :name 'justify :backends '(org)
     :start "<p class=\"text-justify\">"
     :end "</p>")
 
-   (ob:framework-component
-    'center :backends '(org)
+   (make-ob:framework-component
+    :name 'center :backends '(org)
     :start "<p class=\"text-center\">"
     :end "</p>")
 
-   (ob:framework-component
-    'nowrap :backends '(org)
+   (make-ob:framework-component
+    :name 'nowrap :backends '(org)
     :start "<p class=\"text-nowrap\">"
     :end "</p>")
 
    
    
    
-   (ob:framework-component
-    'jumbotron :backends '(org)
+   (make-ob:framework-component
+    :name 'jumbotron :backends '(org)
     :start "<div class=\"jumbotron\">"
     :end "</div>")
-   (ob:framework-component
-    'page-header :backends '(org)
+   (make-ob:framework-component
+    :name 'page-header :backends '(org)
     :start '(format
 	     "<div class=\"page-header\"><h1>%s%s</h1></div>"
 	     title
 	     (if (boundp 'subtitle)
 		 (format " <small>%s</small>" subtitle)
 	       "")))
-   (ob:framework-component
-    'caption :backends '(org)
+   (make-ob:framework-component
+    :name 'caption :backends '(org)
     :start '(format
 	     "<div class=\"caption\">%s"
 	     (if (boundp 'title)
 		 (format "<h3>%s</h3>" title)
 	       ""))
     :end "</div>")
-   (ob:framework-component
-    'thumbnail :backends '(org)
+   (make-ob:framework-component
+    :name 'thumbnail :backends '(org)
     :start "<div class=\"thumbnail\">"
     :end "</div>")
 
-   (ob:framework-component
-    'glyphicon :backends '(org)
+   (make-ob:framework-component
+    :name 'glyphicon :backends '(org)
     :start '("<span class=\"glyphicon glyphicon-" icon "\"></span>"))
-   (ob:framework-component
-    'icon :backends '(org)
+   (make-ob:framework-component
+    :name 'icon :backends '(org)
     :start '("<i class=\"fa fa-" icon "\"></i>"))
-   (ob:framework-component
-    'row :backends '(org)
+   (make-ob:framework-component
+    :name 'row :backends '(org)
     :start (format "<div class=\"row%s\">"
 		   (if (boundp 'equal) " equal" ""))
     :end "</div>")
-   (ob:framework-component
-    'col :backends '(org)
+   (make-ob:framework-component
+    :name 'col :backends '(org)
     :start '("<div class=\""
 	     (loop for i in '(xs sm md lg o-xs o-sm o-md o-lg)
 		   when (boundp i)
@@ -142,52 +131,52 @@
 		   finally return (mapconcat #'identity out " "))
 	     "\">")
     :end "</div>")
-   (ob:framework-component
-    'panel :backends '(org)
+   (make-ob:framework-component
+    :name 'panel :backends '(org)
     :start '("<div class=\"panel"
 	     (when (boundp 'alt) (format " panel-%s" alt))
 	     "\">")
     :end "</div>")
-   (ob:framework-component
-    'panel-heading :backends '(org)
+   (make-ob:framework-component
+    :name 'panel-heading :backends '(org)
     :start '("<div class=\"panel-heading\">"
 	     (when (boundp 'title)
 	       (format "<h3 class=\"panel-title\">%s</h3>" title)))
     :end "</div>")
-   (ob:framework-component
-    'panel-body :backends '(org)
+   (make-ob:framework-component
+    :name 'panel-body :backends '(org)
     :start '("<div class=\"panel-body\">")
     :end "</div>")
-   (ob:framework-component
-    'panel-footer :backends '(org)
+   (make-ob:framework-component
+    :name 'panel-footer :backends '(org)
     :start '("<div class=\"panel-footer\">")
     :end "</div>")
-   (ob:framework-component
-    'label :backends '(org)
+   (make-ob:framework-component
+    :name 'label :backends '(org)
     :start '(format "<span class=\"label label-%s\">"
 		    (if (boundp 'mod) mod "default"))
     :end "</span>")
-   (ob:framework-component
-    'badge :backends '(org)
+   (make-ob:framework-component
+    :name 'badge :backends '(org)
     :start "<span class=\"badge\">"
     :end "</span>")
-   (ob:framework-component
-    'alert :backends '(org)
+   (make-ob:framework-component
+    :name 'alert :backends '(org)
     :start '(format "<div class=\"alert alert-%s\">"
 		    (if (boundp 'mod) mod "warning"))
     :end "</div>")
-   (ob:framework-component
-    'well :backends '(org)
+   (make-ob:framework-component
+    :name 'well :backends '(org)
     :start '(format "<div class=\"well well-%s\">"
 		    (if (boundp 'mod) mod "lg"))
     :end "</div>")
-   (ob:framework-component
-    'thumbnail :backends '(org)
+   (make-ob:framework-component
+    :name 'thumbnail :backends '(org)
     :start "<div class=\"thumbnail\">"
     :end "</div>")
 
-   (ob:framework-component
-    'table :backends '(org)
+   (make-ob:framework-component
+    :name 'table :backends '(org)
     :start '(format "<table class=\"table %s\">"
 		    (loop for v in '(striped bordered hover condensed)
 			  with out = '()
@@ -197,18 +186,18 @@
 			  
     :end "</table>")
 
-   (ob:framework-component
-    'tr :backends '(org)
+   (make-ob:framework-component
+    :name 'tr :backends '(org)
     :start '(format "<tr%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
     :end "</tr>")
 
-   (ob:framework-component
-    'td :backends '(org)
+   (make-ob:framework-component
+    :name 'td :backends '(org)
     :start '(format "<td%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
     :end "</td>")
 
-   (ob:framework-component
-    'source :backends '(org)
+   (make-ob:framework-component
+    :name 'source :backends '(org)
     :start '(let* ((cur-point (point))
 		   (end-point (unless (boundp 'src-file)
 				(save-match-data
@@ -242,10 +231,10 @@
 	      (when end-point
 		(delete-region cur-point (- end-point (length (format "</%s>" tag)))))
 	      (format "<div class=\"src %s\">%s</div>" (or mode "") html)))
-   (ob:framework-component 'src :backends '(org) :alias 'source)
+   (make-ob:framework-component :name 'src :backends '(org) :alias 'source)
 
-   (ob:framework-component
-    'columns :backends '(org)
+   (make-ob:framework-component
+    :name 'columns :backends '(org)
     :start '(format "<div style=\"%s%s\">"
 		    (if (boundp 'width)
 			(format "column-width:%s;-webkit-column-width:%s;-moz-column-width:%s" width width width) "")
@@ -270,7 +259,7 @@ RE-END is passed to `format' with widget name as parameter.
 	(re-start (or re-start "^#\\+\\(?:begin_\\)?\\([^ \n\t:]+\\):?\\([^\n>]+\\)?$"))
 	(re-end (or re-end "^#\\+end_%s"))
 	(items (loop for c in ob:framework-components
-		     collect (cons (ob:get-name c) c)))
+		     collect (cons (ob:get 'name c) c)))
 	(comment (concat "\\s-" (or comment ","))))
     
     (save-match-data
