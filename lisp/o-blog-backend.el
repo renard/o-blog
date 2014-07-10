@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-09 01:17:28
+;; Last changed: 2014-07-10 11:28:35
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -113,19 +113,18 @@ Some global variables are set:
 
     ;; Convert each entry to HTML format
     (loop for type in '(snippets articles pages)
-	  do (loop for entry in (slot-value BLOG type)
+	  do (loop for entry in (ob:get type BLOG)
 		   with id = 0
 		   do (progn
 			(when (eq type 'articles)
-			  (set-slot-value entry 'id id)
+			  (%ob:set entry 'id id)
 			  (setf id (1+ id)))
 			(ob:convert-entry BLOG entry))))
 
     ;; Publish both articles static pages
     (loop for type in '(articles pages)
-	  do (loop for POST in (slot-value BLOG type)
+	  do (loop for POST in (ob:get type BLOG)
 		   do (ob:entry:publish POST)))
-
 
     ;; publish tags
     (let ((PATH-TO-ROOT ".."))
@@ -145,10 +144,10 @@ Some global variables are set:
 					    (member (ob:get 'safe TAG)
 						    (mapcar 'ob:tag-safe
 							    (ob:post-tags x)))))))
-		  (ob:eval-template-to-file "blog_rss.html"
-					    (format "%s/tags/%s.xml"
-						    (ob:get 'publish-dir BLOG)
-						    (ob:get 'safe TAG)))))))
+		(ob:eval-template-to-file "blog_rss.html"
+					  (format "%s/tags/%s.xml"
+						  (ob:get 'publish-dir BLOG)
+						  (ob:get 'safe TAG)))))))
     ;; Write tags JSON
     (with-temp-file
 	(format "%s/%s" (ob:get 'publish-dir BLOG) "tags.js")
@@ -335,11 +334,7 @@ overriden in subclasses."
    (format "%s%s"
 	   (file-name-as-directory
 	    (file-name-directory (ob:get-configuration-file self)))
-	   (if (and
-		(slot-exists-p self 'source-dir)
-		(slot-boundp self 'source-dir))
-	       (oref self source-dir)
-	     ""))))
+	   (or (ob:get 'source-dir self) ""))))
 
 
 (defmethod ob:get-all-posts ((self ob:backend))
@@ -356,10 +351,10 @@ Compute tag occurrence and their HTML percentage value.
 MIN_R and MAX_R are the minimum and maximum percentage value. If
 not provided 80 and 220 are used. This means ob:size is always
 within MIN_R and MAX_R inclusive."
-  (let* ((tags-art (loop for article in (append (slot-value self 'articles))
-			 append (slot-value article 'tags)))
-	 (tags-page (loop for page in (append (slot-value self 'pages))
-			 append (slot-value page 'tags)))
+  (let* ((tags-art (loop for article in (append (ob:get 'articles self))
+			 append (ob:get 'tags article)))
+	 (tags-page (loop for page in (append (ob:get 'pages self))
+			 append (ob:get 'tags page)))
 	 
 	 (tags (sort (append tags-art tags-page)
 		     #'(lambda (a b) (string< (ob:get 'display  a)

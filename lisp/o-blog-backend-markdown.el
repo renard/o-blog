@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-09 02:14:01
+;; Last changed: 2014-07-10 11:32:59
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -70,41 +70,40 @@
 	     (let* ((headers (ob:markdown:get-headers))
 		    (type (intern (plist-get headers 'type)))
 		    (types (intern (format "%ss" type)))
-		    (obj (funcall (intern (format "ob:%s" type))
-			  f
+		    (obj (funcall (intern (format "make-ob:%s" type))
 			  :file f
 			  :source (buffer-substring-no-properties
 				   (point-min) (point-max))))
 		    (obj-list (ob:get types self)))
 	       
-	       (when (slot-exists-p obj 'timestamp)
-		 (set-slot-value obj 'timestamp
-				 (nth 5 (file-attributes f)))
+	       (when (ob:slot-exists-p obj 'timestamp)
+		 (%ob:set obj 'timestamp
+			 (nth 5 (file-attributes f)))
 		 (ob:entry:compute-dates obj))
 
-	       (when (slot-exists-p obj 'tags)
-		 (set-slot-value obj 'tags
-				 (ob:parse-tags (plist-get headers 'tags))))
+	       (when (ob:slot-exists-p obj 'tags)
+		 (%ob:set obj 'tags
+			  (ob:parse-tags (plist-get headers 'tags))))
 
-	       (when (slot-exists-p obj 'category)
-		 (set-slot-value obj 'category
-				  (make-ob:category
-				   (plist-get headers 'category))))
+	       (when (ob:slot-exists-p obj 'category)
+		 (%ob:set obj 'category
+			  (make-ob:category
+			   (plist-get headers 'category))))
 
 	       ;; Add rest of header parameters to object
 	       (loop for header in headers by #'cddr
 		     when (and
-			   (slot-exists-p obj header)
+			   (ob:slot-exists-p obj header)
 			   (not (member header '(tags category))))
-		     do (set-slot-value
+		     do (%ob:set
 			 obj header (plist-get headers header)))
 
 	       (ob:entry:set-path obj)
 	       
 	       (set-slot-value self types (append obj-list (list obj)))
 
-	       (set-slot-value obj 'files-to-copy
-			       (ob:markdown:get-images obj))))))
+	       (%ob:set obj 'files-to-copy
+			(ob:markdown:get-images obj))))))
 
 
 
@@ -124,7 +123,7 @@
       (with-temp-buffer
 	(insert html)
 
-	(set-slot-value
+	(%ob:set
 	 entry 'html (buffer-substring-no-properties (point-min)(point-max))))
       (ob:get-post-excerpt entry))))
 

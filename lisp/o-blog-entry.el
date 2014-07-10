@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-09 02:21:30
+;; Last changed: 2014-07-10 11:16:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -20,124 +20,130 @@
 (eval-when-compile
   (require 'htmlize nil t)
   (require 'sgml-mode nil t)
+  (require 'cl nil t)
   (require 'eieio nil t))
 
+(cl-defstruct
+    (ob:entry)
+  "Object type handling o-blog entries. `ob:entry` is the base
+structure for `ob:page` and `ob:article`.
+
+Slots are:
+
+- `id`: the numerical ID of the entry.
+
+- `title`: the entry title.
+
+- `source`: raw entry source.
+
+- `html`: html converted entry.
+
+- `path`: the entry path for publication.
+
+- `file`: the entry source file location.
+
+- `files-to-copy`: List of files to copy when publishing
+
+- `tags`: list of `ob:tag`.
+
+- `excerpt`: small entry excerpt.
+
+- `htmlfile` path to html file.
+
+- `path-to-root`: path to site root directory relative from
+  current entry.
+
+"
+  id
+  title
+  source
+  html
+  path
+  file
+  files-to-copy
+  tags
+  excerpt
+  htmlfile
+  path-to-root)
+  
+
 
-(defclass ob:entry ()
-  ((id :initarg :id
-       :type integer
-       :documentation "entry ID")
-   (title :initarg :title
-	  :type string
-	  :documentation "")
-   (source :initarg :source
-	   :type string
-	   :documentation "Article raw source")
-   (html :initarg :html
-	 :type string
-	 :documentation "Article html result")
-   (path :initarg :path
-	   :type string
-	   :documentation "Path to article publication")
-   (file :initarg :file
-	   :type string
-	   :documentation "")
-   (files-to-copy :initarg :files-to-copy
-		  :type list
-		  :documentation "List of files to copy when publishing")
-   (tags :initarg :tags
-	 :type list
-	 :documentation "List of ob:tag")
-
-   (excerpt :initarg :excerpt
-	 :type string
-	 :documentation "small entry extract")
-
-   (htmlfile :initarg :htmlfile
-	   :type string
-	   :documentation "")
-   (path-to-root :initarg :path-to-root
-		 :type string
-		 :documentation "")
-   )
-  "Object type handeling o-blog entries.")
 
 
 
 
 ;; Class aliases
 
-(defclass ob:article (ob:entry)
-  ((timestamp :initarg :timestamp
-	      :type list
-	      :documentation "")
-   (year :initarg :year
-	 :type integer
-	 :documentation "")
-   (month :initarg :month
-	 :type integer
-	 :documentation "")
-   (day :initarg :day
-	 :type integer
-	 :documentation "")
-   (category :initarg :category
-	     ;;	   :type ob:category
-	   :documentation "")
-   (template :initarg :template
-	     :initform "blog_post.html"
-	     :type string
-	     :documentation "Template file to use for publication")
-   )
-  "O-blog page article")
+
+(cl-defstruct
+    (ob:article (:include ob:entry))
+  timestamp
+  year
+  month
+  day
+  category
+  (template "blog_post.html"))
+
+
+(cl-defstruct
+    (ob:page
+     (:include ob:entry))
+  (template "blog_static.html")
+  page)
+
+(cl-defstruct
+    (ob:snippet (:include ob:entry)))
+
+
 
 (defun ob:entry:set-path-entry (self)
   ""
-  (set-slot-value
+  (%ob:set
    self 'path (format "%s"
-		      (ob:sanitize-string (oref self title))))
-  (set-slot-value
+		      (ob:sanitize-string (ob:get 'title self))))
+  (%ob:set
    self 'htmlfile (format "%s/%s"
-		      (oref self path)
-		      (oref self path))))
+		      (ob:get 'path self)
+		      (ob:get 'path self))))
 
 (defun ob:entry:compute-dates (self)
   ""
-  (let ((timestamp (oref self timestamp)))
+  (let ((timestamp (ob:get 'timestamp self)))
     (when timestamp
       (loop for (p f) in '((year "%Y") (month "%m") (day "%d"))
-	    do (set-slot-value
+	    do (%ob:set
 		self p
 		(string-to-number
 		 (format-time-string f timestamp)))))))
 
 (defun ob:entry:set-path-article (self)
   ""
-  (set-slot-value
+  (%ob:set
    self 'path (format "%s/%.4d/%.2d"
-		      (ob:sanitize-string (ob:get 'safe (oref self category)))
-		      (oref self year)
-		      (oref self month)))
-  (set-slot-value
+		      (ob:sanitize-string (ob:get 'safe (ob:get 'category  self)))
+		      (ob:get 'year  self)
+		      (ob:get 'month  self)))
+  (%ob:set
    self 'file (format "%.2d_%s.html"
-		      (oref self day)
-		      (ob:sanitize-string (oref self title))))
-  (set-slot-value
-   self 'htmlfile (if (string= "." (oref self path))
-		      (oref self file)
+		      (ob:get 'day  self)
+		      (ob:sanitize-string (ob:get 'title  self))))
+  (%ob:set
+   self 'htmlfile (if (string= "." (ob:get 'path  self))
+		      (ob:get 'file  self)
 		    (format "%s/%s"
-			    (oref self path)
-			    (oref self file))))
-  (set-slot-value
+			    (ob:get 'path  self)
+			    (ob:get 'file  self))))
+  (%ob:set
    self 'path-to-root (file-relative-name
 		       "."
-		       (oref self path))))
+		       (ob:get 'path self))))
 
 (defun ob:get-post-excerpt (self &optional words ellipsis)
   "Return the first WORDS from POST html content.
 
 The return string would be unformatted plain text postfixed by
 ELLIPSIS if defined.."
-  (when (slot-exists-p self 'excerpt)
+  (when (ob:slot-exists-p self 'excerpt)
     (with-temp-buffer
       (insert (ob:get 'html self))
       (let ((words (or words 20))
@@ -161,11 +167,11 @@ ELLIPSIS if defined.."
 	      (delete-region (- (point) (length (match-string 0))) (point))
 	      (insert " "))))
 	(loop for x from 0 below words do (forward-word))
-	(set-slot-value self 'excerpt
-			(concat
-			 (buffer-substring-no-properties
-			  (point-min) (point))
-			 ellipsis))))))
+	(%ob:set self 'excerpt
+		 (concat
+		  (buffer-substring-no-properties
+		   (point-min) (point))
+		  ellipsis))))))
 
 
 (defun ob:entry:publish (self &optional blog-obj)
@@ -173,28 +179,28 @@ ELLIPSIS if defined.."
   (let ((blog-obj (or blog-obj
 		      (when (boundp 'BLOG) BLOG)
 		      (when (boundp 'blog) blog)))
-	(FILE (oref self htmlfile)))
+	(FILE (ob:get 'htmlfile self)))
     (unless (ob:backend-child-p blog-obj)
       (error "`ob:entry:publish': blog-obj is not an `ob:backend' child class."))
-    (when (slot-exists-p self 'template)
+    (when (ob:slot-exists-p self 'template)
       (with-temp-buffer
-	(ob:insert-template (oref self template))
+	(ob:insert-template (ob:get 'template self) blog-obj)
 	(message "Write to: %s"
 		 (expand-file-name (format "%s/%s"
-					   (oref BLOG publish-dir)
+					   (ob:get 'publish-dir BLOG)
 					   FILE)))
 	(ob:write-file (format "%s/%s"
-			       (oref BLOG publish-dir)
+			       (ob:get 'publish-dir BLOG)
 			       FILE)))
 
       (loop for file in (ob:get 'files-to-copy self)
 	    do (ob-do-copy (format "%s/%s"
 				   (or
-				    (file-name-directory (ob:get-name self)) ".")
+				    (file-name-directory (ob:get 'file self)) ".")
 				   file)
 			   (format (format "%s/%s"
-					   (oref BLOG publish-dir)
-					   (oref self path)))))
+					   (ob:get 'publish-dir BLOG)
+					   (ob:get 'path self)))))
 
       ;; (with-temp-buffer
       ;; 	(insert (oref self html))
@@ -203,45 +209,34 @@ ELLIPSIS if defined.."
       ;; 			       (oref self htmlfile))))
       )))
 
-(defclass ob:page (ob:entry)
-  ((template :initarg :template
-	     :initform "blog_static.html"
-	     :type string
-	     :documentation "Template file to use for publication")
-   (page :initarg :page :tpe :string))
-  "O-blog page class")
 
 (defun ob:entry:set-path-page (self)
   ""
-  (set-slot-value self 'path ".")
-  (set-slot-value self 'file (concat
-			      (ob:sanitize-string
-			       (or (ob:get 'page self)
-				   (ob:get 'title self)))
-			      ".html"))
-  (set-slot-value
-   self 'htmlfile (if (string= "." (oref self path))
-		      (oref self file)
+  (%ob:set self 'path ".")
+  (%ob:set self 'file (concat
+		       (ob:sanitize-string
+			(or (ob:get 'page self)
+			    (ob:get 'title self)))
+		       ".html"))
+  (%ob:set
+   self 'htmlfile (if (string= "." (ob:get 'path self))
+		      (ob:get 'file self)
 		    (format "%s/%s"
-			    (oref self path)
-			    (oref self file))))
-  (set-slot-value
+			    (ob:get 'path self )
+			    (ob:get 'file self))))
+  (%ob:set
    self 'path-to-root (file-relative-name
 		       "."
-		       (oref self path))))
+		       (ob:get 'path self))))
 
 
 (defun ob:entry:set-path (self)
-  (let ((class (eieio-object-class self)))
+  (let ((class (%ob:get-type self)))
     (cond
      ((eq 'ob:entry class) (ob:entry:set-path-entry self))
      ((eq 'ob:page class) (ob:entry:set-path-page self))
      ((eq 'ob:article class) (ob:entry:set-path-article self)))))
 
-
-(defclass ob:snippet (ob:entry)
-  nil
-  "O-blog snippet class")
 
 
 

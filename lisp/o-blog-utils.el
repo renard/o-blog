@@ -133,10 +133,29 @@ set ISO8601 \"%Y-%m-%dT%TZ\" format would be used."
 path-to-root slot."
   (cond
    ((boundp 'PATH-TO-ROOT) PATH-TO-ROOT)
-   ((boundp 'POST) (ob:entry:get 'path-to-root POST))
+   ((boundp 'POST) (ob:get 'path-to-root POST))
    (t ".")))
 
+(defun %ob:get-type (object)
+  (when (arrayp object)
+    (let* ((type (aref object 0))
+	   (prefix "cl-struct-")
+	   (prefix-length (length prefix))
+	   type-str)
+      (when (symbolp type)
+	(setf type-str (symbol-name type))
+	;; Symbols are prefixed by "cl-struct-" which length is 10.
+	(when (and
+	       (> (length type-str) prefix-length)
+	       (string= (substring type-str 0 prefix-length) prefix))
+	  (intern (substring type-str prefix-length)))))))
 
+
+(defun ob:slot-exists-p (object slot)
+  (let* ((type (%ob:get-type object)))
+    (assoc slot (cl-struct-slot-info type))))
+      
+  
 
 (defun %ob:set (object slot value)
   (when (arrayp object)
@@ -213,7 +232,7 @@ string."
   (insert
    (with-temp-buffer
      (insert-file-contents
-      (format "%s/%s" (ob:get 'template-dir ob-bck-end) template))
+      (format "%s/%s" (ob:get 'template-dir (or ob-bck-end BLOG)) template))
      (ob:eval-lisp)
      (buffer-string))))
 
