@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-10 19:13:16
+;; Last changed: 2014-07-10 21:31:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -176,7 +176,14 @@ into \"<!--/\" \"/-->\"."
 			      (v (match-string 2 line)))
 			 (list k v)))))))))
 
-  
+
+(ob:register-backend
+ (%ob:get-type (make-ob:backend:markdown))
+ :find-files 'ob:markdown:find-files
+ :parse-config 'ob:markdown:parse-config
+ :parse-entries 'ob:markdown:parse-entries
+ :convert-entry 'ob:markdown:convert-entry)
+
 
 (provide 'o-blog-backend-markdown)
 
