@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-11 11:11:49
+;; Last changed: 2014-07-11 14:54:12
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -56,7 +56,7 @@ T, returns all occurrences of HEADER in a list."
 	       values
 	     (car values))))))))
 
-(defun ob:org-get-entry-text (self)
+(defun ob:org-get-entry-text ()
   "Return entry text from point with not properties.
 
 Please note that a blank line _MUST_ be present between entry
@@ -153,7 +153,7 @@ headers and body."
 
 	  (%ob:set
 	   entry 'source
-	   (ob:org-get-entry-text self))
+	   (ob:org-get-entry-text))
 
 	  entry)))))
 
@@ -172,7 +172,7 @@ using `ob:org:parse-entry'."
 			      do (%ob:set item 'id id)
 			      and collect item))))
 
-(defun ob:org:parse-entries (ob:backend:org)
+(defun ob:org:parse-entries (self)
   "Parse all entries (articles, pages and snippets from current org tree."
   (ob:with-source-buffer
    self
@@ -182,7 +182,7 @@ using `ob:org:parse-entry'."
    self))
 
 
-(defun ob:org-fix-html-level-numbering (self)
+(defun ob:org-fix-html-level-numbering ()
   "Promote every org-generated heading level by one in current buffer."
   (save-excursion
     (goto-char (point-min))
@@ -212,7 +212,7 @@ using `ob:org:parse-entry'."
 		     level text-id))))))))
 
 
-(defun ob:org-fix-icons (self)
+(defun ob:org-fix-icons ()
   "Convert all \"<i>icon-...</i>\" to \"<i class=\"icon-...\"/>\"
 in current-buffer."
   (save-excursion
@@ -239,8 +239,8 @@ in current-buffer."
 	  (delete-region (point-at-bol) (point-at-eol))
 	  (goto-char (point-max))
 	  (delete-region (point-at-bol) (point-at-eol)))))
-    (ob:org-fix-html-level-numbering self)
-    (ob:org-fix-icons self)
+    (ob:org-fix-html-level-numbering)
+    (ob:org-fix-icons)
     (buffer-substring-no-properties (point-min) (point-max))))
 
 
