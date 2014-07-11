@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-10 19:17:13
+;; Last changed: 2014-07-11 10:59:53
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -210,10 +210,12 @@ ELLIPSIS if defined.."
 
 (defun ob:entry:set-path-page (self)
   ""
-  (%ob:set self 'path ".")
+  (%ob:set self 'path (or
+		       (file-name-directory (ob:get 'page self))
+		       "."))
   (%ob:set self 'file (concat
 		       (ob:sanitize-string
-			(or (ob:get 'page self)
+			(or (file-name-nondirectory (ob:get 'page self))
 			    (ob:get 'title self)))
 		       ".html"))
   (%ob:set

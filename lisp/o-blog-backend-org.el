@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-11 00:41:01
+;; Last changed: 2014-07-11 11:11:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -142,6 +142,12 @@ headers and body."
 	    (let ((template (org-entry-get (point) "template")))
 	      (when template
 		(%ob:set entry 'template template))))
+
+
+	  (when (ob:slot-exists-p entry 'page)
+	    (%ob:set entry 'page
+		     (file-name-sans-extension
+		      (org-entry-get (point) "page"))))
 
 	  (ob:entry:set-path entry)
 
