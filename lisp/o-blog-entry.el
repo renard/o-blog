@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-11 17:43:38
+;; Last changed: 2014-07-13 22:00:55
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -197,14 +197,7 @@ ELLIPSIS if defined.."
 				   file)
 			   (format (format "%s/%s"
 					   (ob:get 'publish-dir BLOG)
-					   (ob:get 'path self)))))
-
-      ;; (with-temp-buffer
-      ;; 	(insert (oref self html))
-      ;; 	(ob:write-file (format "%s/%s.txt"
-      ;; 			       (oref BLOG publish-dir)
-      ;; 			       (oref self htmlfile))))
-      )))
+					   (ob:get 'path self))))))))
 
 
 (defun ob:entry:set-path-page (self)
@@ -236,15 +229,6 @@ ELLIPSIS if defined.."
      ((eq 'ob:entry class) (ob:entry:set-path-entry self))
      ((eq 'ob:page class) (ob:entry:set-path-page self))
      ((eq 'ob:article class) (ob:entry:set-path-article self)))))
-
-
-
-
-(defun ob:entry:get (value &optional entry)
-  ""
-  (let ((entry (or entry
-		   (when (boundp 'POST) POST))))
-    (slot-value entry value)))
 
 
 (defun ob:entry:sort-by-date (a b)
