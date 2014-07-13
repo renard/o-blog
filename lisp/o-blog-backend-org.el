@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 21:49:09
+;; Last changed: 2014-07-13 21:57:06
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -95,7 +95,7 @@ headers and body."
 
 
 (defun ob:org:get-tags-list ()
-  ""
+  "Return a list of ob:tags from org tags defined at point"
   (loop for tn in (org-get-local-tags)
 	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
 	collect (make-ob:tag td)))
