@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-13 16:41:26
+;; Last changed: 2014-07-13 21:16:43
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -30,29 +30,9 @@
   (%ob:set self 'source-files (ob:find-files self "txt")))
 
 
-(defun ob:markdown:parse-config (self &optional file)
-  "Parse global configuration file."
-  (let* ((file (or file
-		   (when (file-exists-p "o-blog.conf")
-		     "o-blog.conf")))
-	 (lines (when file
-		  (split-string
-		   (with-temp-buffer
-		     (insert-file-contents file)
-		     (buffer-string))
-		   "\n"))))
-    (when lines
-      (save-match-data
-	(loop for line in lines
-	      when (string-match "^\\s-*\\([^#]+?\\)\\s-*=\\s-*\\(.+?\\)\\s-*$" line)
-	      do (let ((k (intern (match-string 1 line)))
-		       (v (match-string 2 line)))
-		   (when (ob:slot-exists-p self k)
-		     (%ob:set self k v))))))))
 
 
-
-(defun ob:parse-tags (tags)
+(defun ob:markdown:parse-tags (tags)
   "Parse TAGS and generate a list of `ob:tags'."
   (let ((tags (if (listp tags)
 		  tags (split-string tags "\\s-?,\\s-"))))
@@ -185,7 +165,7 @@ into \"<!--/\" \"/-->\"."
 (ob:register-backend
  (%ob:get-type (make-ob:backend:markdown))
  :find-files 'ob:markdown:find-files
- :parse-config 'ob:markdown:parse-config
+ :parse-config 'ob:parse-config
  :parse-entries 'ob:markdown:parse-entries
  :convert-entry 'ob:markdown:convert-entry)
 

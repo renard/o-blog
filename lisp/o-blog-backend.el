@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-11 16:46:00
+;; Last changed: 2014-07-13 21:15:19
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -225,6 +225,32 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 
 
+
+
+(defun ob:parse-config (blog &optional file)
+  "Parse global configuration FILE.
+
+Parse each key / value configuration from FILE. If key is a known
+BLOG slot it is save into the BLOG structure.
+
+If FILE is not defined \"o-blog.conf\" would be tried."
+  (let* ((file (or file
+		   (when (file-exists-p "o-blog.conf")
+		     "o-blog.conf")))
+	 (lines (when file
+		  (split-string
+		   (with-temp-buffer
+		     (insert-file-contents file)
+		     (buffer-string))
+		   "\n"))))
+    (when lines
+      (save-match-data
+	(loop for line in lines
+	      when (string-match "^\\s-*\\([^#]+?\\)\\s-*=\\s-*\\(.+?\\)\\s-*$" line)
+	      do (let ((k (intern (match-string 1 line)))
+		       (v (match-string 2 line)))
+		   (when (ob:slot-exists-p blog k)
+		     (%ob:set blog k v))))))))
 
 
 ;; Useful functions / macros
