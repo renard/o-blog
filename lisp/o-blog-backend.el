@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 21:44:09
+;; Last changed: 2014-07-13 23:33:23
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -85,28 +85,9 @@ Some global variables are set:
 	  do (loop for POST in (ob:get type BLOG)
 		   do (ob:entry:publish POST)))
 
-    ;; publish tags
-    (let ((PATH-TO-ROOT ".."))
-      (let ((FILE "tags/index.html"))
-	(ob:eval-template-to-file "blog_tags.html"
-				  (format "%s/%s"
-					  (ob:get 'publish-dir BLOG)
-					  FILE)))
-      (loop for TAG in TAGS
-	    do
-	    (let ((FILE (format "tags/%s.html" (ob:get 'safe TAG))))
-	      (ob:eval-template-to-file "blog_tags-details.html"
-					(format "%s/%s"
-						(ob:get 'publish-dir BLOG)
-						FILE))
-	      (let ((POSTS (ob:get-posts  (lambda (x)
-					    (member (ob:get 'safe TAG)
-						    (mapcar 'ob:tag-safe
-							    (ob:post-tags x)))))))
-		(ob:eval-template-to-file "blog_rss.html"
-					  (format "%s/tags/%s.xml"
-						  (ob:get 'publish-dir BLOG)
-						  (ob:get 'safe TAG)))))))
+
+    (ob:tag:publish TAGS BLOG)
+
     ;; Write tags JSON
     (with-temp-file
 	(format "%s/%s" (ob:get 'publish-dir BLOG) "tags.js")
