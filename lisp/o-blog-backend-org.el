@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 19:13:36
+;; Last changed: 2014-07-13 21:34:50
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -36,7 +36,7 @@
   ""
   (%ob:set self 'source-files (ob:find-files self "org")))
 
-(defun ob:org-get-header (self header &optional all)
+(defun ob:org:get-header (self header &optional all)
   "Return value of HEADER option as a string from current org-buffer. If ALL is
 T, returns all occurrences of HEADER in a list."
   (ob:with-source-buffer
@@ -56,7 +56,7 @@ T, returns all occurrences of HEADER in a list."
 	       values
 	     (car values))))))))
 
-(defun ob:org-get-entry-text ()
+(defun ob:org:get-entry-text ()
   "Return entry text from point with not properties.
 
 Please note that a blank line _MUST_ be present between entry
@@ -83,7 +83,7 @@ headers and body."
 (defun ob:org:parse-config (self)
   "Par o-blog configuration directely from org header."
       (loop for slot in (ob:get-slots self)
-	    for value = (ob:org-get-header self slot)
+	    for value = (ob:org:get-header self slot)
 	    when value
 	    do (%ob:set self slot value))
       ;; Set some imutalbe values.
@@ -94,7 +94,7 @@ headers and body."
       self)
 
 
-(defun ob:get-tags-list ()
+(defun ob:org:get-tags-list ()
   ""
   (loop for tn in (org-get-local-tags)
 	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
@@ -129,7 +129,7 @@ headers and body."
 
 	  (when (ob:slot-exists-p entry 'tags)
 	    (%ob:set entry 'tags
-			    (ob:get-tags-list)))
+			    (ob:org:get-tags-list)))
 
 	  (when (ob:slot-exists-p entry 'category)
 	    (let ((cat (or (org-entry-get (point) "category")
@@ -153,7 +153,7 @@ headers and body."
 
 	  (%ob:set
 	   entry 'source
-	   (ob:org-get-entry-text))
+	   (ob:org:get-entry-text))
 
 	  entry)))))
 
@@ -182,7 +182,7 @@ using `ob:org:parse-entry'."
    self))
 
 
-(defun ob:org-fix-html-level-numbering ()
+(defun ob:org:fix-html-level-numbering ()
   "Promote every org-generated heading level by one in current buffer."
   (save-excursion
     (goto-char (point-min))
@@ -212,7 +212,7 @@ using `ob:org:parse-entry'."
 		     level text-id))))))))
 
 
-(defun ob:org-fix-icons ()
+(defun ob:org:fix-icons ()
   "Convert all \"<i>icon-...</i>\" to \"<i class=\"icon-...\"/>\"
 in current-buffer."
   (save-excursion
@@ -226,7 +226,7 @@ in current-buffer."
 	  (insert (format
 		   "<i class=\"%s\"></i>" icon)))))))
 
-(defun ob:org-fix-html (html)
+(defun ob:org:fix-html (html)
   "Perform some html fixes on org html export."
   (with-temp-buffer
     (insert html)
@@ -239,8 +239,8 @@ in current-buffer."
 	  (delete-region (point-at-bol) (point-at-eol))
 	  (goto-char (point-max))
 	  (delete-region (point-at-bol) (point-at-eol)))))
-    (ob:org-fix-html-level-numbering)
-    (ob:org-fix-icons)
+    (ob:org:fix-html-level-numbering)
+    (ob:org:fix-icons)
     (buffer-substring-no-properties (point-min) (point-max))))
 
 
@@ -251,7 +251,7 @@ in current-buffer."
     (insert (ob:get 'source entry))
     (org-mode)
     (goto-char (point-min))
-    (ob:org-fix-org)
+    (ob:org:fix-org)
     (ob:org:publish-linked-files self entry)
     (ob:framework-expand)
     (ob:framework-expand "<\\([^:][^/ \n\t>]+\\)\\([^>]*\\)?>" "</%s>")
@@ -289,7 +289,7 @@ in current-buffer."
 	;;(message "Txt: %S" (buffer-substring-no-properties (point-min) (point-max)))
 	;;(message ": %S" (buffer-substring-no-properties (point-min) (point-max)))
 	(%ob:set entry 'html
-			(ob:org-fix-html html)))
+			(ob:org:fix-html html)))
       (when saved-file
 	(delete-file saved-file))
       (ob:get-post-excerpt entry)
@@ -299,7 +299,7 @@ in current-buffer."
 
 
 ;;(defmethod ob:org-fix-org ((self ob:backend:org))
-(defun ob:org-fix-org ()
+(defun ob:org:fix-org ()
   "Fix some org syntax."
   ;; This is a VERY ugly trick to ensure backward compatibility.
   (let*
