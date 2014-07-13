@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 21:15:19
+;; Last changed: 2014-07-13 21:44:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -289,19 +289,13 @@ called recursively."
 	  collect (file-relative-name file-path original-dir))))
 
 
-;; Basic primitives
-(defun ob:get-configuration-file (self)
-  "Return o-blog configuration file, which is SELF instance name."
-  (ob:get 'config-file self))
-
 (defun ob:get-source-directory (self)
   "Return o-blog source directory from ob:backend SELF object."
   (file-name-as-directory
    (format "%s%s"
 	   (file-name-as-directory
-	    (file-name-directory (ob:get-configuration-file self)))
+	    (file-name-directory (ob:get 'config-file self)))
 	   (or (ob:get 'source-dir self) ""))))
-
 
 
 (defun ob:compute-tags (self &optional min_r max_r)
