@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-11 16:46:10
+;; Last changed: 2014-07-13 15:37:25
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -94,7 +94,7 @@ headers and body."
       self)
 
 
-(defun ob:get-tags-list (self)
+(defun ob:get-tags-list ()
   ""
   (loop for tn in (org-get-local-tags)
 	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
@@ -129,7 +129,7 @@ headers and body."
 
 	  (when (ob:slot-exists-p entry 'tags)
 	    (%ob:set entry 'tags
-			    (ob:get-tags-list self)))
+			    (ob:get-tags-list)))
 
 	  (when (ob:slot-exists-p entry 'category)
 	    (let ((cat (or (org-entry-get (point) "category")
@@ -226,7 +226,7 @@ in current-buffer."
 	  (insert (format
 		   "<i class=\"%s\"></i>" icon)))))))
 
-(defun ob:org-fix-html (self html)
+(defun ob:org-fix-html (html)
   "Perform some html fixes on org html export."
   (with-temp-buffer
     (insert html)
@@ -289,7 +289,7 @@ in current-buffer."
 	;;(message "Txt: %S" (buffer-substring-no-properties (point-min) (point-max)))
 	;;(message ": %S" (buffer-substring-no-properties (point-min) (point-max)))
 	(%ob:set entry 'html
-			(ob:org-fix-html self html)))
+			(ob:org-fix-html html)))
       (when saved-file
 	(delete-file saved-file))
       (ob:get-post-excerpt entry)
