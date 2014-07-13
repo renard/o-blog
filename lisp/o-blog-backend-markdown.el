@@ -61,7 +61,7 @@
 
 	       (when (ob:slot-exists-p obj 'tags)
 		 (%ob:set obj 'tags
-			  (ob:parse-tags (plist-get headers 'tags))))
+			  (ob:markdown:parse-tags (plist-get headers 'tags))))
 
 	       (when (ob:slot-exists-p obj 'category)
 		 (%ob:set obj 'category
