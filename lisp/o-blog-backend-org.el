@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 15:37:25
+;; Last changed: 2014-07-13 19:13:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -326,27 +326,30 @@ in current-buffer."
 	       (list "<p class=\"alert-heading\">"
 		     (match-string 2) "</p>")
 	       "")))
-	   "^#\\+END_O_BLOG_ALERT" "</div>")
+	   "^#\\+END_O_BLOG_ALERT" "</div>" "alert")
 	  ;; comment
 	  ("^#\\+BEGIN_COMMENT"
 	   "<!-- Org comment\n"
 	   "^#\\+END_COMMENT"
-	   "\nEnd of Org comment-->\n")
+	   "\nEnd of Org comment-->\n"  "")
 	  ;; Hero unit
 	  ("^#\\+BEGIN_O_BLOG_HERO_UNIT"
 	   "<div class=\"hero-unit\">\n"
 	   "^#\\+END_O_BLOG_HERO_UNIT"
-	   "</div>\n")
+	   "</div>\n"
+	   "jumbotron")
 	  ;; Hero unit
 	  ("^#\\+BEGIN_O_BLOG_PAGE_HEADER"
 	   "<div class=\"page-header\">\n"
 	   "^#\\+END_O_BLOG_PAGE_HEADER"
-	   "</div>\n")
+	   "</div>\n"
+	   "page-header")
 	  ;; Well
 	  ("^#\\+BEGIN_O_BLOG_WELL"
 	   "<div class=\"well\">\n"
 	   "^#\\+END_O_BLOG_WELL"
-	   "</div>\n")
+	   "</div>\n"
+	   "well")
 	  ;;grid
 	  ("^#\\+BEGIN_O_BLOG_ROW:?[ \t]+\\(.*\\)"
 	   (let* ((args (when (stringp (match-string 1))
@@ -358,7 +361,8 @@ in current-buffer."
 			      (nth 1 args))
 		     args))
 	   "^#\\+END_O_BLOG_ROW"
-	   "</div></div>")
+	   "</div></div>"
+	   "row")
 	  ;; grid column
 	  ("^#\\+O_BLOG_ROW_COLUMN:?[ \t]+\\(-?[0-9]+\\)\\([ \t]+\\(-?[0-9]+\\)\\)?"
 	   (let* ((args (when (stringp (match-string 1))
@@ -367,7 +371,9 @@ in current-buffer."
 	   	     (funcall compute-bootstrap-grid-args
 			      (nth 0 args)
 			      (nth 1 args))
-		     args)))
+		     args))
+	   nil
+	   "col")
 	  ;;badge or label
 	  ("\\([^,]\\)\\[\\[ob-\\(badge\\|label\\):\\(default\\|success\\|warning\\|important\\|info\\|inverse\\)\\]\\[\\(.+?\\)\\]\\]"
 	   (let* ((first (match-string 1))
@@ -375,7 +381,9 @@ in current-buffer."
 		  (style (match-string 3))
 		  (data  (match-string 4)))
 	     (format "%s<span class=\"%s %s-%s\">%s</span>"
-		     first type type style data)))
+		     first type type style data))
+	   nil
+	   "badge")
 	  ;; progress
 	  ("\\([^,]\\)\\[\\[ob-progress:\\(info\\|success\\|warning\\|danger\\),?\\([^]]+\\)?\\]\\[\\(.+?\\)\\]\\]"
 	   (let ((first  (match-string 1))
@@ -392,7 +400,9 @@ in current-buffer."
 	      first
 	      style
 	      extra
-	      value)))
+	      value))
+	   nil
+	   "progess")
 	  ;; modal source
 	  ("^#\\+O_BLOG_SOURCE:?[ \t]+\\(.+?\\)\\([ \t]+\\(.+\\)\\)?$"
 	   (let* ((src-file (match-string 1))
@@ -417,14 +427,18 @@ in current-buffer."
 		       ;; Unfortunately rainbow-delimiter-mode does not work fine.
 		       ;; See https://github.com/jlr/rainbow-delimiters/issues/5
 		       (font-lock-fontify-buffer)
-		       (htmlize-region-for-paste (point-min) (point-max))))))
+		       (htmlize-region-for-paste (point-min) (point-max)))))
+	   nil
+	   "source")
 	  )))
-    (loop for (re_start sub_start re_end sub_end)
+    (loop for (re_start sub_start re_end sub_end new)
 	  in subst-list
 	  do (save-match-data
 	       (save-excursion
 		 (goto-char (point-min))
 		 (while (re-search-forward re_start nil t)
+		   (warn "(l:%d) %s is deprecated. Please use `%s'" (line-number-at-pos)
+			 (match-string 0) new)
 		   (beginning-of-line)
 		   (insert
 		    "#+BEGIN_HTML\n"
