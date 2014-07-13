@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-11 16:46:18
+;; Last changed: 2014-07-13 16:41:26
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -96,6 +96,11 @@
 		     do (%ob:set
 			 obj header (plist-get headers header)))
 
+	       (when (eq type 'page)
+		 (unless (ob:get 'page obj)
+		   (%ob:set obj 'page
+			    (ob:sanitize-string (ob:get 'title obj)))))
+	      
 	       (ob:entry:set-path obj)
 	       
 	       (%ob:set self types (append obj-list (list obj)))
