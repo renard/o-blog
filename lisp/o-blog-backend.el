@@ -364,33 +364,6 @@ within MIN_R and MAX_R inclusive."
 ;;
 
 
-
-;; (defmethod ob:publish ((self ob:backend))
-;;   ""
-;;   ;; Publish both articles static pages
-;;   (loop for type in '(articles pages)
-;; 	do (loop for POST in (slot-value blog type)
-;; 		 do (ob:entry:publish POST)))
-
-;;   ;; publish tags
-;;   (with-temp-buffer
-;;     (ob:insert-template "page_tags.html")
-;;     (ob:write-file (format "%s/tags/index.html"
-;; 			   (oref blog publish-dir))))
-
-;;     ;; publish tags
-;;   (with-temp-buffer
-;;     (ob:insert-template "page_tags.html")
-;;     (ob:write-file (format "%s/tags/index.html"
-;; 			   (oref blog publish-dir))))
-;;   (loop for TAG in TAGS
-;; 	do
-;; 	(ob-write-index-to-file "blog_tags-details.html"
-;; 				(format "%s/tags/%s.html"
-;; 					(ob:blog-publish-dir BLOG)
-;; 					(ob:tags-safe TAG)))))
-
-
 (defun ob:get-posts (&optional predicate count sortfunc collect)
   "Return posts (from `POSTS' list of `ob:entry' as defined in
 `o-blog-publish') matching PREDICATE. Limit to COUNT results if
