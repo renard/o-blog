@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 21:34:50
+;; Last changed: 2014-07-13 21:37:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -224,7 +224,7 @@ in current-buffer."
 	  (goto-char (match-beginning 0))
 	  (delete-region (match-beginning 0) (match-end 0))
 	  (insert (format
-		   "<i class=\"%s\"></i>" icon)))))))
+		   "<i class=\"glyphicon glyph%s\"></i>" icon)))))))
 
 (defun ob:org:fix-html (html)
   "Perform some html fixes on org html export."
