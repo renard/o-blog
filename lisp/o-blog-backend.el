@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 23:33:23
+;; Last changed: 2014-07-13 23:39:08
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -87,52 +87,7 @@ Some global variables are set:
 
 
     (ob:tag:publish TAGS BLOG)
-
-    ;; Write tags JSON
-    (with-temp-file
-	(format "%s/%s" (ob:get 'publish-dir BLOG) "tags.js")
-      (insert "{\"tags\":[")
-      (if (not TAGS)
-	  (insert " ")
-	(loop for TAG in TAGS
-	      do (insert
-		  (format
-		   "{\"size\":\"%.2f\",\"path\":\"tags/%s.html\",\"tag\":\"%s\"},"
-		   (ob:get 'size TAG) (ob:get 'safe TAG) (ob:get 'display TAG))))
-	;; remove last comma
-	(delete-char -1))
-      (insert "]}"))
-
-    ;; Write articles JSON
-    (with-temp-file
-	(format "%s/%s" (ob:get 'publish-dir BLOG) "articles.js")
-      (insert "{\"articles\":{ ")
-      (message "LEN: %s / %s: %s"
-	       (length (ob:get-posts nil nil nil 'category))
-	       (length (ob:get-posts))
-	       (ob:get-posts nil nil nil 'category))
-      
-      (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
-	    do (progn
-		 (insert (format "\"%s\":[ " (ob:get 'safe CATEGORY)))
-		 (loop for article in
-		       (ob:get-posts (lambda (x)
-		  		       (equal CATEGORY
-					      (ob:get 'category x))))
-		       do (insert
-		  	   (format
-		  	    "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
-			    (ob:get 'title article)
-		  	    (ob:get 'htmlfile article)
-			    (ob:get 'excerpt article)
-			    )))
-		 ;; remove last comma
-		 (delete-char -1)
-		 (insert "],")))
-      ;; remove last comma
-      (delete-char -1)
-      (insert "}}"))
-
+    (ob:publish-articles-json BLOG)
     
     (let ((BREADCRUMB "Archives"))
       (let ((FILE "archives.html"))
@@ -203,6 +158,36 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 		    (if year (= year (ob:get 'year x)) t)
 		    (if month (= month (ob:get 'month x)) t))))))
     (ob:eval-template-to-file template fp)))
+
+
+
+(defun ob:publish-articles-json (blog)
+    ;; Write articles JSON
+    (with-temp-file
+	(format "%s/%s" (ob:get 'publish-dir blog) "articles.js")
+      (insert "{\"articles\":{ ")
+      
+      (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	    do (progn
+		 (insert (format "\"%s\":[ " (ob:get 'safe CATEGORY)))
+		 (loop for article in
+		       (ob:get-posts (lambda (x)
+		  		       (equal CATEGORY
+					      (ob:get 'category x))))
+		       do (insert
+		  	   (format
+		  	    "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
+			    (ob:get 'title article)
+		  	    (ob:get 'htmlfile article)
+			    (ob:get 'excerpt article)
+			    )))
+		 ;; remove last comma
+		 (delete-char -1)
+		 (insert "],")))
+      ;; remove last comma
+      (delete-char -1)
+      (insert "}}")))
+
 
 
 
