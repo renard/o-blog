@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2014-07-11 16:45:06
+;; Last changed: 2014-07-13 22:09:53
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -81,20 +81,6 @@ current buffer."
 	(require lib)))
 
     (ob:publish (funcall classfct :config-file file))))
-    ;; (let* ((blog (funcall classfct file))
-    ;; 	   ;; Just an alias for backward compatibility
-    ;; 	   ;; TODO: Remove me
-    ;; 	   (BLOG blog))
-    ;;   (ob:parse-config blog)
-    ;;   (ob:parse-entries blog)
-    ;;   (loop for type in '(articles pages snippets)
-    ;; 	    do (loop for entry in (slot-value blog type)
-    ;; 		     do (ob:convert-entry blog entry)))
-      
-    ;;   ;;blog
-    ;;   (ob:compute-tags blog)
-    ;;   (ob:publish blog)
-    ;;   blog)))
 
 (defun o-blog-publish-async-processes-sentinel (proc change)
   "Sentinel in charge of cleaning `org-publish-blog-async' on success."
@@ -130,7 +116,6 @@ current buffer."
 		   (insert (format "Run: %s\n\n" cmd-cli)))
 		 (apply 'start-process (car cmd-line)
 			cmd-buf (car cmd-line) (cdr cmd-line)))))
-    ;;(set-window-buffer (selected-window) cmd-buf)
     (message "Run: %s" cmd-cli)
     (process-put proc :cmd (format "Build %s" file))
     (process-put proc :cmd-buf cmd-buf)
