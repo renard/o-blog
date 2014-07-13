@@ -1,12 +1,14 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2014-07-07 20:30:23
+#+DATE: 2014-07-13 17:13:11
 
 #+STARTUP: logdone
 
 #+TEMPLATE_DIR: ../templates
 #+STYLE_DIR: ../templates/style
 #+URL: http://renard.github.com/o-blog
+#+PUBLISH_DIR: ../site/out-org
+
 
 #+DEFAULT_CATEGORY: Tips
 #+DISQUS: renard-o-blog
@@ -25,17 +27,19 @@
   :TEMPLATE: blog_static_no_title.html
   :END:
 
-#+begin_o_blog_row 8
-
-#+begin_o_blog_hero_unit
+#+begin_row
+#+begin_col: md="8"
+#+begin_jumbotron
 #+HTML: <h1>o-blog</h1>
 
 A stand-alone blog and publication tool for [[http://orgmode.org/][Org-mode]].
-#+end_o_blog_hero_unit
+#+end_jumbotron
 
 #+HTML: <h1 style="font-size: 500%;">Quick start guide</h1>
 
-#+o_blog_row_column 4
+#+end_col
+
+#+begin_col: md="4"
 
 
 #+HTML: <div class="hero-unit" style="font-size: 200%;">
@@ -53,7 +57,9 @@ A stand-alone blog and publication tool for [[http://orgmode.org/][Org-mode]].
 
 #+HTML: </div>
 
-#+end_o_blog_row
+#+end_col
+
+#+end_row
 
 
 ** Setup
@@ -1246,7 +1252,7 @@ The [[http://twitter.github.com/bootstrap/javascript.html#modals][Modal]] bootst
 file in a modal window. The magic line is:
 
 #+begin_src org
-  ,#+O_BLOG_SOURCE: path/to/file [mode]
+  ,#-source: src-file="path/to/file" [mode="mode"]
 #+end_src
 
 The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
@@ -1256,7 +1262,7 @@ The /org template shorcut/ is =<os= =TAB=. Two parameters might be used:
 
 Here is an example of the =sample-init.el= file:
 
-#+o_blog_source ../Makefile
+#-source: src-file="../Makefile"
 
 ** DONE Adding icons					    :usage:Bootstrap:
    CLOSED: [2012-02-10 Fri 00:19]
@@ -1597,7 +1603,7 @@ alternative for offline publications.
 
 The script =get-font= does all needed jobs.
 
-#+O_BLOG_SOURCE: ../Makefile
+#-source: src-file="../Makefile"
 
 You can run:
 
