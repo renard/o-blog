@@ -1,11 +1,11 @@
-;;; o-blog-backend-org.el --- org-mode backend for o-blog
+;;; O-blog-backend-org.el --- org-mode backend for o-blog
 
 ;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 21:37:39
+;; Last changed: 2014-07-13 21:49:09
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -296,9 +296,92 @@ in current-buffer."
       entry)))
 
 
+(defun  ob:org:publish-linked-files(self entry)
+  "Copy files (defined by \"file:\" link prefix) to page related directory."
+  (save-match-data
+    (save-excursion
+      (goto-char (point-min))
+      (let ((htmlfile (ob:get 'htmlfile entry))
+	    (page (ob:slot-exists-p entry 'page))
+	    (filepath (ob:get 'filepath entry))
+	    (title (ob:get 'title entry))
+	    ret)
+	(while (re-search-forward "\\(\\[file:\\)\\([^]]+\\)\\(\\]\\)" nil t)
+	  (let ((prefix (match-string-no-properties 1))
+		(file  (match-string-no-properties 2))
+		(suffix (match-string-no-properties 3)))
+
+	    (when (file-exists-p file)
+	      (replace-match
+	       (if page
+		   (format "%s%s/%s/%s%s"
+			   prefix
+			   (ob:get 'path-to-root entry)
+			   (or (file-name-directory htmlfile) ".")
+			   (file-name-nondirectory file) suffix)
+
+		 (format "%s%s/%s/%s/%s%s"
+			 prefix
+			 (ob:get 'path-to-root entry)
+			 (file-relative-name "." filepath)
+			 (file-name-sans-extension htmlfile)
+			 (file-name-nondirectory file) suffix ))
+
+	       (add-to-list 'ret file)))))
+	
+	(when ret
+	  (unless page
+	    ;; create a redirection page as index.html into files' directory
+	    (with-temp-buffer
+	      (insert
+	       (mapconcat 'identity
+			  `(,(format "* Redirect from (%s)" title)
+			    ":PROPERTIES:"
+			    ,(format ":PAGE: %s/index.html" (file-name-sans-extension htmlfile))
+			    ":TEMPLATE: page_redirect.html"
+			    ":END:")
+			  "\n"))
+	      (org-mode)
+	      (goto-char (point-min))
+	      (let ((redir (ob:org:parse-entry self (point-marker) 'page)))
+		(message "REDIR: %S" redir)
+		(%ob:set redir 'path-to-root
+				(concat "../" (ob:get 'path-to-root entry)))
+		(%ob:set self 'pages
+				(append (ob:get 'pages self)
+				      (list redir))))))
+
+	  ;; copy all files into their target directory.
+	  (message "Copy file: %S" ret)
+	    
+	  (loop for f in ret
+		do (let ((target
+			  (if page
+			      (format "%s/%s"
+ 				      (ob:blog-publish-dir BLOG)
+				      (file-name-nondirectory f))
+			    (format "%s/%s/%s"
+				    (ob:blog-publish-dir BLOG)
+				    ;; file path is nil when exporting static page?
+				    ;;(or filepath ".")
+				    (file-name-sans-extension htmlfile)
+				    (file-name-nondirectory f)))))
+		     (mkdir (file-name-directory target) t)
+		     (message "COPY %s -> %s" f target)
+		     (ob-do-copy f target))))))))
+
+(ob:register-backend
+ (%ob:get-type (make-ob:backend:org))
+ :find-files 'ob:org:find-files
+ :parse-config 'ob:org:parse-config
+ :parse-entries 'ob:org:parse-entries
+ :convert-entry 'ob:org:convert-entry)
 
 
-;;(defmethod ob:org-fix-org ((self ob:backend:org))
+;;
+;; Deprecated functions to be removed soon.
+;;
+
 (defun ob:org:fix-org ()
   "Fix some org syntax."
   ;; This is a VERY ugly trick to ensure backward compatibility.
@@ -459,87 +542,6 @@ in current-buffer."
 			"\n#+END_HTML\n")
 		       (delete-region (point) (point-at-eol))))))))))
 
-
-(defun  ob:org:publish-linked-files(self entry)
-  "Copy files (defined by \"file:\" link prefix) to page related directory."
-  (save-match-data
-    (save-excursion
-      (goto-char (point-min))
-      (let ((htmlfile (ob:get 'htmlfile entry))
-	    (page (ob:slot-exists-p entry 'page))
-	    (filepath (ob:get 'filepath entry))
-	    (title (ob:get 'title entry))
-	    ret)
-	(while (re-search-forward "\\(\\[file:\\)\\([^]]+\\)\\(\\]\\)" nil t)
-	  (let ((prefix (match-string-no-properties 1))
-		(file  (match-string-no-properties 2))
-		(suffix (match-string-no-properties 3)))
-
-	    (when (file-exists-p file)
-	      (replace-match
-	       (if page
-		   (format "%s%s/%s/%s%s"
-			   prefix
-			   (ob:get 'path-to-root entry)
-			   (or (file-name-directory htmlfile) ".")
-			   (file-name-nondirectory file) suffix)
-
-		 (format "%s%s/%s/%s/%s%s"
-			 prefix
-			 (ob:get 'path-to-root entry)
-			 (file-relative-name "." filepath)
-			 (file-name-sans-extension htmlfile)
-			 (file-name-nondirectory file) suffix ))
-
-	       (add-to-list 'ret file)))))
-	
-	(when ret
-	  (unless page
-	    ;; create a redirection page as index.html into files' directory
-	    (with-temp-buffer
-	      (insert
-	       (mapconcat 'identity
-			  `(,(format "* Redirect from (%s)" title)
-			    ":PROPERTIES:"
-			    ,(format ":PAGE: %s/index.html" (file-name-sans-extension htmlfile))
-			    ":TEMPLATE: page_redirect.html"
-			    ":END:")
-			  "\n"))
-	      (org-mode)
-	      (goto-char (point-min))
-	      (let ((redir (ob:org:parse-entry self (point-marker) 'page)))
-		(message "REDIR: %S" redir)
-		(%ob:set redir 'path-to-root
-				(concat "../" (ob:get 'path-to-root entry)))
-		(%ob:set self 'pages
-				(append (ob:get 'pages self)
-				      (list redir))))))
-
-	  ;; copy all files into their target directory.
-	  (message "Copy file: %S" ret)
-	    
-	  (loop for f in ret
-		do (let ((target
-			  (if page
-			      (format "%s/%s"
- 				      (ob:blog-publish-dir BLOG)
-				      (file-name-nondirectory f))
-			    (format "%s/%s/%s"
-				    (ob:blog-publish-dir BLOG)
-				    ;; file path is nil when exporting static page?
-				    ;;(or filepath ".")
-				    (file-name-sans-extension htmlfile)
-				    (file-name-nondirectory f)))))
-		     (mkdir (file-name-directory target) t)
-		     (message "COPY %s -> %s" f target)
-		     (ob-do-copy f target))))))))
-
-(ob:register-backend
- (%ob:get-type (make-ob:backend:org))
- :find-files 'ob:org:find-files
- :parse-config 'ob:org:parse-config
- :parse-entries 'ob:org:parse-entries
- :convert-entry 'ob:org:convert-entry)
 
 
 (provide 'o-blog-backend-org)
