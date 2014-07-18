@@ -12,5 +12,6 @@
       (ob:post-content-html POST)
     </lisp>
   </div>
+  <lisp>(when (ob:get 'disqus BLOG) (ob:insert-template "plugin_disqus.html"))</lisp>
 </article>
 <lisp>(ob:insert-template "page_footer.html")</lisp>

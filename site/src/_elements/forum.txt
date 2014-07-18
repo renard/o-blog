@@ -1,0 +1,9 @@
+% -*- markdown -*-
+<!--/
+title: Forum
+type: page
+page: forum
+template: blog_static_no_title.html
+/-->
+
+<lisp>(ob:insert-template "plugin_muut.html")</lisp>

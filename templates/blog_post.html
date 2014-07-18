@@ -70,5 +70,5 @@
     </nav>
   </footer>
   </div>
-  <lisp>(ob:insert-template "plugin_disqus.html")</lisp>
+  <lisp>(when (ob:get 'disqus BLOG) (ob:insert-template "plugin_disqus.html"))</lisp>
 <lisp>(ob:insert-template "page_footer.html")</lisp>

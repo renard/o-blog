@@ -18,6 +18,7 @@ type: snippet
 	- [Cloud]({lisp}(ob:path-to-root){/lisp}/tags/index.html)
 	- [Details]({lisp}(ob:path-to-root){/lisp}/tags.html)
 - [<icon icon="child"> Testimonial]({lisp}(ob:path-to-root){/lisp}/testimonials.html)
+- [<icon icon="comments-o"> Forum]({lisp}(ob:path-to-root){/lisp}/forum.html)
 
 
 <!--

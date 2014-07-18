@@ -42,10 +42,16 @@
 	$(document).ready(function() {
         $("head").append([
 	'<link href="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/css/bootstrap.css" rel="stylesheet">',
-	'<link href="<lisp>(ob:path-to-root)</lisp>/style/Font-Awesome/css/font-awesome.min.css" rel="stylesheet">',
-	'<link href="<lisp>(ob:path-to-root)</lisp>/style/tipue/css/tipuesearch.css" rel="stylesheet">',
-        '<link href="<lisp>(ob:path-to-root)</lisp>/style/tipue/css/tipuedrop.css" rel="stylesheet">'].join());
+	'<link href="<lisp>(ob:path-to-root)</lisp>/style/font-awesome/css/font-awesome.min.css" rel="stylesheet">'])
 	});
-     </script>
+      </script>
+      <lisp>
+	(when (ob:get 'google-analytics BLOG)
+	(ob:insert-template "plugin_analytics.html"))
+      </lisp>
+      <lisp>
+	(when (ob:get 'muut-forum BLOG)
+	(insert "<script src=\"//cdn.muut.com/1/moot.min.js\"></script>"))
+      </lisp>
 </body>
 </html>

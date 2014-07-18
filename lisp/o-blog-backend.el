@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-13 23:39:08
+;; Last changed: 2014-07-18 13:31:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -44,7 +44,15 @@
   title
   description
   url
-  (posts-sorter 'ob:entry:sort-by-date))
+  (posts-sorter 'ob:entry:sort-by-date)
+
+  ;; External plugins
+  muut-forum
+  muut-title
+  muut-channel
+  disqus
+  google-analytics
+)
 
 (defun ob:publish (self)
   "Publish a new blog.
