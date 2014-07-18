@@ -18,7 +18,7 @@
 
     (loop for tag in (ob:get 'tags p)
     do (insert (format "<category scheme=\"/tags/%s.html\" term=\"%s\" label=\"%s\"/>"
-    (ob:get 'safe tag) (ob:get-name tag) (ob:get-name tag))))
+    (ob:get 'safe tag) (ob:get 'display tag) (ob:get 'display tag))))
 
     (insert
     (format "<content type=\"html\">%s</content>" (htmlize-protect-string(ob:get 'html p)))
