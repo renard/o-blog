@@ -1,0 +1,22 @@
+<div class="ob-share pull-right">
+  <ul>
+    <lisp>
+      (when (ob:get 'twitter-account BLOG)
+      (insert "<li>")
+	(ob:insert-template "plugin_twitter_tweet.html")
+	(insert "</li>")
+      (when (ob:get 'twitter-follow BLOG)
+      (insert "<li>")
+	(ob:insert-template "plugin_twitter_follow.html")
+	(insert "</li>")))
+    </lisp>
+    <lisp>
+      (when (ob:get 'google-plus BLOG)
+      (insert "<li>")
+	(ob:insert-template "plugin_google_plus.html")
+	(insert "</li>"))
+    </lisp>
+
+  </ul>
+</div>
+
