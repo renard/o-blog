@@ -21,7 +21,9 @@
       <a class="navbar-brand" href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:blog-title BLOG)</lisp></a>
       <div class="collapse navbar-collapse">
 	<lisp>(ob:post-content-html (ob:get-snippet "Navigation"))</lisp>
+	<lisp>(ob:insert-template "plugin_share.html")</lisp>
       </div>
+
     </nav>
 
     <div class="subnav subnav-fixed visible-desktop">
