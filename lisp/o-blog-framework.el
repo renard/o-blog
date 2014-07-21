@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-21 11:55:36
+;; Last changed: 2014-07-21 22:44:44
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -17,7 +17,7 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'htmlize))
+  (require 'htmlize nil t))
 
 
 (cl-defstruct (ob:framework-component)
@@ -225,7 +225,12 @@
 		;; Unfortunately rainbow-delimiter-mode does not work fine.
 		;; See https://github.com/jlr/rainbow-delimiters/issues/5
 		(font-lock-fontify-buffer)
-		(setf html (htmlize-region-for-paste (point-min) (point-max))))
+		(if (functionp 'htmlize-region-for-paste)
+		    (setf html (htmlize-region-for-paste (point-min) (point-max)))
+		  (warn "htmlize not installed try to export simple buffer content")
+		  (setf html (format "<pre>%s</pre>"
+				     (buffer-substring-no-properties
+				      (point-min) (point-max))))))
 
 	      (when end-point
 		(delete-region cur-point (- end-point (length (format "</%s>" tag)))))
