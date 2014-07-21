@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-18 16:30:16
+;; Last changed: 2014-07-21 11:55:00
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -18,8 +18,8 @@
 
 
 (eval-when-compile
-  (require 'find-func nil t)
-  (require 'cl nil t))
+  (require 'find-func)
+  (require 'cl))
 
 
 (cl-defstruct
