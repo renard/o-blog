@@ -16,6 +16,12 @@
 	(ob:insert-template "plugin_google_plus.html")
 	(insert "</li>"))
     </lisp>
+    <lisp>
+      (when (ob:get 'share-linkedin BLOG)
+      (insert "<li>")
+	(ob:insert-template "plugin_share_linkedin.html")
+	(insert "</li>"))
+    </lisp>
 
   </ul>
 </div>
