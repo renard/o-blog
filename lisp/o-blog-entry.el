@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-07-21 22:29:40
+;; Last changed: 2014-09-19 12:26:22
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -56,6 +56,7 @@ Slots are:
   id
   title
   source
+  source-file
   html
   path
   file
@@ -192,8 +193,9 @@ ELLIPSIS if defined.."
 
       (loop for file in (ob:get 'files-to-copy self)
 	    do (ob-do-copy (format "%s/%s"
-				   (or
-				    (file-name-directory (ob:get 'file self)) ".")
+				   (or (file-name-directory
+					(ob:get 'source-file self))
+				       ".")
 				   file)
 			   (format (format "%s/%s"
 					   (ob:get 'publish-dir BLOG)

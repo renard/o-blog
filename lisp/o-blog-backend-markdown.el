@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-09-19 11:03:04
+;; Last changed: 2014-09-19 18:45:57
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -87,11 +87,17 @@
 			    (ob:sanitize-string (ob:get 'title obj)))))
 	      
 	       (ob:entry:set-path obj)
+	       (%ob:set obj 'source-file f)
 	       
-	       (%ob:set self types (append obj-list (list obj)))
+	       (let ((default-directory
+		       (format "%s/%s" default-directory
+			       (or
+				(file-name-directory (ob:get 'source-file obj))))))
+		 (%ob:set obj 'files-to-copy
+			  (ob:markdown:get-images)))
 
-	       (%ob:set obj 'files-to-copy
-			(ob:markdown:get-images obj))))))
+
+	       (%ob:set self types (append obj-list (list obj)))))))
 
 
 
@@ -100,9 +106,13 @@
   ""
   (with-temp-buffer
     (insert (ob:get 'source entry))
-	(ob:framework-expand "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"  "</%s>" "" "" "#")
     (let ((buff-src (current-buffer))
+	  (default-directory (format "%s/%s"
+				     default-directory
+				     (file-name-directory
+				      (ob:get 'source-file entry))))
 	  html)
+      (ob:framework-expand "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"  "</%s>" "" "" "#" entry)
       (with-temp-buffer
 	(let ((buff-out (current-buffer)))
 	  (with-current-buffer buff-src
@@ -116,10 +126,11 @@
       (ob:get-post-excerpt entry))))
 
 
-(defun ob:markdown:get-images (object)
+(defun ob:markdown:get-images ();;object)
   ""
-  (with-temp-buffer
-    (insert (ob:get 'source object))
+  ;; (with-temp-buffer
+  ;;   (insert (ob:get 'source object))
+  (save-excursion
     (goto-char (point-min))
     (let (files)
       ;; images
