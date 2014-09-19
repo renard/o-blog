@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-07-21 22:44:44
+;; Last changed: 2014-09-19 16:40:43
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -32,8 +32,8 @@
   (list
    (make-ob:framework-component
     :name 'lead :backends '(org)
-    :start "<p class=\"lead\">"
-    :end "</p>")
+    :start "<div class=\"lead\">"
+    :end "</div>")
 
    (make-ob:framework-component
     :name 'mark :backends '(org)
@@ -245,10 +245,19 @@
 		    (if (boundp 'count) (format " column-count:%s;-webkit-column-count:%s;-moz-column-count:%s;" count count count) ""))
     :end "</div>")
 
-   
+
+   (make-ob:framework-component
+    :name 'copy :backends '(org)
+    :start '(progn
+	      (when (and object
+			 (boundp 'src))
+		(let ((files-to-copy (ob:get 'files-to-copy object)))
+		  (add-to-list 'files-to-copy src)
+		  (%ob:set object 'files-to-copy files-to-copy)))
+	      ""))
    ))
 
-(defun ob:framework-expand (&optional re-start re-end prefix suffix comment)
+(defun ob:framework-expand (&optional re-start re-end prefix suffix comment object)
   "Expand framework widgets using RE-START and RE-END to delimit notations,
 convert widget to their HTML notation. COMMENT is an escape
 string to prevent widget expansion.
@@ -257,6 +266,9 @@ RE-START is a 2-group regexp. First group is the widget name,
 second one is a list of parameters.
 
 RE-END is passed to `format' with widget name as parameter.
+
+OBJECT is the current post object.
+
 "
   (let ((prefix (or prefix "@@html:"))
 	(suffix (or suffix "@@"))
