@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-07-21 11:55:11
+;; Last changed: 2014-09-19 11:03:04
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -53,12 +53,17 @@
 			  :source (buffer-substring-no-properties
 				   (point-min) (point-max))))
 		    (obj-list (ob:get types self)))
-	       
+
 	       (when (ob:slot-exists-p obj 'timestamp)
 		 (%ob:set obj 'timestamp
-			 (nth 5 (file-attributes f)))
+			  (condition-case nil
+			      (apply #'encode-time
+				     (map 'list #'(lambda(x) (or x 0))
+					  (parse-time-string
+					   (plist-get headers 'timestamp))))
+			    (nth 5 (file-attributes f))))
 		 (ob:entry:compute-dates obj))
-
+	       
 	       (when (ob:slot-exists-p obj 'tags)
 		 (%ob:set obj 'tags
 			  (ob:markdown:parse-tags (plist-get headers 'tags))))
@@ -72,7 +77,7 @@
 	       (loop for header in headers by #'cddr
 		     when (and
 			   (ob:slot-exists-p obj header)
-			   (not (member header '(tags category))))
+			   (not (member header '(tags timestamp category))))
 		     do (%ob:set
 			 obj header (plist-get headers header)))
 
