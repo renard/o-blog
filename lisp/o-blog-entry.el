@@ -118,14 +118,14 @@ Slots are:
 (defun ob:entry:set-path-article (self)
   ""
   (%ob:set
-   self 'path (format "%s/%.4d/%.2d"
+   self 'path (format "%s/%.4d/%.2d/%s"
 		      (ob:sanitize-string (ob:get 'safe (ob:get 'category  self)))
 		      (ob:get 'year  self)
-		      (ob:get 'month  self)))
-  (%ob:set
-   self 'file (format "%.2d_%s.html"
-		      (ob:get 'day  self)
+		      (ob:get 'month  self)
 		      (ob:sanitize-string (ob:get 'title  self))))
+
+  (%ob:set self 'file "index.html")
+
   (%ob:set
    self 'htmlfile (if (string= "." (ob:get 'path  self))
 		      (ob:get 'file  self)
