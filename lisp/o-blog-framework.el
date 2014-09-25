@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-09-19 16:40:43
+;; Last changed: 2014-09-23 09:46:38
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -197,15 +197,15 @@
 
    (make-ob:framework-component
     :name 'source :backends '(org)
-    :start '(let* ((cur-point (point))
+    :start '(let* ((mode (or (and (boundp 'mode) mode) "fundamental"))
+		   (cur-point (point))
 		   (end-point (unless (boundp 'src-file)
 				(save-match-data
 				  (search-forward (format "</%s>" tag)))))
 		   (content (when end-point
 			      (buffer-substring-no-properties (1+ cur-point)
 			       (- end-point (length (format "</%s>" tag))))))
-		   (func (when (and (boundp 'mode) mode)
-			   (setq func (intern (format "%s-mode" mode)))))
+		   (func (setq func (intern (format "%s-mode" mode))))
 		   html)
 
 	      (with-temp-buffer
