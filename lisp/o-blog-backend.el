@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-08-25 18:06:37
+;; Last changed: 2014-09-23 16:59:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -76,7 +76,7 @@ Some global variables are set:
   
   (let* ((BLOG self)
 	 (PAGES (ob:get 'pages BLOG))
-	 (POSTS (ob:get 'articles BLOG))
+	 (POSTS (sort (ob:get 'articles BLOG) (ob:get 'posts-sorter BLOG)))
 	 (ALL-POSTS POSTS)
 	 (TAGS  (ob:get 'tags BLOG))
 	 (convert-entry (ob:get-backend-function
