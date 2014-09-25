@@ -191,7 +191,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 		  	    "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
 			    (ob:get 'title article)
 		  	    (ob:get 'htmlfile article)
-			    (ob:get 'excerpt article)
+			    (or (ob:get 'excerpt article) "")
 			    )))
 		 ;; remove last comma
 		 (delete-char -1)
