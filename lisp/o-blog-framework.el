@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-09-23 09:46:38
+;; Last changed: 2014-09-30 00:44:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -17,6 +17,7 @@
 ;;; Code:
 
 (eval-when-compile
+  (require 'cl)
   (require 'htmlize nil t))
 
 
