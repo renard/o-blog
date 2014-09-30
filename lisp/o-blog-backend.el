@@ -89,7 +89,7 @@ Some global variables are set:
 	 (convert-entry (ob:get-backend-function
 			 (%ob:get-type self) :convert-entry)))
 
-        ;; Convert each entry to HTML format
+    ;; Convert each entry to HTML format
     (loop for type in '(snippets articles pages)
 	  do (loop for entry in (ob:get type BLOG)
 		   with id = 0
@@ -97,7 +97,11 @@ Some global variables are set:
 			(when (eq type 'articles)
 			  (%ob:set entry 'id id)
 			  (setf id (1+ id)))
-			(funcall convert-entry BLOG entry))))
+			(unless (ob:get 'html entry)
+			  (funcall convert-entry BLOG entry)
+			  (with-temp-buffer
+			    (insert (format "%S" entry))
+			    (ob:write-file (ob:get 'cache-file entry)))))))
 
     ;; Publish both articles static pages
     (loop for type in '(articles pages)
