@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-09-30 23:47:15
+;; Last changed: 2014-10-01 01:37:51
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -104,6 +104,7 @@
 
 (defun ob:markdown:parse-entries (backend)
   (loop for f in (ob:get 'source-files backend)
+	when (file-exists-p f)
 	do
 	(let ((cache-file (format "%s/%s.cache"
 				  (ob:get 'cache-dir backend)
