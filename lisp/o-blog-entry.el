@@ -184,10 +184,6 @@ ELLIPSIS if defined.."
     (when (ob:slot-exists-p self 'template)
       (with-temp-buffer
 	(ob:insert-template (ob:get 'template self) blog-obj)
-	(message "Write to: %s"
-		 (expand-file-name (format "%s/%s"
-					   (ob:get 'publish-dir BLOG)
-					   FILE)))
 	(ob:write-file (format "%s/%s"
 			       (ob:get 'publish-dir BLOG)
 			       FILE)))
