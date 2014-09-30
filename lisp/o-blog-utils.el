@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-07-11 00:15:55
+;; Last changed: 2014-10-01 00:14:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -37,6 +37,14 @@
 (defun ob:get-backend-function (backend function)
   ""
   (plist-get (plist-get *ob:backends* backend) function))
+
+(defmacro ob:profile (message &rest body)
+  `(let ((start-at (current-time)))
+     ,@body
+     (message "%s: %.3fs" ,message
+	      (time-to-seconds
+	       (time-subtract (current-time) start-at)))))
+
 
 (defun ob:replace-in-string (string replacement-list)
   "Perform a mass `replace-regexp-in-string' against STRING for
@@ -311,7 +319,7 @@ A copy function COPYF and its arguments ARGS could be specified."
 	 (args (or args
 		   (when (eq 'copy-file copyf) '(t t t)))))
     (when (file-exists-p src)
-      (message "Copying %s -> %s using %s" src dst copyf)
+      ;;(message "Copying %s -> %s using %s" src dst copyf)
       (apply copyf src dst args))))
 
 (defun ob:publish-style (object)
