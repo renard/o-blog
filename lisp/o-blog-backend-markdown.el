@@ -116,7 +116,6 @@
 			   (time-less-p (nth 5 (file-attributes f))
 					(nth 5 (file-attributes cache-file))))
 		      (with-temp-buffer
-			(message "CACHE: %s" f)
 			(insert-file-contents cache-file)
 			(car (read-from-string (buffer-string))))
 		    (ob:markdown:parse-file-as-entry f)))
