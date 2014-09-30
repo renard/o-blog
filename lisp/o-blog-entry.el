@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-09-19 12:26:22
+;; Last changed: 2014-10-01 00:00:07
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -57,6 +57,7 @@ Slots are:
   title
   source
   source-file
+  cache-file
   html
   path
   file
