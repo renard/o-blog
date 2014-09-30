@@ -131,6 +131,9 @@
   ""
   (with-temp-buffer
     (insert (ob:get 'source entry))
+    (goto-char (point-min))
+    (when (search-forward "/-->" nil t)
+      (kill-region (point-min) (point)))
     (let ((buff-src (current-buffer))
 	  (default-directory (format "%s/%s"
 				     default-directory
