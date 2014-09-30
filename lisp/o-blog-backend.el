@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-09-30 02:42:19
+;; Last changed: 2014-09-30 23:32:16
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -37,6 +37,7 @@
 		  (concat (file-name-directory
 			   (find-library-name "o-blog"))
 			  "../templates")))
+  (cache-dir "../_cache")
   articles
   pages
   snippets
