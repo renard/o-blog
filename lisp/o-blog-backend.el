@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-09-30 23:32:16
+;; Last changed: 2014-10-01 00:36:06
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -69,11 +69,19 @@ Some global variables are set:
 
 "
   (let ((type (%ob:get-type self)))
-    (funcall (ob:get-backend-function type :find-files) self)
-    (funcall (ob:get-backend-function type :parse-config) self)
-    (funcall (ob:get-backend-function type :parse-entries) self))
-  
-  (ob:compute-tags self)
+    (ob:profile
+     "Find files"
+     (funcall (ob:get-backend-function type :find-files) self))
+    (ob:profile
+     "Parse config"
+     (funcall (ob:get-backend-function type :parse-config) self))
+    (ob:profile
+     "Parse entries"
+     (funcall (ob:get-backend-function type :parse-entries) self)))
+
+  (ob:profile
+   "Compute tags"
+   (ob:compute-tags self))
 
   ;; Strange behavior here, SORT is supposed to modify list by side effect.
   ;; In fact only some articles are missing if 'ARTICLES is not set back
@@ -90,69 +98,93 @@ Some global variables are set:
 			 (%ob:get-type self) :convert-entry)))
 
     ;; Convert each entry to HTML format
-    (loop for type in '(snippets articles pages)
-	  do (loop for entry in (ob:get type BLOG)
-		   with id = 0
-		   do (progn
-			(when (eq type 'articles)
-			  (%ob:set entry 'id id)
-			  (setf id (1+ id)))
-			(unless (ob:get 'html entry)
-			  (funcall convert-entry BLOG entry)
-			  (with-temp-buffer
-			    (insert (format "%S" entry))
-			    (ob:write-file (ob:get 'cache-file entry)))))))
+    (ob:profile
+     "Convert entries to HTML"
+     (loop for type in '(snippets articles pages)
+	   do (loop for entry in (ob:get type BLOG)
+		    with id = 0
+		    do (progn
+			 (when (eq type 'articles)
+			   (%ob:set entry 'id id)
+			   (setf id (1+ id)))
+			 (unless (ob:get 'html entry)
+			   (funcall convert-entry BLOG entry)
+			   (with-temp-buffer
+			     (insert (format "%S" entry))
+			     (ob:write-file (ob:get 'cache-file entry))))))))
 
     ;; Publish both articles static pages
-    (loop for type in '(articles pages)
-	  do (loop for POST in (ob:get type BLOG)
-		   do (ob:entry:publish POST)))
+    (ob:profile
+     "Publish articles and pages"
+     (loop for type in '(articles pages)
+	   do (loop for POST in (ob:get type BLOG)
+		    do (ob:entry:publish POST))))
 
 
-    (ob:tag:publish TAGS BLOG)
-    (ob:publish-articles-json BLOG)
+    (ob:profile
+     "Publish tags"
+     (ob:tag:publish TAGS BLOG))
+
+    (ob:profile
+     "Publish json"
+     (ob:publish-articles-json BLOG))
     
-    (let ((BREADCRUMB "Archives"))
-      (let ((FILE "archives.html"))
-	(ob:eval-template-to-file "blog_archives.html"
-				  (format "%s/%s"
-					  (ob:get 'publish-dir BLOG)
-					  FILE))))
-    
-    (ob:eval-template-to-file "blog_rss.html"
-			      (format "%s/index.xml"
-				      (ob:get 'publish-dir BLOG)))
+    (ob:profile
+     "Publish archives"
+     (let ((BREADCRUMB "Archives"))
+       (let ((FILE "archives.html"))
+	 (ob:eval-template-to-file "blog_archives.html"
+				   (format "%s/%s"
+					   (ob:get 'publish-dir BLOG)
+					   FILE)))))
 
-    (ob:eval-template-to-file "blog_sitemap.html"
-			      (format "%s/sitemap.xml"
-				      (ob:get 'publish-dir BLOG)))
+    (ob:profile
+     "Publish RSS"
+     (ob:eval-template-to-file "blog_rss.html"
+			       (format "%s/index.xml"
+				       (ob:get 'publish-dir BLOG))))
 
-    (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
-	  with PATH-TO-ROOT = ".."
-	  do
-	  (loop for YEAR in (ob:get-posts
-			     (lambda (x)
-			       (equal CATEGORY (ob:get 'category x)))
-			     nil nil 'year)
-		with PATH-TO-ROOT = "../.."
-		do
-		(loop for MONTH in (ob:get-posts
-				    (lambda (x)
-				      (and
-				       (equal CATEGORY (ob:get 'category x))
-				       (= YEAR (ob:get 'year x))))
-				    nil nil 'month)
-		      with PATH-TO-ROOT = "../../.."
-		      do (ob-process-index "blog_index_month.html" CATEGORY YEAR MONTH))
-		and do (ob-process-index "blog_index_year.html" CATEGORY YEAR))
-	  and do (unless (equal "." CATEGORY)
-		   (ob:eval-template-to-file "blog_rss.html"
-					     (format "%s/%s/index.xml"
-						     (ob:get 'publish-dir BLOG)
-						     (ob:get 'safe CATEGORY)))
-		   (ob-process-index "blog_index_category.html" CATEGORY)))
+    (ob:profile
+     "Publish Sitemap"
+     (ob:eval-template-to-file "blog_sitemap.html"
+			       (format "%s/sitemap.xml"
+				       (ob:get 'publish-dir BLOG))))
+
+    (ob:profile
+     "Publish Category / years / month"
+
+     (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	   with PATH-TO-ROOT = ".."
+	   do
+	   (loop for YEAR in (ob:get-posts
+			      (lambda (x)
+				(equal CATEGORY (ob:get 'category x)))
+			      nil nil 'year)
+		 with PATH-TO-ROOT = "../.."
+		 do
+		 (loop for MONTH in (ob:get-posts
+				     (lambda (x)
+				       (and
+					(equal CATEGORY (ob:get 'category x))
+					(= YEAR (ob:get 'year x))))
+				     nil nil 'month)
+		       with PATH-TO-ROOT = "../../.."
+		       do (ob-process-index "blog_index_month.html" CATEGORY YEAR MONTH))
+		 and do (ob-process-index "blog_index_year.html" CATEGORY YEAR))
+	   and do (unless (equal "." CATEGORY)
+		    (ob:eval-template-to-file "blog_rss.html"
+					      (format "%s/%s/index.xml"
+						      (ob:get 'publish-dir BLOG)
+						      (ob:get 'safe CATEGORY)))
+		    (ob-process-index "blog_index_category.html" CATEGORY))))
     )
-  (ob:publish-style self)
+  
+
+
+    (ob:profile
+     "Publish style"
+     (ob:publish-style self))
+    (message "o-blog publication done")
   self)
 
 (defun ob-process-index (template &optional category year month)

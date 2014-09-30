@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2014-07-13 22:11:44
+;; Last changed: 2014-10-01 00:36:39
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -80,7 +80,8 @@ current buffer."
       (unless (featurep lib)
 	(require lib)))
 
-    (ob:publish (funcall classfct :config-file file))))
+    (ob:profile "Publish blog"
+		(ob:publish (funcall classfct :config-file file)))))
 
 (defun o-blog-publish-async-processes-sentinel (proc change)
   "Sentinel in charge of cleaning `org-publish-blog-async' on success."
