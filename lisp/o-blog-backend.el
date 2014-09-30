@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-09-23 16:59:33
+;; Last changed: 2014-09-30 02:42:19
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -73,10 +73,16 @@ Some global variables are set:
     (funcall (ob:get-backend-function type :parse-entries) self))
   
   (ob:compute-tags self)
-  
+
+  ;; Strange behavior here, SORT is supposed to modify list by side effect.
+  ;; In fact only some articles are missing if 'ARTICLES is not set back
+  ;; with the sorted list.
+  (%ob:set self 'articles (sort (ob:get 'articles self)
+				(ob:get 'posts-sorter self)))
+
   (let* ((BLOG self)
 	 (PAGES (ob:get 'pages BLOG))
-	 (POSTS (sort (ob:get 'articles BLOG) (ob:get 'posts-sorter BLOG)))
+	 (POSTS (ob:get 'articles BLOG))
 	 (ALL-POSTS POSTS)
 	 (TAGS  (ob:get 'tags BLOG))
 	 (convert-entry (ob:get-backend-function
