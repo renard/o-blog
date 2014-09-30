@@ -181,31 +181,31 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 
 
 (defun ob:publish-articles-json (blog)
-    ;; Write articles JSON
-    (with-temp-file
-	(format "%s/%s" (ob:get 'publish-dir blog) "articles.js")
-      (insert "{\"articles\":{ ")
+  ;; Write articles JSON
+  (with-temp-buffer
+    (insert "{\"articles\":{ ")
       
-      (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
-	    do (progn
-		 (insert (format "\"%s\":[ " (ob:get 'safe CATEGORY)))
-		 (loop for article in
-		       (ob:get-posts (lambda (x)
-		  		       (equal CATEGORY
-					      (ob:get 'category x))))
-		       do (insert
-		  	   (format
-		  	    "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
-			    (ob:get 'title article)
-		  	    (ob:get 'htmlfile article)
-			    (or (ob:get 'excerpt article) "")
-			    )))
-		 ;; remove last comma
-		 (delete-char -1)
-		 (insert "],")))
-      ;; remove last comma
-      (delete-char -1)
-      (insert "}}")))
+    (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+	  do (progn
+	       (insert (format "\"%s\":[ " (ob:get 'safe CATEGORY)))
+	       (loop for article in
+		     (ob:get-posts (lambda (x)
+				     (equal CATEGORY
+					    (ob:get 'category x))))
+		     do (insert
+			 (format
+			  "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
+			  (ob:get 'title article)
+			  (ob:get 'htmlfile article)
+			  (or (ob:get 'excerpt article) "")
+			  )))
+	       ;; remove last comma
+	       (delete-char -1)
+	       (insert "],")))
+    ;; remove last comma
+    (delete-char -1)
+    (insert "}}")
+    (ob:write-file (format "%s/%s" (ob:get 'publish-dir blog) "articles.js"))))
 
 
 
