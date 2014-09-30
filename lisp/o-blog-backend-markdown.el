@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-09-19 18:45:57
+;; Last changed: 2014-09-30 23:47:15
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -41,65 +41,90 @@
 	  collect (make-ob:tag td))))
 
 
-(defun ob:markdown:parse-entries (self)
-  (loop for f in (ob:get 'source-files self)
-	do (with-temp-buffer
-	     (insert-file-contents f)
-	     (let* ((headers (ob:markdown:get-headers))
-		    (type (intern (plist-get headers 'type)))
-		    (types (intern (format "%ss" type)))
-		    (obj (funcall (intern (format "make-ob:%s" type))
-			  :file f
-			  :source (buffer-substring-no-properties
-				   (point-min) (point-max))))
-		    (obj-list (ob:get types self)))
+(defun ob:markdown:parse-file-as-entry (file)
+  "Try to load FILE as a blog entry."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (let* ((headers (ob:markdown:get-headers))
+	   (type (intern (plist-get headers 'type)))
+	   (obj (funcall (intern (format "make-ob:%s" type))
+			 :file file
+			 :source-file file
+			 :source (buffer-substring-no-properties
+				  (point-min) (point-max)))))
 
-	       (when (ob:slot-exists-p obj 'timestamp)
-		 (%ob:set obj 'timestamp
-			  (condition-case nil
-			      (apply #'encode-time
-				     (map 'list #'(lambda(x) (or x 0))
-					  (parse-time-string
-					   (plist-get headers 'timestamp))))
-			    (nth 5 (file-attributes f))))
-		 (ob:entry:compute-dates obj))
-	       
-	       (when (ob:slot-exists-p obj 'tags)
-		 (%ob:set obj 'tags
-			  (ob:markdown:parse-tags (plist-get headers 'tags))))
+      ;; Compute timestamp
+      (when (ob:slot-exists-p obj 'timestamp)
+	(%ob:set obj 'timestamp
+		 (condition-case nil
+		     (apply #'encode-time
+			    (map 'list #'(lambda(x) (or x 0))
+				 (parse-time-string
+				  (plist-get headers 'timestamp))))
+		   (nth 5 (file-attributes file))))
+	(ob:entry:compute-dates obj))
+      
+      ;; compute tags
+      (when (ob:slot-exists-p obj 'tags)
+	(%ob:set obj 'tags
+		 (ob:markdown:parse-tags (plist-get headers 'tags))))
 
-	       (when (ob:slot-exists-p obj 'category)
-		 (%ob:set obj 'category
-			  (make-ob:category
-			   (plist-get headers 'category))))
+      ;; compute category
+      (when (ob:slot-exists-p obj 'category)
+	(%ob:set obj 'category
+		 (make-ob:category
+		  (plist-get headers 'category))))
 
-	       ;; Add rest of header parameters to object
-	       (loop for header in headers by #'cddr
-		     when (and
-			   (ob:slot-exists-p obj header)
-			   (not (member header '(tags timestamp category))))
-		     do (%ob:set
-			 obj header (plist-get headers header)))
+      ;; Add rest of header parameters to object
+      (loop for header in headers by #'cddr
+	    when (and
+		  (ob:slot-exists-p obj header)
+		  (not (member header '(tags timestamp category))))
+	    do (%ob:set
+		obj header (plist-get headers header)))
 
-	       (when (eq type 'page)
-		 (unless (ob:get 'page obj)
-		   (%ob:set obj 'page
-			    (ob:sanitize-string (ob:get 'title obj)))))
-	      
-	       (ob:entry:set-path obj)
-	       (%ob:set obj 'source-file f)
-	       
-	       (let ((default-directory
-		       (format "%s/%s" default-directory
-			       (or
-				(file-name-directory (ob:get 'source-file obj))))))
-		 (%ob:set obj 'files-to-copy
-			  (ob:markdown:get-images)))
+      (when (eq type 'page)
+	(unless (ob:get 'page obj)
+	  (%ob:set obj 'page
+		   (ob:sanitize-string (ob:get 'title obj)))))
+
+      ;; Compute object paths
+      (ob:entry:set-path obj)
+
+      ;; Find extra files to copy
+      (let ((default-directory
+	      (format "%s/%s" default-directory
+		      (or
+		       (file-name-directory (ob:get 'source-file obj))))))
+	(%ob:set obj 'files-to-copy
+		 (ob:markdown:get-images)))
+
+      obj)))
 
 
-	       (%ob:set self types (append obj-list (list obj)))))))
+(defun ob:markdown:parse-entries (backend)
+  (loop for f in (ob:get 'source-files backend)
+	do
+	(let ((cache-file (format "%s/%s.cache"
+				  (ob:get 'cache-dir backend)
+				  (file-name-sans-extension f))))
 
 
+	  (let* ((entry
+		  (if (and (file-exists-p cache-file)
+			   (time-less-p (nth 5 (file-attributes f))
+					(nth 5 (file-attributes cache-file))))
+		      (with-temp-buffer
+			(message "CACHE: %s" f)
+			(insert-file-contents cache-file)
+			(car (read-from-string (buffer-string))))
+		    (ob:markdown:parse-file-as-entry f)))
+		   (class (%ob:get-type entry))
+		   (class-type (intern (format "%ss" (substring-no-properties
+						      (symbol-name class) 3))))
+		   (obj-list (ob:get class-type backend)))
+	      (%ob:set entry 'cache-file cache-file)
+	      (%ob:set backend class-type (append obj-list (list entry)))))))
 
 
 (defun ob:markdown:convert-entry (self entry)
