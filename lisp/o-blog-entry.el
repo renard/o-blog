@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-10-01 00:00:07
+;; Last changed: 2014-10-01 01:49:48
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -83,6 +83,7 @@ Slots are:
   month
   day
   category
+  image
   (template "blog_post.html"))
 
 

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-10-01 01:37:51
+;; Last changed: 2014-10-01 02:12:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -92,12 +92,14 @@
       (ob:entry:set-path obj)
 
       ;; Find extra files to copy
-      (let ((default-directory
-	      (format "%s/%s" default-directory
-		      (or
-		       (file-name-directory (ob:get 'source-file obj))))))
-	(%ob:set obj 'files-to-copy
-		 (ob:markdown:get-images)))
+      (let* ((default-directory
+	       (format "%s/%s" default-directory
+		       (or
+			(file-name-directory (ob:get 'source-file obj)))))
+	     (images (ob:markdown:get-images)))
+	(when (ob:slot-exists-p obj 'image)
+	  (setq images (append images (list (ob:get 'image obj)))))
+	(%ob:set obj 'files-to-copy images))
 
       obj)))
 
