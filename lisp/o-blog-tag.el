@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-02-09
-;; Last changed: 2014-07-13 23:34:13
+;; Last changed: 2014-10-07 00:32:24
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -15,6 +15,7 @@
 
 ;;; Code:
 
+(require 'cl)
 
 (cl-defstruct
     (ob:category

@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-10-01 01:49:48
+;; Last changed: 2014-10-07 00:31:41
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -17,10 +17,9 @@
 ;;; Code:
 
 
-(eval-when-compile
-  (require 'html2text)
-  (require 'sgml-mode)
-  (require 'cl))
+(require 'html2text)
+(require 'sgml-mode)
+(require 'cl)
 
 (cl-defstruct
     (ob:entry)

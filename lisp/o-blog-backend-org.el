@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-07-21 11:55:21
+;; Last changed: 2014-10-07 00:31:23
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -16,12 +16,11 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl)
-  (require 'o-blog-backend)
-  (require 'ox)
-  (require 'org-archive)
-  (require 'org-table))
+(require 'cl)
+(require 'o-blog-backend)
+(require 'ox)
+(require 'org-archive)
+(require 'org-table)
 
 
 

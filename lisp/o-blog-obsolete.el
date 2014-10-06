@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-03-30
-;; Last changed: 2014-07-08 23:40:28
+;; Last changed: 2014-10-07 00:31:58
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -17,8 +17,7 @@
 ;;; Code:
 
 
-(eval-when-compile
-  (require 'cl))
+(require 'cl)
 
 (defcustom ob:obsolete-warn nil
   "Display warning message about obsolete functions. Can be a

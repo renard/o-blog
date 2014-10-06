@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2014-10-01 00:36:39
+;; Last changed: 2014-10-07 00:33:06
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -15,15 +15,14 @@
 
 
 ;;; Code:
-(eval-when-compile
-  (require 'cl)
-  (require 'o-blog-utils)
-  (require 'o-blog-tag)
-  (require 'o-blog-entry)
-  (require 'o-blog-i18n)
-  (require 'o-blog-backend)
-  (require 'o-blog-framework)
-  (require 'o-blog-obsolete))
+(require 'cl)
+(require 'o-blog-utils)
+(require 'o-blog-tag)
+(require 'o-blog-entry)
+(require 'o-blog-i18n)
+(require 'o-blog-backend)
+(require 'o-blog-framework)
+(require 'o-blog-obsolete)
 
 (defun o-blog-version()
   "return current o-blog version."
