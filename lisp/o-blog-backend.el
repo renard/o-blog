@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-10-07 00:31:31
+;; Last changed: 2014-10-10 20:19:55
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -222,7 +222,8 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
       
     (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
 	  do (progn
-	       (insert (format "\"%s\":[ " (ob:get 'safe CATEGORY)))
+	       (insert (format "%s:[ "
+			       (json-encode-string (ob:get 'display CATEGORY))))
 	       (loop for article in
 		     (ob:get-posts (lambda (x)
 				     (equal CATEGORY
@@ -232,7 +233,7 @@ If provided CATEGORY YEAR and MONTH are used to select articles."
 			  "{\"title\":%S,\"path\":%S,\"excerpt\":%S},"
 			  (ob:get 'title article)
 			  (ob:get 'htmlfile article)
-			  (or (ob:get 'excerpt article) "")
+			  (json-encode-string (or (ob:get 'excerpt article) ""))
 			  )))
 	       ;; remove last comma
 	       (delete-char -1)
