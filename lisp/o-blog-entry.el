@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-10-07 00:31:41
+;; Last changed: 2014-10-09 22:58:49
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -147,32 +147,39 @@ ELLIPSIS if defined.."
   (when (ob:slot-exists-p self 'excerpt)
     (with-temp-buffer
       (insert (ob:get 'html self))
-      (let ((words (or words 20))
-	    (ellipsis (or ellipsis "…"))
-	    (html2text-remove-tag-list
-	     (loop for tag in html-tag-alist
-		   collect (car tag))))
-	(html2text)
-	(goto-char (point-min))
-	;; remove all comments
-	(save-excursion
-	  (save-match-data
-	    (while (search-forward-regexp "<!--" nil t)
-	      (let ((start (- (point) 4)))
-		(save-match-data
-		  (search-forward-regexp "-->"))
-		(delete-region start (point))))))
-	(save-excursion
-	  (save-match-data
-	    (while (search-forward-regexp "\\(\\s-*\n\\s-*\\)" nil t)
-	      (delete-region (- (point) (length (match-string 0))) (point))
-	      (insert " "))))
-	(loop for x from 0 below words do (forward-word))
-	(%ob:set self 'excerpt
-		 (concat
-		  (buffer-substring-no-properties
-		   (point-min) (point))
-		  ellipsis))))))
+      (goto-char (point-min))
+      (if (search-forward "<!--excerpt-->" nil t)
+	  (let ((start (point)))
+	    (if (search-forward "<!--/excerpt-->" nil t)
+		(%ob:set self 'excerpt
+			 (buffer-substring-no-properties
+			  start (- (point) (length "<!--/excerpt-->"))))
+	      (error "excerpt not closed")))
+	(let ((words (or words 20))
+	      (ellipsis (or ellipsis "…"))
+	      (html2text-remove-tag-list
+	       (loop for tag in html-tag-alist
+		     collect (car tag))))
+	  (html2text)
+	  ;; remove all comments
+	  (save-excursion
+	    (save-match-data
+	      (while (search-forward-regexp "<!--" nil t)
+		(let ((start (- (point) 4)))
+		  (save-match-data
+		    (search-forward-regexp "-->"))
+		  (delete-region start (point))))))
+	  (save-excursion
+	    (save-match-data
+	      (while (search-forward-regexp "\\(\\s-*\n\\s-*\\)" nil t)
+		(delete-region (- (point) (length (match-string 0))) (point))
+		(insert " "))))
+	  (loop for x from 0 below words do (forward-word))
+	  (%ob:set self 'excerpt
+		   (concat
+		    (buffer-substring-no-properties
+		     (point-min) (point))
+		    ellipsis)))))))
 
 
 (defun ob:entry:publish (self &optional blog-obj)
