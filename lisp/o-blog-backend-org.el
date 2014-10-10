@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-10-07 00:31:23
+;; Last changed: 2014-10-10 20:55:53
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -99,6 +99,38 @@ headers and body."
 	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
 	collect (make-ob:tag td)))
 
+
+(defun ob:org:parse-entry-1 (entry)
+
+  (when (ob:slot-exists-p entry 'tags)
+    (%ob:set entry 'tags
+	     (ob:org:get-tags-list)))
+
+  (when (ob:slot-exists-p entry 'category)
+    (let ((cat (or (org-entry-get (point) "category")
+		   (car (last (org-get-outline-path))))))
+	(%ob:set entry
+		 'category
+		 (make-ob:category  cat))))
+
+  (when (ob:slot-exists-p entry 'template)
+    (let ((template (org-entry-get (point) "template")))
+      (when template
+	(%ob:set entry 'template template))))
+
+
+  (when (ob:slot-exists-p entry 'page)
+    (%ob:set entry 'page
+	     (file-name-sans-extension
+	      (org-entry-get (point) "page"))))
+    
+  (%ob:set
+   entry 'source
+   (ob:org:get-entry-text))
+  entry)
+
+
+
 (defun ob:org:parse-entry (self marker type)
   "Parse an org-mode entry at position defined by MARKER."
   (save-excursion
@@ -108,52 +140,41 @@ headers and body."
 				   (point-at-eol)
 				   t)
 	(let* ((type (or type 'article))
+	       (title (match-string-no-properties 4))
+	       (timestamp (apply 'encode-time
+				 (org-parse-time-string
+				  (or (org-entry-get (point) "CLOSED")
+				      (time-stamp-string
+				       "%:y-%02m-%02d %02H:%02M:%02S %u")))))
+	       
 	       (class (intern (format "make-ob:%s" type)))
-	       (entry (funcall class
-			       :file (ob:get 'config-file self))))
+	       
+	       (entry  (funcall class :file (ob:get 'config-file self))))
 
-	  (%ob:set
-	   entry 'title
-	   (match-string-no-properties 4))
-
+	  (%ob:set entry 'title title)
+	  
 	  (when (ob:slot-exists-p entry 'timestamp)
-	    (%ob:set
-	     entry 'timestamp
-	     (apply 'encode-time
-		    (org-parse-time-string
-		     (or (org-entry-get (point) "CLOSED")
-			 (time-stamp-string
-			  "%:y-%02m-%02d %02H:%02M:%02S %u")))))
+	    (%ob:set entry 'timestamp timestamp)
 	    (ob:entry:compute-dates entry))
-
-	  (when (ob:slot-exists-p entry 'tags)
-	    (%ob:set entry 'tags
-			    (ob:org:get-tags-list)))
-
-	  (when (ob:slot-exists-p entry 'category)
-	    (let ((cat (or (org-entry-get (point) "category")
-			   (car (last (org-get-outline-path))))))
-	    (%ob:set entry
-		     'category
-		     (make-ob:category  cat))))
-
-	  (when (ob:slot-exists-p entry 'template)
-	    (let ((template (org-entry-get (point) "template")))
-	      (when template
-		(%ob:set entry 'template template))))
-
-
-	  (when (ob:slot-exists-p entry 'page)
-	    (%ob:set entry 'page
-		     (file-name-sans-extension
-		      (org-entry-get (point) "page"))))
 
 	  (ob:entry:set-path entry)
 
-	  (%ob:set
-	   entry 'source
-	   (ob:org:get-entry-text))
+	  (when (ob:get 'htmlfile entry)
+	    (%ob:set entry 'cache-file
+		     (format "%s/%s.cache"
+			     (ob:get 'cache-dir self)
+			     (file-name-sans-extension (ob:get 'htmlfile entry)))))
 
+	  (if (and (ob:get 'cache-file entry)
+		   (file-exists-p (ob:get 'cache-file entry))
+		   (time-less-p timestamp
+				(nth 5 (file-attributes (ob:get 'cache-file entry)))))
+	      (setq entry
+		    (with-temp-buffer
+		      (insert-file-contents (ob:get 'cache-file entry))
+		      (car (read-from-string (buffer-string)))))
+	    (setq entry (ob:org:parse-entry-1 entry)))
+	       
 	  entry)))))
 
 
