@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-10-10 20:19:55
+;; Last changed: 2014-10-10 20:51:17
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -108,9 +108,10 @@ Some global variables are set:
 			   (setf id (1+ id)))
 			 (unless (ob:get 'html entry)
 			   (funcall convert-entry BLOG entry)
-			   (with-temp-buffer
-			     (insert (format "%S" entry))
-			     (ob:write-file (ob:get 'cache-file entry))))))))
+			   (when (ob:get 'cache-file entry)
+			     (with-temp-buffer
+			       (insert (format "%S" entry))
+			       (ob:write-file (ob:get 'cache-file entry)))))))))
 
     ;; Publish both articles static pages
     (ob:profile
