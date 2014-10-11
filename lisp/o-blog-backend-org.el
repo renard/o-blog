@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-10-10 20:55:53
+;; Last changed: 2014-10-11 23:05:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -21,6 +21,7 @@
 (require 'ox)
 (require 'org-archive)
 (require 'org-table)
+(require 'time-stamp)
 
 
 
