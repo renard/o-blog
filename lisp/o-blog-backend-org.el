@@ -275,7 +275,10 @@ in current-buffer."
     (goto-char (point-min))
     (ob:org:fix-org)
     (ob:org:publish-linked-files self entry)
-    (ob:framework-expand)
+    ;; Expand org-like widgets
+    (ob:framework-expand "^#\\+\\(?:begin_\\)?\\([^ \n\t:]+\\):?\\([^\n>]+\\)?$"
+			 "^#\\+end_%s")
+    ;; Expand xml-like widgets
     (ob:framework-expand "<\\([^:][^/ \n\t>]+\\)\\([^>]*\\)?>" "</%s>")
 
     ;; exporting block with ditaa is kinda messy since it requires a real

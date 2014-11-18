@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-10-09 22:43:46
+;; Last changed: 2014-11-18 23:42:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -262,7 +262,7 @@
 	      ""))
    ))
 
-(defun ob:framework-expand (&optional re-start re-end prefix suffix comment object)
+(defun ob:framework-expand (re-start re-end &optional prefix suffix comment object)
   "Expand framework widgets using RE-START and RE-END to delimit notations,
 convert widget to their HTML notation. COMMENT is an escape
 string to prevent widget expansion.
@@ -277,8 +277,6 @@ OBJECT is the current post object.
 "
   (let ((prefix (or prefix "@@html:"))
 	(suffix (or suffix "@@"))
-	(re-start (or re-start "^#\\+\\(?:begin_\\)?\\([^ \n\t:]+\\):?\\([^\n>]+\\)?$"))
-	(re-end (or re-end "^#\\+end_%s"))
 	(items (loop for c in ob:framework-components
 		     collect (cons (ob:get 'name c) c)))
 	(comment (concat "\\s-" (or comment ","))))
