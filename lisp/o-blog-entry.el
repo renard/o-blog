@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-11-18 23:26:18
+;; Last changed: 2014-11-19 00:57:00
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -214,10 +214,11 @@ ELLIPSIS if defined.."
 			(file-name-directory (or (ob:get 'page self) "."))
 			".")))
   (%ob:set self 'file (concat
-		       (ob:sanitize-string
-			(or (file-name-nondirectory (or (ob:get 'page self) "."))
-			    (ob:get 'title self)))
-		       ".html"))
+  		       (ob:sanitize-string
+			(if (ob:get 'page self)
+			    (file-name-nondirectory (ob:get 'page self))
+			  (ob:get 'title self)))
+  		       ".html"))
   (%ob:set
    self 'htmlfile (if (string= "." (ob:get 'path self))
 		      (ob:get 'file self)
