@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-10-11 23:05:33
+;; Last changed: 2014-11-18 23:43:00
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -158,23 +158,24 @@ headers and body."
 	    (%ob:set entry 'timestamp timestamp)
 	    (ob:entry:compute-dates entry))
 
+	  
+	  (setq entry (ob:org:parse-entry-1 entry))
 	  (ob:entry:set-path entry)
-
+	  
 	  (when (ob:get 'htmlfile entry)
 	    (%ob:set entry 'cache-file
 		     (format "%s/%s.cache"
 			     (ob:get 'cache-dir self)
 			     (file-name-sans-extension (ob:get 'htmlfile entry)))))
 
-	  (if (and (ob:get 'cache-file entry)
+	  (when (and (ob:get 'cache-file entry)
 		   (file-exists-p (ob:get 'cache-file entry))
 		   (time-less-p timestamp
 				(nth 5 (file-attributes (ob:get 'cache-file entry)))))
 	      (setq entry
 		    (with-temp-buffer
 		      (insert-file-contents (ob:get 'cache-file entry))
-		      (car (read-from-string (buffer-string)))))
-	    (setq entry (ob:org:parse-entry-1 entry)))
+		      (car (read-from-string (buffer-string))))))
 	       
 	  entry)))))
 
