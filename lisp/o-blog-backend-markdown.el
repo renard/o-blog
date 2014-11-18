@@ -82,25 +82,26 @@
 	    do (%ob:set
 		obj header (plist-get headers header)))
 
-      (when (eq type 'page)
-	(unless (ob:get 'page obj)
-	  (%ob:set obj 'page
-		   (ob:sanitize-string (ob:get 'title obj)))))
+      (unless (ob:get 'skip obj)
+	(when (eq type 'page)
+	  (unless (ob:get 'page obj)
+	    (%ob:set obj 'page
+		     (ob:sanitize-string (ob:get 'title obj)))))
 
-      ;; Compute object paths
-      (ob:entry:set-path obj)
+	;; Compute object paths
+	(ob:entry:set-path obj)
 
-      ;; Find extra files to copy
-      (let* ((default-directory
-	       (format "%s/%s" default-directory
-		       (or
-			(file-name-directory (ob:get 'source-file obj)))))
-	     (images (ob:markdown:get-images)))
-	(when (ob:slot-exists-p obj 'image)
-	  (setq images (append images (list (ob:get 'image obj)))))
-	(%ob:set obj 'files-to-copy images))
-
-      obj)))
+	;; Find extra files to copy
+	(let* ((default-directory
+		 (format "%s/%s" default-directory
+			 (or
+			  (file-name-directory (ob:get 'source-file obj)))))
+	       (images (ob:markdown:get-images)))
+	  (when (ob:slot-exists-p obj 'image)
+	    (setq images (append images (list (ob:get 'image obj)))))
+	  (%ob:set obj 'files-to-copy images))
+	
+	obj))))
 
 
 (defun ob:markdown:parse-entries (backend)
