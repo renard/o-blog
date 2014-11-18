@@ -31,18 +31,27 @@
 	  <p><lisp>(ob:gettext :powered-by)</lisp> <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
 	</div>
       </div>
+      <div class="ob-script-container">
       <script type="text/javascript">
       	var path_to_root = "<lisp>(ob:path-to-root)</lisp>";
 	var ob_this_page = "<lisp>FILE</lisp>";
       </script>
-      <script src="<lisp>(ob:path-to-root)</lisp>/style/jquery-2.1.1.min.js"></script>
-      <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap.min.js"></script>
-      <script src="<lisp>(ob:path-to-root)</lisp>/style/o-blog-bootstrap.min.js"></script>
+      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/o-blog.min.js"></script>
+      <!-- <script src="<lisp>(ob:path-to-root)</lisp>/style/jquery-2.1.1.min.js"></script> -->
+      <!-- <script src="<lisp>(ob:path-to-root)</lisp>/style/jquery.equalizer.min.js"></script> -->
+      <!-- <script src="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/js/bootstrap.min.js"></script> -->
+      <!-- <script src="<lisp>(ob:path-to-root)</lisp>/style/o-blog-bootstrap.min.js"></script> -->
+      <!-- <script type="text/javascript"> -->
+      <!-- 	$(document).ready(function() { -->
+      <!--   $("head").append([ -->
+      <!-- 	'<link href="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/css/bootstrap.css" rel="stylesheet">', -->
+      <!-- 	'<link href="<lisp>(ob:path-to-root)</lisp>/style/font-awesome/css/font-awesome.min.css" rel="stylesheet">']) -->
+      <!-- 	}); -->
+      <!-- </script> -->
       <script type="text/javascript">
 	$(document).ready(function() {
-        $("head").append([
-	'<link href="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/css/bootstrap.css" rel="stylesheet">',
-	'<link href="<lisp>(ob:path-to-root)</lisp>/style/font-awesome/css/font-awesome.min.css" rel="stylesheet">'])
+	$("head").append([ 
+      	'<link href="<lisp>(ob:path-to-root)</lisp>/style/css/o-blog.min.css" rel="stylesheet">'])
 	});
       </script>
       <lisp>
