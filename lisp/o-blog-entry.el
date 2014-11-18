@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-10-10 20:43:41
+;; Last changed: 2014-11-18 23:26:18
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -53,6 +53,7 @@ Slots are:
 
 "
   id
+  skip
   title
   source
   source-file
