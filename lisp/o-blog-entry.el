@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-21
-;; Last changed: 2014-11-19 00:57:00
+;; Last changed: 2014-11-19 16:13:13
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -190,11 +190,19 @@ ELLIPSIS if defined.."
 		      (when (boundp 'blog) blog)))
 	(FILE (ob:get 'htmlfile self)))
     (when (ob:slot-exists-p self 'template)
+      ;; Publish article
       (with-temp-buffer
 	(ob:insert-template (ob:get 'template self) blog-obj)
 	(ob:write-file (format "%s/%s"
 			       (ob:get 'publish-dir BLOG)
 			       FILE)))
+      ;; Publish backward compatibility
+      (when (eq (%ob:get-type self) 'ob:article)
+      	(with-temp-buffer
+      	  (ob:insert-template "page_redirect_compat.html" blog-obj)
+      	  (ob:write-file (format "%s/%s.html"
+      				 (ob:get 'publish-dir BLOG)
+      				 (ob:get 'path self)))))
 
       (loop for file in (ob:get 'files-to-copy self)
 	    do (ob-do-copy (format "%s/%s"
