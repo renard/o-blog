@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-04-10
-;; Last changed: 2013-03-28 23:15:46
+;; Last changed: 2014-11-19 01:10:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -119,10 +119,10 @@ The translation items are used in following templates:
 
   - :posted-on blog_post: blog_post.html
   - :post-timestamp: blog_post.html
-  - :home: nav_links.html, nav_breadcrumb.html
-  - :tags: nav_links.html, page_footer.html
-  - :archives: nav_links.html, page_footer.html
-  - :rss: nav_links.html
+  - :home: nav_breadcrumb.html
+  - :tags: page_footer.html
+  - :archives: page_footer.html
+  - :rss: 
   - :about: page_footer.html
   - :links: page_footer.html
   - :powered-by: page_footer.html
