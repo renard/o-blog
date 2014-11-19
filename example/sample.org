@@ -1,6 +1,6 @@
 #+TITLE: o-blog
 #-DESCRIPTION: A stand-alone blogging system for Org-mode.
-#+DATE: 2014-11-18 23:38:04
+#+DATE: 2014-11-19 01:10:58
 
 #+STARTUP: logdone
 
@@ -374,8 +374,6 @@ month, and the entire archives.
 
 =nav_= prefixed templates are used to generate navigation snippets:
 
- - =nav_links.html=: Used to generate navigation menu used in both the
-   page header and footer.
  - =nav_tag-cloud.html=: Used to generate tag cloud on page bottom.
 
 *** Page templates
