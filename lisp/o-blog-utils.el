@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-10-07 00:32:34
+;; Last changed: 2014-11-19 16:40:30
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -261,7 +261,13 @@ string."
 
 
 
+(defun ob:file-name-directory-base (file)
+  "Return last directory component of FILE.
 
+Ex: \"/path/to/some/file.html\" -> \"some\"
+
+"
+  (nth 1 (reverse (split-string file "/"))))
 
 
 (defun ob:lesser (a b)
