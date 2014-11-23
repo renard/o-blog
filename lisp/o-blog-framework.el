@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-11-20 15:26:22
+;; Last changed: 2014-11-23 20:24:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -19,32 +19,51 @@
 (require 'cl)
 (require 'htmlize nil t)
 
+(defun ob:docstring-to-markdown (object &optional type)
+  "Convert OBJECT docstring to markdown representation. Return a
+list which contains the docstring and the function signature if
+OBJECT is a function.
 
-(defun ob:function-to-markdown(function)
-  "Convert FUNCTION docstring to markdown. Return a list which
-`car' is the function signature and `cadr' the markdown converted
-docstring."
-  (let* ((doc (documentation function t))
-	 (args (help-function-arglist function)))
-    (loop for arg in args
-	  do (setq
-	      doc
-	      ;; taken from help-do-arg-highlight
-	      (replace-regexp-in-string
-	       (concat "\\<"                   ; beginning of word
-		       "\\(?:[a-z-]*-\\)?"     ; for xxx-ARG
-		       "\\("
-		       (regexp-quote (format "%s" arg))
-		       "\\)"
-		       "\\(?:es\\|s\\|th\\)?"  ; for ARGth, ARGs
-		       "\\(?:-[a-z0-9-]+\\)?"  ; for ARG-xxx, ARG-n
-		       "\\(?:-[{([<`\"].*?\\)?"; for ARG-{x}, (x), <x>, [x], `x'
-		       "\\>")                  ; end of word
-	       ;;"`\\2`"
-	       (upcase (format "`%s`" arg))
-	       doc t t 1)))
-    (list (format "`%s`" (help-make-usage function args)) doc)))
-
+If an OBJECT TYPE helper is not provided, it will be guessed in
+that order: function, variable or structure (last resort guess)."
+  (let* ((type (or (when (member type '(function variable structure))
+		     type)
+		   (cond
+		    ((functionp object) 'function)
+		    ((boundp object) 'variable)
+		    (t 'structure))))
+	 (args (when (eq type 'function) (help-function-arglist object)))
+	 (docstring (cond
+		     ((eq type 'function) (documentation object t))
+		     ((eq type 'variable) (documentation-property
+					   object 'variable-documentation t))
+		     ((eq type 'structure) (documentation-property
+					    object 'structure-documentation t)))))
+    ;; Try to beautify CAPS variables within markdown literal.
+    (when (eq type 'function)
+      (loop for arg in args
+	    do (setq
+		docstring
+		;; taken from help-do-arg-highlight
+		(replace-regexp-in-string
+		 (concat "\\<"                   ; beginning of word
+			 "\\(?:[a-z-]*-\\)?"     ; for xxx-ARG
+			 "\\("
+			 (regexp-quote (format "%s" arg))
+			 "\\)"
+			 "\\(?:es\\|s\\|th\\)?"  ; for ARGth, ARGs
+			 "\\(?:-[a-z0-9-]+\\)?"  ; for ARG-xxx, ARG-n
+			 "\\(?:-[{([<`\"].*?\\)?"; for ARG-{x}, (x), <x>, [x], `x'
+			 "\\>")                  ; end of word
+		 ;;"`\\2`"
+		 (upcase (format "`%s`" arg))
+		 docstring t t 1))))
+    (list docstring
+	  (when (eq type 'function)
+	    (format "%s" (help-make-usage object args))))))
+    
+		      
+    
 
 
 (cl-defstruct (ob:framework-component)
@@ -574,13 +593,13 @@ git clone \"git://github.com/renard/o-blog.git\"
     :start '(progn
 	      (when (boundp 'name)
 		(let* ((name (intern name))
-		       (fn-markdown (ob:function-to-markdown name)))
+		       (markdown (ob:docstring-to-markdown
+				     name (when (boundp 'obj-type) (intern obj-type)))))
 		  (with-temp-buffer
 		    (insert
 		     (format "
 <panel alt=\"default\">
-<panel-heading title=\"%s\">
-</panel-heading>
+<div class=\"panel-heading\"><h3 class=\"panel-title\">`%s`</h3></div>
 <panel-body>
 
 %s
@@ -588,8 +607,8 @@ git clone \"git://github.com/renard/o-blog.git\"
 </panel-body>
 </panel>
 "
-			     (nth 0 fn-markdown)
-			     (nth 1 fn-markdown)))
+			     (or (nth 1 markdown) name)
+			     (nth 0 markdown)))
 		    (ob:framework-expand
 		     "<\\([a-z][a-z0-9-]*\\)\\([^>]+\\)?>"
 		     "</%s>" "" "" "#")
@@ -610,9 +629,8 @@ git clone \"git://github.com/renard/o-blog.git\"
 		  (with-temp-buffer
 		    (insert
 		     (format "
-<div class=\"panel\">
-<panel-heading title=\"%s\">
-</panel-heading>
+<div class=\"panel panel-default\">
+<div class=\"panel-heading\"><h3 class=\"panel-title\">`%s`</h3></div>
 <panel-body>
 
 %s
