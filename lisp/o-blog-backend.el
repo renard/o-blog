@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-04
-;; Last changed: 2014-10-10 20:51:17
+;; Last changed: 2014-11-23 20:40:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -19,7 +19,7 @@
 
 (require 'find-func)
 (require 'cl)
-
+(require 'json)
 
 (cl-defstruct
     (ob:backend)
