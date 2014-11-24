@@ -1,0 +1,26 @@
+{
+    "name" : "o-blog",
+    "title" : "o-blog",
+    "version" : "2.5",
+    "devDependencies": {
+	"less": "",
+
+	"jquery": "",
+	"font-awesome": "",
+	"bootstrap": "",
+	
+	
+        "grunt": "0.4.1",
+        "grunt-cli": "",
+	"grunt-curl": "",
+	"grunt-zip": "",
+	"grunt-git": "",
+	"grunt-contrib-copy": "",
+	"grunt-contrib-less": "",
+        "grunt-contrib-concat": "0.1.3",
+        "grunt-contrib-cssmin" : "0.6.1",
+        "grunt-contrib-watch" : "0.5.3",
+        "grunt-contrib-uglify" : "0.2.0",
+	"httpserver": ""
+    }
+}
