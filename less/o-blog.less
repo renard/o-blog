@@ -6,8 +6,12 @@
 /*     @sansFontFamily: "Andika", "Helvetica Neue", Helvetica, Arial, sans-serif; */
 
 /* } */
-@import "../bootstrap/less/bootstrap.less";
+/* @import "../bootstrap/less/bootstrap.less"; */
 /* @import "../bootstrap/less/responsive.less"; */
+
+/* Base definition for all bootstrap; */
+@import 'variables.less';
+@import 'mixins.less';
 
 @import "o-blog-default.less";
 
@@ -402,3 +406,6 @@ html {
 	line-height: 15px;
     }
 }
+
+
+@import 'bootstrap.less';
