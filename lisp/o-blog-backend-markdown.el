@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-11-18 22:37:27
+;; Last changed: 2014-11-23 20:28:21
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -25,8 +25,8 @@
 (cl-defstruct (ob:backend:markdown
 	       (:include ob:backend)))
 
-(defun ob:markdown:find-files (self)
-  (%ob:set self 'source-files (ob:find-files self "txt")))
+(defun ob:markdown:find-files (backend)
+  (%ob:set backend 'source-files (ob:find-files backend "txt")))
 
 
 
@@ -129,7 +129,7 @@
 	      (%ob:set backend class-type (append obj-list (list entry)))))))
 
 
-(defun ob:markdown:convert-entry (self entry)
+(defun ob:markdown:convert-entry (backend entry)
   ""
   (with-temp-buffer
     (insert (ob:get 'source entry))
