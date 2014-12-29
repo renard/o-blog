@@ -1,0 +1,7 @@
+#!/bin/sh
+
+SRC_FILE="~/.emacs.d/el-get/o-blog/example/sample.org"
+
+. "$(dirname $0)/config"
+
+$EMACS $EMACS_OPTS --eval "$SCRIPT"

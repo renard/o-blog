@@ -1,0 +1,7 @@
+#!/bin/sh
+
+SRC_FILE="~/.emacs.d/el-get/o-blog/site/src/index.txt"
+
+. "$(dirname $0)/config"
+
+$EMACS $EMACS_OPTS -l ~/.emacs.d/el-get/markdown-mode/markdown-mode.el --eval "$SCRIPT"

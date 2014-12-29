@@ -1,0 +1,16 @@
+#!/bin/sh
+
+
+case $(uname) in
+    Darwin)
+	EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+	;;
+    *)
+	EMACS=$(which emacs)
+	;;
+esac
+EXTRA_FILES="-l ~/.emacs.d/el-get/htmlize/htmlize.el"
+O_BLOG_EL="-L ~/.emacs.d/el-get/o-blog/lisp -l ~/.emacs.d/el-get/o-blog/lisp/o-blog.el"
+#INIT_EL="-l ~/.emacs.d/init.el"
+EMACS_OPTS="-q --batch $EXTRA_FILES $O_BLOG_EL $INIT_EL"
+SCRIPT="(o-blog-publish \"${SRC_FILE}\" )"
