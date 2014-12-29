@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-11-19 16:40:30
+;; Last changed: 2014-12-29 13:56:03
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -17,6 +17,7 @@
 ;;; Code:
 
 (require 'cl)
+(require 'cl-macs)
 
 (defvar *ob:backends* nil
   "Plist of functions to process article with o-blog
