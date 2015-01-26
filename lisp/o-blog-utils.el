@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2014-12-29 13:56:03
+;; Last changed: 2015-01-26 02:31:15
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -358,6 +358,31 @@ fragment (tag: 'a attribute 'href)"
 	      nconc (ob:get-html-links child wanted-tag wanted-attribute)))
        (t nil)))))
 
+
+
+(defun ob:unhtmlize (string)
+  "Return an unhtmlized version of STRING"
+  (with-temp-buffer
+    (insert string)
+    (let ((html2text-remove-tag-list
+	  (loop for tag in html-tag-alist
+		collect (car tag))))
+      (html2text)
+       ;; remove all comments
+       (save-excursion
+	 (save-match-data
+	   (while (search-forward-regexp "<!--" nil t)
+	     (let ((start (- (point) 4)))
+	       (save-match-data
+		 (search-forward-regexp "-->"))
+	       (delete-region start (point))))))
+       ;; remove line breaks
+       (save-excursion
+	 (save-match-data
+	   (while (search-forward-regexp "\\(\\s-*\n\\s-*\\)" nil t)
+	     (delete-region (- (point) (length (match-string 0))) (point))
+	     (insert " "))))
+       (buffer-string)))))
 
 
 (provide 'o-blog-utils)
