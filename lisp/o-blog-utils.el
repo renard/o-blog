@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2015-01-26 02:31:15
+;; Last changed: 2015-01-28 23:04:43
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -382,7 +382,7 @@ fragment (tag: 'a attribute 'href)"
 	   (while (search-forward-regexp "\\(\\s-*\n\\s-*\\)" nil t)
 	     (delete-region (- (point) (length (match-string 0))) (point))
 	     (insert " "))))
-       (buffer-string)))))
+       (buffer-string))))
 
 
 (provide 'o-blog-utils)
