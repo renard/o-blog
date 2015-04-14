@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-06-05
-;; Last changed: 2014-11-23 20:24:03
+;; Last changed: 2015-04-14 16:47:33
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -560,7 +560,7 @@ git clone \"git://github.com/renard/o-blog.git\"
 				      (point-min) (point-max))))))
 
 	      (when end-point
-		(delete-region cur-point (- end-point (length (format "</%s>" tag)))))
+		(delete-region cur-point end-point))
 	      (format "<div class=\"src %s\">%s</div>" (or mode "") html)))
    (make-ob:framework-component :name 'src :backends '(org) :alias 'source)
 
