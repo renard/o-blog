@@ -1,7 +1,7 @@
 {
     "name" : "o-blog",
     "title" : "o-blog",
-    "version" : "2.5",
+    "version" : "2.5.0",
     "devDependencies": {
 	"less": "",
 
