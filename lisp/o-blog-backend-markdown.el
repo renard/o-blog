@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-08-22
-;; Last changed: 2014-11-23 20:28:21
+;; Last changed: 2015-04-14 18:24:45
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -95,12 +95,12 @@
 	(let* ((default-directory
 		 (format "%s/%s" default-directory
 			 (or
-			  (file-name-directory (ob:get 'source-file obj)))))
+			  (file-name-directory (ob:get 'source-file obj))
+			  "")))
 	       (images (ob:markdown:get-images)))
 	  (when (ob:slot-exists-p obj 'image)
 	    (setq images (append images (list (ob:get 'image obj)))))
 	  (%ob:set obj 'files-to-copy images))
-	
 	obj))))
 
 
