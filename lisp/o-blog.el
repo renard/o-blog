@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2012-12-03
-;; Last changed: 2014-12-30 23:38:18
+;; Last changed: 2015-04-09 19:14:36
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -71,6 +71,7 @@ current buffer."
 				 (file-exists-p (format "%s/o-blog.conf" dir)))
 		       do (setf dir (file-name-directory (directory-file-name dir)))))
 	     dir))
+	 (executing-kbd-macro t)
 	 (classfct (intern (format "make-ob:backend:%s" backend))))
 
     (when (member backend '(markdown))
