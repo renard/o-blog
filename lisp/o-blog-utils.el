@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2015-01-28 23:04:43
+;; Last changed: 2015-04-13 10:27:35
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -213,6 +213,18 @@ path-to-root slot."
     (when (>= id 0)
       (nth id POSTS))))
 
+(defun ob:get-post-or-blog-title ()
+  "Return current post or blog title."
+  (if (boundp 'POST)
+      (ob:post-title POST)
+    (ob:blog-title BLOG)))
+
+(defun ob:get-page-url()
+  "Return the current page's URL"
+  (format "%s/%s" (ob:get 'url BLOG)
+	  (if (boundp 'POST)
+	      (ob:get 'htmlfile POST)
+	    FILE)))
 
 (defun ob:get-name (object)
   "Return OBJECT class name."
