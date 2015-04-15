@@ -1,11 +1,7 @@
-<ul class="year <lisp>YEAR</lisp>">
-  <lisp>
-    (loop for MONTH in (ob:get-posts nil nil nil 'month)
-    do (progn
-    (insert (format "<li><a href=\"%s/%s/%.4d/%.2d/index.html\">%.2d</a>" (ob:path-to-root) (ob:get 'safe CATEGORY) YEAR MONTH MONTH))
-      (let ((POSTS (ob:get-posts (lambda(x) (= MONTH (ob:post-month x))))))
-      (ob:insert-template "index_month.html")
-      )
-      (insert "</li>")))
-  </lisp>
-</ul>
+<lisp>
+  (loop for MONTH in (ob:get-posts nil nil nil 'month)
+  do (let ((POSTS (ob:get-posts (lambda(x) (= MONTH (ob:post-month x))))))
+  (insert (format "<div id=\"%s-%s-%s\">" (ob:get 'safe CATEGORY) YEAR MONTH))
+    (ob:insert-template "index_month.html")
+    (insert "</div>")))
+</lisp>

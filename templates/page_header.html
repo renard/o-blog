@@ -2,42 +2,18 @@
 <html lang="<lisp>(ob:blog-language BLOG)</lisp>">
   <head>
     <meta charset="utf-8"/>
-    <title><lisp>(if (boundp 'POST) (ob:post-title POST) (ob:blog-title BLOG))</lisp></title>
+    <title><lisp>(ob:get-post-or-blog-title)</lisp></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="generator" content="<lisp>(o-blog-version)</lisp>"/>
+    <link rel="icon" type="image/png" href="<lisp>(ob:path-to-root)</lisp>/style/img/favicon.png" />
+    <script src="<lisp>(ob:path-to-root)</lisp>/style/js/sidjs.min.js" async></script>
+    <script>
+      <lisp>(ob:insert-file (format "%s/js/runif.min.js" (ob:get 'style-dir BLOG)))</lisp>
+      <lisp>(ob:insert-file (format "%s/js/o-blog-init.min.js" (ob:get 'style-dir BLOG)))</lisp>
+    </script>
   </head>
   <body>
     <div id="spinner" style="width:100%;height:100%;position:fixed;top:0;bottom:0;left:0;right:0;margin:auto;z-index:999998;background-color:rgba(0,0,0,0.5);">
       <div id="ob-spinner" style="width:100px;height:100px;position:fixed;top:0;bottom:0;left:0;right:0;margin:auto;z-index:999999;background-color:rgba(127,127,127,0.5);"></div>
-      <script src="<lisp>(ob:path-to-root)</lisp>/style/js/spin.min.js"></script>
-      <script>
-	var ob_spinner = new Spinner({color: '#bbb'}).spin(document.getElementById('ob-spinner'));
-      </script>
     </div>
-
-
-    <div class="ob-navbar-container">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="navbar-header">
-	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".ob-navbar">
-	  <span class="sr-only">Toggle navigation</span>
-	  <span class="icon-bar"></span>
-	  <span class="icon-bar"></span>
-	  <span class="icon-bar"></span>
-	</button>
-      </div>
-      <a class="navbar-brand" href="<lisp>(ob:path-to-root)</lisp>/index.html"><lisp>(ob:blog-title BLOG)</lisp></a>
-      <div class="collapse navbar-collapse ob-navbar">
-	<lisp>(ob:post-content-html (ob:get-snippet "Navigation"))</lisp>
-	<lisp>(ob:insert-template "plugin_share.html")</lisp>
-      </div>
-    </nav>
-
-    <div class="subnav subnav-fixed visible-desktop">
-      <div class="container">
-	<lisp>(ob:insert-template "nav_breadcrumb.html")</lisp>
-      </div>
-    </div>
-    </div>
-    
     <div id="page" class="container">

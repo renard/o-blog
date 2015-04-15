@@ -4,8 +4,9 @@
 (cond
  ;; Static page or post
  ((boundp 'POST)
-  (let ((path (when (ob:get 'path POST)
-		(cdr (split-string (ob:get 'path POST) "/")))))
+(let ((path (when (ob:get 'path POST)
+(butlast
+		(cdr (split-string (ob:get 'path POST) "/"))))))
 
     (loop for p in (if (ob:greater (length path) 1) (cons (ob:get 'category POST) path) path)
 	  with prev = (ob:path-to-root)

@@ -1,28 +1,18 @@
-<div class="ob-share pull-right">
-  <ul>
+<div class="ob-share">
+  <div class="title">If you like this article you may want to share it</div>
+  <div class="social-container">
     <lisp>
       (when (ob:get 'twitter-account BLOG)
-      (insert "<li>")
-	(ob:insert-template "plugin_twitter_tweet.html")
-	(insert "</li>")
-      (when (ob:get 'twitter-follow BLOG)
-      (insert "<li>")
-	(ob:insert-template "plugin_twitter_follow.html")
-	(insert "</li>")))
+      (format "<a href=\"#\" data-type=\"twitter\" data-description=%S data-via=%S class=\"prettySocial fa fa-twitter\"></a>" (ob:get 'title POST) (ob:get 'twitter-account BLOG)))
     </lisp>
     <lisp>
       (when (ob:get 'google-plus BLOG)
-      (insert "<li>")
-	(ob:insert-template "plugin_google_plus.html")
-	(insert "</li>"))
+      (format "<a href=\"#\" data-type=\"googleplus\" data-description=%S  class=\"prettySocial fa fa-google-plus\"></a>" (ob:get 'title POST)))
     </lisp>
     <lisp>
       (when (ob:get 'share-linkedin BLOG)
-      (insert "<li>")
-	(ob:insert-template "plugin_share_linkedin.html")
-	(insert "</li>"))
+      (format "<a href=\"#\" data-type=\"linkedin\" data-title=%S data-description=%S class=\"prettySocial fa fa-linkedin\"></a>" (ob:get 'title POST) (ob:unhtmlize (ob:get 'excerpt POST))))
     </lisp>
-
-  </ul>
+  </div>
 </div>
 

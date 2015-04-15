@@ -1,11 +1,7 @@
-<ul class="all">
-  <lisp>
-    (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
-    do (progn
-    (insert (format "<li><a href=\"%s/%s/index.html\">%s</a>" (ob:path-to-root) (ob:get 'safe CATEGORY) (ob:get 'display CATEGORY)))
-      (let ((POSTS (ob:get-posts (lambda(x) (equal (ob:get 'display CATEGORY) (ob:get 'display (ob:post-category x)))))))
-      (ob:insert-template "index_category.html")
-      )
-      (insert "</li>")))
-  </lisp>
-</ul>
+<lisp>
+  (loop for CATEGORY in (ob:get-posts nil nil nil 'category)
+  do (let ((POSTS (ob:get-posts (lambda(x) (equal (ob:get 'display CATEGORY) (ob:get 'display (ob:post-category x)))))))
+  (insert (format "<div id=\"%s\">" (ob:get 'safe CATEGORY)))
+    (ob:insert-template "index_category.html")
+    (insert "</div>")))
+</lisp>

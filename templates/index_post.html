@@ -1,0 +1,52 @@
+<div class="ob-post row">
+  <div class="col-md-2 col-sd-2 col-xs-2">
+    <lisp>
+      (when (ob:get 'image post)
+      (insert (format "<img class=\"article-image\" alt=\"article image\" src=\"%s/%s/%s\" style=\"max-height: 96px;\"/>"
+	(ob:path-to-root)
+      (ob:get 'path post)
+      (ob:get 'image post))))
+    </lisp>
+  </div>
+  <div class="col-md-8 col-sd-8 col-xs-8">
+    <h4 class="ob-article-title">
+      <a href="<lisp>
+	       (format "%s/%s"
+			      (ob:path-to-root)
+			      (ob:get 'htmlfile post))</lisp>"><lisp>(or (ob:post-title post) "title")</lisp></a></h4>
+    <lisp>(ob:get 'excerpt post)</lisp>
+    <p><a class="btn btn-primary" href="<lisp>
+					(format "%s/%s"
+						       (ob:path-to-root)
+						       (ob:get 'htmlfile post))</lisp>">Read more</a></p>
+    <p>
+      <span class="fa fa-files-o"></span>
+      <a class="ob-date" href="<lisp>(format "%s/%s/index.html"
+							       (ob:path-to-root)
+         (ob:get 'safe (ob:get 'category post)))</lisp>"><lisp>(ob:get 'display (ob:get 'category post))</lisp></a>
+      | <span class="fa fa-calendar"></span>
+      <lisp>(ob:format-date (ob:get 'timestamp post) "%d")</lisp>
+      <lisp>
+	(format "<a class=\"ob-date\" href=\"%s/%s/%s/%s/index.html\">%s</a>"
+	(ob:path-to-root)
+	(ob:get 'safe (ob:post-category post))
+	(ob:format-date (ob:post-timestamp post) "%Y")
+	(ob:format-date (ob:post-timestamp post) "%m")
+	(ob:format-date (ob:post-timestamp post) "%b"))
+      </lisp>
+      <lisp>
+    	(format "<a class=\"ob-date\" href=\"%s/%s/%s/index.html\">%s</a>"
+    	(ob:path-to-root)
+    	(ob:get 'safe (ob:post-category post))
+    	(ob:format-date (ob:post-timestamp post) "%Y")
+    	(ob:format-date (ob:post-timestamp post) "%Y"))
+      </lisp>
+      | <span class="fa fa-tags"></span>
+      <lisp>
+	(loop for tag in (ob:post-tags post)
+	do (insert (format "<span class=\"label label-default small\"><a href=\"%s/tags/%s.html\">%s</a></span> "
+	(ob:path-to-root) (ob:get 'safe tag) (ob:get 'display tag))))
+      </lisp>
+    </p>
+  </div>
+</div>

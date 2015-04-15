@@ -1,14 +1,12 @@
 <lisp>(ob:insert-template "page_header.html")</lisp>
   <div class="article">
   <header class="article-header">
-
-    
-    
-    <div class="jumbotron">
-      <div class="page-header">
-	<time date="<lisp> (ob:format-date (ob:post-timestamp POST)) </lisp>">
+    <div class="page-header">
+      <div>
+	<div class="time">
+	  <time datetime="<lisp> (ob:format-date (ob:get 'timestamp POST) "%Y-%m-%d") </lisp>"></time>
 	  <div>
-	    <span class="day"><lisp>(ob:format-date (ob:get 'timestamp POST) "%m")</lisp></span>
+	    <span class="day"><lisp>(ob:format-date (ob:get 'timestamp POST) "%d")</lisp></span>
 	    <span class="month"><lisp>
 		(format "<a href=\"%s/%s/%s/%s/index.html\">%s</a>"
 		(ob:path-to-root)
@@ -25,12 +23,17 @@
     		(ob:format-date (ob:post-timestamp POST) "%Y"))
 	    </lisp></span>
 	  </div>
-	  <h1><lisp>(ob:get 'title POST)</lisp></h1>
-	</time>
+	</div>
+	<lisp>
+	  (when (ob:get 'image POST)
+	(format "<img class=\"article-image\" alt=\"article image\" src=\"%s\"/>" (ob:get 'image POST)))
+	</lisp>
+	<h1><lisp>(ob:get 'title POST)</lisp></h1>
       </div>
-      <nav>
-	<ul class="pager">
-	  <lisp>
+      <div>
+	<nav>
+	  <ul class="pager">
+	    <lisp>
 	    (progn
 	    (let ((ppost (ob:get-prev-post 1)))
 	    (if ppost
@@ -46,20 +49,21 @@
 	    (ob:post-htmlfile npost)
 	    (ob:post-title npost)))
 	    (insert "<li class=\"next\">&nbsp;</li>"))))
-	  </lisp>
-	</ul>
-      </nav>
+	    </lisp>
+	  </ul>
+	</nav>
+      </div>
     </div>
-
   </header>
+
   <div class="article-content">
     <lisp>(ob:post-content-html POST)</lisp>
   </div>
   
-  <footer class="well article-footer">
-    <lisp>(ob:gettext :posted-on)</lisp> <time datetime="<lisp> (ob:format-date (ob:post-timestamp POST)) </lisp>"> <lisp> (ob:format-date (ob:post-timestamp POST) (ob:gettext :post-timestamp))</lisp></time>.
+  <footer class="article-footer">
+    <!-- <lisp>(ob:gettext :posted-on)</lisp> <time datetime="<lisp> (ob:format-date (ob:post-timestamp POST)) </lisp>"> <lisp> (ob:format-date (ob:post-timestamp POST) (ob:gettext :post-timestamp))</lisp></time>. -->
     <nav class="tag-cloud">
-      <h1><i class="icon-tags"></i> <lisp>(ob:gettext :related-tags)</lisp></h1>
+      <i class="fa fa-tags"></i>
       <ul>
 	<lisp>
 	  (loop for tag in (ob:post-tags POST)
@@ -68,7 +72,9 @@
 	</lisp>
       </ul>
     </nav>
+
   </footer>
+  <lisp>(ob:insert-template "plugin_share.html")</lisp>
   </div>
   <lisp>(when (ob:get 'disqus BLOG) (ob:insert-template "plugin_disqus.html"))</lisp>
-<lisp>(ob:insert-template "page_footer.html")</lisp>
+  <lisp>(ob:insert-template "page_footer.html")</lisp>
