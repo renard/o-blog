@@ -5,7 +5,7 @@
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 ;; Keywords: emacs, 
 ;; Created: 2013-01-22
-;; Last changed: 2015-04-13 10:27:35
+;; Last changed: 2015-04-15 10:54:26
 ;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
 
 ;; This file is NOT part of GNU Emacs.
@@ -244,6 +244,18 @@ string."
       (format "%s/%s" (ob:get 'template-dir (or ob-bck-end BLOG)) template))
      (ob:eval-lisp)
      (buffer-string))))
+
+(defun ob:insert-file (file &optional eval-lisp)
+  "Return the content of FILE as a string to be inserted into the
+current buffer.
+
+If EVAL-LISP is not NIL, `ob:eval-lisp` is called before
+returning the buffer content."
+  (with-temp-buffer
+    (insert-file-contents-literally file)
+    (when eval-lisp
+      (ob:eval-lisp))
+    (buffer-substring-no-properties (point-min)(point-max))))
 
 (defun ob:eval-template-to-file (template file)
   "Evaluate TEMPLATE an write it to FILE."
