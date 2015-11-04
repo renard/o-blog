@@ -1,4 +1,4 @@
-;;; o-blog.el --- 
+;;; o-blog.el --- Standalone orgmode blog exporter
 
 ;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
