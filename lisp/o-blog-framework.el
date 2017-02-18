@@ -20,7 +20,7 @@
   (require 'eieio nil t))
 
 
-(defclass ob:framework-component nil
+(defclass ob:framework-component ()
   ((backends :initarg :backends
 	     :type (or symbol list)
 	     :documentation "List of supported backends")
@@ -42,48 +42,48 @@
 (setq ob:framework-components
   (list
    (ob:framework-component
-    'lead :backends '(org)
+    "lead" :backends '(org)
     :start "<p class=\"lead\">"
     :end "</p>")
 
    (ob:framework-component
-    'mark :backends '(org)
+    "mark" :backends '(org)
     :start "<mark>"
     :end "</mark>")
 
    (ob:framework-component
-    'del :backends '(org)
+    "del" :backends '(org)
     :start "<del>"
     :end "</del>")
 
    (ob:framework-component
-    'kbd :backends '(org)
+    "kbd" :backends '(org)
     :start "<kbd>"
     :end "</kbd>")
 
    
    (ob:framework-component
-    'right :backends '(org)
+    "right" :backends '(org)
     :start "<p class=\"text-right\">"
     :end "</p>")
 
    (ob:framework-component
-    'left :backends '(org)
+    "left" :backends '(org)
     :start "<p class=\"text-left\">"
     :end "</p>")
 
    (ob:framework-component
-    'justify :backends '(org)
+    "justify" :backends '(org)
     :start "<p class=\"text-justify\">"
     :end "</p>")
 
    (ob:framework-component
-    'center :backends '(org)
+    "center" :backends '(org)
     :start "<p class=\"text-center\">"
     :end "</p>")
 
    (ob:framework-component
-    'nowrap :backends '(org)
+    "nowrap" :backends '(org)
     :start "<p class=\"text-nowrap\">"
     :end "</p>")
 
@@ -91,11 +91,11 @@
    
    
    (ob:framework-component
-    'jumbotron :backends '(org)
+    "jumbotron" :backends '(org)
     :start "<div class=\"jumbotron\">"
     :end "</div>")
    (ob:framework-component
-    'page-header :backends '(org)
+    "page-header" :backends '(org)
     :start '(format
 	     "<div class=\"page-header\"><h1>%s%s</h1></div>"
 	     title
@@ -103,7 +103,7 @@
 		 (format " <small>%s</small>" subtitle)
 	       "")))
    (ob:framework-component
-    'caption :backends '(org)
+    "caption" :backends '(org)
     :start '(format
 	     "<div class=\"caption\">%s"
 	     (if (boundp 'title)
@@ -111,23 +111,23 @@
 	       ""))
     :end "</div>")
    (ob:framework-component
-    'thumbnail :backends '(org)
+    "thumbnail" :backends '(org)
     :start "<div class=\"thumbnail\">"
     :end "</div>")
 
    (ob:framework-component
-    'glyphicon :backends '(org)
+    "glyphicon" :backends '(org)
     :start '("<span class=\"glyphicon glyphicon-" icon "\"></span>"))
    (ob:framework-component
-    'icon :backends '(org)
+    "icon" :backends '(org)
     :start '("<i class=\"fa fa-" icon "\"></i>"))
    (ob:framework-component
-    'row :backends '(org)
+    "row" :backends '(org)
     :start (format "<div class=\"row%s\">"
 		   (if (boundp 'equal) " equal" ""))
     :end "</div>")
    (ob:framework-component
-    'col :backends '(org)
+    "col" :backends '(org)
     :start '("<div class=\""
 	     (loop for i in '(xs sm md lg o-xs o-sm o-md o-lg)
 		   when (boundp i)
@@ -142,51 +142,51 @@
 	     "\">")
     :end "</div>")
    (ob:framework-component
-    'panel :backends '(org)
+    "panel" :backends '(org)
     :start '("<div class=\"panel"
 	     (when (boundp 'alt) (format " panel-%s" alt))
 	     "\">")
     :end "</div>")
    (ob:framework-component
-    'panel-heading :backends '(org)
+    "panel-heading" :backends '(org)
     :start '("<div class=\"panel-heading\">"
 	     (when (boundp 'title)
 	       (format "<h3 class=\"panel-title\">%s</h3>" title)))
     :end "</div>")
    (ob:framework-component
-    'panel-body :backends '(org)
+    "panel-body" :backends '(org)
     :start '("<div class=\"panel-body\">")
     :end "</div>")
    (ob:framework-component
-    'panel-footer :backends '(org)
+    "panel-footer" :backends '(org)
     :start '("<div class=\"panel-footer\">")
     :end "</div>")
    (ob:framework-component
-    'label :backends '(org)
+    "label" :backends '(org)
     :start '(format "<span class=\"label label-%s\">"
 		    (if (boundp 'mod) mod "default"))
     :end "</span>")
    (ob:framework-component
-    'badge :backends '(org)
+    "badge" :backends '(org)
     :start "<span class=\"badge\">"
     :end "</span>")
    (ob:framework-component
-    'alert :backends '(org)
+    "alert" :backends '(org)
     :start '(format "<div class=\"alert alert-%s\">"
 		    (if (boundp 'mod) mod "warning"))
     :end "</div>")
    (ob:framework-component
-    'well :backends '(org)
+    "well" :backends '(org)
     :start '(format "<div class=\"well well-%s\">"
 		    (if (boundp 'mod) mod "lg"))
     :end "</div>")
    (ob:framework-component
-    'thumbnail :backends '(org)
+    "thumbnail" :backends '(org)
     :start "<div class=\"thumbnail\">"
     :end "</div>")
 
    (ob:framework-component
-    'table :backends '(org)
+    "table" :backends '(org)
     :start '(format "<table class=\"table %s\">"
 		    (loop for v in '(striped bordered hover condensed)
 			  with out = '()
@@ -197,17 +197,17 @@
     :end "</table>")
 
    (ob:framework-component
-    'tr :backends '(org)
+    "tr" :backends '(org)
     :start '(format "<tr%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
     :end "</tr>")
 
    (ob:framework-component
-    'td :backends '(org)
+    "td" :backends '(org)
     :start '(format "<td%s>" (if (boundp 'mod) (format " class=\"%s\"" mod) ""))
     :end "</td>")
 
    (ob:framework-component
-    'source :backends '(org)
+    "source" :backends '(org)
     :start '(let* ((cur-point (point))
 		   (end-point (unless (boundp 'src-file)
 				(save-match-data
@@ -241,10 +241,10 @@
 	      (when end-point
 		(delete-region cur-point (- end-point (length (format "</%s>" tag)))))
 	      (format "<div class=\"src %s\">%s</div>" (or mode "") html)))
-   (ob:framework-component 'src :backends '(org) :alias 'source)
+   (ob:framework-component "src" :backends '(org) :alias 'source)
 
    (ob:framework-component
-    'columns :backends '(org)
+    "columns" :backends '(org)
     :start '(format "<div style=\"%s%s\">"
 		    (if (boundp 'width)
 			(format "column-width:%s;-webkit-column-width:%s;-moz-column-width:%s" width width width) "")
