@@ -334,13 +334,13 @@ overriden in subclasses."
   (file-name-as-directory
    (format "%s%s"
 	   (file-name-as-directory
-	    (file-name-directory (ob:get-configuration-file self)))
+	    (or (file-name-directory (ob:get-configuration-file self))
+                ""))
 	   (if (and
 		(slot-exists-p self 'source-dir)
 		(slot-boundp self 'source-dir))
 	       (oref self source-dir)
 	     ""))))
-
 
 (defmethod ob:get-all-posts ((self ob:backend))
   "Generic method for finding files. This method MUST be
