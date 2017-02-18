@@ -80,7 +80,8 @@ current buffer."
       (unless (featurep lib)
 	(require lib)))
 
-    (ob:publish (funcall classfct file))))
+    (ob:publish (funcall classfct file)))
+  (message "Completed publishing "))
     ;; (let* ((blog (funcall classfct file))
     ;; 	   ;; Just an alias for backward compatibility
     ;; 	   ;; TODO: Remove me
